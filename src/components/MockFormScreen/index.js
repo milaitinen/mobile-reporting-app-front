@@ -3,7 +3,6 @@ import { View } from "react-native";
 
 import { MockForms } from "./../../data/Mocks";
 import Deck from "./MockForm";
-import DeckCreation from "./FormCreation";
 
 class FormScreen extends Component {
   static displayName = "FormScreen";
@@ -19,7 +18,7 @@ class FormScreen extends Component {
     }
 
     return this.state.decks.map(deck => {
-      return <Deck deck={deck} key={deck.formID} count={deck.fields.length} />;
+      return <Deck deck={deck} key={deck.formID} />;
     });
   }
 
@@ -27,7 +26,6 @@ class FormScreen extends Component {
     return (
       <View>
         {this._mkDeckViews()}
-        {/*<DeckCreation />*/}
       </View>
     );
   }

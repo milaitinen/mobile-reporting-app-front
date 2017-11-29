@@ -4,7 +4,6 @@ import { TabNavigator } from "react-navigation";
 
 import Heading from "./Header";
 import MockFormScreen from "./MockFormScreen";
-import NewCardScreen from "./NewCardScreen";
 import ReviewScreen from "./ReviewScreen";
 
 

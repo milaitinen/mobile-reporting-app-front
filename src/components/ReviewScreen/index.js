@@ -63,27 +63,17 @@ class ReviewScreen extends Component {
 
     render() {
         return (
-
             <View style={styles.MainContainer}>
-
               <FlatList data={ this.state.dataSource }
-
                   ItemSeparatorComponent = {this.FlatListItemSeparator}
-
                   renderItem={({item}) =>
                       <Text style={styles.FlatListItemStyle}>
                       > {item.name}
                       </Text>}
-
                   keyExtractor={(item, index) => index}
-
               />
-
-
             </View>
-
         );
-
     }
 }
 
