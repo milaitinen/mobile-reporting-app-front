@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
 import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation'
 import LoginScreen from '../Containers/LoginScreen'
 import SignupScreen from '../Containers/SignupScreen'
@@ -45,7 +45,15 @@ const DrawerNavigation = StackNavigator({
     headerMode: 'float',
     navigationOptions: ({navigation}) => ({
         headerStyle: {backgroundColor: '#f0f8ff'},
-        headerLeft: <Text onPress={() => navigation.navigate('DrawerOpen')}>   Menu</Text>
+        headerLeft: <Text style={{fontSize: 30, fontWeight:'bold', paddingLeft: 15} } onPress={() => {
+            // Coming soon: navigation.navigate('DrawerToggle')
+            // https://github.com/react-community/react-navigation/pull/2492
+            if (navigation.state.index === 0) {
+                navigation.navigate('DrawerOpen')
+            } else {
+                navigation.navigate('DrawerClose')
+            }
+        }}>☰</Text>
     })
 })
 
