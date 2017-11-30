@@ -5,7 +5,10 @@ import {
     View,
     FlatList,
     Alert,
-    Platform
+    Platform,
+    TextInput,
+    Button,
+    ActivityIndicator
 } from 'react-native';
 
 import {url} from './urlsetting';
@@ -57,14 +60,72 @@ class ReviewScreen extends Component {
 
     }
 */
+  InsertDataToServer = () => {
+
+      const { TextInputName } = this.state ;
+
+      fetch(url, {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              name: TextInputName
+          })
+
+      }).then(response => {
+          if (response.status === 200) {
+              return "Report added";
+          } else {
+              return response.status;
+          }
+      }).then((message) => {
+        // Showing response message coming from server after inserting records.
+          Alert.alert(message);
+
+      }).catch((error) => {
+          console.error(error);
+      });
+
+  }
+
     renderUserInfo = () => {
         return null;
     };
 
     render() {
+
+        if (this.state.isLoading) {
+            return (
+                <View style={[styles.container]}>
+
+                    <ActivityIndicator
+                        animating={this.state.animating}
+                        style={[styles.centering, {height: 80}]}
+                        size='large'
+                    />
+
+                </View>
+            );
+        }
+
         return (
             <View style={styles.MainContainer}>
-              <FlatList data={ this.state.dataSource }
+                <TextInput
+                    placeholder='Enter Report Name'
+
+                    onChangeText={TextInputName => this.setState({TextInputName})}
+
+                    underlineColorAndroid='transparent'
+
+                    style={styles.TextInputStyleClass}
+                />
+
+                <Button title='Create New Report' onPress={this.InsertDataToServer} color='#2196F3' />
+
+              <FlatList
+                  data={ this.state.dataSource }
                   ItemSeparatorComponent = {this.FlatListItemSeparator}
                   renderItem={({item}) =>
                       <Text style={styles.FlatListItemStyle}>
@@ -78,6 +139,26 @@ class ReviewScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+
+    TextInputStyleClass: {
+
+        textAlign: 'center',
+        marginBottom: 7,
+        height: 40,
+        borderWidth: 1,
+// Set border Hex Color Code Here.
+        borderColor: '#FF5722',
+
+// Set border Radius.
+        //borderRadius: 10 ,
+    },
+
+    activityIndicator: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 80
+    },
 
     MainContainer: {
         justifyContent: 'center',

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 
 import Button from "./../Button";
 import NormalText from "./../NormalText";
@@ -8,7 +8,7 @@ class MockForm extends Component {
   static displayName = "MockForm";
 
   _review = () => {
-    console.warn("Not implemented");
+      Alert.alert("Not implemented");
   };
 
   _addFields = () => {
