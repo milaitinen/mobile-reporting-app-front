@@ -46,8 +46,7 @@ const DrawerNavigation = StackNavigator({
     navigationOptions: ({navigation}) => ({
         headerStyle: {backgroundColor: '#f0f8ff'},
         headerLeft: <Text style={{fontSize: 30, fontWeight:'bold', paddingLeft: 15} } onPress={() => {
-            // Coming soon: navigation.navigate('DrawerToggle')
-            // https://github.com/react-community/react-navigation/pull/2492
+
             if (navigation.state.index === 0) {
                 navigation.navigate('DrawerOpen')
             } else {
