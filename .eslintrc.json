@@ -1,0 +1,35 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react",
+    "react-native"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "parser": "babel-eslint",
+  "env": {
+    "react-native/react-native": true
+  },
+  "rules": {
+    "react-native/no-unused-styles": 2,
+    "quotes": ["error", "double"],
+    "semi": ["error", "always"],
+    "no-unused-vars": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "no-trailing-spaces": "error",
+    "indent": ["error", 2],
+    "object-curly-spacing": ["error", "always"],
+    "keyword-spacing": ["error", { "before": true, "after": true }],
+    "spaced-comment": ["error", "always"],
+    "jsx-uses-vars": "true",
+    "react/prop-types": 0
+  }
+}

@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import { View, Image } from "react-native";
+import React from "React";
+import { Component, View, HeadingText } from "react";
 
 import styles from "./styles";
-import HeadingText from "./../HeadingText";
 
 class Header extends Component {
   static displayName = "Header";

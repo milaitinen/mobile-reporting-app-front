@@ -11,7 +11,7 @@ class Form {
   }
 
   static fromObject(ob) {
-    let d = new Form(ob.name);
+    const d = new Form(ob.name);
     d.setFromObject(ob);
     return d;
   }

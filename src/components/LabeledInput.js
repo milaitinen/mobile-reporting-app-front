@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-
-import { StyleSheet, View } from "react-native";
-
-import Input from "./Input";
+import React from "react";
+import { Component } from "react";
+import { View } from "react-native";
 import NormalText from "./NormalText";
+import { StyleSheet } from "react-native";
 
 class LabeledInput extends Component {
   render() {
@@ -12,12 +11,6 @@ class LabeledInput extends Component {
         <NormalText style={styles.label}>
           {this.props.label}:
         </NormalText>
-        <Input
-          onEntry={this.props.onEntry}
-          onChange={this.props.onChange}
-          clearOnSubmit={this.props.clearOnSubmit}
-          style={this.props.inputStyle}
-        />
       </View>
     );
   }

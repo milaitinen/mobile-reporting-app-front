@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
+import { Component } from "react";
 import { View } from "react-native";
-
 import { MockForms } from "./../../data/Mocks";
 import Deck from "./MockForm";
 

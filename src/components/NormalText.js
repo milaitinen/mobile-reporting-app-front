@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Component } from "react";
+import { StyleSheet, Text } from "react-native";
 
 import { fonts, scalingFactors } from "./../styles/fonts";
 import Dimensions from "Dimensions";
-let { width } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 class NormalText extends Component {
   static displayName = "NormalText";

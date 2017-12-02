@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import React from "react";
+import { Component } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import colors from "./../styles/colors";
 
@@ -7,7 +8,7 @@ class Button extends Component {
   static displayName = "Button";
 
   render() {
-    let opacity = this.props.disabled ? 1 : 0.5;
+    const opacity = this.props.disabled ? 1 : 0.5;
     return (
       <TouchableOpacity
         activeOpacity={opacity}
