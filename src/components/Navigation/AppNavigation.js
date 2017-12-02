@@ -63,10 +63,12 @@ const LoginStack = StackNavigator({
     forgottenPasswordScreen: { screen: ForgottenPasswordScreen, navigationOptions: { title: 'Forgot Password' } },
     menuScreen: { screen: MenuScreen }
 }, {
-    headerMode: 'float',
+
+    headerMode: 'screen',
     navigationOptions: {
         headerStyle: {backgroundColor: '#f0f8ff'},
-        title: 'Mobile Reporting App'
+        title: 'Mobile Reporting App',
+        header: null
     }
 })
 
