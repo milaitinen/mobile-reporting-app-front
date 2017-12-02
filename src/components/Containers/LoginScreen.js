@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
         //textAlign: 'center',
         marginBottom: 7,
         height: 40,
+        fontFamily: 'Roboto-Light',
         //borderWidth: 1,
         //borderColor: '#FF5722',
 
@@ -97,16 +98,18 @@ const styles = StyleSheet.create({
     contentContainer: {
         padding: 20,
         flex: 1,
-        //backgroundColor: '#fff',
+        backgroundColor: '#1e5d9d',
         justifyContent: 'center',
     },
     textLink: {
         color: 'blue',
         paddingTop: 25,
+        fontFamily: 'Roboto-Light',
         fontSize: 16,
         textAlign: 'center'
     },
     title: {
+        fontFamily: 'Roboto-Light',
         fontSize: 27,
         textAlign: 'center',
         paddingBottom: 35,
@@ -121,6 +124,7 @@ const styles = StyleSheet.create({
     },
 
     copyright: {
+        fontFamily: 'Roboto-Light',
         color: 'blue',
         textAlign: 'center',
         position: 'absolute',
