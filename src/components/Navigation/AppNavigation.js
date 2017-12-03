@@ -23,19 +23,10 @@ var MainScreenNavigator = TabNavigator({
         }
     }
 });
-/*
-MainScreenNavigator.navigationOptions = {
-    title: "Tab example"
-};
-*/
-
-const styles = StyleSheet.create({ container: { flex: 1, marginTop: 30 } });
-
 
 
 const DrawerStack = DrawerNavigator({
     Menu: { screen: TemplateView, navigationOptions: { title: 'Templates' } },
-    //Forms: { screen: ReviewScreen, navigationOptions: { title: 'Your forms' }},
     MockForms: { screen: MockFormScreen, navigationOptions: { title: 'Mockforms' } },
 
 })
@@ -54,10 +45,12 @@ const DrawerNavigation = StackNavigator({
         })},
     FormsFromBackendServer: { screen: ReviewScreen, navigationOptions: ({ navigation }) => ({
             title: navigation.state.routeName
-        }), }
-}, {
-    headerMode: 'float',
+        }),}
+    },
 
+
+    {
+    headerMode: 'float',
 
 })
 
@@ -89,5 +82,3 @@ const PrimaryNav = StackNavigator({
 })
 
 export default PrimaryNav
-
-//export default MainScreenNavigator;

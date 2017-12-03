@@ -9,7 +9,8 @@ import {
     TextInput,
     Button,
     ActivityIndicator,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native';
 
 import {url} from './urlsetting';
@@ -115,37 +116,37 @@ class ReviewScreen extends Component {
         }
 
         return (
-            <View style={styles.MainContainer}>
-                <TextInput
-                    placeholder='Enter Report Name'
+            <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={styles.MainContainer}>
 
-                    onChangeText={TextInputName => this.setState({TextInputName})}
+                    <TextInput
+                        placeholder='Enter Report Name'
 
-                    underlineColorAndroid='transparent'
+                        onChangeText={TextInputName => this.setState({TextInputName})}
 
-                    style={styles.TextInputStyleClass}
-                />
+                        underlineColorAndroid='transparent'
 
-                <TouchableOpacity
-                    //title='Create New Report'
-                    onPress={this.InsertDataToServer}
-                    //color='#2196F3'
-                    style={styles.createButton} >
+                        style={styles.TextInputStyleClass}
+                    />
 
-                    <Text>
-                        +
-                    </Text>
-                </TouchableOpacity>
-
-              <FlatList
-                  data={ this.state.dataSource }
-                  ItemSeparatorComponent = {this.FlatListItemSeparator}
-                  renderItem={({item}) =>
-                      <Text style={styles.FlatListItemStyle}>
-                      > {item.name}
-                      </Text>}
-                  keyExtractor={(item, index) => index}
-              />
+                    <FlatList
+                        data={ this.state.dataSource }
+                        renderItem={({item}) =>
+                            <Text style={styles.FlatListItemStyle}>
+                                > {item.name}
+                            </Text>}
+                            keyExtractor={(item, index) => index}
+                    />
+                </ScrollView>
+                <View>
+                    <TouchableOpacity
+                        onPress={this.InsertDataToServer}
+                        style={styles.newReportButton} >
+                        <Text style={styles.plus}>
+                            +
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -161,8 +162,23 @@ const circle = {
 
 const styles = StyleSheet.create({
 
-    TextInputStyleClass: {
+    plus: {
+        fontSize: 40,
+        color: 'white'
+    },
 
+    newReportButton: {
+        ...circle,
+        backgroundColor: '#349d4a',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+
+    },
+
+    TextInputStyleClass: {
         textAlign: 'center',
         marginBottom: 7,
         height: 40,
