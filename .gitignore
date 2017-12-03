@@ -28,5 +28,5 @@ build/
 local.properties
 *.iml
 
-src/components/ReviewScreen/urlsetting.js
+src/components/Containers/urlsetting.js
 

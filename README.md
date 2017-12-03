@@ -1,12 +1,21 @@
-Note to those new to yarn
+Before running the App:
 
-1. Install yarn on your computer (Mac -> brew install yarn, linux -> https://yarnpkg.com/lang/en/docs/install/#linux-tab, windows -> https://yarnpkg.com/lang/en/docs/install/#windows-tab). I have version 1.3.2
+Make sure to create urlsetting.js file in src/components/Containers, where you store the host and port info.
+For example: export const url = "http://HOST:PORT-ID/forms";
+
+------------------------------------------------------------------------------------------------------------------------
+
+To run the App using yarn:
+
+1. Install yarn on your computer (Mac -> brew install yarn, linux -> https://yarnpkg.com/lang/en/docs/install/#linux-tab,
+                                  windows -> https://yarnpkg.com/lang/en/docs/install/#windows-tab). I have version 1.3.2
 2. Type in the command: yarn install
 3. To start the app: yarn run ios/android
 
-If you want to test the app on your phone, install expo (an app) and once it’s installed read the QR code on the command line.
-NOTE! The phone and the computer must be connected to the same network.
+Install the Expo app on your iOS or Android phone, and use the QR code in the terminal to open your app.
+Find the QR scanner on the Projects tab of the app. (source: https://github.com/react-community/create-react-native-app)
 
+------------------------------------------------------------------------------------------------------------------------
 
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).

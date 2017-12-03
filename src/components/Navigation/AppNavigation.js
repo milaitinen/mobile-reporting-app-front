@@ -2,21 +2,19 @@ import React from "react";
 import { StackNavigator, DrawerNavigator } from "react-navigation";
 import { Text } from "react-native";
 import LoginScreen from "../Containers/LoginScreen";
-import SignupScreen from "../Containers/SignupScreen";
+import SignUpScreen from "../Containers/SignupScreen";
 import ForgottenPasswordScreen from "../Containers/ForgottenPasswordScreen";
 
-import MockFormScreen from "../MockFormScreen/index";
-import ReviewScreen from "../ReviewScreen/index";
+import { MockForm } from "../Containers/MockFormScreen";
+import ReviewScreen from "../Containers/TemplateScreen";
 import MenuScreen from "../Containers/MenuScreen";
-
-
 
 // -- Some new code --
 
 const DrawerStack = DrawerNavigator({
   Menu: { screen: MenuScreen, navigationOptions: { title: "Main Menu" } },
   Forms: { screen: ReviewScreen, navigationOptions: { title: "Your forms" } },
-  MockForms: { screen: MockFormScreen, navigationOptions: { title: "Mockforms" } },
+  MockForms: { screen: MockForm, navigationOptions: { title: "Mockforms" } },
 });
 
 const DrawerNavigation = StackNavigator({
@@ -39,7 +37,7 @@ const DrawerNavigation = StackNavigator({
 // login stack
 const LoginStack = StackNavigator({
   loginScreen: { screen: LoginScreen },
-  signupScreen: { screen: SignupScreen, navigationOptions: { title: "Create an account" } },
+  signupScreen: { screen: SignUpScreen, navigationOptions: { title: "Create an account" } },
   forgottenPasswordScreen: { screen: ForgottenPasswordScreen, navigationOptions: { title: "Forgot Password" } },
   menuScreen: { screen: MenuScreen }
 }, {

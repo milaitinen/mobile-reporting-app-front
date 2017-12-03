@@ -31,7 +31,6 @@ export default class LoginScreen extends React.Component {
           style={styles.copyright}>
                     Copyright © Arter Oy 2017
         </Text>
-
       </View>
     );
   }

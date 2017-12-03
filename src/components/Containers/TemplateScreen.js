@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -13,7 +13,7 @@ import {
 
 import { url } from "./urlsetting";
 
-class ReviewScreen extends Component {
+class ReviewScreen extends React.Component {
     static displayName = "ReviewScreen";
 
     constructor(props)
@@ -101,13 +101,11 @@ class ReviewScreen extends Component {
       if (this.state.isLoading) {
         return (
           <View style={[styles.container]}>
-
             <ActivityIndicator
               animating={this.state.animating}
               style={[styles.centering, { height: 80 }]}
               size='large'
             />
-
           </View>
         );
       }
@@ -116,11 +114,8 @@ class ReviewScreen extends Component {
         <View style={styles.MainContainer}>
           <TextInput
             placeholder='Enter Report Name'
-
             onChangeText={TextInputName => this.setState({ TextInputName })}
-
             underlineColorAndroid='transparent'
-
             style={styles.TextInputStyleClass}
           />
 
