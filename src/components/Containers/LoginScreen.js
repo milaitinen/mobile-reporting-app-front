@@ -18,7 +18,7 @@ export default class LoginScreen extends React.Component {
     render() {
         return (
             <ImageBackground
-                source={require('./img/background_4.png')}
+                source={require('./img/background_5.png')}
                 style={styles.contentContainer}>
 
                 <Text
@@ -92,11 +92,12 @@ const styles = StyleSheet.create({
 
         //textAlign: 'center',
         width: 250,
-        marginBottom: 7,
+        marginBottom: 15,
         height: 40,
         borderBottomWidth: 1,
         borderBottomColor: 'white',
         fontFamily: 'Roboto-Light',
+        fontSize: 16,
         color: 'white',
         alignSelf: 'center',
         //borderWidth: 1,
@@ -108,11 +109,12 @@ const styles = StyleSheet.create({
 
     button: {
         backgroundColor: '#9dcbe5',
-        marginTop:10,
+        marginTop:30,
         paddingTop:10,
         paddingBottom:10,
-        marginLeft:100,
-        marginRight:100,
+        marginLeft:115,
+        marginRight:115,
+        marginBottom: 25,
         borderRadius:10,
         borderWidth: 1,
         borderColor: '#9dcbe5',
@@ -120,7 +122,7 @@ const styles = StyleSheet.create({
     },
 
     signin: {
-        color: 'white',
+        color: '#274752',
         fontFamily: 'Roboto-Light',
         fontSize: 15,
         textAlign: 'center',
@@ -137,9 +139,9 @@ const styles = StyleSheet.create({
 
     textLink: {
         color: 'white',
-        paddingTop: 25,
+        paddingTop: 20,
         fontFamily: 'Roboto-Light',
-        fontSize: 16,
+        fontSize: 14,
         textAlign: 'center'
     },
 
@@ -147,15 +149,16 @@ const styles = StyleSheet.create({
         color: '#78d3f2',
         paddingTop: 25,
         fontFamily: 'Roboto-Light',
-        fontSize: 16,
+        fontSize: 15,
         textAlign: 'center'
     },
 
     title: {
         fontFamily: 'Roboto-Light',
-        fontSize: 27,
+        fontSize: 30,
         textAlign: 'center',
-        paddingBottom: 35,
+        marginTop: 10,
+        paddingBottom: 30,
         color: 'white',
         //fontWeight: 'bold'
     },
@@ -163,7 +166,7 @@ const styles = StyleSheet.create({
     slogan: {
         fontSize: 20,
         textAlign: 'center',
-        paddingBottom: 40,
+        paddingBottom: 50,
         color: 'white',
         //fontWeight: 'bold'
     },
@@ -173,6 +176,6 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
 
-        marginTop: 200,
+        marginTop: 50,
     }
 })
