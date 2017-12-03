@@ -18,7 +18,7 @@ export default class LoginScreen extends React.Component {
     render() {
         return (
             <ImageBackground
-                source={require('./img/background_3.png')}
+                source={require('./img/background_4.png')}
                 style={styles.contentContainer}>
 
                 <Text
@@ -33,8 +33,9 @@ export default class LoginScreen extends React.Component {
 
                 <TextInput
                     placeholder='Email'
+                    placeholderTextColor='white'
                     onChangeText={TextInputUser => this.setState({TextInputUser})}
-                    //underlineColorAndroid='transparent'
+                    underlineColorAndroid='transparent'
                     style={styles.TextInputStyleClass}
                 />
 
@@ -42,23 +43,24 @@ export default class LoginScreen extends React.Component {
 
                     secureTextEntry={true}
                     placeholder='Password'
+                    placeholderTextColor='white'
                     onChangeText={TextInputPassword => this.setState({TextInputPassword})}
-                    //underlineColorAndroid='transparent'
+                    underlineColorAndroid='transparent'
                     style={styles.TextInputStyleClass}
                 />
 
                 <TextInput
                     placeholder='Server url'
-
+                    placeholderTextColor='white'
                     onChangeText={TextInputServer => this.setState({TextInputServer})}
-                    //underlineColorAndroid='transparent'
+                    underlineColorAndroid='transparent'
                     style={styles.TextInputStyleClass}
                 />
 
                 <Button
                     title='Sign in'
                     onPress={() => this.props.navigation.navigate('drawerStack')}
-                    color='#3cb371'
+                    color='#9dcbe5'
                 />
 
                 <Text
@@ -68,7 +70,7 @@ export default class LoginScreen extends React.Component {
                 </Text>
 
                 <Text
-                    style={styles.textLink}
+                    style={styles.signup}
                     onPress={() => this.props.navigation.navigate('signupScreen')} >
                     Sign up
                 </Text>
@@ -87,10 +89,14 @@ const styles = StyleSheet.create({
     TextInputStyleClass: {
 
         //textAlign: 'center',
+        width: 250,
         marginBottom: 7,
         height: 40,
+        borderBottomWidth: 1,
+        borderBottomColor: 'white',
         fontFamily: 'Roboto-Light',
         color: 'white',
+        alignSelf: 'center',
         //borderWidth: 1,
         //borderColor: '#FF5722',
 
@@ -108,6 +114,13 @@ const styles = StyleSheet.create({
     },
     textLink: {
         color: 'white',
+        paddingTop: 25,
+        fontFamily: 'Roboto-Light',
+        fontSize: 16,
+        textAlign: 'center'
+    },
+    signup: {
+        color: '#78d3f2',
         paddingTop: 25,
         fontFamily: 'Roboto-Light',
         fontSize: 16,
