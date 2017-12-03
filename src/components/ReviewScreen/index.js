@@ -8,7 +8,8 @@ import {
     Platform,
     TextInput,
     Button,
-    ActivityIndicator
+    ActivityIndicator,
+    TouchableOpacity
 } from 'react-native';
 
 import {url} from './urlsetting';
@@ -125,7 +126,16 @@ class ReviewScreen extends Component {
                     style={styles.TextInputStyleClass}
                 />
 
-                <Button title='Create New Report' onPress={this.InsertDataToServer} color='#2196F3' />
+                <TouchableOpacity
+                    //title='Create New Report'
+                    onPress={this.InsertDataToServer}
+                    //color='#2196F3'
+                    style={styles.createButton} >
+
+                    <Text>
+                        +
+                    </Text>
+                </TouchableOpacity>
 
               <FlatList
                   data={ this.state.dataSource }
@@ -140,6 +150,14 @@ class ReviewScreen extends Component {
         );
     }
 }
+
+const circle = {
+    borderWidth: 0,
+    borderRadius: 40,
+    width: 80,
+    height: 80
+};
+
 
 const styles = StyleSheet.create({
 

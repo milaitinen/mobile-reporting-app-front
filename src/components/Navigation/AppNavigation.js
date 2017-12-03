@@ -5,10 +5,10 @@ import LoginScreen from '../Containers/LoginScreen'
 import SignupScreen from '../Containers/SignupScreen'
 import ForgottenPasswordScreen from '../Containers/ForgottenPasswordScreen'
 
-import Heading from "../Header/index";
 import MockFormScreen from "../MockFormScreen/index";
 import ReviewScreen from "../ReviewScreen/index";
 import MenuScreen from "../Containers/MenuScreen";
+import TemplateView from "../Containers/TemplateView";
 
 
 var MainScreenNavigator = TabNavigator({
@@ -31,29 +31,34 @@ MainScreenNavigator.navigationOptions = {
 
 const styles = StyleSheet.create({ container: { flex: 1, marginTop: 30 } });
 
-// -- Some new code --
+
 
 const DrawerStack = DrawerNavigator({
-    Menu: { screen: MenuScreen, navigationOptions: { title: 'Main Menu' } },
-    Forms: { screen: ReviewScreen, navigationOptions: { title: 'Your forms' }},
+    Menu: { screen: TemplateView, navigationOptions: { title: 'Templates' } },
+    //Forms: { screen: ReviewScreen, navigationOptions: { title: 'Your forms' }},
     MockForms: { screen: MockFormScreen, navigationOptions: { title: 'Mockforms' } },
+
 })
 
 const DrawerNavigation = StackNavigator({
-    DrawerStack: { screen: DrawerStack }
+    DrawerStack: { screen: DrawerStack ,navigationOptions: ({navigation}) => ({
+            headerStyle: {backgroundColor: '#f0f8ff'},
+            headerLeft: <Text style={{fontSize: 30, fontWeight:'bold', paddingLeft: 15} } onPress={() => {
+
+                if (navigation.state.index === 0) {
+                    navigation.navigate('DrawerOpen')
+                } else {
+                    navigation.navigate('DrawerClose')
+                }
+            }}>☰</Text>
+        })},
+    FormsFromBackendServer: { screen: ReviewScreen, navigationOptions: ({ navigation }) => ({
+            title: navigation.state.routeName
+        }), }
 }, {
     headerMode: 'float',
-    navigationOptions: ({navigation}) => ({
-        headerStyle: {backgroundColor: '#f0f8ff'},
-        headerLeft: <Text style={{fontSize: 30, fontWeight:'bold', paddingLeft: 15} } onPress={() => {
 
-            if (navigation.state.index === 0) {
-                navigation.navigate('DrawerOpen')
-            } else {
-                navigation.navigate('DrawerClose')
-            }
-        }}>☰</Text>
-    })
+
 })
 
 // login stack
@@ -61,7 +66,6 @@ const LoginStack = StackNavigator({
     loginScreen: { screen: LoginScreen },
     signupScreen: { screen: SignupScreen, navigationOptions: { title: 'Create an account' }},
     forgottenPasswordScreen: { screen: ForgottenPasswordScreen, navigationOptions: { title: 'Forgot Password' } },
-    menuScreen: { screen: MenuScreen }
 }, {
 
     headerMode: 'screen',
@@ -75,7 +79,8 @@ const LoginStack = StackNavigator({
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
     loginStack: { screen: LoginStack },
-    drawerStack: { screen: DrawerNavigation }
+    drawerStack: { screen: DrawerNavigation },
+
 }, {
     // Default config for all screens
     headerMode: 'none',
