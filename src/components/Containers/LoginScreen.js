@@ -147,9 +147,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Light',
         color: 'white',
         textAlign: 'center',
-        position: 'absolute',
-        bottom: 10,
-        left: 0,
-        right: 0,
+
+        marginTop: 200,
     }
 })
