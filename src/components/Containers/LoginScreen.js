@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, TextInput, ScrollView, ImageBackground, } from 'react-native'
+import { TouchableOpacity, StyleSheet, Text, View, Button, TextInput, ScrollView, ImageBackground, } from 'react-native'
 
 export default class LoginScreen extends React.Component {
 
@@ -57,11 +57,13 @@ export default class LoginScreen extends React.Component {
                     style={styles.TextInputStyleClass}
                 />
 
-                <Button
-                    title='Sign in'
+                <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('drawerStack')}
-                    color='#9dcbe5'
-                />
+                    style={styles.button}>
+                    <Text style={styles.signin}>
+                        Sign In
+                    </Text>
+                </TouchableOpacity>
 
                 <Text
                     style={styles.textLink}
@@ -104,6 +106,26 @@ const styles = StyleSheet.create({
         //borderRadius: 10 ,
     },
 
+    button: {
+        backgroundColor: '#9dcbe5',
+        marginTop:10,
+        paddingTop:10,
+        paddingBottom:10,
+        marginLeft:100,
+        marginRight:100,
+        borderRadius:10,
+        borderWidth: 1,
+        borderColor: '#9dcbe5',
+
+    },
+
+    signin: {
+        color: 'white',
+        fontFamily: 'Roboto-Light',
+        fontSize: 15,
+        textAlign: 'center',
+    },
+
     contentContainer: {
         padding: 20,
         flex: 1,
@@ -112,6 +134,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         justifyContent: 'center',
     },
+
     textLink: {
         color: 'white',
         paddingTop: 25,
@@ -119,6 +142,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center'
     },
+
     signup: {
         color: '#78d3f2',
         paddingTop: 25,
@@ -126,6 +150,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center'
     },
+
     title: {
         fontFamily: 'Roboto-Light',
         fontSize: 27,
