@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
 
     plus: {
         fontSize: 40,
-        color: 'white'
+        color: 'white',
+        marginBottom: 3,
     },
 
     newReportButton: {
