@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, ImageBackground, } from 'react-native'
 
 export default class LoginScreen extends React.Component {
 
@@ -17,7 +17,10 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return (
-            <ScrollView contentContainerStyle={styles.contentContainer}>
+            <ImageBackground
+                source={require('./img/background_3.png')}
+                style={styles.contentContainer}>
+
                 <Text
                     style={styles.title}>
                     MR-Application
@@ -74,8 +77,7 @@ export default class LoginScreen extends React.Component {
                     style={styles.copyright}>
                     Copyright © Arter Oy 2017
                 </Text>
-
-            </ScrollView>
+            </ImageBackground>
         )
     }
 }
@@ -88,6 +90,7 @@ const styles = StyleSheet.create({
         marginBottom: 7,
         height: 40,
         fontFamily: 'Roboto-Light',
+        color: 'white',
         //borderWidth: 1,
         //borderColor: '#FF5722',
 
@@ -98,11 +101,13 @@ const styles = StyleSheet.create({
     contentContainer: {
         padding: 20,
         flex: 1,
-        backgroundColor: '#1e5d9d',
+        width: null,
+        height: null,
+        backgroundColor: 'transparent',
         justifyContent: 'center',
     },
     textLink: {
-        color: 'blue',
+        color: 'white',
         paddingTop: 25,
         fontFamily: 'Roboto-Light',
         fontSize: 16,
@@ -113,6 +118,7 @@ const styles = StyleSheet.create({
         fontSize: 27,
         textAlign: 'center',
         paddingBottom: 35,
+        color: 'white',
         //fontWeight: 'bold'
     },
 
@@ -120,12 +126,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         paddingBottom: 40,
+        color: 'white',
         //fontWeight: 'bold'
     },
 
     copyright: {
         fontFamily: 'Roboto-Light',
-        color: 'blue',
+        color: 'white',
         textAlign: 'center',
         position: 'absolute',
         bottom: 10,
