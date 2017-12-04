@@ -34,7 +34,6 @@ export default class LoginScreen extends React.Component {
                 <TextInput
                     placeholder='Email'
                     placeholderTextColor='white'
-                    inlineImageLeft='person'
                     onChangeText={TextInputUser => this.setState({TextInputUser})}
                     underlineColorAndroid='transparent'
                     style={styles.TextInputStyleClass}
