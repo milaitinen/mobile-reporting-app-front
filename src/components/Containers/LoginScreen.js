@@ -28,12 +28,13 @@ export default class LoginScreen extends React.Component {
 
                 <Text
                     style={styles.slogan}>
-                    Insert slogan here
+                    Keep calm and keep reporting
                 </Text>
 
                 <TextInput
                     placeholder='Email'
                     placeholderTextColor='white'
+                    inlineImageLeft='person'
                     onChangeText={TextInputUser => this.setState({TextInputUser})}
                     underlineColorAndroid='transparent'
                     style={styles.TextInputStyleClass}
@@ -164,10 +165,13 @@ const styles = StyleSheet.create({
     },
 
     slogan: {
-        fontSize: 20,
+        fontSize: 25,
+        width: 200,
         textAlign: 'center',
-        paddingBottom: 50,
+        paddingBottom: 30,
         color: 'white',
+        fontFamily: 'Allura-Regular',
+        alignSelf: 'center',
         //fontWeight: 'bold'
     },
 
