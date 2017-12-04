@@ -1,34 +1,34 @@
-import React from "react";
-import { StackNavigator, DrawerNavigator } from "react-navigation";
-import { Text } from "react-native";
-import LoginScreen from "../Containers/LoginScreen";
-import SignUpScreen from "../Containers/SignupScreen";
-import ForgottenPasswordScreen from "../Containers/ForgottenPasswordScreen";
+import React from 'react';
+import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { Text } from 'react-native';
+import LoginScreen from '../Containers/LoginScreen';
+import SignUpScreen from '../Containers/SignupScreen';
+import ForgottenPasswordScreen from '../Containers/ForgottenPasswordScreen';
 
-import { MockForm } from "../Containers/MockFormScreen";
-import ReviewScreen from "../Containers/TemplateScreen";
-import MenuScreen from "../Containers/MenuScreen";
+import { MockForm } from '../Containers/MockFormScreen';
+import ReviewScreen from '../Containers/TemplateScreen';
+import MenuScreen from '../Containers/MenuScreen';
 
 // -- Some new code --
 
 const DrawerStack = DrawerNavigator({
-  Menu: { screen: MenuScreen, navigationOptions: { title: "Main Menu" } },
-  Forms: { screen: ReviewScreen, navigationOptions: { title: "Your forms" } },
-  MockForms: { screen: MockForm, navigationOptions: { title: "Mockforms" } },
+  Menu: { screen: MenuScreen, navigationOptions: { title: 'Main Menu' } },
+  Forms: { screen: ReviewScreen, navigationOptions: { title: 'Your forms' } },
+  MockForms: { screen: MockForm, navigationOptions: { title: 'Mockforms' } },
 });
 
 const DrawerNavigation = StackNavigator({
   DrawerStack: { screen: DrawerStack }
 }, {
-  headerMode: "float",
+  headerMode: 'float',
   navigationOptions: ({ navigation }) => ({
-    headerStyle: { backgroundColor: "#f0f8ff" },
-    headerLeft: <Text style={{ fontSize: 30, fontWeight:"bold", paddingLeft: 15 } } onPress={() => {
+    headerStyle: { backgroundColor: '#f0f8ff' },
+    headerLeft: <Text style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15 } } onPress={() => {
 
       if (navigation.state.index === 0) {
-        navigation.navigate("DrawerOpen");
+        navigation.navigate('DrawerOpen');
       } else {
-        navigation.navigate("DrawerClose");
+        navigation.navigate('DrawerClose');
       }
     }}>☰</Text>
   })
@@ -37,14 +37,14 @@ const DrawerNavigation = StackNavigator({
 // login stack
 const LoginStack = StackNavigator({
   loginScreen: { screen: LoginScreen },
-  signupScreen: { screen: SignUpScreen, navigationOptions: { title: "Create an account" } },
-  forgottenPasswordScreen: { screen: ForgottenPasswordScreen, navigationOptions: { title: "Forgot Password" } },
+  signupScreen: { screen: SignUpScreen, navigationOptions: { title: 'Create an account' } },
+  forgottenPasswordScreen: { screen: ForgottenPasswordScreen, navigationOptions: { title: 'Forgot Password' } },
   menuScreen: { screen: MenuScreen }
 }, {
-  headerMode: "float",
+  headerMode: 'float',
   navigationOptions: {
-    headerStyle: { backgroundColor: "#f0f8ff" },
-    title: "Mobile Reporting App"
+    headerStyle: { backgroundColor: '#f0f8ff' },
+    title: 'Mobile Reporting App'
   }
 });
 
@@ -54,9 +54,9 @@ const PrimaryNav = StackNavigator({
   drawerStack: { screen: DrawerNavigation }
 }, {
   // Default config for all screens
-  headerMode: "none",
-  title: "Main",
-  initialRouteName: "loginStack"
+  headerMode: 'none',
+  title: 'Main',
+  initialRouteName: 'loginStack'
 });
 
 export default PrimaryNav;

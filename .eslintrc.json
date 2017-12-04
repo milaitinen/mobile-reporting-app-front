@@ -20,7 +20,7 @@
   },
   "rules": {
     "react-native/no-unused-styles": 2,
-    "quotes": ["error", "double"],
+    "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "no-unused-vars": "error",
     "no-var": "error",

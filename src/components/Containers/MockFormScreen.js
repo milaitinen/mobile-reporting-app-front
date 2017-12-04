@@ -1,5 +1,5 @@
-import React from "react";
-import { View, FlatList, Text, StyleSheet } from "react-native";
+import React from 'react';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
 
 const dummyForms = [...new Array(12)].map((e, i) => `MockForm${i + 1}`);
 

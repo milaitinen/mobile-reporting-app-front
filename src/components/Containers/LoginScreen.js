@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import React from 'react';
+import { StyleSheet, View, Text, Button } from 'react-native';
 
 export default class LoginScreen extends React.Component {
   render() {
@@ -12,19 +12,19 @@ export default class LoginScreen extends React.Component {
 
         <Button
           title='Log in'
-          onPress={() => this.props.navigation.navigate("drawerStack")}
+          onPress={() => this.props.navigation.navigate('drawerStack')}
           color='#3cb371'
         />
 
         <Text
           style={styles.textLink}
-          onPress={() => this.props.navigation.navigate("forgottenPasswordScreen")} >
+          onPress={() => this.props.navigation.navigate('forgottenPasswordScreen')} >
                     Forgot your password?
         </Text>
 
         <Text
           style={styles.textLink}
-          onPress={() => this.props.navigation.navigate("signupScreen")} >
+          onPress={() => this.props.navigation.navigate('signupScreen')} >
                     New user? Sign up here!
         </Text>
         <Text
@@ -40,22 +40,22 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   textLink: {
-    color: "blue",
+    color: 'blue',
     paddingTop: 15,
     fontSize: 16
   },
   message: {
     paddingBottom: 100,
     fontSize: 30,
-    fontWeight: "bold"
+    fontWeight: 'bold'
   },
   copyright: {
     paddingTop: 50,
-    color: "blue"
+    color: 'blue'
   }
 });

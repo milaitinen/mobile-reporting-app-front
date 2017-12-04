@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,19 +9,19 @@ import {
   TextInput,
   Button,
   ActivityIndicator
-} from "react-native";
+} from 'react-native';
 
-import { url } from "./urlsetting";
+import { url } from './urlsetting';
 
 class ReviewScreen extends React.Component {
-    static displayName = "ReviewScreen";
+    static displayName = 'ReviewScreen';
 
     constructor(props)
     {
       super(props);
       this.state = {
         isLoading: true,
-        TextInputName: ""
+        TextInputName: ''
       };
     }
 
@@ -48,8 +48,8 @@ class ReviewScreen extends React.Component {
         <View
           style={{
             height: 1,
-            width: "100%",
-            backgroundColor: "#CED0CE"
+            width: '100%',
+            backgroundColor: '#CED0CE'
           }}
         />
       );
@@ -66,10 +66,10 @@ class ReviewScreen extends React.Component {
     const { TextInputName } = this.state ;
 
     fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name: TextInputName
@@ -77,7 +77,7 @@ class ReviewScreen extends React.Component {
 
     }).then(response => {
       if (response.status === 200) {
-        return "Report added";
+        return 'Report added';
       } else {
         return response.status;
       }
@@ -138,22 +138,22 @@ const styles = StyleSheet.create({
 
   TextInputStyleClass: {
 
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 7,
     height: 40,
     borderWidth: 1,
     // Set border Hex Color Code Here.
-    borderColor: "#FF5722",
+    borderColor: '#FF5722',
 
     // Set border Radius.
     // borderRadius: 10 ,
   },
 
   MainContainer: {
-    justifyContent: "center",
+    justifyContent: 'center',
     flex: 1,
     // margin: 10,
-    paddingTop: (Platform.OS === "ios") ? 20 : 0,
+    paddingTop: (Platform.OS === 'ios') ? 20 : 0,
   },
   FlatListItemStyle: {
     padding: 10,
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     // alignItems: 'center',
-    backgroundColor: "white"
+    backgroundColor: 'white'
   }
 });
 
