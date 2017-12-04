@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, StyleSheet, Text, View, Button, TextInput, ScrollView, ImageBackground, } from 'react-native'
+import { TouchableOpacity, StyleSheet, Text, View, Button, TextInput, ScrollView, ImageBackground, Image } from 'react-native'
 
 export default class LoginScreen extends React.Component {
 
@@ -30,32 +30,38 @@ export default class LoginScreen extends React.Component {
                     style={styles.slogan}>
                     Keep calm and keep reporting
                 </Text>
+                <View style={styles.SectionStyle}>
+                    <Image source={require('./img/person.png')} style={styles.ImageStyle}/>
+                    <TextInput
+                        placeholder='Email'
+                        placeholderTextColor='white'
+                        onChangeText={TextInputUser => this.setState({TextInputUser})}
+                        underlineColorAndroid='transparent'
+                        style={styles.TextInputStyleClass}
+                    />
+                </View>
 
-                <TextInput
-                    placeholder='Email'
-                    placeholderTextColor='white'
-                    onChangeText={TextInputUser => this.setState({TextInputUser})}
-                    underlineColorAndroid='transparent'
-                    style={styles.TextInputStyleClass}
-                />
-
-                <TextInput
-
-                    secureTextEntry={true}
-                    placeholder='Password'
-                    placeholderTextColor='white'
-                    onChangeText={TextInputPassword => this.setState({TextInputPassword})}
-                    underlineColorAndroid='transparent'
-                    style={styles.TextInputStyleClass}
-                />
-
-                <TextInput
-                    placeholder='Server url'
-                    placeholderTextColor='white'
-                    onChangeText={TextInputServer => this.setState({TextInputServer})}
-                    underlineColorAndroid='transparent'
-                    style={styles.TextInputStyleClass}
-                />
+                <View style={styles.SectionStyle}>
+                    <Image source={require('./img/lock.png')} style={styles.ImageStyle}/>
+                    <TextInput
+                        secureTextEntry={true}
+                        placeholder='Password'
+                        placeholderTextColor='white'
+                        onChangeText={TextInputPassword => this.setState({TextInputPassword})}
+                        underlineColorAndroid='transparent'
+                        style={styles.TextInputStyleClass}
+                    />
+                </View>
+                <View style={styles.SectionStyle}>
+                    <Image source={require('./img/language.png')} style={styles.ImageStyle}/>
+                    <TextInput
+                        placeholder='Server url'
+                        placeholderTextColor='white'
+                        onChangeText={TextInputServer => this.setState({TextInputServer})}
+                        underlineColorAndroid='transparent'
+                        style={styles.TextInputStyleClass}
+                    />
+                </View>
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('drawerStack')}
@@ -87,15 +93,35 @@ export default class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    ImageStyle: {
+        paddingTop: 10,
+        paddingBottom: 15,
+        paddingRight: 10,
+        margin: 5,
+        height: 25,
+        width: 25,
+        resizeMode : 'stretch',
+        alignItems: 'center'
+    },
+
+    SectionStyle: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
+        borderBottomWidth: 1,
+        borderBottomColor: 'white',
+        alignSelf: 'center',
+        height: 40,
+        width: 250,
+        margin: 10
+    },
 
     TextInputStyleClass: {
 
         //textAlign: 'center',
-        width: 250,
-        marginBottom: 15,
+        width: 215,
         height: 40,
-        borderBottomWidth: 1,
-        borderBottomColor: 'white',
         fontFamily: 'Roboto-Light',
         fontSize: 16,
         color: 'white',
