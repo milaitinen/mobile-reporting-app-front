@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderBottomWidth: 1,
     borderBottomColor: 'white',
-    fontFamily: 'Roboto-Light',
+    // fontFamily: 'Roboto-Light',
     fontSize: 16,
     color: 'white',
     alignSelf: 'center',
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 
   signin: {
     color: '#274752',
-    fontFamily: 'Roboto-Light',
+    // fontFamily: 'Roboto-Light',
     fontSize: 15,
     textAlign: 'center',
   },
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   textLink: {
     color: 'white',
     paddingTop: 20,
-    fontFamily: 'Roboto-Light',
+    // fontFamily: 'Roboto-Light',
     fontSize: 14,
     textAlign: 'center'
   },
@@ -147,13 +147,13 @@ const styles = StyleSheet.create({
   signup: {
     color: '#78d3f2',
     paddingTop: 25,
-    fontFamily: 'Roboto-Light',
+    // fontFamily: 'Roboto-Light',
     fontSize: 15,
     textAlign: 'center'
   },
 
   title: {
-    fontFamily: 'Roboto-Light',
+    // fontFamily: 'Roboto-Light',
     fontSize: 30,
     textAlign: 'center',
     marginTop: 10,
@@ -168,13 +168,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingBottom: 30,
     color: 'white',
-    fontFamily: 'Allura-Regular',
+    // fontFamily: 'Allura-Regular',
     alignSelf: 'center',
     // fontWeight: 'bold'
   },
 
   copyright: {
-    fontFamily: 'Roboto-Light',
+    // fontFamily: 'Roboto-Light',
     color: 'white',
     textAlign: 'center',
 

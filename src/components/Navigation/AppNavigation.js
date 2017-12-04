@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import React from 'react';
+import { Text } from 'react-native';
 import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
 import LoginScreen from '../Containers/LoginScreen';
-import SignupScreen from '../Containers/SignupScreen';
+import SignupScreen from '../Containers/SignUpScreen';
 import ForgottenPasswordScreen from '../Containers/ForgottenPasswordScreen';
 
 import MockFormScreen from '../Containers/MockFormScreen';
 import TemplateScreen from '../Containers/TemplateScreen';
-import MenuScreen from '../Containers/MenuScreen';
 import TemplateView from '../Containers/TemplateView';
 
 
