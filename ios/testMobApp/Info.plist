@@ -4,6 +4,14 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Windsong.ttf</string>
+		<string>Roboto-Thin.ttf</string>
+		<string>Qwigley-Regular.ttf</string>
+		<string>journal.ttf</string>
+		<string>GreatVibes-Regular.otf</string>
+		<string>DancingScript-Regular.otf</string>
+		<string>Allura-Regular.otf</string>
+		<string>AlexBrush-Regular.ttf</string>
 		<string>Roboto-Light.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
