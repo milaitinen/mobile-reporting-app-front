@@ -23,12 +23,11 @@ class ReviewScreen extends Component {
         super(props);
         this.state = {
             isLoading: true,
-            TextInputName: ""
         };
     }
 
     componentDidMount() {
-
+        
         fetch(url)
             .then((response) => response.json())
             .then((responseJson) => {
@@ -43,61 +42,6 @@ class ReviewScreen extends Component {
                 console.error(error);
             });
     }
-
-    FlatListItemSeparator = () => {
-        return (
-            <View
-                style={{
-                    height: 1,
-                    width: '100%',
-                    backgroundColor: '#CED0CE'
-                }}
-            />
-        );
-    };
-
-    /*static GetFlatListItem(name) {
-
-        Alert.alert(
-            name,
-            'Hello World!'
-        );
-
-    }
-*/
-  InsertDataToServer = () => {
-
-      const { TextInputName } = this.state ;
-
-      fetch(url, {
-          method: 'POST',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              name: TextInputName
-          })
-
-      }).then(response => {
-          if (response.status === 200) {
-              return "Report added";
-          } else {
-              return response.status;
-          }
-      }).then((message) => {
-        // Showing response message coming from server after inserting records.
-          Alert.alert(message);
-
-      }).catch((error) => {
-          console.error(error);
-      });
-
-  }
-
-    renderUserInfo = () => {
-        return null;
-    };
 
     render() {
 
@@ -119,16 +63,6 @@ class ReviewScreen extends Component {
             <View style={{flex: 1}}>
                 <ScrollView contentContainerStyle={styles.MainContainer}>
 
-                    <TextInput
-                        placeholder='Enter Report Name'
-
-                        onChangeText={TextInputName => this.setState({TextInputName})}
-
-                        underlineColorAndroid='transparent'
-
-                        style={styles.TextInputStyleClass}
-                    />
-
                     <FlatList
                         data={ this.state.dataSource }
                         renderItem={({item}) =>
@@ -140,7 +74,8 @@ class ReviewScreen extends Component {
                 </ScrollView>
                 <View>
                     <TouchableOpacity
-                        onPress={this.InsertDataToServer}
+                        //onPress={this.InsertDataToServer}
+                        onPress={() => this.props.navigation.navigate('NewForm')}
                         style={styles.newReportButton} >
                         <Text style={styles.plus}>
                             +
@@ -179,18 +114,6 @@ const styles = StyleSheet.create({
 
     },
 
-    TextInputStyleClass: {
-        textAlign: 'center',
-        marginBottom: 7,
-        height: 40,
-        borderWidth: 1,
-// Set border Hex Color Code Here.
-        borderColor: '#FF5722',
-
-// Set border Radius.
-        //borderRadius: 10 ,
-    },
-
     activityIndicator: {
         flex: 1,
         justifyContent: 'center',
@@ -211,8 +134,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        //justifyContent: 'center',
-        //alignItems: 'center',
         backgroundColor: 'white'
     },
     linkButton: {
