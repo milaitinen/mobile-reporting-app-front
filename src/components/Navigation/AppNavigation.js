@@ -1,27 +1,38 @@
-import React from 'react';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
-import { Text } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, Button } from 'react-native';
+import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
 import LoginScreen from '../Containers/LoginScreen';
-import SignUpScreen from '../Containers/SignupScreen';
+import SignupScreen from '../Containers/SignupScreen';
 import ForgottenPasswordScreen from '../Containers/ForgottenPasswordScreen';
 
-import { MockForm } from '../Containers/MockFormScreen';
-import ReviewScreen from '../Containers/TemplateScreen';
+import MockFormScreen from '../Containers/MockFormScreen';
+import TemplateScreen from '../Containers/TemplateScreen';
 import MenuScreen from '../Containers/MenuScreen';
+import TemplateView from '../Containers/TemplateView';
 
-// -- Some new code --
+
+const MainScreenNavigator = TabNavigator({
+  Forms: { screen: TemplateScreen },
+  MockForms: { screen: MockFormScreen }
+}, {
+  swipeEnabled: true,
+  tabBarOptions: {
+    labelStyle: {
+      fontSize: 16,
+      padding: 10
+    }
+  }
+});
+
 
 const DrawerStack = DrawerNavigator({
-  Menu: { screen: MenuScreen, navigationOptions: { title: 'Main Menu' } },
-  Forms: { screen: ReviewScreen, navigationOptions: { title: 'Your forms' } },
-  MockForms: { screen: MockForm, navigationOptions: { title: 'Mockforms' } },
+  Menu: { screen: TemplateView, navigationOptions: { title: 'Templates' } },
+  MockForms: { screen: MockFormScreen, navigationOptions: { title: 'Mockforms' } },
+
 });
 
 const DrawerNavigation = StackNavigator({
-  DrawerStack: { screen: DrawerStack }
-}, {
-  headerMode: 'float',
-  navigationOptions: ({ navigation }) => ({
+  DrawerStack: { screen: DrawerStack ,navigationOptions: ({ navigation }) => ({
     headerStyle: { backgroundColor: '#f0f8ff' },
     headerLeft: <Text style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15 } } onPress={() => {
 
@@ -31,27 +42,38 @@ const DrawerNavigation = StackNavigator({
         navigation.navigate('DrawerClose');
       }
     }}>☰</Text>
-  })
+  }) },
+  FormsFromBackendServer: { screen: TemplateScreen, navigationOptions: ({ navigation }) => ({
+    title: navigation.state.routeName
+  }), }
+},
+
+
+{
+  headerMode: 'float',
+
 });
 
 // login stack
 const LoginStack = StackNavigator({
   loginScreen: { screen: LoginScreen },
-  signupScreen: { screen: SignUpScreen, navigationOptions: { title: 'Create an account' } },
+  signupScreen: { screen: SignupScreen, navigationOptions: { title: 'Create an account' } },
   forgottenPasswordScreen: { screen: ForgottenPasswordScreen, navigationOptions: { title: 'Forgot Password' } },
-  menuScreen: { screen: MenuScreen }
 }, {
-  headerMode: 'float',
+
+  headerMode: 'screen',
   navigationOptions: {
     headerStyle: { backgroundColor: '#f0f8ff' },
-    title: 'Mobile Reporting App'
+    title: 'Mobile Reporting App',
+    header: null
   }
 });
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
   loginStack: { screen: LoginStack },
-  drawerStack: { screen: DrawerNavigation }
+  drawerStack: { screen: DrawerNavigation },
+
 }, {
   // Default config for all screens
   headerMode: 'none',
@@ -60,5 +82,3 @@ const PrimaryNav = StackNavigator({
 });
 
 export default PrimaryNav;
-
-// export default MainScreenNavigator;
