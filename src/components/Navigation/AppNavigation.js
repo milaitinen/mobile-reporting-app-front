@@ -6,78 +6,64 @@ import SignupScreen from '../Containers/SignUpScreen';
 import ForgottenPasswordScreen from '../Containers/ForgottenPasswordScreen';
 
 import MockFormScreen from '../Containers/MockFormScreen';
-import TemplateScreen from '../Containers/TemplateScreen';
+import ReviewScreen from '../Containers/TemplateScreen';
 import TemplateView from '../Containers/TemplateView';
+import NewFormScreen from '../Containers/NewFormScreen'
 
 
-const MainScreenNavigator = TabNavigator({
-  Forms: { screen: TemplateScreen },
-  MockForms: { screen: MockFormScreen }
+
+const TemplateStack = StackNavigator({
+
+    Templates: { screen: TemplateView,     navigationOptions: ({navigation}) => ({
+            title: 'Templates',
+            headerStyle: {backgroundColor: '#f0f8ff'},
+            headerLeft: <Text style={{fontSize: 30, fontWeight:'bold', paddingLeft: 15} } onPress={() => {
+
+                navigation.navigate('DrawerOpen')
+
+            }}>☰</Text>
+        })
+    },
+
+    FormsFromBackendServer: { screen: ReviewScreen, navigationOptions: ({ navigation }) => ({
+            title: navigation.state.routeName
+        }) },
+
+    NewForm: { screen: NewFormScreen, navigationOptions: { title: 'Create new report' }},
+
 }, {
-  swipeEnabled: true,
-  tabBarOptions: {
-    labelStyle: {
-      fontSize: 16,
-      padding: 10
-    }
-  }
-});
 
+})
 
 const DrawerStack = DrawerNavigator({
-  Menu: { screen: TemplateView, navigationOptions: { title: 'Templates' } },
-  MockForms: { screen: MockFormScreen, navigationOptions: { title: 'Mockforms' } },
+    Menu: { screen: TemplateStack, navigationOptions: { title: 'Templates' } },
+    MockForms: { screen: MockFormScreen, navigationOptions: { title: 'Mockforms' } },
 
-});
+})
 
-const DrawerNavigation = StackNavigator({
-  DrawerStack: { screen: DrawerStack ,navigationOptions: ({ navigation }) => ({
-    headerStyle: { backgroundColor: '#f0f8ff' },
-    headerLeft: <Text style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15 } } onPress={() => {
-
-      if (navigation.state.index === 0) {
-        navigation.navigate('DrawerOpen');
-      } else {
-        navigation.navigate('DrawerClose');
-      }
-    }}>☰</Text>
-  }) },
-  FormsFromBackendServer: { screen: TemplateScreen, navigationOptions: ({ navigation }) => ({
-    title: navigation.state.routeName
-  }), }
-},
-
-
-{
-  headerMode: 'float',
-
-});
-
-// login stack
 const LoginStack = StackNavigator({
-  loginScreen: { screen: LoginScreen },
-  signupScreen: { screen: SignupScreen, navigationOptions: { title: 'Create an account' } },
-  forgottenPasswordScreen: { screen: ForgottenPasswordScreen, navigationOptions: { title: 'Forgot Password' } },
+    loginScreen: { screen: LoginScreen },
+    signupScreen: { screen: SignupScreen, navigationOptions: { title: 'Create an account' }},
+    forgottenPasswordScreen: { screen: ForgottenPasswordScreen, navigationOptions: { title: 'Forgot Password' } },
 }, {
 
-  headerMode: 'screen',
-  navigationOptions: {
-    headerStyle: { backgroundColor: '#f0f8ff' },
-    title: 'Mobile Reporting App',
-    header: null
-  }
-});
+    headerMode: 'screen',
+    navigationOptions: {
+        headerStyle: {backgroundColor: '#f0f8ff'},
+        header: null
+    }
+})
 
 // Manifest of possible screens
-const PrimaryNav = StackNavigator({
-  loginStack: { screen: LoginStack },
-  drawerStack: { screen: DrawerNavigation },
+const MainScreenNavigator = StackNavigator({
+    loginStack: { screen: LoginStack },
+    drawerStack: { screen: DrawerStack },
 
 }, {
-  // Default config for all screens
-  headerMode: 'none',
-  title: 'Main',
-  initialRouteName: 'loginStack'
-});
+    // Default config for all screens
+    headerMode: 'none',
+    title: 'Main',
+    initialRouteName: 'loginStack'
+})
 
-export default PrimaryNav;
+export default MainScreenNavigator
