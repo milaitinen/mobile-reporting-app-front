@@ -36,16 +36,20 @@
 		2DCD954D1E0B4F2C00145EB5 /* MobileReportingAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MobileReportingAppTests.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		9324297D1FD46EE500562F46 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 932429611FD46EE500562F46 /* Roboto-Light.ttf */; };
-		93BC22281FD5966300EB3EE3 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93BC21F01FD5966000EB3EE3 /* Roboto-Thin.ttf */; };
-		93BC22291FD5966300EB3EE3 /* Windsong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93BC22201FD5966100EB3EE3 /* Windsong.ttf */; };
-		93BC222A1FD5966300EB3EE3 /* AlexBrush-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93BC22211FD5966100EB3EE3 /* AlexBrush-Regular.ttf */; };
-		93BC222B1FD5966300EB3EE3 /* Qwigley-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93BC22221FD5966100EB3EE3 /* Qwigley-Regular.ttf */; };
-		93BC222C1FD5966300EB3EE3 /* DancingScript-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93BC22231FD5966100EB3EE3 /* DancingScript-Regular.otf */; };
-		93BC222D1FD5966300EB3EE3 /* blackjack.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93BC22241FD5966200EB3EE3 /* blackjack.otf */; };
-		93BC222E1FD5966300EB3EE3 /* Allura-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93BC22251FD5966200EB3EE3 /* Allura-Regular.otf */; };
-		93BC222F1FD5966300EB3EE3 /* journal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93BC22261FD5966200EB3EE3 /* journal.ttf */; };
-		93BC22301FD5966300EB3EE3 /* GreatVibes-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93BC22271FD5966300EB3EE3 /* GreatVibes-Regular.otf */; };
+		9327D3121FD6E6FE00DE7009 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D3081FD6E6FC00DE7009 /* Roboto-Thin.ttf */; };
+		9327D3131FD6E6FE00DE7009 /* Windsong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D3091FD6E6FD00DE7009 /* Windsong.ttf */; };
+		9327D3141FD6E6FE00DE7009 /* journal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D30A1FD6E6FD00DE7009 /* journal.ttf */; };
+		9327D3151FD6E6FE00DE7009 /* AlexBrush-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D30B1FD6E6FD00DE7009 /* AlexBrush-Regular.ttf */; };
+		9327D3161FD6E6FE00DE7009 /* blackjack.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D30C1FD6E6FD00DE7009 /* blackjack.otf */; };
+		9327D3171FD6E6FE00DE7009 /* Allura-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D30D1FD6E6FD00DE7009 /* Allura-Regular.otf */; };
+		9327D3181FD6E6FE00DE7009 /* GreatVibes-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D30E1FD6E6FE00DE7009 /* GreatVibes-Regular.otf */; };
+		9327D3191FD6E6FE00DE7009 /* Qwigley-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D30F1FD6E6FE00DE7009 /* Qwigley-Regular.ttf */; };
+		9327D31A1FD6E6FE00DE7009 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D3101FD6E6FE00DE7009 /* Roboto-Light.ttf */; };
+		9327D31B1FD6E6FE00DE7009 /* DancingScript-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D3111FD6E6FE00DE7009 /* DancingScript-Regular.otf */; };
+		9327D31D1FD6E7B500DE7009 /* MobileReportingApp.app in Resources */ = {isa = PBXBuildFile; fileRef = 13B07F961A680F5B00A75B9A /* MobileReportingApp.app */; };
+		9327D31F1FD6E7BF00DE7009 /* MobileReportingApp-tvOS.app in Resources */ = {isa = PBXBuildFile; fileRef = 2D02E47B1E0B4A5D006451C7 /* MobileReportingApp-tvOS.app */; };
+		9327D3201FD6E7C400DE7009 /* MobileReportingAppTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 00E356EE1AD99517003FC87E /* MobileReportingAppTests.xctest */; };
+		9327D3211FD6E7C700DE7009 /* MobileReportingApp-tvOSTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 2D02E4901E0B4A5D006451C7 /* MobileReportingApp-tvOSTests.xctest */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 /* End PBXBuildFile section */
 
@@ -312,7 +316,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
 		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
@@ -324,11 +327,9 @@
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MobileReportingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileReportingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MobileReportingApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MobileReportingApp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MobileReportingApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MobileReportingApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MobileReportingApp/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* MobileReportingApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MobileReportingApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -336,16 +337,16 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		932429611FD46EE500562F46 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Light.ttf"; path = "../../../Downloads/roboto/Roboto-Light.ttf"; sourceTree = "<group>"; };
-		93BC21F01FD5966000EB3EE3 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Thin.ttf"; path = "../../../Downloads/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
-		93BC22201FD5966100EB3EE3 /* Windsong.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Windsong.ttf; path = ../../../Downloads/fonts/Windsong.ttf; sourceTree = "<group>"; };
-		93BC22211FD5966100EB3EE3 /* AlexBrush-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AlexBrush-Regular.ttf"; path = "../../../Downloads/fonts/AlexBrush-Regular.ttf"; sourceTree = "<group>"; };
-		93BC22221FD5966100EB3EE3 /* Qwigley-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Qwigley-Regular.ttf"; path = "../../../Downloads/fonts/Qwigley-Regular.ttf"; sourceTree = "<group>"; };
-		93BC22231FD5966100EB3EE3 /* DancingScript-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DancingScript-Regular.otf"; path = "../../../Downloads/fonts/DancingScript-Regular.otf"; sourceTree = "<group>"; };
-		93BC22241FD5966200EB3EE3 /* blackjack.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = blackjack.otf; path = ../../../Downloads/fonts/blackjack.otf; sourceTree = "<group>"; };
-		93BC22251FD5966200EB3EE3 /* Allura-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Allura-Regular.otf"; path = "../../../Downloads/fonts/Allura-Regular.otf"; sourceTree = "<group>"; };
-		93BC22261FD5966200EB3EE3 /* journal.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = journal.ttf; path = ../../../Downloads/fonts/journal.ttf; sourceTree = "<group>"; };
-		93BC22271FD5966300EB3EE3 /* GreatVibes-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GreatVibes-Regular.otf"; path = "../../../Downloads/fonts/GreatVibes-Regular.otf"; sourceTree = "<group>"; };
+		9327D3081FD6E6FC00DE7009 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Thin.ttf"; path = "../android/app/src/main/assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		9327D3091FD6E6FD00DE7009 /* Windsong.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Windsong.ttf; path = ../android/app/src/main/assets/fonts/Windsong.ttf; sourceTree = "<group>"; };
+		9327D30A1FD6E6FD00DE7009 /* journal.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = journal.ttf; path = ../android/app/src/main/assets/fonts/journal.ttf; sourceTree = "<group>"; };
+		9327D30B1FD6E6FD00DE7009 /* AlexBrush-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AlexBrush-Regular.ttf"; path = "../android/app/src/main/assets/fonts/AlexBrush-Regular.ttf"; sourceTree = "<group>"; };
+		9327D30C1FD6E6FD00DE7009 /* blackjack.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = blackjack.otf; path = ../android/app/src/main/assets/fonts/blackjack.otf; sourceTree = "<group>"; };
+		9327D30D1FD6E6FD00DE7009 /* Allura-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Allura-Regular.otf"; path = "../android/app/src/main/assets/fonts/Allura-Regular.otf"; sourceTree = "<group>"; };
+		9327D30E1FD6E6FE00DE7009 /* GreatVibes-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GreatVibes-Regular.otf"; path = "../android/app/src/main/assets/fonts/GreatVibes-Regular.otf"; sourceTree = "<group>"; };
+		9327D30F1FD6E6FE00DE7009 /* Qwigley-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Qwigley-Regular.ttf"; path = "../android/app/src/main/assets/fonts/Qwigley-Regular.ttf"; sourceTree = "<group>"; };
+		9327D3101FD6E6FE00DE7009 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Light.ttf"; path = "../android/app/src/main/assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
+		9327D3111FD6E6FE00DE7009 /* DancingScript-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DancingScript-Regular.otf"; path = "../android/app/src/main/assets/fonts/DancingScript-Regular.otf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -482,20 +483,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* MobileReportingApp */ = {
-			isa = PBXGroup;
-			children = (
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
-				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
-				13B07FB71A68108700A75B9A /* main.m */,
-			);
-			name = MobileReportingApp;
-			sourceTree = "<group>";
-		};
 		146834001AC3E56700842450 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -566,9 +553,20 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				9327D30B1FD6E6FD00DE7009 /* AlexBrush-Regular.ttf */,
+				9327D30D1FD6E6FD00DE7009 /* Allura-Regular.otf */,
+				9327D30C1FD6E6FD00DE7009 /* blackjack.otf */,
+				9327D3111FD6E6FE00DE7009 /* DancingScript-Regular.otf */,
+				9327D30E1FD6E6FE00DE7009 /* GreatVibes-Regular.otf */,
+				9327D30A1FD6E6FD00DE7009 /* journal.ttf */,
+				9327D30F1FD6E6FE00DE7009 /* Qwigley-Regular.ttf */,
+				9327D3101FD6E6FE00DE7009 /* Roboto-Light.ttf */,
+				9327D3081FD6E6FC00DE7009 /* Roboto-Thin.ttf */,
+				9327D3091FD6E6FD00DE7009 /* Windsong.ttf */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MobileReportingAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				9327D2E41FD6E43E00DE7009 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -584,6 +582,17 @@
 				2D02E4901E0B4A5D006451C7 /* MobileReportingApp-tvOSTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9327D2E41FD6E43E00DE7009 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB71A68108700A75B9A /* main.m */,
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		ADBDB9201DFEBF0600ED6528 /* Products */ = {
@@ -1018,6 +1027,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9327D3201FD6E7C400DE7009 /* MobileReportingAppTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1025,18 +1035,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93BC222C1FD5966300EB3EE3 /* DancingScript-Regular.otf in Resources */,
-				93BC22281FD5966300EB3EE3 /* Roboto-Thin.ttf in Resources */,
-				93BC222D1FD5966300EB3EE3 /* blackjack.otf in Resources */,
+				9327D31D1FD6E7B500DE7009 /* MobileReportingApp.app in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				93BC22301FD5966300EB3EE3 /* GreatVibes-Regular.otf in Resources */,
-				93BC222B1FD5966300EB3EE3 /* Qwigley-Regular.ttf in Resources */,
-				93BC222F1FD5966300EB3EE3 /* journal.ttf in Resources */,
-				93BC222E1FD5966300EB3EE3 /* Allura-Regular.otf in Resources */,
+				9327D3171FD6E6FE00DE7009 /* Allura-Regular.otf in Resources */,
+				9327D3131FD6E6FE00DE7009 /* Windsong.ttf in Resources */,
+				9327D31A1FD6E6FE00DE7009 /* Roboto-Light.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				93BC22291FD5966300EB3EE3 /* Windsong.ttf in Resources */,
-				93BC222A1FD5966300EB3EE3 /* AlexBrush-Regular.ttf in Resources */,
-				9324297D1FD46EE500562F46 /* Roboto-Light.ttf in Resources */,
+				9327D3191FD6E6FE00DE7009 /* Qwigley-Regular.ttf in Resources */,
+				9327D3161FD6E6FE00DE7009 /* blackjack.otf in Resources */,
+				9327D3141FD6E6FE00DE7009 /* journal.ttf in Resources */,
+				9327D31B1FD6E6FE00DE7009 /* DancingScript-Regular.otf in Resources */,
+				9327D3151FD6E6FE00DE7009 /* AlexBrush-Regular.ttf in Resources */,
+				9327D3181FD6E6FE00DE7009 /* GreatVibes-Regular.otf in Resources */,
+				9327D3121FD6E6FE00DE7009 /* Roboto-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1044,6 +1055,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9327D31F1FD6E7BF00DE7009 /* MobileReportingApp-tvOS.app in Resources */,
 				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1052,6 +1064,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9327D3211FD6E7C700DE7009 /* MobileReportingApp-tvOSTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
