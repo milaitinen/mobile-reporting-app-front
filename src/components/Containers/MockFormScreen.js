@@ -8,22 +8,22 @@ export default class MockForm extends React.Component {
   static displayName = 'MockForm';
 
   render() {
-    return (
-      <View>
-        <FlatList
-          data={dummyForms}
-          renderItem={({ item }) => <Text style={styles.FlatListItemStyle}>{item}</Text>}
-          keyExtractor={(item, index) => index}
-        />
-      </View>
-    );
+      return (
+          <View>
+              <FlatList
+                  data={dummyForms}
+                  renderItem={({ item }) => <Text style={styles.FlatListItemStyle}>{item}</Text>}
+                  keyExtractor={(item, index) => index}
+              />
+          </View>
+      );
   }
 }
 
 const styles = StyleSheet.create({
-  FlatListItemStyle: {
-    padding: 10,
-    fontSize: 15,
-    height: 44
-  }
+    FlatListItemStyle: {
+        padding: 10,
+        fontSize: 15,
+        height: 44
+    }
 });

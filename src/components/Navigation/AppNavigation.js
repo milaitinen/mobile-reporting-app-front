@@ -25,7 +25,7 @@ const TemplateStack = StackNavigator({
     })
     },
 
-    FormsFromBackendServer: { screen: TemplateScreen, navigationOptions: ({ navigation }) => ({
+    Reports: { screen: TemplateScreen, navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName
     }) },
 
