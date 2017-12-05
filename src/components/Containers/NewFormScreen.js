@@ -1,7 +1,7 @@
-import React from 'react'
-import {StyleSheet, Text, View, TextInput, Platform, Alert, Button} from 'react-native'
-import {url} from './urlsetting'
-import {NavigationActions} from 'react-navigation'
+import React from 'react';
+import { StyleSheet, View, TextInput, Platform, Alert, Button } from 'react-native';
+import { url } from './urlsetting';
+import { NavigationActions } from 'react-navigation';
 export default class NewFormScreen extends React.Component {
 
 
@@ -9,7 +9,7 @@ export default class NewFormScreen extends React.Component {
     {
         super(props);
         this.state = {
-            TextInputName: ""
+            TextInputName: ''
         };
     }
 
@@ -30,8 +30,8 @@ export default class NewFormScreen extends React.Component {
         }).then(response => {
             if (response.status === 200) {
 
-                this.props.navigation.dispatch(NavigationActions.back())
-                return "Report added";
+                this.props.navigation.dispatch(NavigationActions.back());
+                return 'Report added';
             } else {
                 return response.status;
             }
@@ -51,7 +51,7 @@ export default class NewFormScreen extends React.Component {
                 <TextInput
                     placeholder='Enter Report Name'
 
-                    onChangeText={TextInputName => this.setState({TextInputName})}
+                    onChangeText={TextInputName => this.setState({ TextInputName })}
 
                     underlineColorAndroid='transparent'
 
@@ -63,14 +63,14 @@ export default class NewFormScreen extends React.Component {
                 >
                 </Button>
             </View>
-        )
+        );
     }
 }
 
 const styles = StyleSheet.create({
     MainContainer: {
         justifyContent: 'center',
-        //alignItems: 'center',
+        // alignItems: 'center',
         flex: 1,
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#FF5722',
     },
-})
+});

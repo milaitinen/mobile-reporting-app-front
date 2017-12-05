@@ -1,5 +1,4 @@
 import {
-    Button,
     View,
     StyleSheet,
     Text,
@@ -7,7 +6,7 @@ import {
     ScrollView
 } from 'react-native';
 
-import React from "react";
+import React from 'react';
 
 export default class TemplateView extends React.Component {
 
@@ -26,21 +25,21 @@ export default class TemplateView extends React.Component {
                 <ScrollView>
                     <FlatList
                         data={[
-                            {key: 1, name: 'FormsFromBackendServer'},
-                            {key: 2, name: 'Academic'},
-                            {key: 3, name: 'Business'},
-                            {key: 4, name: 'Bibliography'},
-                            {key: 5, name: 'Marketing'},
-                            {key: 6, name: 'Newsletter'},
-                            {key: 7, name: 'Thesis'},
-                            {key: 8, name: 'Calendar'},
-                            {key: 9, name: 'Planning'},
-                            {key: 10, name: 'Cover Letter'},
-                            {key: 11, name: 'Example1'},
-                            {key: 12, name: 'Example2'},
-                            {key: 13, name: 'Example3'},
+                            { key: 1, name: 'FormsFromBackendServer' },
+                            { key: 2, name: 'Academic' },
+                            { key: 3, name: 'Business' },
+                            { key: 4, name: 'Bibliography' },
+                            { key: 5, name: 'Marketing' },
+                            { key: 6, name: 'Newsletter' },
+                            { key: 7, name: 'Thesis' },
+                            { key: 8, name: 'Calendar' },
+                            { key: 9, name: 'Planning' },
+                            { key: 10, name: 'Cover Letter' },
+                            { key: 11, name: 'Example1' },
+                            { key: 12, name: 'Example2' },
+                            { key: 13, name: 'Example3' },
                         ]}
-                        renderItem={({item}) =>
+                        renderItem={({ item }) =>
                             <Text
                                 style={styles.item}
                                 onPress={() => this.props.navigation.navigate(item.name)} >
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        //justifyContent: 'center',
-        //alignItems: 'center'
+        // justifyContent: 'center',
+        // alignItems: 'center'
     }
 });

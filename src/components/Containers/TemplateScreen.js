@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
@@ -13,7 +13,7 @@ import {
     ScrollView
 } from 'react-native';
 
-import {url} from './urlsetting';
+import { url } from './urlsetting';
 
 class TemplateScreen extends Component {
     static displayName = 'TemplateScreen';
@@ -51,7 +51,7 @@ class TemplateScreen extends Component {
 
                     <ActivityIndicator
                         animating={this.state.animating}
-                        style={[styles.centering, {height: 80}]}
+                        style={[styles.centering, { height: 80 }]}
                         size='large'
                     />
 
@@ -60,12 +60,12 @@ class TemplateScreen extends Component {
         }
 
         return (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
                 <ScrollView contentContainerStyle={styles.MainContainer}>
 
                     <FlatList
                         data={ this.state.dataSource }
-                        renderItem={({item}) =>
+                        renderItem={({ item }) =>
                             <Text style={styles.FlatListItemStyle}>
                                 > {item.name}
                             </Text>}
@@ -74,7 +74,7 @@ class TemplateScreen extends Component {
                 </ScrollView>
                 <View>
                     <TouchableOpacity
-                        //onPress={this.InsertDataToServer}
+                        // onPress={this.InsertDataToServer}
                         onPress={() => this.props.navigation.navigate('NewForm')}
                         style={styles.newReportButton} >
                         <Text style={styles.plus}>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     MainContainer: {
         justifyContent: 'center',
         flex: 1,
-        //margin: 10,
+        // margin: 10,
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
     FlatListItemStyle: {
@@ -135,12 +135,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white'
-    },
-    linkButton: {
-        textAlign: 'center',
-        color: '#CCCCCC',
-        marginBottom: 10,
-        padding: 5
     }
 });
 
