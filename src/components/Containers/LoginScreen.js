@@ -1,5 +1,5 @@
-import React from 'react'
-import { TouchableOpacity, StyleSheet, Text, View, Button, TextInput, ScrollView, ImageBackground, Image } from 'react-native'
+import React from 'react';
+import { TouchableOpacity, StyleSheet, Text, View, TextInput, ImageBackground, Image } from 'react-native';
 
 export default class LoginScreen extends React.Component {
 
@@ -88,7 +88,7 @@ export default class LoginScreen extends React.Component {
                     Copyright © Arter Oy 2017
                 </Text>
             </ImageBackground>
-        )
+        );
     }
 }
 
@@ -119,18 +119,18 @@ const styles = StyleSheet.create({
 
     TextInputStyleClass: {
 
-        //textAlign: 'center',
+        // textAlign: 'center',
         width: 215,
         height: 40,
         fontFamily: 'Roboto-Light',
         fontSize: 16,
         color: 'white',
         alignSelf: 'center',
-        //borderWidth: 1,
-        //borderColor: '#FF5722',
+        // borderWidth: 1,
+        // borderColor: '#FF5722',
 
-// Set border Radius.
-        //borderRadius: 10 ,
+        // Set border Radius.
+        // borderRadius: 10 ,
     },
 
     button: {
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         paddingBottom: 30,
         color: 'white',
-        //fontWeight: 'bold'
+        // fontWeight: 'bold'
     },
 
     slogan: {
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Allura-Regular',
         alignSelf: 'center',
-        //fontWeight: 'bold'
+        // fontWeight: 'bold'
     },
 
     copyright: {
@@ -207,4 +207,4 @@ const styles = StyleSheet.create({
 
         marginTop: 50,
     }
-})
+});
