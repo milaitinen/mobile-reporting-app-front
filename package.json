@@ -16,6 +16,11 @@
   "jest": {
     "preset": "jest-expo"
   },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  },
   "dependencies": {
     "babel-eslint": "^8.0.3",
     "eslint": "^4.12.1",
