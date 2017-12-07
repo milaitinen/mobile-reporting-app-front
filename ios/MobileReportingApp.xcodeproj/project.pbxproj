@@ -46,10 +46,6 @@
 		9327D3191FD6E6FE00DE7009 /* Qwigley-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D30F1FD6E6FE00DE7009 /* Qwigley-Regular.ttf */; };
 		9327D31A1FD6E6FE00DE7009 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D3101FD6E6FE00DE7009 /* Roboto-Light.ttf */; };
 		9327D31B1FD6E6FE00DE7009 /* DancingScript-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9327D3111FD6E6FE00DE7009 /* DancingScript-Regular.otf */; };
-		9327D31D1FD6E7B500DE7009 /* MobileReportingApp.app in Resources */ = {isa = PBXBuildFile; fileRef = 13B07F961A680F5B00A75B9A /* MobileReportingApp.app */; };
-		9327D31F1FD6E7BF00DE7009 /* MobileReportingApp-tvOS.app in Resources */ = {isa = PBXBuildFile; fileRef = 2D02E47B1E0B4A5D006451C7 /* MobileReportingApp-tvOS.app */; };
-		9327D3201FD6E7C400DE7009 /* MobileReportingAppTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 00E356EE1AD99517003FC87E /* MobileReportingAppTests.xctest */; };
-		9327D3211FD6E7C700DE7009 /* MobileReportingApp-tvOSTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 2D02E4901E0B4A5D006451C7 /* MobileReportingApp-tvOSTests.xctest */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 /* End PBXBuildFile section */
 
@@ -326,7 +322,7 @@
 		00E356F21AD99517003FC87E /* MobileReportingAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileReportingAppTests.m; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* MobileReportingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileReportingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* MobileReportingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MobileReportingApp.app; path = "../../../../../../../../SoftaStuff/mobile-reporting-app-front/ios/build/Build/Products/Debug-iphonesimulator/MobileReportingApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MobileReportingApp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MobileReportingApp/Images.xcassets; sourceTree = "<group>"; };
@@ -692,6 +688,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = A4K9K87Y7T;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -1027,7 +1026,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9327D3201FD6E7C400DE7009 /* MobileReportingAppTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1035,7 +1033,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9327D31D1FD6E7B500DE7009 /* MobileReportingApp.app in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				9327D3171FD6E6FE00DE7009 /* Allura-Regular.otf in Resources */,
 				9327D3131FD6E6FE00DE7009 /* Windsong.ttf in Resources */,
@@ -1055,7 +1052,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9327D31F1FD6E7BF00DE7009 /* MobileReportingApp-tvOS.app in Resources */,
 				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1064,7 +1060,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9327D3211FD6E7C700DE7009 /* MobileReportingApp-tvOSTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1207,6 +1202,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = A4K9K87Y7T;
 				INFOPLIST_FILE = MobileReportingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1224,6 +1220,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A4K9K87Y7T;
 				INFOPLIST_FILE = MobileReportingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
