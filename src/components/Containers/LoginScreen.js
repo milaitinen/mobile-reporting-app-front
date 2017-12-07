@@ -18,7 +18,7 @@ export default class LoginScreen extends React.Component {
     render() {
         return (
             <ImageBackground
-                source={require('./img/background_5.png')}
+                source={require('./img/background.png')}
                 style={styles.contentContainer}>
 
                 <Text
@@ -190,12 +190,12 @@ const styles = StyleSheet.create({
     },
 
     slogan: {
-        fontSize: 25,
+        fontSize: 30,
         width: 200,
         textAlign: 'center',
         paddingBottom: 30,
         color: 'white',
-        fontFamily: 'Allura-Regular',
+        fontFamily: 'Qwigley-Regular',
         alignSelf: 'center',
         // fontWeight: 'bold'
     },
