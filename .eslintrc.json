@@ -19,6 +19,7 @@
     "jest": true
   },
   "rules": {
+    "react/no-unescaped-entities": "off",
     "react-native/no-unused-styles": 2,
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
@@ -29,8 +30,9 @@
     "indent": ["error", 4],
     "object-curly-spacing": ["error", "always"],
     "keyword-spacing": ["error", { "before": true, "after": true }],
-    "spaced-comment": ["error", "always"],
+    //"spaced-comment": ["error", "always"],
     "jsx-uses-vars": "true",
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "no-console": 0
   }
 }

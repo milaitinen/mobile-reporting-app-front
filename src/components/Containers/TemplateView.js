@@ -25,24 +25,24 @@ export default class TemplateView extends React.Component {
                 <ScrollView>
                     <FlatList
                         data={[
-                            { key: 1, name: 'FormsFromBackendServer' },
-                            { key: 2, name: 'Academic' },
-                            { key: 3, name: 'Business' },
-                            { key: 4, name: 'Bibliography' },
-                            { key: 5, name: 'Marketing' },
-                            { key: 6, name: 'Newsletter' },
-                            { key: 7, name: 'Thesis' },
-                            { key: 8, name: 'Calendar' },
-                            { key: 9, name: 'Planning' },
-                            { key: 10, name: 'Cover Letter' },
-                            { key: 11, name: 'Example1' },
-                            { key: 12, name: 'Example2' },
-                            { key: 13, name: 'Example3' },
+                            { key: 1, name: 'Workplace survey' },
+                            { key: 2, name: 'Customer survey' },
+                            { key: 3, name: 'Reclamation survey' },
+                            { key: 4, name: 'Customer satisfaction survey' },
+                            { key: 5, name: 'Job performance review' },
+                            { key: 6, name: 'Employee satisfaction survey' },
+                            { key: 7, name: 'Service evaluation' },
+                            { key: 8, name: 'Quality survey' },
+                            { key: 9, name: 'Staff survey' },
+                            { key: 10, name: 'Feedback survey' },
+                            { key: 11, name: 'Product survey' },
+                            { key: 12, name: 'Medical practive survey' },
+                            { key: 13, name: 'Marketing survey' },
                         ]}
                         renderItem={({ item }) =>
                             <Text
                                 style={styles.item}
-                                onPress={() => this.props.navigation.navigate(item.name)} >
+                                onPress={() => this.props.navigation.navigate('Reports')} >
                                 {item.name}
                             </Text>
                         }
