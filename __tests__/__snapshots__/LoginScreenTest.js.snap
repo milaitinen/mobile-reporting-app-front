@@ -1,0 +1,334 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "transparent",
+      "flex": 1,
+      "height": null,
+      "justifyContent": "center",
+      "padding": 20,
+      "width": null,
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "testUri": "../../../src/components/Containers/img/background.png",
+      }
+    }
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "height": null,
+          "width": null,
+        },
+        undefined,
+      ]
+    }
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "white",
+        "fontFamily": "Roboto-Light",
+        "fontSize": 30,
+        "marginTop": 10,
+        "paddingBottom": 30,
+        "textAlign": "center",
+      }
+    }
+  >
+    MR-Application
+  </Text>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "alignSelf": "center",
+        "color": "white",
+        "fontFamily": "Qwigley-Regular",
+        "fontSize": 30,
+        "paddingBottom": 30,
+        "textAlign": "center",
+        "width": 200,
+      }
+    }
+  >
+    Keep calm and keep reporting
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "center",
+        "backgroundColor": "transparent",
+        "borderBottomColor": "white",
+        "borderBottomWidth": 1,
+        "flexDirection": "row",
+        "height": 40,
+        "justifyContent": "center",
+        "margin": 10,
+        "width": 250,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "testUri": "../../../src/components/Containers/img/person.png",
+        }
+      }
+      style={
+        Object {
+          "alignItems": "center",
+          "height": 25,
+          "margin": 5,
+          "paddingBottom": 15,
+          "paddingRight": 10,
+          "paddingTop": 10,
+          "resizeMode": "stretch",
+          "width": 25,
+        }
+      }
+    />
+    <TextInput
+      allowFontScaling={true}
+      onChangeText={[Function]}
+      placeholder="Email"
+      placeholderTextColor="white"
+      style={
+        Object {
+          "alignSelf": "center",
+          "color": "white",
+          "fontFamily": "Roboto-Light",
+          "fontSize": 16,
+          "height": 40,
+          "width": 215,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "center",
+        "backgroundColor": "transparent",
+        "borderBottomColor": "white",
+        "borderBottomWidth": 1,
+        "flexDirection": "row",
+        "height": 40,
+        "justifyContent": "center",
+        "margin": 10,
+        "width": 250,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "testUri": "../../../src/components/Containers/img/lock.png",
+        }
+      }
+      style={
+        Object {
+          "alignItems": "center",
+          "height": 25,
+          "margin": 5,
+          "paddingBottom": 15,
+          "paddingRight": 10,
+          "paddingTop": 10,
+          "resizeMode": "stretch",
+          "width": 25,
+        }
+      }
+    />
+    <TextInput
+      allowFontScaling={true}
+      onChangeText={[Function]}
+      placeholder="Password"
+      placeholderTextColor="white"
+      secureTextEntry={true}
+      style={
+        Object {
+          "alignSelf": "center",
+          "color": "white",
+          "fontFamily": "Roboto-Light",
+          "fontSize": 16,
+          "height": 40,
+          "width": 215,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "center",
+        "backgroundColor": "transparent",
+        "borderBottomColor": "white",
+        "borderBottomWidth": 1,
+        "flexDirection": "row",
+        "height": 40,
+        "justifyContent": "center",
+        "margin": 10,
+        "width": 250,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "testUri": "../../../src/components/Containers/img/language.png",
+        }
+      }
+      style={
+        Object {
+          "alignItems": "center",
+          "height": 25,
+          "margin": 5,
+          "paddingBottom": 15,
+          "paddingRight": 10,
+          "paddingTop": 10,
+          "resizeMode": "stretch",
+          "width": 25,
+        }
+      }
+    />
+    <TextInput
+      allowFontScaling={true}
+      onChangeText={[Function]}
+      placeholder="Server url"
+      placeholderTextColor="white"
+      style={
+        Object {
+          "alignSelf": "center",
+          "color": "white",
+          "fontFamily": "Roboto-Light",
+          "fontSize": 16,
+          "height": 40,
+          "width": 215,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+  </View>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    collapsable={undefined}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#9dcbe5",
+        "borderColor": "#9dcbe5",
+        "borderRadius": 10,
+        "borderWidth": 1,
+        "marginBottom": 25,
+        "marginLeft": 115,
+        "marginRight": 115,
+        "marginTop": 30,
+        "opacity": 1,
+        "paddingBottom": 10,
+        "paddingTop": 10,
+      }
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#274752",
+          "fontFamily": "Roboto-Light",
+          "fontSize": 15,
+          "textAlign": "center",
+        }
+      }
+    >
+      Sign In
+    </Text>
+  </View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    onPress={[Function]}
+    style={
+      Object {
+        "color": "white",
+        "fontFamily": "Roboto-Light",
+        "fontSize": 14,
+        "paddingTop": 20,
+        "textAlign": "center",
+      }
+    }
+  >
+    Forgot password?
+  </Text>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    onPress={[Function]}
+    style={
+      Object {
+        "color": "#78d3f2",
+        "fontFamily": "Roboto-Light",
+        "fontSize": 15,
+        "paddingTop": 25,
+        "textAlign": "center",
+      }
+    }
+  >
+    Sign up
+  </Text>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "white",
+        "fontFamily": "Roboto-Light",
+        "marginTop": 50,
+        "textAlign": "center",
+      }
+    }
+  >
+    Copyright © Arter Oy 2017
+  </Text>
+</View>
+`;
