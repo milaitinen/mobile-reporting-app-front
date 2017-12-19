@@ -29,7 +29,7 @@ export default class NewFormScreen extends React.Component {
 
         }).then(response => {
             if (response.status === 200) {
-
+                this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
                 return 'Report added';
             } else {
