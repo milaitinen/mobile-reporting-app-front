@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, TextInput, ImageBackground, Image } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 export default class LoginScreen extends React.Component {
 
@@ -31,7 +32,7 @@ export default class LoginScreen extends React.Component {
                     Keep calm and keep reporting
                 </Text>
                 <View style={styles.SectionStyle}>
-                    <Image source={require('./img/person.png')} style={styles.ImageStyle}/>
+                    <Icon name={'user'} color={'white'} size={16} />
                     <TextInput
                         placeholder='Email'
                         placeholderTextColor='white'
@@ -42,7 +43,7 @@ export default class LoginScreen extends React.Component {
                 </View>
 
                 <View style={styles.SectionStyle}>
-                    <Image source={require('./img/lock.png')} style={styles.ImageStyle}/>
+                    <Icon name={'lock'} color={'white'} size={16}/>
                     <TextInput
                         secureTextEntry={true}
                         placeholder='Password'
@@ -53,7 +54,7 @@ export default class LoginScreen extends React.Component {
                     />
                 </View>
                 <View style={styles.SectionStyle}>
-                    <Image source={require('./img/language.png')} style={styles.ImageStyle}/>
+                    <Icon name={'globe'} color={'white'} size={16}/>
                     <TextInput
                         placeholder='Server url'
                         placeholderTextColor='white'
@@ -93,17 +94,6 @@ export default class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    ImageStyle: {
-        paddingTop: 10,
-        paddingBottom: 15,
-        paddingRight: 10,
-        margin: 5,
-        height: 25,
-        width: 25,
-        resizeMode : 'stretch',
-        alignItems: 'center'
-    },
-
     SectionStyle: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -126,6 +116,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'white',
         alignSelf: 'center',
+        marginLeft: 5,
         // borderWidth: 1,
         // borderColor: '#FF5722',
 
