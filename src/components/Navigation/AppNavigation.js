@@ -1,21 +1,20 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
+
 import LoginScreen from '../Containers/LoginScreen';
 import SignupScreen from '../Containers/SignUpScreen';
 import ForgottenPasswordScreen from '../Containers/ForgottenPasswordScreen';
-
 import MockFormScreen from '../Containers/MockFormScreen';
 import TemplateScreen from '../Containers/TemplateScreen';
-import TemplateView from '../Containers/TemplateView';
 import NewFormScreen from '../Containers/NewFormScreen';
 
 
 
 const TemplateStack = StackNavigator({
 
-    Templates: { screen: TemplateView,     navigationOptions: ({ navigation }) => ({
-        title: 'Templates',
+    Templates: { screen: TemplateScreen,     navigationOptions: ({ navigation }) => ({
+        title: 'Forms',
         headerStyle: { backgroundColor: '#f0f8ff' },
         headerLeft: <Text style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15 } } onPress={() => {
 

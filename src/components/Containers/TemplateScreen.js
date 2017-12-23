@@ -12,8 +12,9 @@ import {
     TouchableOpacity,
     ScrollView
 } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
-import renderIf from './renderIf';
+import Panel from './Panel';
 import { url } from './urlsetting';
 
 class TemplateScreen extends Component {
@@ -31,7 +32,7 @@ class TemplateScreen extends Component {
 
     componentDidMount() {
 
-        fetch(url)
+        fetch(url + '/layouts')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -45,6 +46,22 @@ class TemplateScreen extends Component {
             .catch((error) => {
                 console.error(error);
             });
+
+        fetch(url + '/forms')
+            .then((response2) => response2.json())
+            .then((responseJson2) => {
+                this.setState({
+                    isLoading: false,
+                    refreshing: false,
+                    dataSource2: responseJson2
+                }, function() {
+                    // In this block you can do something with new state.
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
     }
 
     handleRefresh = () => {
@@ -57,6 +74,10 @@ class TemplateScreen extends Component {
             }
         );
 
+    }
+
+    onRowPress = () => {
+        this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh });
     }
 
 
@@ -82,91 +103,46 @@ class TemplateScreen extends Component {
 
                 <ScrollView contentContainerStyle={styles.MainContainer}>
 
-                    {renderIf(this.state.switch,
-                        <FlatList
-                            data={ this.state.dataSource }
-                            renderItem={({ item }) =>
-                                <Text style={styles.FlatListItemStyle}>
-                                    > {item.name}
-                                </Text>}
-                            keyExtractor={(item, index) => index}
-                            refreshing={this.state.refreshing}
-                            //onRefresh={this.handleRefresh}
-                        />
-                    )}
-                    {renderIf(!this.state.switch,
-                        <Text style={styles.exampleText}>
-                            Implement Cardview here
-                        </Text>
-                    )}
 
-                    <TouchableOpacity
-                        style={styles.switchButton}
-                        onPress={() => this.setState({ switch: !this.state.switch }) } >
-                        <Text style={styles.switchText}>
-                            Switch between listview and cardview
-                        </Text>
-                    </TouchableOpacity>
+                    <FlatList
+                        data={ this.state.dataSource }
+                        renderItem={({ item }) =>
 
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh }) }
-                        style={styles.newReportButton} >
-                        <Text style={styles.plus}>
-                            +
-                        </Text>
-                    </TouchableOpacity>
+                            <Panel
+                                title={item.title}
+                                onRowPress={this.onRowPress} >
+                                <FlatList
+                                    data={ this.state.dataSource2 }
+                                    renderItem={({ item }) =>
+                                        <Text
+                                            style={styles.FlatListItemStyle}
+                                            //onPress={() => this.props.navigation.navigate('Reports')}
+                                        >
+                                            {item.title}
+                                        </Text>
+
+                                    }
+                                    keyExtractor={item => item.orderNo}
+                                />
+                            </Panel>
+
+                        }
+                        keyExtractor={item => item.id}
+                        refreshing={this.state.refreshing}
+
+                    />
+
+
                 </ScrollView>
             </View>
         );
     }
 }
 
-const circle = {
-    borderWidth: 0,
-    borderRadius: 40,
-    width: 80,
-    height: 80
-};
 
 
 const styles = StyleSheet.create({
 
-    switchText: {
-        textAlign: 'center',
-        color: 'white',
-        fontSize: 18,
-    },
-
-    switchButton: {
-        position: 'absolute',
-        bottom:0,
-        right:0,
-        backgroundColor: '#349d4a',
-
-    },
-
-    exampleText: {
-        fontSize: 40,
-        textAlignVertical: 'center',
-        textAlign: 'center',
-    },
-
-    plus: {
-        fontSize: 40,
-        color: 'white',
-        marginBottom: 3,
-    },
-
-    newReportButton: {
-        ...circle,
-        backgroundColor: '#349d4a',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-
-    },
 
     activityIndicator: {
         flex: 1,
@@ -183,8 +159,8 @@ const styles = StyleSheet.create({
     },
     FlatListItemStyle: {
         padding: 10,
-        fontSize: 15,
-        height: 44
+        fontSize: 18,
+        height: 60
     },
     container: {
         flex: 1,
