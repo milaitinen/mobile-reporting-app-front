@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
-    Text,
     View,
     FlatList,
-    Alert,
     Platform,
-    TextInput,
-    Button,
     ActivityIndicator,
-    TouchableOpacity,
     ScrollView
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
@@ -32,28 +27,19 @@ class TemplateScreen extends Component {
 
     componentDidMount() {
 
+        this.getLayoutsAndForms();
+
+    }
+
+    getLayouts() {
+
         fetch(url + '/layouts')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
                     isLoading: false,
                     refreshing: false,
-                    dataSource: responseJson
-                }, function() {
-                    // In this block you can do something with new state.
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-
-        fetch(url + '/forms')
-            .then((response2) => response2.json())
-            .then((responseJson2) => {
-                this.setState({
-                    isLoading: false,
-                    refreshing: false,
-                    dataSource2: responseJson2
+                    dataLayouts: responseJson
                 }, function() {
                     // In this block you can do something with new state.
                 });
@@ -63,6 +49,30 @@ class TemplateScreen extends Component {
             });
 
     }
+
+    getForms() {
+
+        fetch(url + '/forms')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    isLoading: false,
+                    refreshing: false,
+                    dataForms: responseJson
+                }, function() {
+                    // In this block you can do something with new state.
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+
+    getLayoutsAndForms() {
+        return Promise.all([this.getLayouts(), this.getForms()]);
+    }
+
 
     handleRefresh = () => {
         this.setState(
@@ -79,7 +89,6 @@ class TemplateScreen extends Component {
     onRowPress = () => {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh });
     }
-
 
 
     render() {
@@ -103,23 +112,24 @@ class TemplateScreen extends Component {
 
                 <ScrollView contentContainerStyle={styles.MainContainer}>
 
-
                     <FlatList
-                        data={ this.state.dataSource }
-                        renderItem={({ item }) =>
-
+                        data={ this.state.dataLayouts }
+                        renderItem={({ item, index }) =>
                             <Panel
                                 title={item.title}
                                 onRowPress={this.onRowPress} >
                                 <FlatList
-                                    data={ this.state.dataSource2 }
+                                    data={ this.state.dataForms }
                                     renderItem={({ item }) =>
-                                        <Text
-                                            style={styles.FlatListItemStyle}
-                                            //onPress={() => this.props.navigation.navigate('Reports')}
-                                        >
-                                            {item.title}
-                                        </Text>
+                                        (item.layoutID === index + 1) ?
+
+                                            <ListItem
+                                                style={styles.FlatListItemStyle}
+                                                //onPress={() => this.props.navigation.navigate('Reports')}
+                                                title={item.title}
+                                                subtitle={item.dateCreated}
+                                            />
+                                            :null
 
                                     }
                                     keyExtractor={item => item.orderNo}
@@ -159,7 +169,7 @@ const styles = StyleSheet.create({
     },
     FlatListItemStyle: {
         padding: 10,
-        fontSize: 18,
+        //fontSize: 18,
         height: 60
     },
     container: {

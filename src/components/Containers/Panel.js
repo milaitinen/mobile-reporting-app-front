@@ -7,7 +7,6 @@ class Panel extends Component{
         super(props);
         this.state = {
             title       : props.title,
-            navigate    : props.navigate,
             expanded    : false,
             animation   : new Animated.Value(40)
         };
