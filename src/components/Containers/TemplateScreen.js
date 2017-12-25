@@ -124,13 +124,15 @@ class TemplateScreen extends Component {
                                         (item.layoutID === index + 1) ?
 
                                             <ListItem
-                                                style={styles.FlatListItemStyle}
+                                                //style={styles.FlatListItemStyle}
                                                 //onPress={() => this.props.navigation.navigate('Reports')}
+                                                hideChevron={true}
                                                 title={item.title}
                                                 subtitle={item.dateCreated}
                                             />
                                             :null
 
+                                        
                                     }
                                     keyExtractor={item => item.orderNo}
                                 />
