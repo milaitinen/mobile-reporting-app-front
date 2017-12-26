@@ -31,47 +31,36 @@ class TemplateScreen extends Component {
         this.getLayoutsAndForms();
 
     }
+    
 
-    getLayouts() {
+    getLayoutsAndForms = () => {
 
         fetch(url + '/layouts')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
-                    isLoading: false,
-                    refreshing: false,
+                    //isLoading: false,
+                    //refreshing: false,
                     dataLayouts: responseJson
-                }, function() {
-                    // In this block you can do something with new state.
                 });
+            })
+            .then(()=> {
+                fetch(url + '/forms')
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                        this.setState({
+                            isLoading: false,
+                            refreshing: false,
+                            dataForms: responseJson
+                        });
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    }).done();
             })
             .catch((error) => {
                 console.error(error);
-            });
-
-    }
-
-    getForms() {
-
-        fetch(url + '/forms')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    refreshing: false,
-                    dataForms: responseJson
-                }, function() {
-                    // In this block you can do something with new state.
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-
-    }
-
-    getLayoutsAndForms() {
-        return Promise.all([this.getLayouts(), this.getForms()]);
+            }).done();
     }
 
 
