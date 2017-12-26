@@ -22,7 +22,6 @@ class TemplateScreen extends Component {
         this.state = {
             isLoading: true,
             refreshing: false,
-            switch: true,
         };
     }
 
@@ -31,7 +30,7 @@ class TemplateScreen extends Component {
         this.getLayoutsAndForms();
 
     }
-    
+
 
     getLayoutsAndForms = () => {
 
@@ -70,13 +69,14 @@ class TemplateScreen extends Component {
                 refreshing: true,
             },
             () => {
-                this.componentDidMount();
+                //this.componentDidMount();
+                this.getLayoutsAndForms();
             }
         );
 
     }
 
-    onRowPress = () => {
+    createNew = () => {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh });
     }
 
@@ -107,7 +107,7 @@ class TemplateScreen extends Component {
                         renderItem={({ item }) =>
                             <Panel
                                 title={item.title}
-                                onRowPress={this.onRowPress} >
+                                createNew={this.createNew} >
                                 <FlatList
                                     data={ this.state.dataForms }
                                     renderItem={({ item }) =>

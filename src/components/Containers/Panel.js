@@ -42,8 +42,8 @@ class Panel extends Component{
         });
     }
 
-    onRowPress() {
-        this.props.onRowPress();
+    createNew() {
+        this.props.createNew();
     }
 
     render(){
@@ -60,7 +60,7 @@ class Panel extends Component{
                     </Text>
                     <TouchableHighlight
                         style={styles.button}
-                        onPress={() => this.onRowPress() }
+                        onPress={() => this.createNew() }
                         underlayColor="#f1f1f1">
                         <Text
                             style={styles.buttonText}>+</Text>
