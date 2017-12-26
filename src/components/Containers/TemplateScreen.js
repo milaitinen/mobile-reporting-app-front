@@ -5,7 +5,8 @@ import {
     FlatList,
     Platform,
     ActivityIndicator,
-    ScrollView
+    ScrollView,
+    Text
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
@@ -114,25 +115,19 @@ class TemplateScreen extends Component {
 
                     <FlatList
                         data={ this.state.dataLayouts }
-                        renderItem={({ item, index }) =>
+                        renderItem={({ item }) =>
                             <Panel
                                 title={item.title}
                                 onRowPress={this.onRowPress} >
                                 <FlatList
                                     data={ this.state.dataForms }
                                     renderItem={({ item }) =>
-                                        (item.layoutID === index + 1) ?
-
-                                            <ListItem
-                                                //style={styles.FlatListItemStyle}
-                                                //onPress={() => this.props.navigation.navigate('Reports')}
-                                                hideChevron={true}
-                                                title={item.title}
-                                                subtitle={item.dateCreated}
-                                            />
-                                            :null
-
-                                        
+                                        <ListItem
+                                            containerStyle={ styles.ListItemStyle }
+                                            title={item.title}
+                                            subtitle={item.dateCreated}
+                                            hideChevron={true}
+                                        />
                                     }
                                     keyExtractor={item => item.orderNo}
                                 />
@@ -169,10 +164,8 @@ const styles = StyleSheet.create({
         // margin: 10,
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
-    FlatListItemStyle: {
-        padding: 10,
-        //fontSize: 18,
-        height: 60
+    ListItemStyle: {
+        height: 50
     },
     container: {
         flex: 1,
