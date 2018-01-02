@@ -1,11 +1,15 @@
 import React from 'react';
 import { Text, ImageBackground } from 'react-native';
+import PropTypes from 'prop-types';
 
 import styles from './styles';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 
 export default class LoginScreen extends React.Component {
+    static propTypes = {
+        navigation: PropTypes.object,
+    };
 
     constructor(props)
     {
