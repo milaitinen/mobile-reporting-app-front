@@ -3,19 +3,19 @@ import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 
 export default class SignUpScreen extends React.Component {
 
-  handleButtonPress = () => {
-      this.props.navigation.goBack();
-  };
+    handleButtonPress = () => {
+        this.props.navigation.goBack();
+    };
 
-  render() {
-      return (
-          <View style={styles.container}>
-              <TouchableHighlight style={styles.button} onPress={() => this.handleButtonPress()}>
-                  <Text style={styles.text}>SignUp Screen</Text>
-              </TouchableHighlight>
-          </View>
-      );
-  }
+    render() {
+        return (
+            <View style={styles.container}>
+                <TouchableHighlight style={styles.button} onPress={() => this.handleButtonPress()}>
+                    <Text style={styles.text}>SignUp Screen</Text>
+                </TouchableHighlight>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({

@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 
 // here is our redux-aware our smart component
 function ReduxNavigation (props) {
-  const { dispatch, nav } = props;
-  const navigation = ReactNavigation.addNavigationHelpers({
-    dispatch,
-    state: nav
-  });
+    const { dispatch, nav } = props;
+    const navigation = ReactNavigation.addNavigationHelpers({
+        dispatch,
+        state: nav
+    });
 
-  return <AppNavigation navigation={navigation} />;
+    return <AppNavigation navigation={navigation} />;
 }
 
 const mapStateToProps = state => ({ nav: state.nav });
