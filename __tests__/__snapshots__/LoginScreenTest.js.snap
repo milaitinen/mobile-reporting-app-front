@@ -87,25 +87,27 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    <Image
-      source={
-        Object {
-          "testUri": "../../../src/components/Containers/img/person.png",
-        }
-      }
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
       style={
-        Object {
-          "alignItems": "center",
-          "height": 25,
-          "margin": 5,
-          "paddingBottom": 15,
-          "paddingRight": 10,
-          "paddingTop": 10,
-          "resizeMode": "stretch",
-          "width": 25,
-        }
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 16,
+          },
+          undefined,
+          Object {
+            "fontFamily": "Feather",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
       }
-    />
+    >
+      
+    </Text>
     <TextInput
       allowFontScaling={true}
       onChangeText={[Function]}
@@ -118,6 +120,7 @@ exports[`renders correctly 1`] = `
           "fontFamily": "Roboto-Light",
           "fontSize": 16,
           "height": 40,
+          "marginLeft": 5,
           "width": 215,
         }
       }
@@ -140,25 +143,27 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    <Image
-      source={
-        Object {
-          "testUri": "../../../src/components/Containers/img/lock.png",
-        }
-      }
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
       style={
-        Object {
-          "alignItems": "center",
-          "height": 25,
-          "margin": 5,
-          "paddingBottom": 15,
-          "paddingRight": 10,
-          "paddingTop": 10,
-          "resizeMode": "stretch",
-          "width": 25,
-        }
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 16,
+          },
+          undefined,
+          Object {
+            "fontFamily": "Feather",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
       }
-    />
+    >
+      
+    </Text>
     <TextInput
       allowFontScaling={true}
       onChangeText={[Function]}
@@ -172,6 +177,7 @@ exports[`renders correctly 1`] = `
           "fontFamily": "Roboto-Light",
           "fontSize": 16,
           "height": 40,
+          "marginLeft": 5,
           "width": 215,
         }
       }
@@ -194,25 +200,27 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    <Image
-      source={
-        Object {
-          "testUri": "../../../src/components/Containers/img/language.png",
-        }
-      }
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
       style={
-        Object {
-          "alignItems": "center",
-          "height": 25,
-          "margin": 5,
-          "paddingBottom": 15,
-          "paddingRight": 10,
-          "paddingTop": 10,
-          "resizeMode": "stretch",
-          "width": 25,
-        }
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 16,
+          },
+          undefined,
+          Object {
+            "fontFamily": "Feather",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
       }
-    />
+    >
+      
+    </Text>
     <TextInput
       allowFontScaling={true}
       onChangeText={[Function]}
@@ -225,6 +233,7 @@ exports[`renders correctly 1`] = `
           "fontFamily": "Roboto-Light",
           "fontSize": 16,
           "height": 40,
+          "marginLeft": 5,
           "width": 215,
         }
       }
