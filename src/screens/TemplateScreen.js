@@ -9,9 +9,11 @@ import {
     Text
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import templateScreenStyles from './style/templateScreenStyles';
 
 import { Panel } from '../components/Panel';
 import { url } from './urlsetting';
+
 
 class TemplateScreen extends Component {
     static displayName = 'TemplateScreen';
@@ -108,11 +110,11 @@ class TemplateScreen extends Component {
 
         if (this.state.isLoading) {
             return (
-                <View style={[styles.container]}>
+                <View style={[templateScreenStyles.container]}>
 
                     <ActivityIndicator
                         animating={this.state.animating}
-                        style={[styles.activityIndicator, { height: 80 }]}
+                        style={[templateScreenStyles.activityIndicator, { height: 80 }]}
                         size='large'
                     />
 
@@ -123,7 +125,7 @@ class TemplateScreen extends Component {
         return (
             <View style={{ flex: 1 }}>
 
-                <ScrollView contentContainerStyle={styles.MainContainer}>
+                <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
 
                     <FlatList
                         data={ this.state.dataLayouts }
@@ -137,7 +139,7 @@ class TemplateScreen extends Component {
                                     renderItem={({ item }) =>
                                         <ListItem
                                             key={item.title}
-                                            containerStyle={ styles.ListItemStyle }
+                                            containerStyle={ templateScreenStyles.ListItemStyle }
                                             title={item.title}
                                             subtitle={item.dateCreated}
                                             hideChevron={true}
@@ -159,31 +161,5 @@ class TemplateScreen extends Component {
         );
     }
 }
-
-
-const styles = StyleSheet.create({
-
-
-    activityIndicator: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 80
-    },
-
-    MainContainer: {
-        justifyContent: 'center',
-        flex: 1,
-        // margin: 10,
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-    },
-    ListItemStyle: {
-        height: 50
-    },
-    container: {
-        flex: 1,
-        backgroundColor: 'white'
-    }
-});
 
 export default TemplateScreen;
