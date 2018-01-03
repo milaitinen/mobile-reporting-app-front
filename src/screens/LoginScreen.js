@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, ImageBackground } from 'react-native';
 
-import styles from './style/styles';
+import loginStyles from './style/styles';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 
@@ -20,12 +20,12 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return (
-            <ImageBackground source={require('./images/background.png')} style={styles.contentContainer}>
-                <Text style={styles.title}>
+            <ImageBackground source={require('./images/background.png')} style={loginStyles.contentContainer}>
+                <Text style={loginStyles.title}>
                     MR-Application
                 </Text>
 
-                <Text style={styles.slogan}>
+                <Text style={loginStyles.slogan}>
                     Keep calm and keep reporting
                 </Text>
 
@@ -50,15 +50,15 @@ export default class LoginScreen extends React.Component {
                     Sign In
                 </SignInButton>
 
-                <Text style={styles.textLink} onPress={() => this.props.navigation.navigate('forgottenPasswordScreen')}>
+                <Text style={loginStyles.textLink} onPress={() => this.props.navigation.navigate('forgottenPasswordScreen')}>
                     Forgot password?
                 </Text>
 
-                <Text style={styles.signUp} onPress={() => this.props.navigation.navigate('signUpScreen')}>
+                <Text style={loginStyles.signUp} onPress={() => this.props.navigation.navigate('signUpScreen')}>
                     Sign up
                 </Text>
 
-                <Text style={styles.copyright}>
+                <Text style={loginStyles.copyright}>
                     Copyright © Arter Oy 2017
                 </Text>
             </ImageBackground>
