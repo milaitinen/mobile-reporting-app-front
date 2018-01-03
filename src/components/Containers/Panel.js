@@ -59,9 +59,8 @@ class Panel extends Component{
                         onPress={this.toggle.bind(this)}
                         title={this.state.title}
                         subtitle={this.state.nofForms + ' Forms'}
-                        hideChevron={true}
-                        //rightIcon={{ name: 'arrow-right', type: 'font-awesome', style: { marginRight: 10, fontSize: 15 } }}
-                        //onPressRightIcon={() => this.createNew()}
+                        rightIcon={{ name: 'arrow-right', type: 'font-awesome', style: { marginRight: 10, fontSize: 15 } }}
+                        onPressRightIcon={() => this.createNew()}
 
                     />
 
