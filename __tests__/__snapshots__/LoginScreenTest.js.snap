@@ -2,6 +2,13 @@
 
 exports[`renders correctly 1`] = `
 <View
+  colors={
+    Array [
+      "#3d4f7c",
+      "#31456f",
+      "#1b3055",
+    ]
+  }
   style={
     Object {
       "backgroundColor": "transparent",
@@ -13,29 +20,6 @@ exports[`renders correctly 1`] = `
     }
   }
 >
-  <Image
-    source={
-      Object {
-        "testUri": "../../../src/screens/images/background.png",
-      }
-    }
-    style={
-      Array [
-        Object {
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        },
-        Object {
-          "height": null,
-          "width": null,
-        },
-        undefined,
-      ]
-    }
-  />
   <Text
     accessible={true}
     allowFontScaling={true}
