@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,View,TouchableHighlight,Animated } from 'react-native';
-
+import { StyleSheet,Text,View,TouchableHighlight,Animated, Image } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 class Panel extends Component{
     constructor(props){
         super(props);
         this.state = {
             title       : props.title,
+            nofForms    : props.nofForms,
             expanded    : false,
-            animation   : new Animated.Value(40)
+            animation   : new Animated.Value(50)
         };
     }
 
@@ -52,19 +53,18 @@ class Panel extends Component{
         return (
             <Animated.View
                 style={[styles.container,{ height: this.state.animation }]}>
-                <View style={styles.titleContainer} onLayout={this._setMinHeight.bind(this)}>
-                    <Text
-                        style={styles.title}
-                        onPress={this.toggle.bind(this)}>
-                        {this.state.title}
-                    </Text>
-                    <TouchableHighlight
-                        style={styles.button}
-                        onPress={() => this.createNew() }
-                        underlayColor="#f1f1f1">
-                        <Text
-                            style={styles.buttonText}>+</Text>
-                    </TouchableHighlight>
+                <View onLayout={this._setMinHeight.bind(this)}>
+                    <ListItem
+                        containerStyle={ styles.ListItemStyle }
+                        onPress={this.toggle.bind(this)}
+                        title={this.state.title}
+                        subtitle={this.state.nofForms + ' Forms'}
+                        hideChevron={true}
+                        //rightIcon={{ name: 'arrow-right', type: 'font-awesome', style: { marginRight: 10, fontSize: 15 } }}
+                        //onPressRightIcon={() => this.createNew()}
+
+                    />
+
                 </View>
 
                 <View style={styles.body} onLayout={this._setMaxHeight.bind(this)}>
@@ -77,6 +77,10 @@ class Panel extends Component{
 }
 
 const styles = StyleSheet.create({
+
+    ListItemStyle: {
+        height: 50
+    },
     container: {
         backgroundColor: '#fff',
         margin:10,

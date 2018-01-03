@@ -20,6 +20,7 @@ class TemplateScreen extends Component {
     {
         super(props);
         this.state = {
+            arr: [],
             isLoading: true,
             refreshing: false,
         };
@@ -44,22 +45,23 @@ class TemplateScreen extends Component {
                 });
             })
             .then(()=> {
-                fetch(url + '/forms')
-                    .then((response) => response.json())
-                    .then((responseJson) => {
-                        this.setState({
-                            isLoading: false,
-                            refreshing: false,
-                            dataForms: responseJson
+
+                for (let i = 1; i <= 5; i++) {      // i <= this.state.dataLayouts.length
+                    fetch(url + '/forms?layoutid=' + i)
+                        .then((response) => response.json())
+                        .then((responseJson) => {
+                            this.setState({
+                                arr: this.state.arr.concat([responseJson]),
+                                isLoading: false,
+                                refreshing: false,
+                            });
                         });
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    }).done();
-            })
-            .catch((error) => {
+
+                }
+            }).catch((error) => {
                 console.error(error);
             }).done();
+
     }
 
 
@@ -104,12 +106,13 @@ class TemplateScreen extends Component {
 
                     <FlatList
                         data={ this.state.dataLayouts }
-                        renderItem={({ item }) =>
+                        renderItem={({ item, index }) =>
                             <Panel
                                 title={item.title}
-                                createNew={this.createNew} >
+                                createNew={this.createNew}
+                                nofForms={this.state.arr[0].length} >
                                 <FlatList
-                                    data={ this.state.dataForms }
+                                    data={ this.state.arr[index] }
                                     renderItem={({ item }) =>
                                         <ListItem
                                             containerStyle={ styles.ListItemStyle }
