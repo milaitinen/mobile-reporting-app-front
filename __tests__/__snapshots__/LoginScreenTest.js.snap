@@ -110,14 +110,10 @@ exports[`renders correctly 1`] = `
     </Text>
     <TextInput
       allowFontScaling={true}
+      name="user"
       onChangeText={[Function]}
       placeholder="Email"
       placeholderTextColor="white"
-      source={
-        Object {
-          "testUri": "../../../src/screens/images/person.png",
-        }
-      }
       style={
         Object {
           "alignSelf": "center",
@@ -171,15 +167,11 @@ exports[`renders correctly 1`] = `
     </Text>
     <TextInput
       allowFontScaling={true}
+      name="lock"
       onChangeText={[Function]}
       placeholder="Password"
       placeholderTextColor="white"
       secureTextEntry={true}
-      source={
-        Object {
-          "testUri": "../../../src/screens/images/lock.png",
-        }
-      }
       style={
         Object {
           "alignSelf": "center",
@@ -233,14 +225,10 @@ exports[`renders correctly 1`] = `
     </Text>
     <TextInput
       allowFontScaling={true}
+      name="globe"
       onChangeText={[Function]}
       placeholder="Server url"
       placeholderTextColor="white"
-      source={
-        Object {
-          "testUri": "../../../src/screens/images/language.png",
-        }
-      }
       style={
         Object {
           "alignSelf": "center",
