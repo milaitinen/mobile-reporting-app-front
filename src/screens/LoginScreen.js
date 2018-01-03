@@ -30,18 +30,18 @@ export default class LoginScreen extends React.Component {
                 </Text>
 
                 <Input
-                    source={require('./images/person.png')}
+                    name={'user'}
                     placeholder='Email'
                     onChangeText={TextInputUser => this.setState({ TextInputUser })}
                 />
                 <Input
-                    source={require('./images/lock.png')}
+                    name={'lock'}
                     secureTextEntry={true}
                     placeholder='Password'
                     onChangeText={TextInputPassword => this.setState({ TextInputPassword })}
                 />
                 <Input
-                    source={require('./images/language.png')}
+                    name={'globe'}
                     placeholder='Server url'
                     onChangeText={TextInputServer => this.setState({ TextInputServer })}
                 />
