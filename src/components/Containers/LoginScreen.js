@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, TextInput, ImageBackground, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default class LoginScreen extends React.Component {
 
@@ -18,8 +19,8 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return (
-            <ImageBackground
-                source={require('./img/background.png')}
+            <LinearGradient
+                colors={['#6d90b3', '#306393', '#12477f']}
                 style={styles.contentContainer}>
 
                 <Text
@@ -88,7 +89,7 @@ export default class LoginScreen extends React.Component {
                     style={styles.copyright}>
                     Copyright © Arter Oy 2017
                 </Text>
-            </ImageBackground>
+            </LinearGradient>
         );
     }
 }
