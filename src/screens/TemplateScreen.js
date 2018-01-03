@@ -33,6 +33,21 @@ class TemplateScreen extends Component {
     }
 
 
+    getFormsByLayouts = () => {
+        const formsByLayout = [];
+        for (let i = 1; i <= this.state.dataLayouts.length; i++) {      // i <= this.state.dataLayouts.length
+            fetch(url + '/forms?layoutid=' + i)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    formsByLayout.push(responseJson);
+
+                });
+
+        }
+        return formsByLayout;
+    }
+
+
     getLayoutsAndForms = () => {
 
         fetch(url + '/layouts')
@@ -45,22 +60,28 @@ class TemplateScreen extends Component {
                 });
             })
             .then(()=> {
-
-                for (let i = 1; i <= 5; i++) {      // i <= this.state.dataLayouts.length
-                    fetch(url + '/forms?layoutid=' + i)
-                        .then((response) => response.json())
-                        .then((responseJson) => {
-                            this.setState({
-                                arr: this.state.arr.concat([responseJson]),
-                                isLoading: false,
-                                refreshing: false,
-                            });
-                        });
+                const promises = [];
+                for (let i = 1; i <= this.state.dataLayouts.length; i++) {
+                    const orgReposUrl = url + '/forms?layoutid=' + i;
+                    promises.push(fetch(orgReposUrl).then(response => response.json()));
 
                 }
-            }).catch((error) => {
-            console.error(error);
-        }).done();
+
+                Promise.all(promises)
+                    .then(data => {
+                        this.setState({
+                            arr: data,
+                            isLoading: false,
+                            refreshing: false,
+                        });
+                    })
+                    .catch(err => console.error(err));
+
+
+            })
+            .catch((error) => {
+                console.error(error);
+            }).done();
 
     }
 
@@ -110,11 +131,12 @@ class TemplateScreen extends Component {
                             <Panel
                                 title={item.title}
                                 createNew={this.createNew}
-                                nofForms={this.state.arr[0].length} >
+                                nofForms={this.state.arr[index].length} >
                                 <FlatList
                                     data={ this.state.arr[index] }
                                     renderItem={({ item }) =>
                                         <ListItem
+                                            key={item.title}
                                             containerStyle={ styles.ListItemStyle }
                                             title={item.title}
                                             subtitle={item.dateCreated}
@@ -137,7 +159,6 @@ class TemplateScreen extends Component {
         );
     }
 }
-
 
 
 const styles = StyleSheet.create({
