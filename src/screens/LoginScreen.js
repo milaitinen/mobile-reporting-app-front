@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, ImageBackground } from 'react-native';
 import PropTypes from 'prop-types';
 
-import styles from './styles';
+import styles from './style/styles';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 
