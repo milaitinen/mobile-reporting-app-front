@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, ImageBackground } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style/styles';
 import { SignInButton } from '../components/Button';
@@ -20,7 +21,10 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return (
-            <ImageBackground source={require('./images/background.png')} style={styles.contentContainer}>
+            <LinearGradient
+                colors={['#3d4f7c', '#31456f', '#1b3055']}
+                style={styles.contentContainer}
+            >
                 <Text style={styles.title}>
                     MR-Application
                 </Text>
@@ -61,7 +65,7 @@ export default class LoginScreen extends React.Component {
                 <Text style={styles.copyright}>
                     Copyright © Arter Oy 2017
                 </Text>
-            </ImageBackground>
+            </LinearGradient>
         );
     }
 }
