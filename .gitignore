@@ -60,6 +60,6 @@ android/gradlew.bat
 local.properties
 *.iml
 
-src/components/Containers/urlsetting.js
+src/screens/urlsetting.js
 
 package-lock.json
