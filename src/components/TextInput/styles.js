@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'white',
         alignSelf: 'center',
+        marginLeft: 5,
     // borderWidth: 1,
     // borderColor: '#FF5722',
 
