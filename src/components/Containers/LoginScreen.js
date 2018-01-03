@@ -20,7 +20,7 @@ export default class LoginScreen extends React.Component {
     render() {
         return (
             <LinearGradient
-                colors={['#6d90b3', '#306393', '#12477f']}
+                colors={['#3d4f7c', '#31456f', '#1b3055']}
                 style={styles.contentContainer}>
 
                 <Text
