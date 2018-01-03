@@ -16,7 +16,7 @@ exports[`renders correctly 1`] = `
   <Image
     source={
       Object {
-        "testUri": "../../../src/components/Containers/img/background.png",
+        "testUri": "../../../src/screens/images/background.png",
       }
     }
     style={
@@ -90,7 +90,7 @@ exports[`renders correctly 1`] = `
     <Image
       source={
         Object {
-          "testUri": "../../../src/components/Containers/img/person.png",
+          "testUri": "../../../src/screens/images/person.png",
         }
       }
       style={
@@ -111,6 +111,11 @@ exports[`renders correctly 1`] = `
       onChangeText={[Function]}
       placeholder="Email"
       placeholderTextColor="white"
+      source={
+        Object {
+          "testUri": "../../../src/screens/images/person.png",
+        }
+      }
       style={
         Object {
           "alignSelf": "center",
@@ -143,7 +148,7 @@ exports[`renders correctly 1`] = `
     <Image
       source={
         Object {
-          "testUri": "../../../src/components/Containers/img/lock.png",
+          "testUri": "../../../src/screens/images/lock.png",
         }
       }
       style={
@@ -165,6 +170,11 @@ exports[`renders correctly 1`] = `
       placeholder="Password"
       placeholderTextColor="white"
       secureTextEntry={true}
+      source={
+        Object {
+          "testUri": "../../../src/screens/images/lock.png",
+        }
+      }
       style={
         Object {
           "alignSelf": "center",
@@ -197,7 +207,7 @@ exports[`renders correctly 1`] = `
     <Image
       source={
         Object {
-          "testUri": "../../../src/components/Containers/img/language.png",
+          "testUri": "../../../src/screens/images/language.png",
         }
       }
       style={
@@ -218,6 +228,11 @@ exports[`renders correctly 1`] = `
       onChangeText={[Function]}
       placeholder="Server url"
       placeholderTextColor="white"
+      source={
+        Object {
+          "testUri": "../../../src/screens/images/language.png",
+        }
+      }
       style={
         Object {
           "alignSelf": "center",
@@ -236,7 +251,7 @@ exports[`renders correctly 1`] = `
     accessibilityLabel={undefined}
     accessibilityTraits={undefined}
     accessible={true}
-    collapsable={undefined}
+    hasTVPreferredFocus={undefined}
     hitSlop={undefined}
     isTVSelectable={true}
     nativeID={undefined}
@@ -248,19 +263,23 @@ exports[`renders correctly 1`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "backgroundColor": "#9dcbe5",
-        "borderColor": "#9dcbe5",
-        "borderRadius": 10,
-        "borderWidth": 1,
-        "marginBottom": 25,
-        "marginLeft": 115,
-        "marginRight": 115,
-        "marginTop": 30,
-        "opacity": 1,
-        "paddingBottom": 10,
-        "paddingTop": 10,
-      }
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+        },
+        Object {
+          "backgroundColor": "#9dcbe5",
+          "borderColor": "#9dcbe5",
+          "borderRadius": 10,
+          "borderWidth": 1,
+          "marginBottom": 25,
+          "marginLeft": 115,
+          "marginRight": 115,
+          "marginTop": 30,
+          "paddingBottom": 10,
+          "paddingTop": 10,
+        },
+      ]
     }
     testID={undefined}
     tvParallaxProperties={undefined}

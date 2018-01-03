@@ -1,12 +1,12 @@
 import 'react-native';
 import React from 'react';
-import LoginScreen from '../src/screens/LoginScreen';
+import SignUpScreen from '../src/screens/SignUpScreen';
 
 import renderer from 'react-test-renderer';
 
 it('renders correctly', () => {
     const tree = renderer.create(
-        <LoginScreen />
+        <SignUpScreen />
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });

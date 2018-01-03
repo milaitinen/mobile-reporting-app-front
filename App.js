@@ -1,10 +1,10 @@
 import React from 'react';
-import PrimaryNav from './src/components/Navigation/AppNavigation';
+import Navigator from './src/navigation/AppNavigation';
 
 export default class App extends React.Component {
-  render() {
-    return (
-      <PrimaryNav/>
-    );
-  }
+    render() {
+        return (
+            <Navigator/>
+        );
+    }
 }
