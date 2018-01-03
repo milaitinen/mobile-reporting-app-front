@@ -12,40 +12,55 @@ import NewFormScreen from '../screens/NewFormScreen';
 
 
 const TemplateStack = StackNavigator({
-
-    Templates: { screen: TemplateView,     navigationOptions: ({ navigation }) => ({
-        title: 'Templates',
-        headerStyle: { backgroundColor: '#f0f8ff' },
-        headerLeft: <Text style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15 } } onPress={() => {
-
-            navigation.navigate('DrawerOpen');
-
-        }}>☰</Text>
-    })
+    Templates: {
+        screen: TemplateView,
+        navigationOptions: ({ navigation }) => ({
+            title: 'Templates',
+            headerStyle: { backgroundColor: '#f0f8ff' },
+            headerLeft:
+                <Text
+                    style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15 }}
+                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
+                    ☰
+                </Text>
+        })
     },
-
-    Reports: { screen: TemplateScreen, navigationOptions: ({ navigation }) => ({
-        title: navigation.state.routeName
-    }) },
-
-    NewForm: { screen: NewFormScreen, navigationOptions: { title: 'Create new report' } },
-
+    Reports: {
+        screen: TemplateScreen,
+        navigationOptions: ({ navigation }) => ({ title: navigation.state.routeName })
+    },
+    NewForm: {
+        screen: NewFormScreen,
+        navigationOptions: { title: 'Create new report' }
+    },
 }, {
-
+    // is this part necessary?
 });
 
 const DrawerStack = DrawerNavigator({
-    Menu: { screen: TemplateStack, navigationOptions: { title: 'Templates' } },
-    MockForms: { screen: MockFormScreen, navigationOptions: { title: 'Mockforms' } },
-
+    Menu: {
+        screen: TemplateStack,
+        navigationOptions: { title: 'Templates' }
+    },
+    MockForms: {
+        screen: MockFormScreen,
+        navigationOptions: { title: 'Mock forms' }
+    },
 });
 
 const LoginStack = StackNavigator({
-    loginScreen: { screen: LoginScreen },
-    signUpScreen: { screen: SignUpScreen, navigationOptions: { title: 'Create an account' } },
-    forgottenPasswordScreen: { screen: ForgottenPasswordScreen, navigationOptions: { title: 'Forgot Password' } },
+    loginScreen: {
+        screen: LoginScreen
+    },
+    signUpScreen: {
+        screen: SignUpScreen,
+        navigationOptions: { title: 'Create an account' }
+    },
+    forgottenPasswordScreen: {
+        screen: ForgottenPasswordScreen,
+        navigationOptions: { title: 'Forgot Password' }
+    },
 }, {
-
     headerMode: 'screen',
     navigationOptions: {
         headerStyle: { backgroundColor: '#f0f8ff' },
@@ -57,7 +72,6 @@ const LoginStack = StackNavigator({
 const MainScreenNavigator = StackNavigator({
     loginStack: { screen: LoginStack },
     drawerStack: { screen: DrawerStack },
-
 }, {
     // Default config for all screens
     headerMode: 'none',
