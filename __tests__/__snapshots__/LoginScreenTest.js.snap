@@ -2,6 +2,13 @@
 
 exports[`renders correctly 1`] = `
 <View
+  colors={
+    Array [
+      "#3d4f7c",
+      "#31456f",
+      "#1b3055",
+    ]
+  }
   style={
     Object {
       "backgroundColor": "transparent",
@@ -13,29 +20,6 @@ exports[`renders correctly 1`] = `
     }
   }
 >
-  <Image
-    source={
-      Object {
-        "testUri": "../../../src/screens/images/background.png",
-      }
-    }
-    style={
-      Array [
-        Object {
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        },
-        Object {
-          "height": null,
-          "width": null,
-        },
-        undefined,
-      ]
-    }
-  />
   <Text
     accessible={true}
     allowFontScaling={true}
@@ -87,35 +71,33 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    <Image
-      source={
-        Object {
-          "testUri": "../../../src/screens/images/person.png",
-        }
-      }
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
       style={
-        Object {
-          "alignItems": "center",
-          "height": 25,
-          "margin": 5,
-          "paddingBottom": 15,
-          "paddingRight": 10,
-          "paddingTop": 10,
-          "resizeMode": "stretch",
-          "width": 25,
-        }
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 16,
+          },
+          undefined,
+          Object {
+            "fontFamily": "Feather",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
       }
-    />
+    >
+      
+    </Text>
     <TextInput
       allowFontScaling={true}
+      name="user"
       onChangeText={[Function]}
       placeholder="Email"
       placeholderTextColor="white"
-      source={
-        Object {
-          "testUri": "../../../src/screens/images/person.png",
-        }
-      }
       style={
         Object {
           "alignSelf": "center",
@@ -123,6 +105,7 @@ exports[`renders correctly 1`] = `
           "fontFamily": "Roboto-Light",
           "fontSize": 16,
           "height": 40,
+          "marginLeft": 5,
           "width": 215,
         }
       }
@@ -145,36 +128,34 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    <Image
-      source={
-        Object {
-          "testUri": "../../../src/screens/images/lock.png",
-        }
-      }
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
       style={
-        Object {
-          "alignItems": "center",
-          "height": 25,
-          "margin": 5,
-          "paddingBottom": 15,
-          "paddingRight": 10,
-          "paddingTop": 10,
-          "resizeMode": "stretch",
-          "width": 25,
-        }
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 16,
+          },
+          undefined,
+          Object {
+            "fontFamily": "Feather",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
       }
-    />
+    >
+      
+    </Text>
     <TextInput
       allowFontScaling={true}
+      name="lock"
       onChangeText={[Function]}
       placeholder="Password"
       placeholderTextColor="white"
       secureTextEntry={true}
-      source={
-        Object {
-          "testUri": "../../../src/screens/images/lock.png",
-        }
-      }
       style={
         Object {
           "alignSelf": "center",
@@ -182,6 +163,7 @@ exports[`renders correctly 1`] = `
           "fontFamily": "Roboto-Light",
           "fontSize": 16,
           "height": 40,
+          "marginLeft": 5,
           "width": 215,
         }
       }
@@ -204,35 +186,33 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    <Image
-      source={
-        Object {
-          "testUri": "../../../src/screens/images/language.png",
-        }
-      }
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
       style={
-        Object {
-          "alignItems": "center",
-          "height": 25,
-          "margin": 5,
-          "paddingBottom": 15,
-          "paddingRight": 10,
-          "paddingTop": 10,
-          "resizeMode": "stretch",
-          "width": 25,
-        }
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 16,
+          },
+          undefined,
+          Object {
+            "fontFamily": "Feather",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
       }
-    />
+    >
+      
+    </Text>
     <TextInput
       allowFontScaling={true}
+      name="globe"
       onChangeText={[Function]}
       placeholder="Server url"
       placeholderTextColor="white"
-      source={
-        Object {
-          "testUri": "../../../src/screens/images/language.png",
-        }
-      }
       style={
         Object {
           "alignSelf": "center",
@@ -240,6 +220,7 @@ exports[`renders correctly 1`] = `
           "fontFamily": "Roboto-Light",
           "fontSize": 16,
           "height": 40,
+          "marginLeft": 5,
           "width": 215,
         }
       }
