@@ -3,19 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "babel-jest": "^21.2.0",
-    "jest": "^21.2.1",
-    "react-test-renderer": "^16.2.0",
-    "regenerator-runtime": "^0.11.1"
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "jest-expo": "23.0.0",
+    "react-test-renderer": "16.0.0"
   },
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "test": "jest"
+    "test": "node node_modules/jest/bin/jest.js --watch"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "jest-expo"
   },
   "rnpm": {
     "assets": [
@@ -29,6 +28,7 @@
     "eslint-plugin-react-native": "^3.2.0",
     "react": "16.0.0",
     "react-native": "0.50.3",
+    "react-native-elements": "^0.18.5",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.21"

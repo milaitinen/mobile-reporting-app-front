@@ -13,7 +13,7 @@ import NewFormScreen from '../screens/NewFormScreen';
 
 const TemplateStack = StackNavigator({
     Templates: {
-        screen: TemplateView,
+        screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
             title: 'Templates',
             headerStyle: { backgroundColor: '#f0f8ff' },
