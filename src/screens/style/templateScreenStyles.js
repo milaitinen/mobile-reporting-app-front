@@ -12,6 +12,7 @@ const templateScreenStyles = StyleSheet.create({
     MainContainer: {
         justifyContent: 'center',
         flex: 1,
+        backgroundColor: '#3d4f7c',
         // margin: 10,
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
@@ -20,7 +21,7 @@ const templateScreenStyles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: 'white'
+        backgroundColor: '#3d4f7c'
     }
 });
 
