@@ -202,15 +202,15 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
-arr-diff@^2.0.0:
+formsByLayouts-diff@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/arr-diff/-/arr-diff-2.0.0.tgz#8f3b827f955a8bd669697e4a4256ac3ceae356cf"
+  resolved "https://registry.yarnpkg.com/formsByLayouts-diff/-/formsByLayouts-diff-2.0.0.tgz#8f3b827f955a8bd669697e4a4256ac3ceae356cf"
   dependencies:
-    arr-flatten "^1.0.1"
+    formsByLayouts-flatten "^1.0.1"
 
-arr-flatten@^1.0.1:
+formsByLayouts-flatten@^1.0.1:
   version "1.1.0"
-  resolved "https://registry.yarnpkg.com/arr-flatten/-/arr-flatten-1.1.0.tgz#36048bbff4e7b47e136644316c99669ea5ae91f1"
+  resolved "https://registry.yarnpkg.com/formsByLayouts-flatten/-/formsByLayouts-flatten-1.1.0.tgz#36048bbff4e7b47e136644316c99669ea5ae91f1"
 
 array-differ@^1.0.0:
   version "1.0.0"
@@ -3100,7 +3100,7 @@ micromatch@^2.1.5, micromatch@^2.3.11:
   version "2.3.11"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-2.3.11.tgz#86677c97d1720b363431d04d0d15293bd38c1565"
   dependencies:
-    arr-diff "^2.0.0"
+    formsByLayouts-diff "^2.0.0"
     array-unique "^0.2.1"
     braces "^1.8.2"
     expand-brackets "^0.1.4"

@@ -9,27 +9,68 @@ export default class NewFormScreen extends React.Component {
     {
         super(props);
         this.state = {
-            TextInputName: ''
+            TextInputName  : '',                                      // Text input is initialized as an empty string.
+            layoutID       : props.navigation.state.params.layoutID,  /* LayoutID that is inherited from navigation
+                                                                         parameters as stated in TemplateScreen class. */
+
         };
+
     }
+
+    // Gets the current date and return it as a string.
+
+    getDate = () => {
+
+        const today = new Date();
+        let dd = today.getDate();
+        let mm = today.getMonth() + 1; // January is 0!
+        const yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+
+        return yyyy + '-' + mm + '-' + dd;
+    }
+
+
+    // Inserts data to server with a post method.
 
     InsertDataToServer = () => {
 
-        const { TextInputName } = this.state ;
+        const date = this.getDate();
 
-        fetch(url, {
+        fetch(url + '/users/1/forms', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
+
             body: JSON.stringify({
-                name: TextInputName
+                layoutID: this.state.layoutID,
+                title: this.state.TextInputName,
+                dateCreated: date,
+                answers: [
+                    {
+                        fieldID: 1,
+                        answer: "Answer 1"
+                    },
+                    {
+                        fieldID: 2,
+                        answer: "Answer 2"
+                    }
+                ]
+
             })
 
         }).then(response => {
             if (response.status === 200) {
-
+                this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
                 return 'Report added';
             } else {
@@ -44,7 +85,7 @@ export default class NewFormScreen extends React.Component {
         });
 
     }
-
+    
     render() {
         return (
             <View style={styles.MainContainer}>

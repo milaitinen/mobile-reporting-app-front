@@ -7,7 +7,6 @@ import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 
 import MockFormScreen from '../screens/MockFormScreen';
 import TemplateScreen from '../screens/TemplateScreen';
-import TemplateView from '../screens/TemplateView';
 import NewFormScreen from '../screens/NewFormScreen';
 
 
