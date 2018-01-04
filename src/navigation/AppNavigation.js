@@ -8,6 +8,7 @@ import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 import MockFormScreen from '../screens/MockFormScreen';
 import TemplateScreen from '../screens/TemplateScreen';
 import NewFormScreen from '../screens/NewFormScreen';
+import ReportsScreen from '../screens/ReportsScreen';
 
 
 const TemplateStack = StackNavigator({
@@ -32,6 +33,11 @@ const TemplateStack = StackNavigator({
         screen: NewFormScreen,
         navigationOptions: { title: 'Create new report' }
     },
+    ReportsPage: {
+        screen: ReportsScreen,
+        navigationOptions: { title: 'List of reports'}
+    },
+
 }, {
     // is this part necessary?
 });

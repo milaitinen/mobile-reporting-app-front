@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Animated } from 'react-native';
+import { Text, StyleSheet, View, Animated } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 class Layout extends Component{
@@ -54,6 +54,10 @@ class Layout extends Component{
         this.props.createNew(layoutID);
     }
 
+    viewAllReports() {
+        this.props.viewAllReports();
+    }
+
     render(){
         /* Renders the Layout and its children, which are defined in the TemplateScreen class.
            The TemplateScreen uses FlatList component as the Layout components child.
@@ -76,6 +80,9 @@ class Layout extends Component{
 
                 <View style={styles.body} onLayout={this._setMaxHeight.bind(this)}>
                     {this.props.children}
+                    <Text style={styles.more} onPress={() => this.viewAllReports()}>
+                        Show more
+                    </Text>
                 </View>
 
             </Animated.View>
@@ -96,7 +103,12 @@ const styles = StyleSheet.create({
     body: {
         padding     : 10,
         paddingTop  : 0
-    }
+    },
+    more: {
+        color: '#88daf2',
+        textDecorationLine: 'underline',
+        padding: 10,
+    },
 });
 
 export default Layout;
