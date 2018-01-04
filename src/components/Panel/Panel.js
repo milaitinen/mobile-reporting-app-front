@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,View,TouchableHighlight,Animated, Image } from 'react-native';
+import { View, Animated } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import panelStyles from './panelStyles';
 
 class Panel extends Component{
     constructor(props){
@@ -52,21 +53,21 @@ class Panel extends Component{
 
         return (
             <Animated.View
-                style={[styles.container,{ height: this.state.animation }]}>
+                style={[panelStyles.container,{ height: this.state.animation }]}>
                 <View onLayout={this._setMinHeight.bind(this)}>
                     <ListItem
-                        containerStyle={ styles.ListItemStyle }
+                        containerStyle={ panelStyles.ListItemStyle }
                         onPress={this.toggle.bind(this)}
                         title={this.state.title}
                         subtitle={this.state.nofForms + ' Forms'}
-                        rightIcon={{ name: 'arrow-right', type: 'font-awesome', style: { marginRight: 10, fontSize: 15 } }}
+                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: panelStyles.rightIconStyle,  }}
                         onPressRightIcon={() => this.createNew()}
 
                     />
 
                 </View>
 
-                <View style={styles.body} onLayout={this._setMaxHeight.bind(this)}>
+                <View style={panelStyles.body} onLayout={this._setMaxHeight.bind(this)}>
                     {this.props.children}
                 </View>
 
@@ -74,40 +75,5 @@ class Panel extends Component{
         );
     }
 }
-
-const styles = StyleSheet.create({
-
-    ListItemStyle: {
-        height: 50
-    },
-    container: {
-        backgroundColor: '#fff',
-        margin:10,
-        overflow:'hidden'
-    },
-    titleContainer: {
-        flexDirection: 'row'
-    },
-    title: {
-        flex    : 1,
-        padding : 10,
-        color   :'#2a2f43',
-        fontWeight:'bold'
-    },
-
-    buttonText: {
-        fontWeight:'bold',
-        fontSize: 25,
-        paddingRight: 15,
-    },
-
-    button: {
-
-    },
-    body: {
-        padding     : 10,
-        paddingTop  : 0
-    }
-});
 
 export default Panel;

@@ -5,11 +5,13 @@ import {
     ActivityIndicator,
     ScrollView,
 } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, SearchBar } from 'react-native-elements';
 import templateScreenStyles from './style/templateScreenStyles';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { Panel } from '../components/Panel';
 import { url } from './urlsetting';
+import loginStyles from './style/styles';
 
 
 class TemplateScreen extends Component {
@@ -120,41 +122,52 @@ class TemplateScreen extends Component {
         }
 
         return (
-            <View style={{ flex: 1 }}>
+            <LinearGradient
+                colors={['#3d4f7c', '#31456f', '#1b3055']}
+                style={loginStyles.contentContainer}
+            >
+                <View style={{ flex: 1 }}>
 
-                <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
+                    <SearchBar
+                        lightTheme
+                        containerStyle = {templateScreenStyles.searchBarContainer}
+                        backgroundColor = { 'transparent'}
+                        placeholder='Search for reports' />
 
-                    <FlatList
-                        data={ this.state.dataLayouts }
-                        renderItem={({ item, index }) =>
-                            <Panel
-                                title={item.title}
-                                createNew={this.createNew}
-                                nofForms={this.state.arr[index].length} >
-                                <FlatList
-                                    data={ this.state.arr[index] }
-                                    renderItem={({ item }) =>
-                                        <ListItem
-                                            key={item.title}
-                                            containerStyle={ templateScreenStyles.ListItemStyle }
-                                            title={item.title}
-                                            subtitle={item.dateCreated}
-                                            hideChevron={true}
-                                        />
-                                    }
-                                    keyExtractor={item => item.orderNo}
-                                />
-                            </Panel>
+                    <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
 
-                        }
-                        keyExtractor={item => item.id}
-                        refreshing={this.state.refreshing}
+                        <FlatList
+                            data={ this.state.dataLayouts }
+                            renderItem={({ item, index }) =>
+                                <Panel
+                                    title={item.title}
+                                    createNew={this.createNew}
+                                    nofForms={this.state.arr[index].length} >
+                                    <FlatList
+                                        data={ this.state.arr[index] }
+                                        renderItem={({ item }) =>
+                                            <ListItem
+                                                key={item.title}
+                                                containerStyle={ templateScreenStyles.ListItemStyle }
+                                                title={item.title}
+                                                subtitle={item.dateCreated}
+                                                hideChevron={true}
+                                            />
+                                        }
+                                        keyExtractor={item => item.orderNo}
+                                    />
+                                </Panel>
 
-                    />
+                            }
+                            keyExtractor={item => item.id}
+                            refreshing={this.state.refreshing}
+
+                        />
 
 
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
+            </LinearGradient>
         );
     }
 }

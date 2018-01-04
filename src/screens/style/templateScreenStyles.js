@@ -12,7 +12,7 @@ const templateScreenStyles = StyleSheet.create({
     MainContainer: {
         justifyContent: 'center',
         flex: 1,
-        backgroundColor: '#3d4f7c',
+        backgroundColor: 'transparent',
         // margin: 10,
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
@@ -22,6 +22,17 @@ const templateScreenStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#3d4f7c'
+    },
+
+    searchBarContainer: {
+        paddingBottom: (Platform.OS === 'ios') ? 20 : 5,
+        backgroundColor: 'transparent',
+        borderBottomWidth: 0,
+        borderTopWidth:0,
+    },
+
+    searchBarInput: {
+        backgroundColor: 'transparent'
     }
 });
 
