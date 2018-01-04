@@ -1,10 +1,14 @@
 import { StyleSheet } from 'react-native';
 
 const panelStyles = StyleSheet.create({
-    ListItemStyle: {
-        height: 50,
+    ListItemTitleStyle: {
+        height:60,
         borderRadius: 10,
         backgroundColor: '#fff',
+    },
+
+    ListItemStyle: {
+        height: 50,
     },
 
     container: {
@@ -20,8 +24,32 @@ const panelStyles = StyleSheet.create({
     },
 
     rightIconStyle: {
-        marginRight: 10,
-        fontSize: 25,
+        marginRight: 5,
+        fontSize: 40,
+        backgroundColor: '#39ac56',
+        paddingLeft: 2,
+        paddingRight: 2,
+        borderRadius: 8,
+        //borderColor: '#000',
+        //borderWidth: 1
+    },
+
+    leftIconStyle: {
+        marginLeft: 5,
+        fontSize: 40
+    },
+
+    badgeContainerStyleA: {
+        backgroundColor: '#00b33c',
+    },
+
+    badgeContainerStyleP: {
+        backgroundColor: '#ffb84d',
+    },
+
+    badgeTextStyle: {
+        color: '#666666',
+        padding: 1
     },
 
     title: {

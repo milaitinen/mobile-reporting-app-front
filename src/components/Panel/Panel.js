@@ -56,11 +56,12 @@ class Panel extends Component{
                 style={[panelStyles.container,{ height: this.state.animation }]}>
                 <View onLayout={this._setMinHeight.bind(this)}>
                     <ListItem
-                        containerStyle={ panelStyles.ListItemStyle }
+                        containerStyle={ panelStyles.ListItemTitleStyle }
                         onPress={this.toggle.bind(this)}
                         title={this.state.title}
                         subtitle={this.state.nofForms + ' Forms'}
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: panelStyles.rightIconStyle,  }}
+                        leftIcon = { { name: 'folder-open', type: 'Materialicons', style: panelStyles.leftIconStyle, }}
                         onPressRightIcon={() => this.createNew()}
 
                     />

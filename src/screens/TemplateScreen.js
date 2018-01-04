@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Panel } from '../components/Panel';
 import { url } from './urlsetting';
 import loginStyles from './style/styles';
+import panelStyles from '../components/Panel/panelStyles';
 
 
 class TemplateScreen extends Component {
@@ -131,7 +132,7 @@ class TemplateScreen extends Component {
                     <SearchBar
                         lightTheme
                         containerStyle = {templateScreenStyles.searchBarContainer}
-                        backgroundColor = { 'transparent'}
+                        inputStyle = { templateScreenStyles.searchBarInput }
                         placeholder='Search for reports' />
 
                     <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
@@ -148,10 +149,11 @@ class TemplateScreen extends Component {
                                         renderItem={({ item }) =>
                                             <ListItem
                                                 key={item.title}
-                                                containerStyle={ templateScreenStyles.ListItemStyle }
+                                                containerStyle={ panelStyles.ListItemStyle }
                                                 title={item.title}
                                                 subtitle={item.dateCreated}
                                                 hideChevron={true}
+                                                badge = { { value: 'Pending', textStyle: panelStyles.badgeTextStyle, containerStyle: panelStyles.badgeContainerStyleP, }}
                                             />
                                         }
                                         keyExtractor={item => item.orderNo}

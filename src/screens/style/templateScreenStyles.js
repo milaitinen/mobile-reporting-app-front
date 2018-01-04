@@ -16,9 +16,7 @@ const templateScreenStyles = StyleSheet.create({
         // margin: 10,
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
-    ListItemStyle: {
-        height: 50
-    },
+
     container: {
         flex: 1,
         backgroundColor: '#3d4f7c'
@@ -32,7 +30,7 @@ const templateScreenStyles = StyleSheet.create({
     },
 
     searchBarInput: {
-        backgroundColor: 'transparent'
+        backgroundColor: '#fff'
     }
 });
 
