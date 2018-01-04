@@ -7,7 +7,6 @@ import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 
 import MockFormScreen from '../screens/MockFormScreen';
 import TemplateScreen from '../screens/TemplateScreen';
-import TemplateView from '../screens/TemplateView';
 import NewFormScreen from '../screens/NewFormScreen';
 
 
@@ -15,11 +14,12 @@ const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
-            title: 'Templates',
-            headerStyle: { backgroundColor: '#f0f8ff' },
+            headerTitle: 'Forms',
+            headerTitleStyle: { color: '#fff' },
+            headerStyle: { backgroundColor: '#3d4f7c', borderBottomWidth: 1, borderBottomColor: '#fff' },
             headerLeft:
                 <Text
-                    style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15 }}
+                    style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15, color: '#fff' }}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
                     ☰
                 </Text>
