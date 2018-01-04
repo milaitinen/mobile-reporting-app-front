@@ -25,6 +25,7 @@ export default class LoginScreen extends React.Component {
                 colors={['#3d4f7c', '#31456f', '#1b3055']}
                 style={loginStyles.contentContainer}
             >
+
                 <Text style={loginStyles.title}>
                     MR-Application
                 </Text>
