@@ -1,15 +1,45 @@
 import React from 'react';
-import { Text } from 'react-native';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { Text, View, AppRegistry } from 'react-native';
+import { StackNavigator, DrawerNavigator, NavigationActions } from 'react-navigation';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
+
+import PropTypes from 'prop-types';
 
 import MockFormScreen from '../screens/MockFormScreen';
 import TemplateScreen from '../screens/TemplateScreen';
 import NewFormScreen from '../screens/NewFormScreen';
 
+class Sidebar extends React.Component {
 
+    //TODO: why doesn't this work?
+    navigateToScreen = (route) => {
+        const navigateAction = NavigationActions.navigate( {
+            routeName: route
+        });
+        this.props.navigation.dispatch(navigateAction);
+    }
+
+    render () {
+        return (
+            <View>
+                <Text onPress={ () => console.log('painoit ekaa nappia')}>
+                    ensimmäinen juttu
+                </Text>
+                <Text onPress={ () => this.navigateToScreen(LoginScreen) }>
+                    toka juttu
+                </Text>
+            </View>
+        );
+    }
+}
+
+Sidebar.propTypes = {
+    navigation: PropTypes.object,
+}
+
+//The stack that is contained within the drawer stack
 const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
@@ -46,6 +76,9 @@ const DrawerStack = DrawerNavigator({
         screen: MockFormScreen,
         navigationOptions: { title: 'Mock forms' }
     },
+}, {
+    //This loads the contents of the drawer from the custom Sidebar
+    contentComponent: Sidebar,
 });
 
 const LoginStack = StackNavigator({
