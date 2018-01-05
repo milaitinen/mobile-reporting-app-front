@@ -13,12 +13,20 @@ import NewFormScreen from '../screens/NewFormScreen';
 
 class Sidebar extends React.Component {
 
-    //TODO: why doesn't this work?
-    navigateToScreen = (route) => {
-        const navigateAction = NavigationActions.navigate( {
-            routeName: route
-        });
-        this.props.navigation.dispatch(navigateAction);
+    //Integrating this with redux navigation seems to make this work
+    //TODO: test other instances of navigation not integrated with redux
+    //TODO: improve code style
+    logout = (route) => {
+        //perform other logging out related tasks here
+        console.log('logging out');
+        console.log(`2 + 2 = ${2 + 2}`);
+
+        const actionToDispatch = NavigationActions.reset({
+            index: 0,
+            key: null,
+            actions: [NavigationActions.navigate({routeName: 'loginStack'})]
+        })
+        this.props.navigation.dispatch(actionToDispatch)
     }
 
     render () {
@@ -27,17 +35,18 @@ class Sidebar extends React.Component {
                 <Text onPress={ () => console.log('painoit ekaa nappia')}>
                     ensimmäinen juttu
                 </Text>
-                <Text onPress={ () => this.navigateToScreen(LoginScreen) }>
+                <Text onPress={ () => this.logout(LoginScreen) }>
                     toka juttu
                 </Text>
             </View>
         );
     }
 }
-
+/*
 Sidebar.propTypes = {
     navigation: PropTypes.object,
 }
+*/
 
 //The stack that is contained within the drawer stack
 const TemplateStack = StackNavigator({
