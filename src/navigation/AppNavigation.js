@@ -5,9 +5,9 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 
-import MockFormScreen from '../screens/MockFormScreen';
 import TemplateScreen from '../screens/TemplateScreen';
 import NewFormScreen from '../screens/NewFormScreen';
+import ReportsScreen from '../screens/ReportsScreen';
 
 import navigationStyles from '../screens/style/navigationStyles'
 
@@ -35,6 +35,11 @@ const TemplateStack = StackNavigator({
         screen: NewFormScreen,
         navigationOptions: { title: 'Create new report' }
     },
+    ReportsPage: {
+        screen: ReportsScreen,
+        navigationOptions: { title: 'List of reports'}
+    },
+
 }, {
     // is this part necessary?
 });
@@ -43,10 +48,6 @@ const DrawerStack = DrawerNavigator({
     Menu: {
         screen: TemplateStack,
         navigationOptions: { title: 'Templates' }
-    },
-    MockForms: {
-        screen: MockFormScreen,
-        navigationOptions: { title: 'Mock forms' }
     },
 });
 
