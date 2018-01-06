@@ -11,6 +11,7 @@ import { ListItem } from 'react-native-elements';
 
 import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
+import { getLayouts } from './api';
 
 class TemplateScreen extends Component {
     static displayName = 'TemplateScreen';
@@ -31,9 +32,7 @@ class TemplateScreen extends Component {
     */
 
     componentDidMount() {
-
         this.getLayoutsAndForms();
-
     }
 
     /*
@@ -45,89 +44,58 @@ class TemplateScreen extends Component {
     */
 
     getLayoutsAndForms = () => {
-
-        fetch(url + '/layouts')
-            .then((response) => response.json())
+        getLayouts()
             .then((responseJson) => {
                 this.setState({
-                    dataLayouts: responseJson
+                    dataLayouts: responseJson,
+                    isLoading: false,
+                    refreshing: false,
                 });
             })
-            .then(()=> {
-                const promises = [];
-                for (let i = 1; i <= this.state.dataLayouts.length; i++) {
-                    const orgReposUrl = url + '/forms?layoutid=' + i;
-                    promises.push(fetch(orgReposUrl).then(response => response.json()));
 
-                }
-
-                Promise.all(promises)
-                    .then(data => {
-                        this.setState({
-                            formsByLayouts: data,
-                            isLoading: false,
-                            refreshing: false,
-                        });
-                    })
-                    .catch(err => console.error(err));
-
-
-            })
             .catch((error) => {
                 console.error(error);
             }).done();
-
-    }
+    };
 
     // Handler function for refreshing the data and refetching.
-
     handleRefresh = () => {
         this.setState(
-            {
-                refreshing: true,
-            },
-            () => {
-                this.getLayoutsAndForms();
-            }
+            { refreshing: true, },
+            () => { this.getLayoutsAndForms(); }
         );
+    };
 
-    }
     /*
      Function that passes navigation props and navigates to NewFormScreen.
      This makes it possible for the Layout component to navigate.
      Also passes the refresh function and the specific layoutID so that the
      app knows to which layout the new report has to be added.
     */
-
     createNew = (layoutID) => {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
-    }
+    };
 
     viewAllReports = () => {
         this.props.navigation.navigate('ReportsPage');
-    }
+    };
 
     render() {
-
         if (this.state.isLoading) {
             return (
                 <View style={[styles.container]}>
-
                     <ActivityIndicator
                         animating={this.state.animating}
                         style={[styles.activityIndicator, { height: 80 }]}
                         size='large'
                     />
-
                 </View>
             );
         }
 
         return (
             <View style={{ flex: 1 }}>
-
                 <ScrollView contentContainerStyle={styles.MainContainer}>
-
                     <FlatList
                         /* Lists the layouts in a FlatList component. Each FlatList item is rendered using a
                            custom Layout component. The Layout component has a FlatList component as its child
@@ -140,34 +108,14 @@ class TemplateScreen extends Component {
                                 title={item.title} // Title of the layout
                                 createNew={this.createNew} // Passes the createNew function to the Layout component.
                                 viewAllReports={this.viewAllReports}
-                                nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
+                                nofForms={5} /* Passes the number of reports to
                                                                                       Layout component. */
                                 layoutID={item.id} // Passes the id of the Layout.
-                            >
-                                <FlatList
-                                    data={ this.state.formsByLayouts[index] } /* Renders the forms from the state array
-                                                                                 with the help of an index from the earlier
-                                                                                 renderItem function. */
-                                    renderItem={({ item }) =>
-                                        <ListItem
-                                            key={item.title}
-                                            containerStyle={ styles.ListItemStyle }
-                                            title={item.title}
-                                            subtitle={item.dateCreated}
-                                            hideChevron={true}
-                                        />
-                                    }
-                                    keyExtractor={item => item.orderNo}
-                                />
-                            </Layout>
-
+                            />
                         }
                         keyExtractor={item => item.id}
                         refreshing={this.state.refreshing}
-
                     />
-
-
                 </ScrollView>
             </View>
         );
