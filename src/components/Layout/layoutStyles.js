@@ -15,6 +15,7 @@ const layoutStyles = StyleSheet.create({
     ListItemStyle: {
         height: 60,
         borderBottomColor: '#b4b4b470',
+
     },
 
     container: {
@@ -38,6 +39,10 @@ const layoutStyles = StyleSheet.create({
         paddingTop: 5,
         fontFamily: 'Roboto-Light',
         fontSize: 18,
+    },
+
+    listTitleStyle :{
+        fontFamily: 'Roboto-Light'
     },
 
     rightIconStyle: {
@@ -80,7 +85,7 @@ const layoutStyles = StyleSheet.create({
 
     body: {
         padding: 10,
-        paddingTop: 0
+        paddingTop: 0,
     },
 
     more: {

@@ -143,6 +143,7 @@ class TemplateScreen extends Component {
                         lightTheme
                         containerStyle = {templateScreenStyles.searchBarContainer}
                         inputStyle = { templateScreenStyles.searchBarInput }
+                        icon = {{ style: templateScreenStyles.searchIcon }}
                         placeholder='Search for reports' />
 
                     <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
@@ -173,6 +174,8 @@ class TemplateScreen extends Component {
                                                 containerStyle={ layoutStyles.ListItemStyle }
                                                 title={item.title}
                                                 subtitle={item.dateCreated}
+                                                titleStyle = { layoutStyles.listTitleStyle }
+                                                subtitleStyle = {layoutStyles.listTitleStyle }
                                                 hideChevron={true}
                                                 badge = { { value: 'Pending', textStyle: layoutStyles.badgeTextStyle, containerStyle: layoutStyles.badgeContainerStyleP, }}
                                             />
