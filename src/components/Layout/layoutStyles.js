@@ -31,8 +31,8 @@ const layoutStyles = StyleSheet.create({
         paddingLeft: 2,
         paddingRight: 2,
         borderRadius: 8,
-        //borderColor: '#000',
-        //borderWidth: 1
+        borderColor: '#000',
+        borderWidth: 1
     },
 
     leftIconStyle: {
