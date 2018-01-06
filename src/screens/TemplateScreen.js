@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
+    Text,
     View,
     FlatList,
     Platform,
@@ -43,7 +44,6 @@ class TemplateScreen extends Component {
         Promise.all. After the all the promises have been fetched, the function updates the state
         of formsByLayouts, and sets isLoading and refreshing to false.
     */
-
     getLayoutsAndForms = () => {
 
         fetch(url + '/layouts')
@@ -55,10 +55,10 @@ class TemplateScreen extends Component {
             })
             .then(()=> {
                 const promises = [];
+
                 for (let i = 1; i <= this.state.dataLayouts.length; i++) {
                     const orgReposUrl = url + '/forms?layoutid=' + i;
                     promises.push(fetch(orgReposUrl).then(response => response.json()));
-
                 }
 
                 Promise.all(promises)
@@ -77,7 +77,7 @@ class TemplateScreen extends Component {
                 console.error(error);
             }).done();
 
-    }
+    };
 
     // Handler function for refreshing the data and refetching.
 
@@ -91,7 +91,7 @@ class TemplateScreen extends Component {
             }
         );
 
-    }
+    };
     /*
      Function that passes navigation props and navigates to NewFormScreen.
      This makes it possible for the Layout component to navigate.
@@ -101,11 +101,11 @@ class TemplateScreen extends Component {
 
     createNew = (layoutID) => {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
-    }
+    };
 
     viewAllReports = () => {
         this.props.navigation.navigate('ReportsPage');
-    }
+    };
 
     render() {
 
@@ -134,6 +134,8 @@ class TemplateScreen extends Component {
                            component, which lists the specific forms under the right layout. The component and its
                            props are explained in its class more specifically.
                          */
+
+
                         data={ this.state.dataLayouts } // The data in which the layouts are stored.
                         renderItem={({ item, index }) => // Renders each layout separately.
                             <Layout
@@ -145,7 +147,7 @@ class TemplateScreen extends Component {
                                 layoutID={item.id} // Passes the id of the Layout.
                             >
                                 <FlatList
-                                    data={ this.state.formsByLayouts[index] } /* Renders the forms from the state array
+                                    data={ this.state.formsByLayouts[index].slice(0, 5) } /* Renders the forms from the state array
                                                                                  with the help of an index from the earlier
                                                                                  renderItem function. */
                                     renderItem={({ item }) =>

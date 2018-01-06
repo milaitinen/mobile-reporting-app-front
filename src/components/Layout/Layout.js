@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, View, Animated } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-import renderIf from '../../functions/renderIf';
+
 
 class Layout extends Component{
     constructor(props){
@@ -60,8 +60,8 @@ class Layout extends Component{
         this.props.viewAllReports();
     }
 
-    showMore() {
-        if (this.state.nofForms > 5) {
+    showMore = (forms) => {
+        if (forms > 5) {
             return(
                 <Text style={styles.more} onPress={() => this.viewAllReports()}>
                     Show more
@@ -70,12 +70,13 @@ class Layout extends Component{
         } else {
             return null;
         }
-    }
+    };
 
     render(){
         /* Renders the Layout and its children, which are defined in the TemplateScreen class.
            The TemplateScreen uses FlatList component as the Layout components child.
          */
+        const forms = this.state.nofForms;
 
         return (
             <Animated.View
@@ -95,7 +96,7 @@ class Layout extends Component{
 
                 <View style={styles.body} onLayout={this._setMaxHeight.bind(this)}>
                     {this.props.children}
-                    {this.showMore()}
+                    {this.showMore(forms)}
                 </View>
 
             </Animated.View>
