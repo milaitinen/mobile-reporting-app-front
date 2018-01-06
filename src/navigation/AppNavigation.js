@@ -9,17 +9,19 @@ import MockFormScreen from '../screens/MockFormScreen';
 import TemplateScreen from '../screens/TemplateScreen';
 import NewFormScreen from '../screens/NewFormScreen';
 
+import navigationStyles from '../screens/style/navigationStyles'
+
 
 const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
             headerTitle: 'Forms',
-            headerTitleStyle: { color: '#fff' },
-            headerStyle: { backgroundColor: '#3d4f7c', borderBottomWidth: 1, borderBottomColor: '#fff' },
+            headerTitleStyle: navigationStyles.formHeaderTitle,
+            headerStyle: navigationStyles.formHeader ,
             headerLeft:
                 <Text
-                    style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15, color: '#fff' }}
+                    style={navigationStyles.headerLeft}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
                     ☰
                 </Text>
