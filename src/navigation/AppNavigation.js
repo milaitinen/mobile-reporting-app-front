@@ -9,16 +9,19 @@ import TemplateScreen from '../screens/TemplateScreen';
 import NewFormScreen from '../screens/NewFormScreen';
 import ReportsScreen from '../screens/ReportsScreen';
 
+import navigationStyles from '../screens/style/navigationStyles'
+
 
 const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
-            title: 'Templates',
-            headerStyle: { backgroundColor: '#f0f8ff' },
+            headerTitle: 'Forms',
+            headerTitleStyle: navigationStyles.formHeaderTitle,
+            headerStyle: navigationStyles.formHeader ,
             headerLeft:
                 <Text
-                    style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15 }}
+                    style={navigationStyles.headerLeft}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
                     ☰
                 </Text>

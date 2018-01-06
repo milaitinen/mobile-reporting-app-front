@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet,
     View,
     FlatList,
-    Platform,
     ActivityIndicator,
     ScrollView,
 } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, SearchBar } from 'react-native-elements';
+import templateScreenStyles from './style/templateScreenStyles';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
+import loginStyles from './style/styles';
+import layoutStyles from '../components/Layout/layoutStyles';
+
 
 class TemplateScreen extends Component {
     static displayName = 'TemplateScreen';
@@ -111,11 +114,11 @@ class TemplateScreen extends Component {
 
         if (this.state.isLoading) {
             return (
-                <View style={[styles.container]}>
+                <View style={[templateScreenStyles.container]}>
 
                     <ActivityIndicator
                         animating={this.state.animating}
-                        style={[styles.activityIndicator, { height: 80 }]}
+                        style={[templateScreenStyles.activityIndicator, { height: 80 }]}
                         size='large'
                     />
 
@@ -124,9 +127,20 @@ class TemplateScreen extends Component {
         }
 
         return (
+         <LinearGradient
+                colors={['#3d4f7c', '#31456f', '#1b3055']}
+                style={loginStyles.contentContainer}
+            >
+                  
             <View style={{ flex: 1 }}>
 
-                <ScrollView contentContainerStyle={styles.MainContainer}>
+               <SearchBar
+                        lightTheme
+                        containerStyle = {templateScreenStyles.searchBarContainer}
+                        inputStyle = { templateScreenStyles.searchBarInput }
+                        placeholder='Search for reports' />
+
+                    <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
 
                     <FlatList
                         /* Lists the layouts in a FlatList component. Each FlatList item is rendered using a
@@ -150,11 +164,12 @@ class TemplateScreen extends Component {
                                                                                  renderItem function. */
                                     renderItem={({ item }) =>
                                         <ListItem
-                                            key={item.title}
-                                            containerStyle={ styles.ListItemStyle }
-                                            title={item.title}
-                                            subtitle={item.dateCreated}
-                                            hideChevron={true}
+                                           key={item.title}
+                                           containerStyle={ layoutStyles.ListItemStyle }
+                                           title={item.title}
+                                           subtitle={item.dateCreated}
+                                           hideChevron={true}
+                                           badge = { { value: 'Pending', textStyle: layoutStyles.badgeTextStyle, containerStyle: layoutStyles.badgeContainerStyleP, }}
                                         />
                                     }
                                     keyExtractor={item => item.orderNo}
@@ -169,34 +184,10 @@ class TemplateScreen extends Component {
 
 
                 </ScrollView>
-            </View>
+                </View>
+            </LinearGradient>
         );
     }
 }
-
-
-const styles = StyleSheet.create({
-
-
-    activityIndicator: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 80
-    },
-
-    MainContainer: {
-        justifyContent: 'center',
-        flex: 1,
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-    },
-    ListItemStyle: {
-        height: 50
-    },
-    container: {
-        flex: 1,
-        backgroundColor: 'white'
-    }
-});
 
 export default TemplateScreen;
