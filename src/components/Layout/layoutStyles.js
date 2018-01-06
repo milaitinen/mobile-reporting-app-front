@@ -2,35 +2,48 @@ import { StyleSheet } from 'react-native';
 
 const layoutStyles = StyleSheet.create({
     ListItemTitleStyle: {
-        height:60,
-        borderRadius: 10,
+        height: 70,
+        //borderRadius: 10,
         backgroundColor: '#fff',
+        paddingTop: 0,
+        paddingRight: 0,
+        paddingVertical: 20,
     },
 
     ListItemStyle: {
-        height: 50,
+        height: 70,
+        borderBottomColor: '#b4b4b470',
     },
 
     container: {
-        backgroundColor: '#e6e6e6',
-        margin:10,
+        backgroundColor: '#e0e8eb',
+        margin: 10,
         overflow:'hidden',
         borderRadius: 10,
-        height: 80
+        height: 60,
     },
 
     titleContainer: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        //paddingTop: 10,
+    },
+
+    titleStyle: {
+        paddingTop: 10,
     },
 
     rightIconStyle: {
-        marginRight: 5,
-        fontSize: 40,
+        marginRight: 3,
+        marginTop: 2,
+        marginBottom: 1,
+        fontSize: 45,
         color: '#77a482',
         backgroundColor: '#99d9ad',
-        paddingLeft: 2,
-        paddingRight: 2,
-        borderRadius: 8,
+        paddingLeft: 4,
+        paddingRight: 4,
+        paddingTop: 2,
+        paddingBottom: 2,
+        borderRadius: 10,
         //borderColor: '#000',
         //borderWidth: 1
     },
@@ -42,29 +55,18 @@ const layoutStyles = StyleSheet.create({
     },
 
     badgeContainerStyleA: {
-        backgroundColor: '#00b33c',
+        backgroundColor: '#77a482',
+        elevation: 5,
     },
 
     badgeContainerStyleP: {
-        backgroundColor: '#ffb84d',
+        backgroundColor: '#f3fe99',
+        elevation: 5,
     },
 
     badgeTextStyle: {
         color: '#666666',
         padding: 1
-    },
-
-    title: {
-        flex: 1,
-        padding: 10,
-        color:'#2a2f43',
-        fontWeight:'bold'
-    },
-
-    buttonText: {
-        fontWeight:'bold',
-        fontSize: 25,
-        paddingRight: 15,
     },
 
     body: {
@@ -73,9 +75,10 @@ const layoutStyles = StyleSheet.create({
     },
 
     more: {
-        color: '#88daf2',
+        color: '#5088b8',
         textDecorationLine: 'underline',
         padding: 10,
+        textAlign: 'center',
     },
 });
 

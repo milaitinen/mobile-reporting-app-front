@@ -11,7 +11,7 @@ class Layout extends Component{
             nofForms   : props.nofForms,        // Number of forms which the layout inherits from TemplateScreen.
             layoutID   : props.layoutID,        // The specific layoutID which the layout inherits from TemplateScreen.
             expanded   : false,                 // Checks whether the forms of the layout are shown or not.
-            animation  : new Animated.Value(50) /* Initializes the animation state as 50 (same height as the ListItem
+            animation  : new Animated.Value(70) /* Initializes the animation state as 50 (same height as the ListItem
                                                    component which includes the title of the Layout etc.)
                                                    This is the minimum height when the layout isn't expanded. */
         };
@@ -75,6 +75,7 @@ class Layout extends Component{
                         containerStyle={ layoutStyles.ListItemTitleStyle }
                         onPress={this.toggle.bind(this)} // Opens or closes the layout.
                         title={this.state.title} // Title of the layout.
+                        titleStyle={layoutStyles.titleStyle}
                         subtitle={this.state.nofForms + ' Forms'} // Number of forms as a subtitle.
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.rightIconStyle,  }}
                         leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.leftIconStyle, }}
