@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Animated } from 'react-native';
+import { View, Animated, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
 
@@ -27,7 +27,7 @@ class Layout extends Component{
         this.setState({
             expanded : !this.state.expanded
         });
-      
+
         // Animation for closing and opening
         this.state.animation.setValue(initialValue);
         Animated.spring(
@@ -86,7 +86,7 @@ class Layout extends Component{
 
                 <View style={layoutStyles.body} onLayout={this._setMaxHeight.bind(this)}>
                     {this.props.children}
-                    <Text style={styles.more} onPress={() => this.viewAllReports()}>
+                    <Text style={layoutStyles.more} onPress={() => this.viewAllReports()}>
                         Show more
                     </Text>
                 </View>

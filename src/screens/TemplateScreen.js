@@ -127,14 +127,14 @@ class TemplateScreen extends Component {
         }
 
         return (
-         <LinearGradient
+            <LinearGradient
                 colors={['#3d4f7c', '#31456f', '#1b3055']}
                 style={loginStyles.contentContainer}
             >
                   
-            <View style={{ flex: 1 }}>
+                <View style={{ flex: 1 }}>
 
-               <SearchBar
+                    <SearchBar
                         lightTheme
                         containerStyle = {templateScreenStyles.searchBarContainer}
                         inputStyle = { templateScreenStyles.searchBarInput }
@@ -142,48 +142,48 @@ class TemplateScreen extends Component {
 
                     <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
 
-                    <FlatList
+                        <FlatList
                         /* Lists the layouts in a FlatList component. Each FlatList item is rendered using a
                            custom Layout component. The Layout component has a FlatList component as its child
                            component, which lists the specific forms under the right layout. The component and its
                            props are explained in its class more specifically.
                          */
-                        data={ this.state.dataLayouts } // The data in which the layouts are stored.
-                        renderItem={({ item, index }) => // Renders each layout separately.
-                            <Layout
-                                title={item.title} // Title of the layout
-                                createNew={this.createNew} // Passes the createNew function to the Layout component.
-                                viewAllReports={this.viewAllReports}
-                                nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
+                            data={ this.state.dataLayouts } // The data in which the layouts are stored.
+                            renderItem={({ item, index }) => // Renders each layout separately.
+                                <Layout
+                                    title={item.title} // Title of the layout
+                                    createNew={this.createNew} // Passes the createNew function to the Layout component.
+                                    viewAllReports={this.viewAllReports}
+                                    nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
                                                                                       Layout component. */
-                                layoutID={item.id} // Passes the id of the Layout.
-                            >
-                                <FlatList
-                                    data={ this.state.formsByLayouts[index] } /* Renders the forms from the state array
+                                    layoutID={item.id} // Passes the id of the Layout.
+                                >
+                                    <FlatList
+                                        data={ this.state.formsByLayouts[index] } /* Renders the forms from the state array
                                                                                  with the help of an index from the earlier
                                                                                  renderItem function. */
-                                    renderItem={({ item }) =>
-                                        <ListItem
-                                           key={item.title}
-                                           containerStyle={ layoutStyles.ListItemStyle }
-                                           title={item.title}
-                                           subtitle={item.dateCreated}
-                                           hideChevron={true}
-                                           badge = { { value: 'Pending', textStyle: layoutStyles.badgeTextStyle, containerStyle: layoutStyles.badgeContainerStyleP, }}
-                                        />
-                                    }
-                                    keyExtractor={item => item.orderNo}
-                                />
-                            </Layout>
+                                        renderItem={({ item }) =>
+                                            <ListItem
+                                                key={item.title}
+                                                containerStyle={ layoutStyles.ListItemStyle }
+                                                title={item.title}
+                                                subtitle={item.dateCreated}
+                                                hideChevron={true}
+                                                badge = { { value: 'Pending', textStyle: layoutStyles.badgeTextStyle, containerStyle: layoutStyles.badgeContainerStyleP, }}
+                                            />
+                                        }
+                                        keyExtractor={item => item.orderNo}
+                                    />
+                                </Layout>
 
-                        }
-                        keyExtractor={item => item.id}
-                        refreshing={this.state.refreshing}
+                            }
+                            keyExtractor={item => item.id}
+                            refreshing={this.state.refreshing}
 
-                    />
+                        />
 
 
-                </ScrollView>
+                    </ScrollView>
                 </View>
             </LinearGradient>
         );

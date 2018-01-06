@@ -70,7 +70,13 @@ const layoutStyles = StyleSheet.create({
     body: {
         padding: 10,
         paddingTop: 0
-    }
+    },
+
+    more: {
+        color: '#88daf2',
+        textDecorationLine: 'underline',
+        padding: 10,
+    },
 });
 
 export default layoutStyles;
