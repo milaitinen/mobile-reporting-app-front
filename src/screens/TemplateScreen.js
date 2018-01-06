@@ -6,12 +6,14 @@ import {
     Platform,
     ActivityIndicator,
     ScrollView,
+    AsyncStorage,
+    NetInfo
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
-import { getLayouts } from './api';
+
 
 class TemplateScreen extends Component {
     static displayName = 'TemplateScreen';
@@ -19,6 +21,7 @@ class TemplateScreen extends Component {
     {
         super(props);
         this.state = {
+            dataLayouts     : [],
             formsByLayouts  : [],    // Array in which the forms will be appended to by their specific LayoutID.
             isLoading       : true,  // Checks whether the app is loading or not.
             refreshing      : false, // Checks whether the app and its data is refreshing or not.
@@ -27,13 +30,50 @@ class TemplateScreen extends Component {
 
     /*
      componentDidMount() is invoked immediately after the component is mounted. Initialization that requires
-     DOM nodes happens here. The function calls getLayoutsAndForms which loads data from a remote url,
+     DOM nodes happens here. The function calls getLayouts which loads data from a remote url,
      and instantiates the network request.
     */
-
     componentDidMount() {
         this.getLayoutsAndForms();
     }
+
+    // Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178
+    isNetworkConnected = () => {
+        if (Platform.OS === 'ios') {
+            return new Promise(resolve => {
+                const handleFirstConnectivityChangeIOS = isConnected => {
+                    NetInfo.isConnected.removeEventListener('connectionChange', handleFirstConnectivityChangeIOS);
+                    resolve(isConnected);
+                };
+                NetInfo.isConnected.addEventListener('connectionChange', handleFirstConnectivityChangeIOS);
+            });
+        }
+        return NetInfo.isConnected.fetch();
+    };
+
+    getLocalData = (url) => {
+        return AsyncStorage.getItem(url)
+            .then(data => {
+                if (data !== null) {
+                    return JSON.parse(data);
+                } else {
+                    return [];
+                }
+            });
+    };
+
+    saveData = (url, data) => {
+        AsyncStorage.setItem(url, JSON.stringify(data));
+    };
+
+    getRemoteData = (url) => {
+        return (
+            fetch(url)
+                .then(response => {
+                    return response.json();
+                })
+        );
+    };
 
     /*
      Fetches the data from the server in two parts.
@@ -42,20 +82,33 @@ class TemplateScreen extends Component {
         Promise.all. After the all the promises have been fetched, the function updates the state
         of formsByLayouts, and sets isLoading and refreshing to false.
     */
-
     getLayoutsAndForms = () => {
-        getLayouts()
-            .then((responseJson) => {
-                this.setState({
-                    dataLayouts: responseJson,
-                    isLoading: false,
-                    refreshing: false,
-                });
+        this.getData(url + '/layouts')
+            .then(responseJson => this.setState({ dataLayouts: responseJson }))
+            .then(() => {
+                const formsByLayoutID = [];
+                for (let i = 1; i <= this.state.dataLayouts.length; i++) {
+                    const orgReposUrl = url + '/forms?layoutid=' + i;
+                    formsByLayoutID.push(this.getData(orgReposUrl));
+                }
+                Promise.all(formsByLayoutID)
+                    .then(data => { this.setState({ formsByLayouts: data, isLoading: false, refreshing: false, }); })
+                    .catch(err => console.error(err));
             })
+            .catch(error => console.error(error) )
+            .done();
+    };
 
-            .catch((error) => {
-                console.error(error);
-            }).done();
+    getData = (dataUrl) => {
+        return this.isNetworkConnected()
+            .then((isConnected) => {
+                if (!isConnected) { return this.getLocalData(dataUrl);  }
+                return this.getRemoteData(dataUrl);
+            })
+            .then((data) => {
+                this.saveData(dataUrl, data);
+                return data;
+            });
     };
 
     // Handler function for refreshing the data and refetching.
@@ -108,10 +161,26 @@ class TemplateScreen extends Component {
                                 title={item.title} // Title of the layout
                                 createNew={this.createNew} // Passes the createNew function to the Layout component.
                                 viewAllReports={this.viewAllReports}
-                                nofForms={5} /* Passes the number of reports to
+                                nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
                                                                                       Layout component. */
                                 layoutID={item.id} // Passes the id of the Layout.
-                            />
+                            >
+                                <FlatList
+                                    data={ this.state.formsByLayouts[index] } /* Renders the forms from the state array
+                                                                                 with the help of an index from the earlier
+                                                                                 renderItem function. */
+                                    renderItem={({ item }) =>
+                                        <ListItem
+                                            key={item.title}
+                                            containerStyle={ styles.ListItemStyle }
+                                            title={item.title}
+                                            subtitle={item.dateCreated}
+                                            hideChevron={true}
+                                        />
+                                    }
+                                    keyExtractor={item => item.orderNo}
+                                />
+                            </Layout>
                         }
                         keyExtractor={item => item.id}
                         refreshing={this.state.refreshing}
