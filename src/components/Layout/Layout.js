@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Animated } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import panelStyles from './panelStyles';
+import layoutStyles from './layoutStyles';
 
-class Panel extends Component{
+class Layout extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -53,22 +53,22 @@ class Panel extends Component{
 
         return (
             <Animated.View
-                style={[panelStyles.container,{ height: this.state.animation }]}>
+                style={[layoutStyles.container,{ height: this.state.animation }]}>
                 <View onLayout={this._setMinHeight.bind(this)}>
                     <ListItem
-                        containerStyle={ panelStyles.ListItemTitleStyle }
+                        containerStyle={ layoutStyles.ListItemTitleStyle }
                         onPress={this.toggle.bind(this)}
                         title={this.state.title}
                         subtitle={this.state.nofForms + ' Forms'}
-                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: panelStyles.rightIconStyle,  }}
-                        leftIcon = { { name: 'folder-open', type: 'Materialicons', style: panelStyles.leftIconStyle, }}
+                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.rightIconStyle,  }}
+                        leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.leftIconStyle, }}
                         onPressRightIcon={() => this.createNew()}
 
                     />
 
                 </View>
 
-                <View style={panelStyles.body} onLayout={this._setMaxHeight.bind(this)}>
+                <View style={layoutStyles.body} onLayout={this._setMaxHeight.bind(this)}>
                     {this.props.children}
                 </View>
 
@@ -77,4 +77,4 @@ class Panel extends Component{
     }
 }
 
-export default Panel;
+export default Layout;

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const panelStyles = StyleSheet.create({
+const layoutStyles = StyleSheet.create({
     ListItemTitleStyle: {
         height:60,
         borderRadius: 10,
@@ -26,7 +26,8 @@ const panelStyles = StyleSheet.create({
     rightIconStyle: {
         marginRight: 5,
         fontSize: 40,
-        backgroundColor: '#39ac56',
+        color: '#77a482',
+        backgroundColor: '#99d9ad',
         paddingLeft: 2,
         paddingRight: 2,
         borderRadius: 8,
@@ -36,7 +37,8 @@ const panelStyles = StyleSheet.create({
 
     leftIconStyle: {
         marginLeft: 5,
-        fontSize: 40
+        fontSize: 40,
+        color: '#b4b4b4'
     },
 
     badgeContainerStyleA: {
@@ -71,4 +73,4 @@ const panelStyles = StyleSheet.create({
     }
 });
 
-export default panelStyles;
+export default layoutStyles;

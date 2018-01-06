@@ -9,10 +9,10 @@ import { ListItem, SearchBar } from 'react-native-elements';
 import templateScreenStyles from './style/templateScreenStyles';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { Panel } from '../components/Panel';
+import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
 import loginStyles from './style/styles';
-import panelStyles from '../components/Panel/panelStyles';
+import layoutStyles from '../components/Layout/layoutStyles';
 
 
 class TemplateScreen extends Component {
@@ -140,7 +140,7 @@ class TemplateScreen extends Component {
                         <FlatList
                             data={ this.state.dataLayouts }
                             renderItem={({ item, index }) =>
-                                <Panel
+                                <Layout
                                     title={item.title}
                                     createNew={this.createNew}
                                     nofForms={this.state.arr[index].length} >
@@ -149,16 +149,16 @@ class TemplateScreen extends Component {
                                         renderItem={({ item }) =>
                                             <ListItem
                                                 key={item.title}
-                                                containerStyle={ panelStyles.ListItemStyle }
+                                                containerStyle={ layoutStyles.ListItemStyle }
                                                 title={item.title}
                                                 subtitle={item.dateCreated}
                                                 hideChevron={true}
-                                                badge = { { value: 'Pending', textStyle: panelStyles.badgeTextStyle, containerStyle: panelStyles.badgeContainerStyleP, }}
+                                                badge = { { value: 'Pending', textStyle: layoutStyles.badgeTextStyle, containerStyle: layoutStyles.badgeContainerStyleP, }}
                                             />
                                         }
                                         keyExtractor={item => item.orderNo}
                                     />
-                                </Panel>
+                                </Layout>
 
                             }
                             keyExtractor={item => item.id}
