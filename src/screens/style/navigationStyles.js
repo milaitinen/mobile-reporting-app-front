@@ -3,9 +3,11 @@ import {StyleSheet} from 'react-native';
 const navigationStyles = StyleSheet.create({
 
     formHeader: {
-        backgroundColor: '#3d4f7c',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ffffff80',
+        backgroundColor: '#455fa1',
+        borderBottomWidth: 0,
+        borderBottomColor: 'transparent',
+        elevation: 0,
+        //shadowOffset: 0,
         paddingRight: 10,
     },
 
@@ -13,14 +15,15 @@ const navigationStyles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'normal',
         fontFamily: 'Roboto-Light',
-        fontSize: 22,
+        fontSize: 30,
         paddingLeft: 0,
     },
 
     headerLeft: {
-        fontSize: 30,
+        fontSize: 40,
         fontWeight:'normal',
-        paddingLeft: 15,
+        paddingLeft: 20,
+        paddingRight: 0,
         color: '#fff',
         fontFamily: 'Roboto-Light',
     },

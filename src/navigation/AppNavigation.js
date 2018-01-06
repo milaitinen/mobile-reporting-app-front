@@ -16,6 +16,7 @@ const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
+            flex: 0.3,
             headerTitle: 'Forms',
             headerTitleStyle: navigationStyles.formHeaderTitle,
             headerStyle: navigationStyles.formHeader ,

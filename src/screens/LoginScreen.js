@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, StatusBar } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import loginStyles from './style/styles';
@@ -25,6 +25,11 @@ export default class LoginScreen extends React.Component {
                 colors={['#3d4f7c', '#31456f', '#1b3055']}
                 style={loginStyles.contentContainer}
             >
+
+                <StatusBar
+                    backgroundColor="#3d4f7c"
+                    barStyle="light-content"
+                />
 
                 <Text style={loginStyles.title}>
                     MR-Application

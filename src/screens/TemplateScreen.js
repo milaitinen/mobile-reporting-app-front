@@ -129,17 +129,18 @@ class TemplateScreen extends Component {
 
         return (
             <LinearGradient
-                colors={['#3d4f7c', '#31456f', '#1b3055']}
+                colors={['#455fa1', '#364a7d', '#2e3f6b']}
                 style={loginStyles.contentContainer}
             >
 
                 <View style={{ flex: 1 }}>
                     <StatusBar
-                        backgroundColor="#3d4f7c"
+                        backgroundColor="#455fa1"
                         barStyle="light-content"
                     />
 
-                    <SearchBar
+
+                    <SearchBar       //At the moment this doesn't do anything.
                         lightTheme
                         containerStyle = {templateScreenStyles.searchBarContainer}
                         inputStyle = { templateScreenStyles.searchBarInput }

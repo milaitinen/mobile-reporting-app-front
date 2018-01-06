@@ -42,7 +42,8 @@ const layoutStyles = StyleSheet.create({
     },
 
     listTitleStyle :{
-        fontFamily: 'Roboto-Light'
+        fontFamily: 'Roboto-Light',
+        fontSize: 16,
     },
 
     rightIconStyle: {

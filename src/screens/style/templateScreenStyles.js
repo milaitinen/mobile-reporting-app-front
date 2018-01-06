@@ -19,7 +19,7 @@ const templateScreenStyles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: '#3d4f7c'
+        backgroundColor: '#455fa1'
     },
 
     searchBarContainer: {
@@ -32,11 +32,13 @@ const templateScreenStyles = StyleSheet.create({
     },
 
     searchIcon: {
-        paddingLeft: 35,
+        paddingLeft: 32,
+        paddingRight: 5,
+        fontSize: 20,
     },
 
     searchBarInput: {
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
     }
 });
 
