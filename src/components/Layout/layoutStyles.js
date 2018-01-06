@@ -2,16 +2,18 @@ import { StyleSheet } from 'react-native';
 
 const layoutStyles = StyleSheet.create({
     ListItemTitleStyle: {
-        height: 70,
-        //borderRadius: 10,
+        height: 60,
+        borderRadius: 10,
         backgroundColor: '#fff',
         paddingTop: 0,
         paddingRight: 0,
-        paddingVertical: 20,
+        paddingLeft: 1,
+        paddingVertical: 0,
+        paddingBottom: 0,
     },
 
     ListItemStyle: {
-        height: 70,
+        height: 60,
         borderBottomColor: '#b4b4b470',
     },
 
@@ -21,37 +23,44 @@ const layoutStyles = StyleSheet.create({
         overflow:'hidden',
         borderRadius: 10,
         height: 60,
+        elevation: 5,
     },
 
     titleContainer: {
         flexDirection: 'row',
+        paddingRight: 2,
+        paddingLeft: 0,
+
         //paddingTop: 10,
     },
 
     titleStyle: {
-        paddingTop: 10,
+        paddingTop: 5,
+        fontFamily: 'Roboto-Light',
+        fontSize: 18,
     },
 
     rightIconStyle: {
-        marginRight: 3,
-        marginTop: 2,
-        marginBottom: 1,
-        fontSize: 45,
+        marginRight: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        fontSize: 50,
         color: '#77a482',
         backgroundColor: '#99d9ad',
-        paddingLeft: 4,
-        paddingRight: 4,
-        paddingTop: 2,
-        paddingBottom: 2,
+        paddingLeft: 8,
+        paddingRight: 5,
+        paddingTop: 5,
+        paddingBottom: 5,
         borderRadius: 10,
         //borderColor: '#000',
         //borderWidth: 1
     },
 
     leftIconStyle: {
-        marginLeft: 5,
-        fontSize: 40,
-        color: '#b4b4b4'
+        marginLeft: 0,
+        fontSize: 50,
+        color: '#b4b4b4',
+        paddingRight: 0,
     },
 
     badgeContainerStyleA: {

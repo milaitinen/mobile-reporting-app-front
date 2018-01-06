@@ -4,6 +4,7 @@ import {
     FlatList,
     ActivityIndicator,
     ScrollView,
+    StatusBar,
 } from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -131,8 +132,12 @@ class TemplateScreen extends Component {
                 colors={['#3d4f7c', '#31456f', '#1b3055']}
                 style={loginStyles.contentContainer}
             >
-                  
+
                 <View style={{ flex: 1 }}>
+                    <StatusBar
+                        backgroundColor="#3d4f7c"
+                        barStyle="light-content"
+                    />
 
                     <SearchBar
                         lightTheme

@@ -79,7 +79,7 @@ const MainScreenNavigator = StackNavigator({
     // Default config for all screens
     headerMode: 'none',
     title: 'Main',
-    initialRouteName: 'loginStack'
+    initialRouteName: 'loginStack',
 });
 
 export default MainScreenNavigator;
