@@ -33,7 +33,8 @@ class Layout extends Component{
         Animated.spring(
             this.state.animation,
             {
-                toValue: finalValue
+                toValue: finalValue,
+                bounciness: 1,
             }
         ).start();
     }
