@@ -8,7 +8,7 @@ import {
     FlatList, Platform,
 } from 'react-native';
 
-import { ListItem } from 'react-native-elements';
+import { ListItem, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Input from "../components/TextInput/Input";
 
@@ -19,11 +19,16 @@ import Input from "../components/TextInput/Input";
             reports: props.navigation.state.params.reports,
             layoutID: props.navigation.state.params.layoutID,
             title: props.navigation.state.params.title,
+            nofForms: props.navigation.state.params.nofForms,
         }
     }
     handleButtonPress = () => {
         this.props.navigation.goBack();
     };
+
+     createNew = (layoutID) => {
+         this.props.navigation.navigate('NewForm', { layoutID: layoutID });
+     };
 
     render() {
         return (
@@ -33,15 +38,25 @@ import Input from "../components/TextInput/Input";
                         <Text style={styles.title}>
                             {this.state.title}
                         </Text>
+                        <Icon
+                            name={'plus'}
+                            color={'green'}
+                            size={20}
+                            onPress={() => this.createNew(this.state.layoutID)}
+                        />
                     </View>
                     <View style={styles.section}>
                         <Icon name={'sort'} color={'gray'} size={14}> A-Z</Icon>
-                        <View style={styles.search}>
-                            <TextInput
-                                underlineColorAndroid={'transparent'}
-                                placeholder={''}
-                            />
-                        </View>
+                        <SearchBar
+                            placeholder={'Search for reports'}
+                            lightTheme
+                            containerStyle={styles.searchBarContainer}
+                            inputStyle={{backgroundColor: '#fff', width: 160,}}
+
+                        />
+                        <Text style={{fontWeight: 'bold'}}>
+                            {this.state.nofForms + ' Forms'}
+                        </Text>
                     </View>
 
                     <View style={styles.container}>
@@ -69,33 +84,27 @@ const styles = StyleSheet.create({
     title: {
         padding: 10,
         marginLeft: 10,
+        marginRight: 10,
         fontSize: 18,
         fontWeight: 'bold',
     },
-    search: {
+    searchBarContainer: {
+        paddingBottom: (Platform.OS === 'ios') ? 20 : 5,
+        backgroundColor: 'transparent',
+        borderBottomWidth: 0,
+        borderTopWidth:0,
         marginLeft: 10,
-        width: 200,
-        height: 40,
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: 'white',
-
-    },
-    textInput: {
-        width: 180,
-        height: 35,
-        alignSelf: 'center',
-        marginLeft: 10,
+        marginRight: 20,
+        width: 160,
     },
     section: {
+        paddingLeft: 20,
         flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
     },
     titleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         margin: 10,
         paddingBottom: 10,
         borderBottomWidth: 1,

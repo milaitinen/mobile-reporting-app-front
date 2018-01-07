@@ -57,8 +57,8 @@ class Layout extends Component{
         this.props.createNew(layoutID);
     }
 
-    viewAllReports(title, layoutID) {
-        this.props.viewAllReports(title, layoutID);
+    viewAllReports(title, layoutID, forms) {
+        this.props.viewAllReports(title, layoutID, forms);
     }
 
     showMore = (title, layoutID, forms) => {
@@ -66,7 +66,7 @@ class Layout extends Component{
             return(
                 <Text
                     style={styles.more}
-                    onPress={() => this.viewAllReports(title, layoutID)}
+                    onPress={() => this.viewAllReports(title, layoutID, forms)}
                 >
                     Show more
                 </Text>
