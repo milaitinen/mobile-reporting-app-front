@@ -6,7 +6,7 @@ import {
     ScrollView,
     StatusBar,
 } from 'react-native';
-import { ListItem, SearchBar } from 'react-native-elements';
+import { ListItem, SearchBar, Badge } from 'react-native-elements';
 import templateScreenStyles from './style/templateScreenStyles';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -111,6 +111,22 @@ class TemplateScreen extends Component {
         this.props.navigation.navigate('ReportsPage');
     }
 
+
+    badge = (dateAccepted) => {
+        if (dateAccepted != null){
+            console.log('Accepted');
+            return <Badge textStyle = {layoutStyles.badgeTextStyle}
+                containerStyle = {layoutStyles.badgeContainerStyleP}
+                value={'Pending'}
+            />;
+        }
+        console.log('Boo');
+        return <Badge textStyle = {layoutStyles.badgeTextStyle}
+            containerStyle = {layoutStyles.badgeContainerStyleA}
+            value={'Approved'}
+        />;
+    }
+
     render() {
 
         if (this.state.isLoading) {
@@ -178,7 +194,8 @@ class TemplateScreen extends Component {
                                                 titleStyle = { layoutStyles.listTitleStyle }
                                                 subtitleStyle = {layoutStyles.listTitleStyle }
                                                 hideChevron={true}
-                                                badge = { { value: 'Pending', textStyle: layoutStyles.badgeTextStyle, containerStyle: layoutStyles.badgeContainerStyleP, }}
+                                                //badge = {{ value: 'Pending', textStyle: layoutStyles.badgeTextStyle, containerStyle: layoutStyles.badgeContainerStyleP, }}
+                                                badge = {{ element: this.badge(item.dateAccepted) }}
                                             />
                                         }
                                         keyExtractor={item => item.orderNo}

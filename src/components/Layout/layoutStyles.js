@@ -25,6 +25,10 @@ const layoutStyles = StyleSheet.create({
         borderRadius: 10,
         height: 60,
         elevation: 5,
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        }
     },
 
     titleContainer: {
