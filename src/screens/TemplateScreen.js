@@ -103,8 +103,12 @@ class TemplateScreen extends Component {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
     };
 
-    viewAllReports = () => {
-        this.props.navigation.navigate('ReportsPage');
+    viewAllReports = (title, layoutID) => {
+        this.props.navigation.navigate('ReportsPage', {
+            title: title,
+            reports: this.state.formsByLayouts[layoutID - 1],
+            layoutID: layoutID
+        });
     };
 
     render() {

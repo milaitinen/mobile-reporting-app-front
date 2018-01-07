@@ -33,7 +33,8 @@ class Layout extends Component{
         Animated.spring(
             this.state.animation,
             {
-                toValue: finalValue
+                toValue: finalValue,
+                bounciness: 1,
             }
         ).start();
     }
@@ -56,14 +57,17 @@ class Layout extends Component{
         this.props.createNew(layoutID);
     }
 
-    viewAllReports() {
-        this.props.viewAllReports();
+    viewAllReports(title, layoutID) {
+        this.props.viewAllReports(title, layoutID);
     }
 
-    showMore = (forms) => {
+    showMore = (title, layoutID, forms) => {
         if (forms > 5) {
             return(
-                <Text style={styles.more} onPress={() => this.viewAllReports()}>
+                <Text
+                    style={styles.more}
+                    onPress={() => this.viewAllReports(title, layoutID)}
+                >
                     Show more
                 </Text>
             )
@@ -96,7 +100,7 @@ class Layout extends Component{
 
                 <View style={styles.body} onLayout={this._setMaxHeight.bind(this)}>
                     {this.props.children}
-                    {this.showMore(forms)}
+                    {this.showMore(this.state.title, this.state.layoutID, forms)}
                 </View>
 
             </Animated.View>
