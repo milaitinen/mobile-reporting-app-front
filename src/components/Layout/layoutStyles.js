@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const layoutStyles = StyleSheet.create({
     ListItemTitleStyle: {
         height: 60,
-        borderRadius: 10,
+        borderRadius: 5,
         backgroundColor: '#fff',
         paddingTop: 0,
         paddingRight: 0,
@@ -22,7 +22,7 @@ const layoutStyles = StyleSheet.create({
         backgroundColor: '#e0e8eb',
         margin: 10,
         overflow:'hidden',
-        borderRadius: 10,
+        borderRadius: 5,
         height: 60,
         elevation: 5,
         shadowOffset: {
@@ -61,7 +61,7 @@ const layoutStyles = StyleSheet.create({
         paddingRight: 5,
         paddingTop: 5,
         paddingBottom: 5,
-        borderRadius: 10,
+        borderRadius: 5,
         //borderColor: '#000',
         //borderWidth: 1
     },
@@ -76,11 +76,13 @@ const layoutStyles = StyleSheet.create({
     badgeContainerStyleA: {
         backgroundColor: '#77a482',
         elevation: 5,
+        borderRadius: 5,
     },
 
     badgeContainerStyleP: {
         backgroundColor: '#f3fe99',
         elevation: 5,
+        borderRadius: 5,
     },
 
     badgeTextStyle: {

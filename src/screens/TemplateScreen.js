@@ -114,13 +114,11 @@ class TemplateScreen extends Component {
 
     badge = (dateAccepted) => {
         if (dateAccepted != null){
-            console.log('Accepted');
             return <Badge textStyle = {layoutStyles.badgeTextStyle}
                 containerStyle = {layoutStyles.badgeContainerStyleP}
                 value={'Pending'}
             />;
         }
-        console.log('Boo');
         return <Badge textStyle = {layoutStyles.badgeTextStyle}
             containerStyle = {layoutStyles.badgeContainerStyleA}
             value={'Approved'}
@@ -149,7 +147,7 @@ class TemplateScreen extends Component {
                 style={loginStyles.contentContainer}
             >
 
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, paddingTop: 0 }}>
                     <StatusBar
                         backgroundColor="#455fa1"
                         barStyle="light-content"
