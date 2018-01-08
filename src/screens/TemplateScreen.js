@@ -131,7 +131,7 @@ class TemplateScreen extends Component {
                 style={loginStyles.contentContainer}
             >
 
-                <View style={{ flex: 1, paddingTop: 0 }}>
+                <View style={{ flex: 1, paddingTop: 0, paddingRight: 0, paddingLeft: 0 }}>
                     <StatusBar
                         backgroundColor="#455fa1"
                         barStyle="light-content"
@@ -153,18 +153,18 @@ class TemplateScreen extends Component {
                            props are explained in its class more specifically.
                          */
 
-                        data={ this.state.dataLayouts } // The data in which the layouts are stored.
-                        renderItem={({ item, index }) => // Renders each layout separately.
-                            <Layout
-                                title={item.title} // Title of the layout
-                                createNew={this.createNew} // Passes the createNew function to the Layout component.
-                                viewAllReports={this.viewAllReports} // Passes the viewAllReports function to the Layout component.
-                                nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
+                            data={ this.state.dataLayouts } // The data in which the layouts are stored.
+                            renderItem={({ item, index }) => // Renders each layout separately.
+                                <Layout
+                                    title={item.title} // Title of the layout
+                                    createNew={this.createNew} // Passes the createNew function to the Layout component.
+                                    viewAllReports={this.viewAllReports} // Passes the viewAllReports function to the Layout component.
+                                    nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
                                                                                       Layout component. */
-                                layoutID={item.id} // Passes the id of the Layout.
-                            >
-                                <FlatList
-                                    data={ this.state.formsByLayouts[index].slice(0, 5) } /* Renders the first 5 forms from the state array
+                                    layoutID={item.id} // Passes the id of the Layout.
+                                >
+                                    <FlatList
+                                        data={ this.state.formsByLayouts[index].slice(0, 5) } /* Renders the first 5 forms from the state array
                                                                                              with the help of an index from the earlier
                                                                                              renderItem function. */
                                         renderItem={({ item }) =>

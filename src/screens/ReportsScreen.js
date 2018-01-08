@@ -68,12 +68,12 @@ class ReportsScreen extends Component {
                             data={ this.state.reports } // The data in which the reports are stored.
                             renderItem={({ item }) =>   // Renders the reports
                                 <ListItem
-                                    key={item.title}    // Defines the key of the report to be the title.
+                                    key={item.id}    // Defines the key of the report to be the title.
                                     title={item.title}  // Title of the report
                                     subtitle={item.dateCreated} // The creation date of the report as a subtitle.
                                     containerStyle={styles.ListItemStyle}
                                 />}
-                            keyExtractor={item => item.title}
+                            keyExtractor={item => item.id}
                         />
                     </View>
 
