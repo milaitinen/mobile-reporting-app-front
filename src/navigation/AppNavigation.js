@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements'
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
@@ -21,11 +22,14 @@ const TemplateStack = StackNavigator({
             headerTitleStyle: navigationStyles.formHeaderTitle,
             headerStyle: navigationStyles.formHeader ,
             headerLeft:
-                <Text
-                    style={navigationStyles.headerLeft}
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={40}
+                    containerStyle={navigationStyles.headerLeft}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
-                    ☰
-                </Text>
+                </Icon>
         })
     },
     Reports: {

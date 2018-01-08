@@ -192,7 +192,6 @@ class TemplateScreen extends Component {
                                                 titleStyle = { layoutStyles.listTitleStyle }
                                                 subtitleStyle = {layoutStyles.listTitleStyle }
                                                 hideChevron={true}
-                                                //badge = {{ value: 'Pending', textStyle: layoutStyles.badgeTextStyle, containerStyle: layoutStyles.badgeContainerStyleP, }}
                                                 badge = {{ element: this.badge(item.dateAccepted) }}
                                             />
                                         }

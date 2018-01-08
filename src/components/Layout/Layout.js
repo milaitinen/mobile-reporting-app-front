@@ -78,8 +78,8 @@ class Layout extends Component{
                         title={this.state.title} // Title of the layout.
                         titleStyle={layoutStyles.titleStyle}
                         subtitle={this.state.nofForms + ' Forms'} // Number of forms as a subtitle.
-                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.rightIconStyle,  }}
-                        leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.leftIconStyle, }}
+                        rightIcon={{ name: 'file-plus', type: 'feather', style: layoutStyles.rightIconStyle,  }}
+                        leftIcon = { { name: 'folder', type: 'materialicons', style: layoutStyles.leftIconStyle, }}
                         onPressRightIcon={() => this.createNew(this.state.layoutID)} /* Navigates to NewReportScreen when
                                                                                         pressed.*/
                     />

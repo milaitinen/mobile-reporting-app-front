@@ -20,12 +20,8 @@ const navigationStyles = StyleSheet.create({
     },
 
     headerLeft: {
-        fontSize: 40,
-        fontWeight:'normal',
         paddingLeft: 20,
         paddingRight: 0,
-        color: '#fff',
-        fontFamily: 'Roboto-Light',
     },
 
 });
