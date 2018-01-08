@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet,
     View,
     FlatList,
-    Platform,
     ActivityIndicator,
     ScrollView,
-    AsyncStorage,
-    NetInfo
+    StatusBar,
 } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, SearchBar, Badge } from 'react-native-elements';
+import templateScreenStyles from './style/templateScreenStyles';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
+import loginStyles from './style/styles';
+import layoutStyles from '../components/Layout/layoutStyles';
+
 
 
 class TemplateScreen extends Component {
@@ -133,13 +135,27 @@ class TemplateScreen extends Component {
         this.props.navigation.navigate('ReportsPage');
     };
 
+
+    badge = (dateAccepted) => {
+        if (dateAccepted != null){
+            return <Badge textStyle = {layoutStyles.badgeTextStyle}
+                containerStyle = {layoutStyles.badgeContainerStyleA}
+                value={'Approved'}
+            />;
+        }
+        return <Badge textStyle = {layoutStyles.badgeTextStyle}
+            containerStyle = {layoutStyles.badgeContainerStyleP}
+            value={' Pending  '}
+        />;
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={[styles.container]}>
+                <View style={[templateScreenStyles.container]}>
                     <ActivityIndicator
                         animating={this.state.animating}
-                        style={[styles.activityIndicator, { height: 80 }]}
+                        style={[templateScreenStyles.activityIndicator, { height: 80 }]}
                         size='large'
                     />
                 </View>
@@ -147,73 +163,75 @@ class TemplateScreen extends Component {
         }
 
         return (
-            <View style={{ flex: 1 }}>
-                <ScrollView contentContainerStyle={styles.MainContainer}>
-                    <FlatList
+            <LinearGradient
+                colors={['#455fa1', '#364a7d', '#2e3f6b']}
+                style={loginStyles.contentContainer}
+            >
+
+                <View style={{ flex: 1, paddingTop: 0 }}>
+                    <StatusBar
+                        backgroundColor="#455fa1"
+                        barStyle="light-content"
+                    />
+
+
+                    <SearchBar       //At the moment this doesn't do anything.
+                        lightTheme
+                        containerStyle = {templateScreenStyles.searchBarContainer}
+                        inputStyle = { templateScreenStyles.searchBarInput }
+                        icon = {{ style: templateScreenStyles.searchIcon }}
+                        placeholder='Search for reports' />
+
+                    <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
+
+                        <FlatList
                         /* Lists the layouts in a FlatList component. Each FlatList item is rendered using a
                            custom Layout component. The Layout component has a FlatList component as its child
                            component, which lists the specific forms under the right layout. The component and its
                            props are explained in its class more specifically.
                          */
-                        data={ this.state.dataLayouts } // The data in which the layouts are stored.
-                        renderItem={({ item, index }) => // Renders each layout separately.
-                            <Layout
-                                title={item.title} // Title of the layout
-                                createNew={this.createNew} // Passes the createNew function to the Layout component.
-                                viewAllReports={this.viewAllReports}
-                                nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
+                            data={ this.state.dataLayouts } // The data in which the layouts are stored.
+                            renderItem={({ item, index }) => // Renders each layout separately.
+                                <Layout
+                                    title={item.title} // Title of the layout
+                                    createNew={this.createNew} // Passes the createNew function to the Layout component.
+                                    viewAllReports={this.viewAllReports}
+                                    nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
                                                                                       Layout component. */
-                                layoutID={item.id} // Passes the id of the Layout.
-                            >
-                                <FlatList
-                                    data={ this.state.formsByLayouts[index] } /* Renders the forms from the state array
+                                    layoutID={item.id} // Passes the id of the Layout.
+                                >
+                                    <FlatList
+                                        data={ this.state.formsByLayouts[index] } /* Renders the forms from the state array
                                                                                  with the help of an index from the earlier
                                                                                  renderItem function. */
-                                    renderItem={({ item }) =>
-                                        <ListItem
-                                            key={item.title}
-                                            containerStyle={ styles.ListItemStyle }
-                                            title={item.title}
-                                            subtitle={item.dateCreated}
-                                            hideChevron={true}
-                                        />
-                                    }
-                                    keyExtractor={item => item.orderNo}
-                                />
-                            </Layout>
-                        }
-                        keyExtractor={item => item.id}
-                        refreshing={this.state.refreshing}
-                    />
-                </ScrollView>
-            </View>
+                                        renderItem={({ item }) =>
+                                            <ListItem
+                                                key={item.title}
+                                                containerStyle={ layoutStyles.ListItemStyle }
+                                                title={item.title}
+                                                subtitle={item.dateCreated}
+                                                titleStyle = { layoutStyles.listTitleStyle }
+                                                subtitleStyle = {layoutStyles.listTitleStyle }
+                                                hideChevron={true}
+                                                badge = {{ element: this.badge(item.dateAccepted) }}
+                                            />
+                                        }
+                                        keyExtractor={item => item.orderNo}
+                                    />
+                                </Layout>
+
+                            }
+                            keyExtractor={item => item.id}
+                            refreshing={this.state.refreshing}
+
+                        />
+
+
+                    </ScrollView>
+                </View>
+            </LinearGradient>
         );
     }
 }
-
-
-const styles = StyleSheet.create({
-
-
-    activityIndicator: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 80
-    },
-
-    MainContainer: {
-        justifyContent: 'center',
-        flex: 1,
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-    },
-    ListItemStyle: {
-        height: 50
-    },
-    container: {
-        flex: 1,
-        backgroundColor: 'white'
-    }
-});
 
 export default TemplateScreen;
