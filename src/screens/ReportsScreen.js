@@ -1,36 +1,39 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet,
     View,
     Text,
-    TextInput,
     ScrollView,
-    FlatList, Platform,
+    FlatList,
 } from 'react-native';
 
 import { ListItem, SearchBar } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome'
-import Input from "../components/TextInput/Input";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import styles from './style/reportsScreenStyle';
 
- class ReportsScreen extends Component {
+class ReportsScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            reports: props.navigation.state.params.reports,
-            layoutID: props.navigation.state.params.layoutID,
-            title: props.navigation.state.params.title,
-            nofForms: props.navigation.state.params.nofForms,
-        }
+            reports: props.navigation.state.params.reports,     // The reports inherited from the layout component in TemplateScreen.
+            layoutID: props.navigation.state.params.layoutID,   // The specific layoutID inherited from the layout component in TemplateScreen.
+            title: props.navigation.state.params.title,         // The title inherited from the layout component in TemplateScreen.
+            nofForms: props.navigation.state.params.nofForms,   // The number of forms inherited from the layout component in TemplateScreen.
+        };
     }
-    handleButtonPress = () => {
-        this.props.navigation.goBack();
-    };
 
-     createNew = (layoutID) => {
-         this.props.navigation.navigate('NewForm', { layoutID: layoutID });
-     };
+
+    /*
+     Calls the inherited createNew function which is explained in TemplateScreen class.
+     */
+    createNew(layoutID) {
+        this.props.navigation.state.params.new(layoutID);
+    }
 
     render() {
+        /*
+         Renders the reports of a template in a FlatList component.
+         */
+
         return (
             <View style={{ flex: 1 }}>
                 <ScrollView style={styles.MainContainer}>
@@ -42,7 +45,7 @@ import Input from "../components/TextInput/Input";
                             name={'plus'}
                             color={'green'}
                             size={20}
-                            onPress={() => this.createNew(this.state.layoutID)}
+                            onPress={() => this.createNew(this.state.layoutID)} // Navigates to NewReportScreen when pressed.
                         />
                     </View>
                     <View style={styles.section}>
@@ -51,10 +54,10 @@ import Input from "../components/TextInput/Input";
                             placeholder={'Search for reports'}
                             lightTheme
                             containerStyle={styles.searchBarContainer}
-                            inputStyle={{backgroundColor: '#fff', width: 160,}}
+                            inputStyle={{ backgroundColor: '#fff', width: 160, }}
 
                         />
-                        <Text style={{fontWeight: 'bold'}}>
+                        <Text style={{ fontWeight: 'bold' }}>
                             {this.state.nofForms + ' Forms'}
                         </Text>
                     </View>
@@ -62,12 +65,12 @@ import Input from "../components/TextInput/Input";
                     <View style={styles.container}>
                         <FlatList
                             style={styles.flatList}
-                            data={ this.state.reports }
-                            renderItem={({item}) =>
+                            data={ this.state.reports } // The data in which the reports are stored.
+                            renderItem={({ item }) =>   // Renders the reports
                                 <ListItem
-                                    key={item.title}
-                                    title={item.title}
-                                    subtitle={item.dateCreated}
+                                    key={item.title}    // Defines the key of the report to be the title.
+                                    title={item.title}  // Title of the report
+                                    subtitle={item.dateCreated} // The creation date of the report as a subtitle.
                                     containerStyle={styles.ListItemStyle}
                                 />}
                             keyExtractor={item => item.title}
@@ -79,49 +82,5 @@ import Input from "../components/TextInput/Input";
         );
     }
 }
-
-const styles = StyleSheet.create({
-    title: {
-        padding: 10,
-        marginLeft: 10,
-        marginRight: 10,
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    searchBarContainer: {
-        paddingBottom: (Platform.OS === 'ios') ? 20 : 5,
-        backgroundColor: 'transparent',
-        borderBottomWidth: 0,
-        borderTopWidth:0,
-        marginLeft: 10,
-        marginRight: 20,
-        width: 160,
-    },
-    section: {
-        paddingLeft: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    titleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        margin: 10,
-        paddingBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: 'gray',
-    },
-    MainContainer: {
-        flex: 1,
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-    },
-    container: {
-        backgroundColor: '#fff',
-        margin:10,
-        overflow:'hidden'
-    },
-    ListItemStyle: {
-        height: 50
-    },
-});
 
 export default ReportsScreen;

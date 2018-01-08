@@ -52,15 +52,22 @@ class Layout extends Component{
     }
 
     // Calls the inherited createNew function which is explained in TemplateScreen class.
-
     createNew(layoutID) {
         this.props.createNew(layoutID);
     }
 
+    /*
+     Calls the inherited viewAllReports function which is explained in TemplateScreen class.
+     */
     viewAllReports(title, layoutID, forms) {
         this.props.viewAllReports(title, layoutID, forms);
     }
 
+    /*
+     Function for the show more button in TemplateScreen. The button shows if there are more
+     than 5 reports for the template. When pressed, calls the viewAllReports function which
+     navigates to ReportsScreen.
+     */
     showMore = (title, layoutID, forms) => {
         if (forms > 5) {
             return(

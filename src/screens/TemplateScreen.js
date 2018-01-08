@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
-    Text,
     View,
     FlatList,
     Platform,
@@ -92,19 +91,26 @@ class TemplateScreen extends Component {
         );
 
     };
+
     /*
      Function that passes navigation props and navigates to NewFormScreen.
      This makes it possible for the Layout component to navigate.
      Also passes the refresh function and the specific layoutID so that the
      app knows to which layout the new report has to be added.
     */
-
     createNew = (layoutID) => {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
     };
 
+
+    /*
+     Function for viewing all the reports of a certain template. Navigates to ReportsScreen.
+     Also passes the title, number of forms, the reports and the layoutID and createNew function
+     as navigation props.
+     */
     viewAllReports = (title, layoutID, forms) => {
         this.props.navigation.navigate('ReportsPage', {
+            new: this.createNew,
             title: title,
             nofForms: forms,
             reports: this.state.formsByLayouts[layoutID - 1],
@@ -146,7 +152,7 @@ class TemplateScreen extends Component {
                             <Layout
                                 title={item.title} // Title of the layout
                                 createNew={this.createNew} // Passes the createNew function to the Layout component.
-                                viewAllReports={this.viewAllReports}
+                                viewAllReports={this.viewAllReports} // Passes the viewAllReports function to the Layout component.
                                 nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
                                                                                       Layout component. */
                                 layoutID={item.id} // Passes the id of the Layout.
