@@ -1,8 +1,13 @@
 import 'react-native';
 import React from 'react';
 import LoginScreen from '../src/screens/LoginScreen';
+import { SignInButton } from '../src/components/Button';
 
 import renderer from 'react-test-renderer';
+import { shallow, configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
 
 it('renders correctly', () => {
     const tree = renderer.create(
@@ -11,7 +16,10 @@ it('renders correctly', () => {
     expect(tree).toMatchSnapshot();
 });
 
+it('pressing the "Sign In" button works correctly', () => {
+    const opensTemplates = jest.fn();
 
-/*
-TODO: add tests for buttons and find out it if all the different components are present
- */
+    const component = shallow(<SignInButton onPress={ opensTemplates }/>);
+    component.simulate( 'press' );
+    expect( opensTemplates ).toHaveBeenCalled();
+});

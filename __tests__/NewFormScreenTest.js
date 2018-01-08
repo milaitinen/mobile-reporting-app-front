@@ -1,10 +1,14 @@
 import 'react-native';
 import React from 'react';
-import { shallow } from 'enzyme';
+
+import { url } from '../src/screens/urlsetting';
 import NewFormScreen from '../src/screens/NewFormScreen';
 
 import renderer from 'react-test-renderer';
-import { url } from '../src/screens/urlsetting';
+import { shallow, configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
 
 it('renders correctly', () => {
     const tree = renderer.create(
@@ -13,15 +17,14 @@ it('renders correctly', () => {
     expect(tree).toMatchSnapshot();
 });
 
-it('gets current date correctly', () => {
+it('sets the correct date on the forms', () => {
     const date = '2018-01-08';
     const wrapper = shallow(<NewFormScreen/>);
-    wrapper.instance().getDate();
 
-    expect(wrapper).toBe(date);
+    expect(wrapper.instance().getDate()).toBe(date);
 });
 
-it('can fetch correctly', () => {
+it('fetch finds data from the server', () => {
     const data = fetch(url + '/users/1/forms');
     const userData = fetch(url + '/users/1');
 
