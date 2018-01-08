@@ -115,13 +115,13 @@ class TemplateScreen extends Component {
     badge = (dateAccepted) => {
         if (dateAccepted != null){
             return <Badge textStyle = {layoutStyles.badgeTextStyle}
-                containerStyle = {layoutStyles.badgeContainerStyleP}
-                value={' Pending  '}
+                containerStyle = {layoutStyles.badgeContainerStyleA}
+                value={'Approved'}
             />;
         }
         return <Badge textStyle = {layoutStyles.badgeTextStyle}
-            containerStyle = {layoutStyles.badgeContainerStyleA}
-            value={'Approved'}
+            containerStyle = {layoutStyles.badgeContainerStyleP}
+            value={' Pending  '}
         />;
     }
 
