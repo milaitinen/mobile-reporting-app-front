@@ -9,15 +9,14 @@ export default class NewFormScreen extends React.Component {
     {
         super(props);
         this.state = {
-            TextInputName  : '',                                      // Text input is initialized as an empty string.
-            layoutID       : '',  /* LayoutID that is inherited from navigation
-                                                                         parameters as stated in TemplateScreen class. */
-
+            TextInputName  : '',    // Text input is initialized as an empty string.
+            templateID     : '',    /* TemplateID that is inherited from navigation parameters
+                                       as stated in TemplateScreen class. */
         };
 
     }
 
-    // Gets the current date and return it as a string.
+    // Gets the current date and returns it as a string.
 
     getDate = () => {
 
@@ -35,7 +34,7 @@ export default class NewFormScreen extends React.Component {
         }
 
         return yyyy + '-' + mm + '-' + dd;
-    }
+    };
 
 
     // Inserts data to server with a post method.
@@ -44,7 +43,7 @@ export default class NewFormScreen extends React.Component {
 
         const date = this.getDate();
 
-        fetch(url + '/users/1/forms', {
+        fetch(url + '/users/1/forms', {     // ***NOTE*** Change to /reports when API has been changed too.
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -52,7 +51,7 @@ export default class NewFormScreen extends React.Component {
             },
 
             body: JSON.stringify({
-                layoutID: this.props.navigation.state.params.layoutID,
+                templateID: this.props.navigation.state.params.templateID,
                 title: this.state.TextInputName,
                 dateCreated: date,
                 answers: [
@@ -84,7 +83,7 @@ export default class NewFormScreen extends React.Component {
             console.error(error);
         });
 
-    }
+    };
 
     render() {
         return (
@@ -111,7 +110,6 @@ export default class NewFormScreen extends React.Component {
 const styles = StyleSheet.create({
     MainContainer: {
         justifyContent: 'center',
-        // alignItems: 'center',
         flex: 1,
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },

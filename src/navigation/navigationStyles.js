@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 const navigationStyles = StyleSheet.create({
 
-    formHeader: {
+    reportHeader: {
         backgroundColor: '#455fa1',
         borderBottomWidth: 0,
         borderBottomColor: 'transparent',
@@ -11,7 +11,7 @@ const navigationStyles = StyleSheet.create({
         paddingRight: 10,
     },
 
-    formHeaderTitle: {
+    reportHeaderTitle: {
         alignSelf: 'flex-start',
         color: '#fff',
         fontWeight: 'normal',
