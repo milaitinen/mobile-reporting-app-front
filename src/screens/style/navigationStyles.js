@@ -12,6 +12,7 @@ const navigationStyles = StyleSheet.create({
     },
 
     formHeaderTitle: {
+        alignSelf: 'flex-start',
         color: '#fff',
         fontWeight: 'normal',
         fontFamily: 'Roboto-Light',

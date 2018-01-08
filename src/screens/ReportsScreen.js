@@ -9,6 +9,8 @@ import {
 import { ListItem, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './style/reportsScreenStyle';
+import templateScreenStyles from './style/templateScreenStyles';
+import LinearGradient from 'react-native-linear-gradient';
 
 class ReportsScreen extends Component {
     constructor(props) {
@@ -35,50 +37,55 @@ class ReportsScreen extends Component {
          */
 
         return (
-            <View style={{ flex: 1 }}>
-                <ScrollView style={styles.MainContainer}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>
-                            {this.state.title}
-                        </Text>
-                        <Icon
-                            name={'plus'}
-                            color={'green'}
-                            size={20}
-                            onPress={() => this.createNew(this.state.layoutID)} // Navigates to NewReportScreen when pressed.
-                        />
-                    </View>
-                    <View style={styles.section}>
-                        <Icon name={'sort'} color={'gray'} size={14}> A-Z</Icon>
-                        <SearchBar
-                            placeholder={'Search for reports'}
-                            lightTheme
-                            containerStyle={styles.searchBarContainer}
-                            inputStyle={{ backgroundColor: '#fff', width: 160, }}
+            <LinearGradient
+                colors={['#455fa1', '#364a7d', '#2e3f6b']}
+                style={templateScreenStyles.gradient}
+            >
+                <View style={{ flex: 1 , borderTopWidth: 1, }}>
+                    <ScrollView style={styles.MainContainer}>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>
+                                {this.state.title}
+                            </Text>
+                            <Icon
+                                name={'plus'}
+                                color={'green'}
+                                size={20}
+                                onPress={() => this.createNew(this.state.layoutID)} // Navigates to NewReportScreen when pressed.
+                            />
+                        </View>
+                        <View style={styles.section}>
+                            <Icon name={'sort'} color={'gray'} size={14}> A-Z</Icon>
+                            <SearchBar
+                                placeholder={'Search for reports'}
+                                lightTheme
+                                containerStyle={styles.searchBarContainer}
+                                inputStyle={{ backgroundColor: '#fff', width: 160, }}
 
-                        />
-                        <Text style={{ fontWeight: 'bold' }}>
-                            {this.state.nofForms + ' Forms'}
-                        </Text>
-                    </View>
+                            />
+                            <Text style={{ fontWeight: 'bold' }}>
+                                {this.state.nofForms + ' Forms'}
+                            </Text>
+                        </View>
 
-                    <View style={styles.container}>
-                        <FlatList
-                            style={styles.flatList}
-                            data={ this.state.reports } // The data in which the reports are stored.
-                            renderItem={({ item }) =>   // Renders the reports
-                                <ListItem
-                                    key={item.id}    // Defines the key of the report to be the title.
-                                    title={item.title}  // Title of the report
-                                    subtitle={item.dateCreated} // The creation date of the report as a subtitle.
-                                    containerStyle={styles.ListItemStyle}
-                                />}
-                            keyExtractor={item => item.id}
-                        />
-                    </View>
+                        <View style={styles.container}>
+                            <FlatList
+                                style={styles.flatList}
+                                data={ this.state.reports } // The data in which the reports are stored.
+                                renderItem={({ item }) =>   // Renders the reports
+                                    <ListItem
+                                        key={item.id}    // Defines the key of the report to be the title.
+                                        title={item.title}  // Title of the report
+                                        subtitle={item.dateCreated} // The creation date of the report as a subtitle.
+                                        containerStyle={styles.ListItemStyle}
+                                    />}
+                                keyExtractor={item => item.id}
+                            />
+                        </View>
 
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
+            </LinearGradient>
         );
     }
 }

@@ -22,13 +22,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+
+    viewContainer: {
+        flex: 1 ,
+        borderTopWidth: 1,
+        borderTopColor: '#fffff',
+    },
+
     titleContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         margin: 10,
         paddingBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: 'gray',
+        //  borderBottomWidth: 1,
+        //  borderBottomColor: 'gray',
     },
     MainContainer: {
         flex: 1,

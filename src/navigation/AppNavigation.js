@@ -18,7 +18,7 @@ const TemplateStack = StackNavigator({
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
             flex: 0.3,
-            headerTitle: 'Forms',
+            headerTitle: 'Templates',
             headerTitleStyle: navigationStyles.formHeaderTitle,
             headerStyle: navigationStyles.formHeader ,
             headerLeft:
@@ -26,7 +26,7 @@ const TemplateStack = StackNavigator({
                     name={'menu'}
                     type={'feather'}
                     color={'#fff'}
-                    size={40}
+                    size={35}
                     containerStyle={navigationStyles.headerLeft}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
                 </Icon>
@@ -52,7 +52,7 @@ const TemplateStack = StackNavigator({
                     name={'menu'}
                     type={'feather'}
                     color={'#fff'}
-                    size={40}
+                    size={35}
                     containerStyle={navigationStyles.headerLeft}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
                 </Icon>
