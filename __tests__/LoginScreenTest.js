@@ -10,3 +10,8 @@ it('renders correctly', () => {
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });
+
+
+/*
+TODO: add tests for buttons and find out it if all the different components are present
+ */

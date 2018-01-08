@@ -10,9 +10,6 @@ export default class NewFormScreen extends React.Component {
         super(props);
         this.state = {
             TextInputName  : '',                                      // Text input is initialized as an empty string.
-            layoutID       : props.navigation.state.params.layoutID,  /* LayoutID that is inherited from navigation
-                                                                         parameters as stated in TemplateScreen class. */
-
         };
 
     }
@@ -35,7 +32,7 @@ export default class NewFormScreen extends React.Component {
         }
 
         return yyyy + '-' + mm + '-' + dd;
-    }
+    };
 
 
     // Inserts data to server with a post method.
@@ -52,17 +49,17 @@ export default class NewFormScreen extends React.Component {
             },
 
             body: JSON.stringify({
-                layoutID: this.state.layoutID,
+                layoutID: this.props.navigation.state.params.layoutID, /* LayoutID that is inherited from navigation parameters */
                 title: this.state.TextInputName,
                 dateCreated: date,
                 answers: [
                     {
                         fieldID: 1,
-                        answer: "Answer 1"
+                        answer: 'Answer 1',
                     },
                     {
                         fieldID: 2,
-                        answer: "Answer 2"
+                        answer: 'Answer 2',
                     }
                 ]
 
@@ -84,19 +81,17 @@ export default class NewFormScreen extends React.Component {
             console.error(error);
         });
 
-    }
-    
+    };
+
     render() {
         return (
             <View style={styles.MainContainer}>
                 <TextInput
+                    style={styles.TextInputStyleClass}
                     placeholder='Enter Report Name'
-
-                    onChangeText={TextInputName => this.setState({ TextInputName })}
-
+                    onChangeText={(TextInputName) => this.setState({ TextInputName })}
                     underlineColorAndroid='transparent'
 
-                    style={styles.TextInputStyleClass}
                 />
                 <Button
                     title='Create new report'
