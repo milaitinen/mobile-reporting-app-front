@@ -154,6 +154,7 @@ class TemplateScreen extends Component {
                                                                                  with the help of an index from the earlier
                                                                                  renderItem function. */
 
+
                                         renderItem={({ item }) =>
                                             <ListItem
                                                 key={item.title}
