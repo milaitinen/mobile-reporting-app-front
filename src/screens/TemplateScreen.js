@@ -14,7 +14,6 @@ import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
 import { fetchData } from './api';
 import loginStyles from './style/styles';
-import layoutStyles from '../components/Layout/layoutStyles';
 
 
 class TemplateScreen extends Component {
@@ -84,18 +83,7 @@ class TemplateScreen extends Component {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
     };
 
-    badge = (dateAccepted) => {
-        if (dateAccepted != null){
-            return <Badge textStyle = {layoutStyles.badgeTextStyle}
-                containerStyle = {layoutStyles.badgeContainerStyleA}
-                value={'Approved'}
-            />;
-        }
-        return <Badge textStyle = {layoutStyles.badgeTextStyle}
-            containerStyle = {layoutStyles.badgeContainerStyleP}
-            value={' Pending  '}
-        />;
-    };
+
 
     incrementItemCount = () => {
         this.setState(
@@ -148,7 +136,6 @@ class TemplateScreen extends Component {
                                     incrementItemCount={this.incrementItemCount}
                                     title={item.title} // Title of the layout
                                     createNew={this.createNew} // Passes the createNew function to the Layout component.
-                                    viewAllReports={this.viewAllReports} // Passes the viewAllReports function to the Layout component.
                                     nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
                                                                                       Layout component. */
                                     layoutID={item.id} // Passes the id of the Layout.

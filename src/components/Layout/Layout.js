@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Animated, Text, FlatList, Button } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { View, Animated, FlatList, Button } from 'react-native';
+import { ListItem, Badge } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
 
 
@@ -82,11 +82,23 @@ class Layout extends Component{
         );
     }
 
+    badge = (dateAccepted) => {
+        if (dateAccepted != null){
+            return <Badge textStyle = {layoutStyles.badgeTextStyle}
+                containerStyle = {layoutStyles.badgeContainerStyleA}
+                value={'Approved'}
+            />;
+        }
+        return <Badge textStyle = {layoutStyles.badgeTextStyle}
+            containerStyle = {layoutStyles.badgeContainerStyleP}
+            value={' Pending  '}
+        />;
+    };
+
     render(){
         /* Renders the Layout and its children, which are defined in the TemplateScreen class.
            The TemplateScreen uses FlatList component as the Layout components child.
          */
-        const forms = this.state.nofForms;
 
         return (
             <Animated.View
@@ -119,13 +131,12 @@ class Layout extends Component{
                                 title={item.title}
                                 subtitle={item.dateCreated}
                                 hideChevron={true}
-                                badge = { { value: 'Pending', textStyle: layoutStyles.badgeTextStyle,
-                                    containerStyle: layoutStyles.badgeContainerStyleP, }}
+                                badge = {{ element: this.badge(item.dateAccepted) }}
                             />
                         }
                         keyExtractor={item => item.orderNo}
                         ListFooterComponent={
-                            (this.state.data.length >= this.state.itemsCount) ?
+                            (this.state.data.length > this.state.itemsCount) ?
                                 <Button
                                     title={'Show more'}
                                     onPress={() =>
