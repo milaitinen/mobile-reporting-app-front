@@ -4,9 +4,10 @@ import {
     FlatList,
     ActivityIndicator,
     ScrollView,
-    StatusBar,
+    Text,
+    Button
 } from 'react-native';
-import { ListItem, SearchBar, Badge } from 'react-native-elements';
+import { ListItem, SearchBar } from 'react-native-elements';
 import templateScreenStyles from './style/templateScreenStyles';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -27,6 +28,7 @@ class TemplateScreen extends Component {
             formsByLayouts  : [],    // Array in which the forms will be appended to by their specific LayoutID.
             isLoading       : true,  // Checks whether the app is loading or not.
             refreshing      : false, // Checks whether the app and its data is refreshing or not.
+            itemsCount      : 5
         };
     }
 
@@ -83,20 +85,7 @@ class TemplateScreen extends Component {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
     };
 
-    /*
-     Function for viewing all the reports of a certain template. Navigates to ReportsScreen.
-     Also passes the title, number of forms, the reports and the layoutID and createNew function
-     as navigation props.
-     */
-    viewAllReports = (title, layoutID, forms) => {
-        this.props.navigation.navigate('ReportsPage', {
-            new: this.createNew,
-            title: title,
-            nofForms: forms,
-            reports: this.state.formsByLayouts[layoutID - 1],
-            layoutID: layoutID
-        });
-    };
+
 
 
     badge = (dateAccepted) => {
@@ -111,6 +100,15 @@ class TemplateScreen extends Component {
             value={' Pending  '}
         />;
     };
+
+    incrementItemCount = () => {
+        this.setState(
+            {
+                itemsCount: (this.state.itemsCount + 5)
+            },
+        );
+    }
+
 
     render() {
         if (this.state.isLoading) {
@@ -127,7 +125,7 @@ class TemplateScreen extends Component {
 
         return (
             <LinearGradient
-                colors={['#455fa1', '#364a7d', '#2e3f6b']}
+                colors={['#3d4f7c', '#31456f', '#1b3055']}
                 style={loginStyles.contentContainer}
             >
 
@@ -138,49 +136,29 @@ class TemplateScreen extends Component {
                     />
 
                     <SearchBar       //At the moment this doesn't do anything.
-                        lightTheme
-                        containerStyle = {templateScreenStyles.searchBarContainer}
-                        inputStyle = { templateScreenStyles.searchBarInput }
-                        icon = {{ style: templateScreenStyles.searchIcon }}
-                        placeholder='Search for reports' />
+
 
                     <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
 
                         <FlatList
-                        /* Lists the layouts in a FlatList component. Each FlatList item is rendered using a
-                           custom Layout component. The Layout component has a FlatList component as its child
-                           component, which lists the specific forms under the right layout. The component and its
-                           props are explained in its class more specifically.
-                         */
-
+                            /* Lists the layouts in a FlatList component. Each FlatList item is rendered using a
+                               custom Layout component. The Layout component has a FlatList component as its child
+                               component, which lists the specific forms under the right layout. The component and its
+                               props are explained in its class more specifically.
+                             */
                             data={ this.state.dataLayouts } // The data in which the layouts are stored.
+                            extraData={ this.state.itemsCount }
                             renderItem={({ item, index }) => // Renders each layout separately.
                                 <Layout
+                                    incrementItemCount={this.incrementItemCount}
                                     title={item.title} // Title of the layout
                                     createNew={this.createNew} // Passes the createNew function to the Layout component.
                                     viewAllReports={this.viewAllReports} // Passes the viewAllReports function to the Layout component.
                                     nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
                                                                                       Layout component. */
                                     layoutID={item.id} // Passes the id of the Layout.
-                                >
-                                    <FlatList
-                                        data={ this.state.formsByLayouts[index].slice(0, 5) } /* Renders the first 5 forms from the state array
-                                                                                             with the help of an index from the earlier
-                                                                                             renderItem function. */
-                                        renderItem={({ item }) =>
-                                            <ListItem
-                                                key={item.title}
-                                                containerStyle={ layoutStyles.ListItemStyle }
-                                                title={item.title}
-                                                subtitle={item.dateCreated}
-                                                titleStyle = { layoutStyles.listTitleStyle }
-                                                subtitleStyle = {layoutStyles.listTitleStyle }
-                                                hideChevron={true}
-                                                badge = {{ element: this.badge(item.dateAccepted) }}
-                                            />
-                                        }
-                                        keyExtractor={item => item.orderNo}
-                                    />
+                                    data={this.state.formsByLayouts[index]}
+                                >                              
                                 </Layout>
 
                             }
