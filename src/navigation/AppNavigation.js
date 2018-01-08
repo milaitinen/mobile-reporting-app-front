@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
 
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
@@ -19,7 +18,7 @@ const TemplateStack = StackNavigator({
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
             flex: 0.3,
-            headerTitle: 'Forms',
+            headerTitle: 'Templates',
             headerTitleStyle: navigationStyles.formHeaderTitle,
             headerStyle: navigationStyles.formHeader ,
             headerLeft:
@@ -27,7 +26,7 @@ const TemplateStack = StackNavigator({
                     name={'menu'}
                     type={'feather'}
                     color={'#fff'}
-                    size={40}
+                    size={35}
                     containerStyle={navigationStyles.headerLeft}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
                 </Icon>
@@ -44,12 +43,19 @@ const TemplateStack = StackNavigator({
     ReportsPage: {
         screen: ReportsScreen,
         navigationOptions: ({ navigation }) => ({
-            title: 'Reports',
-            headerStyle: { backgroundColor: '#f0f8ff' },
+
+            headerTitle: 'Reports',
+            headerTitleStyle: navigationStyles.formHeaderTitle,
+            headerStyle: navigationStyles.formHeader,
             headerLeft:
-                <View style={{ paddingLeft: 15 }}>
-                    <Icon name={'menu'} color={'gray'} size={30} onPress={() => { navigation.navigate('DrawerOpen'); }}  />
-                </View>
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={35}
+                    containerStyle={navigationStyles.headerLeft}
+                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
+                </Icon>
         })
     },
 

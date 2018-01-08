@@ -13,7 +13,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
 import { fetchData } from './api';
-import loginStyles from './style/styles';
+import layoutStyles from '../components/Layout/layoutStyles';
+
 
 
 class TemplateScreen extends Component {
@@ -92,6 +93,7 @@ class TemplateScreen extends Component {
                         animating={this.state.animating}
                         style={[templateScreenStyles.activityIndicator, { height: 80 }]}
                         size='large'
+                        color={'#88daf2'}
                     />
                 </View>
             );
@@ -99,11 +101,11 @@ class TemplateScreen extends Component {
 
         return (
             <LinearGradient
-                colors={['#3d4f7c', '#31456f', '#1b3055']}
-                style={loginStyles.contentContainer}
+                colors={['#455fa1', '#364a7d', '#2e3f6b']}
+                style={templateScreenStyles.gradient}
             >
 
-                <View style={{ flex: 1, paddingTop: 0, paddingRight: 0, paddingLeft: 0 }}>
+                <View style={templateScreenStyles.viewContainer}>
                     <StatusBar
                         backgroundColor="#455fa1"
                         barStyle="light-content"
