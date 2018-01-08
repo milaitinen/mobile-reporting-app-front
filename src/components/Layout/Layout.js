@@ -77,7 +77,7 @@ class Layout extends Component{
         if (forms > 5) {
             return(
                 <Text
-                    style={styles.more}
+                    style={layoutStyles.more}
                     onPress={() => this.viewAllReports(title, layoutID, forms)}
                 >
                     Show more
