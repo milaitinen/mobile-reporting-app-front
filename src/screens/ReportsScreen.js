@@ -1,36 +1,86 @@
-import React from 'react';
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import React, { Component } from 'react';
+import {
+    View,
+    Text,
+    ScrollView,
+    FlatList,
+} from 'react-native';
 
-export default class ReportsScreen extends React.Component {
+import { ListItem, SearchBar } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import styles from './style/reportsScreenStyle';
 
-    handleButtonPress = () => {
-        this.props.navigation.goBack();
-    };
+class ReportsScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            reports: props.navigation.state.params.reports,     // The reports inherited from the layout component in TemplateScreen.
+            layoutID: props.navigation.state.params.layoutID,   // The specific layoutID inherited from the layout component in TemplateScreen.
+            title: props.navigation.state.params.title,         // The title inherited from the layout component in TemplateScreen.
+            nofForms: props.navigation.state.params.nofForms,   // The number of forms inherited from the layout component in TemplateScreen.
+        };
+    }
+
+
+    /*
+     Calls the inherited createNew function which is explained in TemplateScreen class.
+     */
+    createNew(layoutID) {
+        this.props.navigation.state.params.new(layoutID);
+    }
 
     render() {
+        /*
+         Renders the reports of a template in a FlatList component.
+         */
+
         return (
-            <View style={styles.container}>
-                <Text style={styles.text}>Reports Screen</Text>
+            <View style={{ flex: 1 }}>
+                <ScrollView style={styles.MainContainer}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>
+                            {this.state.title}
+                        </Text>
+                        <Icon
+                            name={'plus'}
+                            color={'green'}
+                            size={20}
+                            onPress={() => this.createNew(this.state.layoutID)} // Navigates to NewReportScreen when pressed.
+                        />
+                    </View>
+                    <View style={styles.section}>
+                        <Icon name={'sort'} color={'gray'} size={14}> A-Z</Icon>
+                        <SearchBar
+                            placeholder={'Search for reports'}
+                            lightTheme
+                            containerStyle={styles.searchBarContainer}
+                            inputStyle={{ backgroundColor: '#fff', width: 160, }}
+
+                        />
+                        <Text style={{ fontWeight: 'bold' }}>
+                            {this.state.nofForms + ' Forms'}
+                        </Text>
+                    </View>
+
+                    <View style={styles.container}>
+                        <FlatList
+                            style={styles.flatList}
+                            data={ this.state.reports } // The data in which the reports are stored.
+                            renderItem={({ item }) =>   // Renders the reports
+                                <ListItem
+                                    key={item.id}    // Defines the key of the report to be the title.
+                                    title={item.title}  // Title of the report
+                                    subtitle={item.dateCreated} // The creation date of the report as a subtitle.
+                                    containerStyle={styles.ListItemStyle}
+                                />}
+                            keyExtractor={item => item.id}
+                        />
+                    </View>
+
+                </ScrollView>
             </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    button: {
-        backgroundColor: '#4F6D7A',
-        width: 250,
-        height: 50,
-        justifyContent: 'center',
-    },
-    text: {
-        textAlign: 'center',
-        color: 'black',
-    }
-});
+export default ReportsScreen;

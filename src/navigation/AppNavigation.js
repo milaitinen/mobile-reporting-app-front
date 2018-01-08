@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements'
+
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
@@ -42,7 +43,14 @@ const TemplateStack = StackNavigator({
     },
     ReportsPage: {
         screen: ReportsScreen,
-        navigationOptions: { title: 'List of reports'}
+        navigationOptions: ({ navigation }) => ({
+            title: 'Reports',
+            headerStyle: { backgroundColor: '#f0f8ff' },
+            headerLeft:
+                <View style={{ paddingLeft: 15 }}>
+                    <Icon name={'menu'} color={'gray'} size={30} onPress={() => { navigation.navigate('DrawerOpen'); }}  />
+                </View>
+        })
     },
 
 }, {

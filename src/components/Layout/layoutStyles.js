@@ -21,6 +21,8 @@ const layoutStyles = StyleSheet.create({
     container: {
         backgroundColor: '#e0e8eb',
         margin: 10,
+        marginLeft:0,
+        marginRight: 0,
         overflow:'hidden',
         borderRadius: 5,
         height: 60,

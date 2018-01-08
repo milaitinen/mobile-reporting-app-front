@@ -3,6 +3,8 @@ import { View, Animated, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
 
+
+
 class Layout extends Component{
     constructor(props){
         super(props);
@@ -55,19 +57,43 @@ class Layout extends Component{
 
 
     // Calls the inherited createNew function which is explained in TemplateScreen class.
-
     createNew(layoutID) {
         this.props.createNew(layoutID);
     }
 
-    viewAllReports() {
-        this.props.viewAllReports();
+    /*
+     Calls the inherited viewAllReports function which is explained in TemplateScreen class.
+     */
+    viewAllReports(title, layoutID, forms) {
+        this.props.viewAllReports(title, layoutID, forms);
     }
+
+    /*
+     Function for the show more button in TemplateScreen. The button shows if there are more
+     than 5 reports for the template. When pressed, calls the viewAllReports function which
+     navigates to ReportsScreen.
+     */
+    showMore = (title, layoutID, forms) => {
+        if (forms > 5) {
+            return(
+                <Text
+                    style={layoutStyles.more}
+                    onPress={() => this.viewAllReports(title, layoutID, forms)}
+                >
+                    Show more
+                </Text>
+            )
+        } else {
+            return null;
+        }
+    };
 
     render(){
         /* Renders the Layout and its children, which are defined in the TemplateScreen class.
            The TemplateScreen uses FlatList component as the Layout components child.
          */
+        const forms = this.state.nofForms;
+
         return (
             <Animated.View
                 style={[layoutStyles.container,{ height: this.state.animation }]}>
@@ -88,9 +114,7 @@ class Layout extends Component{
 
                 <View style={layoutStyles.body} onLayout={this._setMaxHeight.bind(this)}>
                     {this.props.children}
-                    <Text style={layoutStyles.more} onPress={() => this.viewAllReports()}>
-                        Show more
-                    </Text>
+                    {this.showMore(this.state.title, this.state.layoutID, forms)}
                 </View>
 
             </Animated.View>

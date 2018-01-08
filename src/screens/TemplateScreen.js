@@ -47,6 +47,7 @@ class TemplateScreen extends Component {
         of formsByLayouts, and sets isLoading and refreshing to false.
     */
     getLayoutsAndForms = () => {
+
         fetchData(url + '/layouts')
             .then(responseJson => this.setState({ dataLayouts: responseJson }))
             .then(() => {
@@ -59,6 +60,7 @@ class TemplateScreen extends Component {
                     .then(data => { this.setState({ formsByLayouts: data, isLoading: false, refreshing: false, }); })
                     .catch(err => console.error(err));
             })
+
             .catch(error => console.error(error) )
             .done();
     };
@@ -81,8 +83,19 @@ class TemplateScreen extends Component {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
     };
 
-    viewAllReports = () => {
-        this.props.navigation.navigate('ReportsPage');
+    /*
+     Function for viewing all the reports of a certain template. Navigates to ReportsScreen.
+     Also passes the title, number of forms, the reports and the layoutID and createNew function
+     as navigation props.
+     */
+    viewAllReports = (title, layoutID, forms) => {
+        this.props.navigation.navigate('ReportsPage', {
+            new: this.createNew,
+            title: title,
+            nofForms: forms,
+            reports: this.state.formsByLayouts[layoutID - 1],
+            layoutID: layoutID
+        });
     };
 
 
@@ -118,7 +131,7 @@ class TemplateScreen extends Component {
                 style={loginStyles.contentContainer}
             >
 
-                <View style={{ flex: 1, paddingTop: 0 }}>
+                <View style={{ flex: 1, paddingTop: 0, paddingRight: 0, paddingLeft: 0 }}>
                     <StatusBar
                         backgroundColor="#455fa1"
                         barStyle="light-content"
@@ -139,22 +152,21 @@ class TemplateScreen extends Component {
                            component, which lists the specific forms under the right layout. The component and its
                            props are explained in its class more specifically.
                          */
+
                             data={ this.state.dataLayouts } // The data in which the layouts are stored.
                             renderItem={({ item, index }) => // Renders each layout separately.
                                 <Layout
                                     title={item.title} // Title of the layout
                                     createNew={this.createNew} // Passes the createNew function to the Layout component.
-                                    viewAllReports={this.viewAllReports}
+                                    viewAllReports={this.viewAllReports} // Passes the viewAllReports function to the Layout component.
                                     nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
                                                                                       Layout component. */
                                     layoutID={item.id} // Passes the id of the Layout.
                                 >
                                     <FlatList
-                                        data={ this.state.formsByLayouts[index] } /* Renders the forms from the state array
-                                                                                 with the help of an index from the earlier
-                                                                                 renderItem function. */
-
-
+                                        data={ this.state.formsByLayouts[index].slice(0, 5) } /* Renders the first 5 forms from the state array
+                                                                                             with the help of an index from the earlier
+                                                                                             renderItem function. */
                                         renderItem={({ item }) =>
                                             <ListItem
                                                 key={item.title}
@@ -174,7 +186,6 @@ class TemplateScreen extends Component {
                             }
                             keyExtractor={item => item.id}
                             refreshing={this.state.refreshing}
-
                         />
 
 
