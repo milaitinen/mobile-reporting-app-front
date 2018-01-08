@@ -78,6 +78,10 @@ const layoutStyles = StyleSheet.create({
         backgroundColor: '#77a482',
         elevation: 5,
         borderRadius: 5,
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
     },
 
     badgeContainerStyleP: {
