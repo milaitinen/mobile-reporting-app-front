@@ -6,13 +6,12 @@ import {
     Platform,
     ActivityIndicator,
     ScrollView,
-    AsyncStorage,
-    NetInfo
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
+import { fetchData } from './api';
 
 
 class TemplateScreen extends Component {
@@ -37,44 +36,6 @@ class TemplateScreen extends Component {
         this.getLayoutsAndForms();
     }
 
-    // Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178
-    isNetworkConnected = () => {
-        if (Platform.OS === 'ios') {
-            return new Promise(resolve => {
-                const handleFirstConnectivityChangeIOS = isConnected => {
-                    NetInfo.isConnected.removeEventListener('connectionChange', handleFirstConnectivityChangeIOS);
-                    resolve(isConnected);
-                };
-                NetInfo.isConnected.addEventListener('connectionChange', handleFirstConnectivityChangeIOS);
-            });
-        }
-        return NetInfo.isConnected.fetch();
-    };
-
-    getLocalData = (url) => {
-        return AsyncStorage.getItem(url)
-            .then(data => {
-                if (data !== null) {
-                    return JSON.parse(data);
-                } else {
-                    return [];
-                }
-            });
-    };
-
-    saveData = (url, data) => {
-        AsyncStorage.setItem(url, JSON.stringify(data));
-    };
-
-    getRemoteData = (url) => {
-        return (
-            fetch(url)
-                .then(response => {
-                    return response.json();
-                })
-        );
-    };
-
     /*
      Fetches the data from the server in two parts.
      1) Fetches the layouts from the server
@@ -83,13 +44,13 @@ class TemplateScreen extends Component {
         of formsByLayouts, and sets isLoading and refreshing to false.
     */
     getLayoutsAndForms = () => {
-        this.getData(url + '/layouts')
+        fetchData(url + '/layouts')
             .then(responseJson => this.setState({ dataLayouts: responseJson }))
             .then(() => {
                 const formsByLayoutID = [];
                 for (let i = 1; i <= this.state.dataLayouts.length; i++) {
                     const orgReposUrl = url + '/forms?layoutid=' + i;
-                    formsByLayoutID.push(this.getData(orgReposUrl));
+                    formsByLayoutID.push(fetchData(orgReposUrl));
                 }
                 Promise.all(formsByLayoutID)
                     .then(data => { this.setState({ formsByLayouts: data, isLoading: false, refreshing: false, }); })
