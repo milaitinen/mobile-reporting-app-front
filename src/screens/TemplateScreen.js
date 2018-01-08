@@ -26,7 +26,6 @@ class TemplateScreen extends Component {
             formsByLayouts  : [],    // Array in which the forms will be appended to by their specific LayoutID.
             isLoading       : true,  // Checks whether the app is loading or not.
             refreshing      : false, // Checks whether the app and its data is refreshing or not.
-            itemsCount      : 5
         };
     }
 
@@ -85,14 +84,6 @@ class TemplateScreen extends Component {
 
 
 
-    incrementItemCount = () => {
-        this.setState(
-            {
-                itemsCount: (this.state.itemsCount + 5)
-            },
-        );
-    };
-
     render() {
         if (this.state.isLoading) {
             return (
@@ -130,10 +121,8 @@ class TemplateScreen extends Component {
                                props are explained in its class more specifically.
                              */
                             data={ this.state.dataLayouts } // The data in which the layouts are stored.
-                            extraData={ this.state.itemsCount }
                             renderItem={({ item, index }) => // Renders each layout separately.
                                 <Layout
-                                    incrementItemCount={this.incrementItemCount}
                                     title={item.title} // Title of the layout
                                     createNew={this.createNew} // Passes the createNew function to the Layout component.
                                     nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to

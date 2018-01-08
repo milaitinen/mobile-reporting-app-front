@@ -76,7 +76,6 @@ class Layout extends Component{
                 maxHeight: this.state.maxHeight + 300
             },
             () => {
-                this.props.incrementItemCount();
                 this.updateHeight(true);
             }
         );
