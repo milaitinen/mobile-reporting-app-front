@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     viewContainer: {
         flex: 1 ,
         borderTopWidth: 1,
-        borderTopColor: '#fffff',
+        borderTopColor: '#ffffff',
     },
 
     titleContainer: {

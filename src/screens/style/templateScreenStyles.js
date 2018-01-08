@@ -22,7 +22,7 @@ const templateScreenStyles = StyleSheet.create({
 
     viewContainer: {
         flex: 1,
-        paddingTop: 10,
+        paddingTop: 5,
         paddingRight: 0,
         paddingLeft: 0,
         borderTopWidth: 1,
