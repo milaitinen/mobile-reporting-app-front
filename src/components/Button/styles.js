@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-    touchable: {
+
+    buttonContainer: {
         backgroundColor: '#9dcbe5',
         marginTop:30,
         paddingTop:10,
