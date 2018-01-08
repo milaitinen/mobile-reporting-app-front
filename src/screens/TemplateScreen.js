@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
+import { fetchData } from './api';
 import loginStyles from './style/styles';
 import layoutStyles from '../components/Layout/layoutStyles';
 
@@ -22,6 +23,7 @@ class TemplateScreen extends Component {
     {
         super(props);
         this.state = {
+            dataLayouts     : [],
             formsByLayouts  : [],    // Array in which the forms will be appended to by their specific LayoutID.
             isLoading       : true,  // Checks whether the app is loading or not.
             refreshing      : false, // Checks whether the app and its data is refreshing or not.
@@ -30,14 +32,11 @@ class TemplateScreen extends Component {
 
     /*
      componentDidMount() is invoked immediately after the component is mounted. Initialization that requires
-     DOM nodes happens here. The function calls getLayoutsAndForms which loads data from a remote url,
+     DOM nodes happens here. The function calls getLayouts which loads data from a remote url,
      and instantiates the network request.
     */
-
     componentDidMount() {
-
         this.getLayoutsAndForms();
-
     }
 
     /*
@@ -47,69 +46,44 @@ class TemplateScreen extends Component {
         Promise.all. After the all the promises have been fetched, the function updates the state
         of formsByLayouts, and sets isLoading and refreshing to false.
     */
-
     getLayoutsAndForms = () => {
-
-        fetch(url + '/layouts')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    dataLayouts: responseJson
-                });
-            })
-            .then(()=> {
-                const promises = [];
+        fetchData(url + '/layouts')
+            .then(responseJson => this.setState({ dataLayouts: responseJson }))
+            .then(() => {
+                const formsByLayoutID = [];
                 for (let i = 1; i <= this.state.dataLayouts.length; i++) {
                     const orgReposUrl = url + '/forms?layoutid=' + i;
-                    promises.push(fetch(orgReposUrl).then(response => response.json()));
-
+                    formsByLayoutID.push(fetchData(orgReposUrl));
                 }
-
-                Promise.all(promises)
-                    .then(data => {
-                        this.setState({
-                            formsByLayouts: data,
-                            isLoading: false,
-                            refreshing: false,
-                        });
-                    })
+                Promise.all(formsByLayoutID)
+                    .then(data => { this.setState({ formsByLayouts: data, isLoading: false, refreshing: false, }); })
                     .catch(err => console.error(err));
-
-
             })
-            .catch((error) => {
-                console.error(error);
-            }).done();
-
-    }
+            .catch(error => console.error(error) )
+            .done();
+    };
 
     // Handler function for refreshing the data and refetching.
-
     handleRefresh = () => {
         this.setState(
-            {
-                refreshing: true,
-            },
-            () => {
-                this.getLayoutsAndForms();
-            }
+            { refreshing: true, },
+            () => { this.getLayoutsAndForms(); }
         );
+    };
 
-    }
     /*
      Function that passes navigation props and navigates to NewFormScreen.
      This makes it possible for the Layout component to navigate.
      Also passes the refresh function and the specific layoutID so that the
      app knows to which layout the new report has to be added.
     */
-
     createNew = (layoutID) => {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
-    }
+    };
 
     viewAllReports = () => {
         this.props.navigation.navigate('ReportsPage');
-    }
+    };
 
 
     badge = (dateAccepted) => {
@@ -123,20 +97,17 @@ class TemplateScreen extends Component {
             containerStyle = {layoutStyles.badgeContainerStyleP}
             value={' Pending  '}
         />;
-    }
+    };
 
     render() {
-
         if (this.state.isLoading) {
             return (
                 <View style={[templateScreenStyles.container]}>
-
                     <ActivityIndicator
                         animating={this.state.animating}
                         style={[templateScreenStyles.activityIndicator, { height: 80 }]}
                         size='large'
                     />
-
                 </View>
             );
         }
@@ -152,7 +123,6 @@ class TemplateScreen extends Component {
                         backgroundColor="#455fa1"
                         barStyle="light-content"
                     />
-
 
                     <SearchBar       //At the moment this doesn't do anything.
                         lightTheme
@@ -183,6 +153,8 @@ class TemplateScreen extends Component {
                                         data={ this.state.formsByLayouts[index] } /* Renders the forms from the state array
                                                                                  with the help of an index from the earlier
                                                                                  renderItem function. */
+
+
                                         renderItem={({ item }) =>
                                             <ListItem
                                                 key={item.title}
