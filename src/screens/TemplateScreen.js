@@ -63,18 +63,6 @@ class TemplateScreen extends Component {
             .done();
     };
 
-    getData = (dataUrl) => {
-        return this.isNetworkConnected()
-            .then((isConnected) => {
-                if (!isConnected) { return this.getLocalData(dataUrl);  }
-                return this.getRemoteData(dataUrl);
-            })
-            .then((data) => {
-                this.saveData(dataUrl, data);
-                return data;
-            });
-    };
-
     // Handler function for refreshing the data and refetching.
     handleRefresh = () => {
         this.setState(
