@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import Icon from 'react-native-vector-icons/Feather';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
@@ -17,11 +18,9 @@ const TemplateStack = StackNavigator({
             title: 'Templates',
             headerStyle: { backgroundColor: '#f0f8ff' },
             headerLeft:
-                <Text
-                    style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15 }}
-                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
-                    ☰
-                </Text>
+                <View style={{ paddingLeft: 15 }}>
+                    <Icon name={'menu'} color={'gray'} size={30} onPress={() => { navigation.navigate('DrawerOpen'); }}  />
+                </View>
         })
     },
     Reports: {
@@ -34,7 +33,14 @@ const TemplateStack = StackNavigator({
     },
     ReportsPage: {
         screen: ReportsScreen,
-        navigationOptions: { title: 'List of reports'}
+        navigationOptions: ({ navigation }) => ({
+            title: 'Reports',
+            headerStyle: { backgroundColor: '#f0f8ff' },
+            headerLeft:
+                <View style={{ paddingLeft: 15 }}>
+                    <Icon name={'menu'} color={'gray'} size={30} onPress={() => { navigation.navigate('DrawerOpen'); }}  />
+                </View>
+        })
     },
 
 }, {

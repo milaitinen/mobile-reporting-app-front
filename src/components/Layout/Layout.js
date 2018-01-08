@@ -33,7 +33,8 @@ class Layout extends Component{
         Animated.spring(
             this.state.animation,
             {
-                toValue: finalValue
+                toValue: finalValue,
+                bounciness: 1,
             }
         ).start();
     }
@@ -51,19 +52,29 @@ class Layout extends Component{
     }
 
     // Calls the inherited createNew function which is explained in TemplateScreen class.
-
     createNew(layoutID) {
         this.props.createNew(layoutID);
     }
 
-    viewAllReports() {
-        this.props.viewAllReports();
+    /*
+     Calls the inherited viewAllReports function which is explained in TemplateScreen class.
+     */
+    viewAllReports(title, layoutID, forms) {
+        this.props.viewAllReports(title, layoutID, forms);
     }
 
-    showMore = (forms) => {
+    /*
+     Function for the show more button in TemplateScreen. The button shows if there are more
+     than 5 reports for the template. When pressed, calls the viewAllReports function which
+     navigates to ReportsScreen.
+     */
+    showMore = (title, layoutID, forms) => {
         if (forms > 5) {
             return(
-                <Text style={styles.more} onPress={() => this.viewAllReports()}>
+                <Text
+                    style={styles.more}
+                    onPress={() => this.viewAllReports(title, layoutID, forms)}
+                >
                     Show more
                 </Text>
             )
@@ -96,7 +107,7 @@ class Layout extends Component{
 
                 <View style={styles.body} onLayout={this._setMaxHeight.bind(this)}>
                     {this.props.children}
-                    {this.showMore(forms)}
+                    {this.showMore(this.state.title, this.state.layoutID, forms)}
                 </View>
 
             </Animated.View>
