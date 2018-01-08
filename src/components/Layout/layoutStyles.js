@@ -24,10 +24,10 @@ const layoutStyles = StyleSheet.create({
         overflow:'hidden',
         borderRadius: 5,
         height: 60,
-        elevation: 5,
+        elevation: 3,
         shadowOffset: {
             width: 0,
-            height: 5,
+            height: 3,
         }
     },
 
@@ -48,6 +48,7 @@ const layoutStyles = StyleSheet.create({
     listTitleStyle :{
         fontFamily: 'Roboto-Light',
         fontSize: 16,
+        marginRight: 0,
     },
 
     rightIconStyle: {
@@ -81,12 +82,14 @@ const layoutStyles = StyleSheet.create({
 
     badgeContainerStyleP: {
         backgroundColor: '#f3fe99',
-        elevation: 5,
+        elevation: 3,
         shadowOffset: {
             width: 0,
-            height: 5,
+            height: 3,
         },
         borderRadius: 5,
+        //paddingRight: 3,
+        //paddingLeft: 3,
     },
 
     badgeTextStyle: {
