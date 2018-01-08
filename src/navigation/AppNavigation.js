@@ -1,28 +1,35 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements'
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 
-import MockFormScreen from '../screens/MockFormScreen';
 import TemplateScreen from '../screens/TemplateScreen';
-import TemplateView from '../screens/TemplateView';
 import NewFormScreen from '../screens/NewFormScreen';
+import ReportsScreen from '../screens/ReportsScreen';
+
+import navigationStyles from '../screens/style/navigationStyles'
 
 
 const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
-            title: 'Templates',
-            headerStyle: { backgroundColor: '#f0f8ff' },
+            flex: 0.3,
+            headerTitle: 'Forms',
+            headerTitleStyle: navigationStyles.formHeaderTitle,
+            headerStyle: navigationStyles.formHeader ,
             headerLeft:
-                <Text
-                    style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15 }}
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={40}
+                    containerStyle={navigationStyles.headerLeft}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
-                    ☰
-                </Text>
+                </Icon>
         })
     },
     Reports: {
@@ -33,6 +40,11 @@ const TemplateStack = StackNavigator({
         screen: NewFormScreen,
         navigationOptions: { title: 'Create new report' }
     },
+    ReportsPage: {
+        screen: ReportsScreen,
+        navigationOptions: { title: 'List of reports'}
+    },
+
 }, {
     // is this part necessary?
 });
@@ -41,10 +53,6 @@ const DrawerStack = DrawerNavigator({
     Menu: {
         screen: TemplateStack,
         navigationOptions: { title: 'Templates' }
-    },
-    MockForms: {
-        screen: MockFormScreen,
-        navigationOptions: { title: 'Mock forms' }
     },
 });
 
@@ -76,7 +84,7 @@ const MainScreenNavigator = StackNavigator({
     // Default config for all screens
     headerMode: 'none',
     title: 'Main',
-    initialRouteName: 'loginStack'
+    initialRouteName: 'loginStack',
 });
 
 export default MainScreenNavigator;
