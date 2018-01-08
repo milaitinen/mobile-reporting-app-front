@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Animated, FlatList, Button } from 'react-native';
+import { View, Animated, FlatList, Text } from 'react-native';
 import { ListItem, Badge } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
 
@@ -136,12 +136,13 @@ class Layout extends Component{
                         keyExtractor={item => item.orderNo}
                         ListFooterComponent={
                             (this.state.data.length > this.state.itemsCount) ?
-                                <Button
-                                    title={'Show more'}
+                                <Text
+                                    style={layoutStyles.more}
                                     onPress={() =>
                                         this.showMore() }
                                 >
-                                </Button>
+                                    Show more
+                                </Text>
                                 :
                                 null
                         }

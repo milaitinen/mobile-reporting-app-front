@@ -6,19 +6,17 @@ import {
     ScrollView,
     StatusBar
 } from 'react-native';
-import { SearchBar, Badge } from 'react-native-elements';
+import { SearchBar } from 'react-native-elements';
 import templateScreenStyles from './style/templateScreenStyles';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
 import { fetchData } from './api';
-import layoutStyles from '../components/Layout/layoutStyles';
 
 
 
 class TemplateScreen extends Component {
-    static displayName = 'TemplateScreen';
     constructor(props)
     {
         super(props);
@@ -112,7 +110,12 @@ class TemplateScreen extends Component {
                     />
 
                     {/*At the moment this doesn't do anything.*/}
-                    <SearchBar />
+                    <SearchBar
+                        lightTheme
+                        containerStyle = {templateScreenStyles.searchBarContainer}
+                        inputStyle = { templateScreenStyles.searchBarInput }
+                        icon = {{ style: templateScreenStyles.searchIcon }}
+                        placeholder='Search for reports' />
 
                     <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
 

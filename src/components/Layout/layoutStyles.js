@@ -109,7 +109,7 @@ const layoutStyles = StyleSheet.create({
     },
 
     more: {
-        color: '#5088b8',
+        color: '#6da7e7',
         textDecorationLine: 'underline',
         padding: 10,
         textAlign: 'center',
