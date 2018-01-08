@@ -5,48 +5,11 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 
-import PropTypes from 'prop-types';
-
 import MockFormScreen from '../screens/MockFormScreen';
 import TemplateScreen from '../screens/TemplateScreen';
 import NewFormScreen from '../screens/NewFormScreen';
 
-class Sidebar extends React.Component {
-
-    //Integrating this with redux navigation seems to make this work
-    //TODO: test other instances of navigation not integrated with redux
-    //TODO: improve code style
-    logout = (route) => {
-        //perform other logging out related tasks here
-        console.log('logging out');
-        console.log(`2 + 2 = ${2 + 2}`);
-
-        const actionToDispatch = NavigationActions.reset({
-            index: 0,
-            key: null,
-            actions: [NavigationActions.navigate({routeName: 'loginStack'})]
-        })
-        this.props.navigation.dispatch(actionToDispatch)
-    }
-
-    render () {
-        return (
-            <View>
-                <Text onPress={ () => console.log('painoit ekaa nappia')}>
-                    ensimmäinen juttu
-                </Text>
-                <Text onPress={ () => this.logout(LoginScreen) }>
-                    toka juttu
-                </Text>
-            </View>
-        );
-    }
-}
-/*
-Sidebar.propTypes = {
-    navigation: PropTypes.object,
-}
-*/
+import Sidebar from '../navigation/Sidebar';
 
 //The stack that is contained within the drawer stack
 const TemplateStack = StackNavigator({
@@ -72,8 +35,6 @@ const TemplateStack = StackNavigator({
         screen: NewFormScreen,
         navigationOptions: { title: 'Create new report' }
     },
-}, {
-    // is this part necessary?
 });
 
 const DrawerStack = DrawerNavigator({
