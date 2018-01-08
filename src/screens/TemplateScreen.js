@@ -4,9 +4,10 @@ import {
     FlatList,
     ActivityIndicator,
     ScrollView,
-    StatusBar,
+    Text,
+    Button
 } from 'react-native';
-import { ListItem, SearchBar, Badge } from 'react-native-elements';
+import { ListItem, SearchBar } from 'react-native-elements';
 import templateScreenStyles from './style/templateScreenStyles';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -25,6 +26,7 @@ class TemplateScreen extends Component {
             formsByLayouts  : [],    // Array in which the forms will be appended to by their specific LayoutID.
             isLoading       : true,  // Checks whether the app is loading or not.
             refreshing      : false, // Checks whether the app and its data is refreshing or not.
+            itemsCount      : 5
         };
     }
 
@@ -111,18 +113,12 @@ class TemplateScreen extends Component {
         this.props.navigation.navigate('ReportsPage');
     }
 
-
-    badge = (dateAccepted) => {
-        if (dateAccepted != null){
-            return <Badge textStyle = {layoutStyles.badgeTextStyle}
-                containerStyle = {layoutStyles.badgeContainerStyleA}
-                value={'Approved'}
-            />;
-        }
-        return <Badge textStyle = {layoutStyles.badgeTextStyle}
-            containerStyle = {layoutStyles.badgeContainerStyleP}
-            value={' Pending  '}
-        />;
+    incrementItemCount = () => {
+        this.setState(
+            {
+                itemsCount: (this.state.itemsCount + 5)
+            },
+        );
     }
 
     render() {
@@ -143,60 +139,40 @@ class TemplateScreen extends Component {
 
         return (
             <LinearGradient
-                colors={['#455fa1', '#364a7d', '#2e3f6b']}
+                colors={['#3d4f7c', '#31456f', '#1b3055']}
                 style={loginStyles.contentContainer}
             >
 
-                <View style={{ flex: 1, paddingTop: 0 }}>
-                    <StatusBar
-                        backgroundColor="#455fa1"
-                        barStyle="light-content"
-                    />
+                <View style={{ flex: 1 }}>
 
-
-                    <SearchBar       //At the moment this doesn't do anything.
+                    <SearchBar
                         lightTheme
                         containerStyle = {templateScreenStyles.searchBarContainer}
                         inputStyle = { templateScreenStyles.searchBarInput }
-                        icon = {{ style: templateScreenStyles.searchIcon }}
                         placeholder='Search for reports' />
 
                     <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
 
                         <FlatList
-                        /* Lists the layouts in a FlatList component. Each FlatList item is rendered using a
-                           custom Layout component. The Layout component has a FlatList component as its child
-                           component, which lists the specific forms under the right layout. The component and its
-                           props are explained in its class more specifically.
-                         */
+                            /* Lists the layouts in a FlatList component. Each FlatList item is rendered using a
+                               custom Layout component. The Layout component has a FlatList component as its child
+                               component, which lists the specific forms under the right layout. The component and its
+                               props are explained in its class more specifically.
+                             */
                             data={ this.state.dataLayouts } // The data in which the layouts are stored.
+                            extraData={ this.state.itemsCount }
                             renderItem={({ item, index }) => // Renders each layout separately.
                                 <Layout
+                                    incrementItemCount={this.incrementItemCount}
                                     title={item.title} // Title of the layout
                                     createNew={this.createNew} // Passes the createNew function to the Layout component.
                                     viewAllReports={this.viewAllReports}
                                     nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
                                                                                       Layout component. */
                                     layoutID={item.id} // Passes the id of the Layout.
+                                    data={this.state.formsByLayouts[index]}
                                 >
-                                    <FlatList
-                                        data={ this.state.formsByLayouts[index] } /* Renders the forms from the state array
-                                                                                 with the help of an index from the earlier
-                                                                                 renderItem function. */
-                                        renderItem={({ item }) =>
-                                            <ListItem
-                                                key={item.title}
-                                                containerStyle={ layoutStyles.ListItemStyle }
-                                                title={item.title}
-                                                subtitle={item.dateCreated}
-                                                titleStyle = { layoutStyles.listTitleStyle }
-                                                subtitleStyle = {layoutStyles.listTitleStyle }
-                                                hideChevron={true}
-                                                badge = {{ element: this.badge(item.dateAccepted) }}
-                                            />
-                                        }
-                                        keyExtractor={item => item.orderNo}
-                                    />
+
                                 </Layout>
 
                             }
