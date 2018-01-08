@@ -4,10 +4,9 @@ import {
     FlatList,
     ActivityIndicator,
     ScrollView,
-    Text,
-    Button
+    StatusBar
 } from 'react-native';
-import { ListItem, SearchBar } from 'react-native-elements';
+import { SearchBar, Badge } from 'react-native-elements';
 import templateScreenStyles from './style/templateScreenStyles';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -85,9 +84,6 @@ class TemplateScreen extends Component {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
     };
 
-
-
-
     badge = (dateAccepted) => {
         if (dateAccepted != null){
             return <Badge textStyle = {layoutStyles.badgeTextStyle}
@@ -107,8 +103,7 @@ class TemplateScreen extends Component {
                 itemsCount: (this.state.itemsCount + 5)
             },
         );
-    }
-
+    };
 
     render() {
         if (this.state.isLoading) {
@@ -135,8 +130,8 @@ class TemplateScreen extends Component {
                         barStyle="light-content"
                     />
 
-                    <SearchBar       //At the moment this doesn't do anything.
-
+                    {/*At the moment this doesn't do anything.*/}
+                    <SearchBar />
 
                     <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
 
@@ -158,15 +153,11 @@ class TemplateScreen extends Component {
                                                                                       Layout component. */
                                     layoutID={item.id} // Passes the id of the Layout.
                                     data={this.state.formsByLayouts[index]}
-                                >                              
-                                </Layout>
-
+                                />
                             }
                             keyExtractor={item => item.id}
                             refreshing={this.state.refreshing}
                         />
-
-
                     </ScrollView>
                 </View>
             </LinearGradient>
