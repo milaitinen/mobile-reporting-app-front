@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
-import Icon from 'react-native-vector-icons/Feather';
+import { Icon } from 'react-native-elements'
+
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
@@ -10,17 +11,26 @@ import TemplateScreen from '../screens/TemplateScreen';
 import NewFormScreen from '../screens/NewFormScreen';
 import ReportsScreen from '../screens/ReportsScreen';
 
+import navigationStyles from '../screens/style/navigationStyles'
+
 
 const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
-            title: 'Templates',
-            headerStyle: { backgroundColor: '#f0f8ff' },
+            flex: 0.3,
+            headerTitle: 'Forms',
+            headerTitleStyle: navigationStyles.formHeaderTitle,
+            headerStyle: navigationStyles.formHeader ,
             headerLeft:
-                <View style={{ paddingLeft: 15 }}>
-                    <Icon name={'menu'} color={'gray'} size={30} onPress={() => { navigation.navigate('DrawerOpen'); }}  />
-                </View>
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={40}
+                    containerStyle={navigationStyles.headerLeft}
+                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
+                </Icon>
         })
     },
     Reports: {
@@ -82,7 +92,7 @@ const MainScreenNavigator = StackNavigator({
     // Default config for all screens
     headerMode: 'none',
     title: 'Main',
-    initialRouteName: 'loginStack'
+    initialRouteName: 'loginStack',
 });
 
 export default MainScreenNavigator;

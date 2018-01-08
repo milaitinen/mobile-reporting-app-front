@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet,
     View,
     FlatList,
-    Platform,
     ActivityIndicator,
     ScrollView,
+    StatusBar,
 } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, SearchBar, Badge } from 'react-native-elements';
+import templateScreenStyles from './style/templateScreenStyles';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
+import { fetchData } from './api';
+import loginStyles from './style/styles';
+import layoutStyles from '../components/Layout/layoutStyles';
+
 
 class TemplateScreen extends Component {
     static displayName = 'TemplateScreen';
@@ -18,6 +23,7 @@ class TemplateScreen extends Component {
     {
         super(props);
         this.state = {
+            dataLayouts     : [],
             formsByLayouts  : [],    // Array in which the forms will be appended to by their specific LayoutID.
             isLoading       : true,  // Checks whether the app is loading or not.
             refreshing      : false, // Checks whether the app and its data is refreshing or not.
@@ -26,14 +32,11 @@ class TemplateScreen extends Component {
 
     /*
      componentDidMount() is invoked immediately after the component is mounted. Initialization that requires
-     DOM nodes happens here. The function calls getLayoutsAndForms which loads data from a remote url,
+     DOM nodes happens here. The function calls getLayouts which loads data from a remote url,
      and instantiates the network request.
     */
-
     componentDidMount() {
-
         this.getLayoutsAndForms();
-
     }
 
     /*
@@ -45,51 +48,29 @@ class TemplateScreen extends Component {
     */
     getLayoutsAndForms = () => {
 
-        fetch(url + '/layouts')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    dataLayouts: responseJson
-                });
-            })
-            .then(()=> {
-                const promises = [];
-
+        fetchData(url + '/layouts')
+            .then(responseJson => this.setState({ dataLayouts: responseJson }))
+            .then(() => {
+                const formsByLayoutID = [];
                 for (let i = 1; i <= this.state.dataLayouts.length; i++) {
                     const orgReposUrl = url + '/forms?layoutid=' + i;
-                    promises.push(fetch(orgReposUrl).then(response => response.json()));
+                    formsByLayoutID.push(fetchData(orgReposUrl));
                 }
-
-                Promise.all(promises)
-                    .then(data => {
-                        this.setState({
-                            formsByLayouts: data,
-                            isLoading: false,
-                            refreshing: false,
-                        });
-                    })
+                Promise.all(formsByLayoutID)
+                    .then(data => { this.setState({ formsByLayouts: data, isLoading: false, refreshing: false, }); })
                     .catch(err => console.error(err));
-
-
             })
-            .catch((error) => {
-                console.error(error);
-            }).done();
 
+            .catch(error => console.error(error) )
+            .done();
     };
 
     // Handler function for refreshing the data and refetching.
-
     handleRefresh = () => {
         this.setState(
-            {
-                refreshing: true,
-            },
-            () => {
-                this.getLayoutsAndForms();
-            }
+            { refreshing: true, },
+            () => { this.getLayoutsAndForms(); }
         );
-
     };
 
     /*
@@ -101,7 +82,6 @@ class TemplateScreen extends Component {
     createNew = (layoutID) => {
         this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
     };
-
 
     /*
      Function for viewing all the reports of a certain template. Navigates to ReportsScreen.
@@ -118,34 +98,60 @@ class TemplateScreen extends Component {
         });
     };
 
-    render() {
 
+    badge = (dateAccepted) => {
+        if (dateAccepted != null){
+            return <Badge textStyle = {layoutStyles.badgeTextStyle}
+                containerStyle = {layoutStyles.badgeContainerStyleA}
+                value={'Approved'}
+            />;
+        }
+        return <Badge textStyle = {layoutStyles.badgeTextStyle}
+            containerStyle = {layoutStyles.badgeContainerStyleP}
+            value={' Pending  '}
+        />;
+    };
+
+    render() {
         if (this.state.isLoading) {
             return (
-                <View style={[styles.container]}>
-
+                <View style={[templateScreenStyles.container]}>
                     <ActivityIndicator
                         animating={this.state.animating}
-                        style={[styles.activityIndicator, { height: 80 }]}
+                        style={[templateScreenStyles.activityIndicator, { height: 80 }]}
                         size='large'
                     />
-
                 </View>
             );
         }
 
         return (
-            <View style={{ flex: 1 }}>
+            <LinearGradient
+                colors={['#455fa1', '#364a7d', '#2e3f6b']}
+                style={loginStyles.contentContainer}
+            >
 
-                <ScrollView contentContainerStyle={styles.MainContainer}>
+                <View style={{ flex: 1, paddingTop: 0 }}>
+                    <StatusBar
+                        backgroundColor="#455fa1"
+                        barStyle="light-content"
+                    />
 
-                    <FlatList
+                    <SearchBar       //At the moment this doesn't do anything.
+                        lightTheme
+                        containerStyle = {templateScreenStyles.searchBarContainer}
+                        inputStyle = { templateScreenStyles.searchBarInput }
+                        icon = {{ style: templateScreenStyles.searchIcon }}
+                        placeholder='Search for reports' />
+
+                    <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
+
+                        <FlatList
                         /* Lists the layouts in a FlatList component. Each FlatList item is rendered using a
                            custom Layout component. The Layout component has a FlatList component as its child
                            component, which lists the specific forms under the right layout. The component and its
                            props are explained in its class more specifically.
                          */
-
 
                         data={ this.state.dataLayouts } // The data in which the layouts are stored.
                         renderItem={({ item, index }) => // Renders each layout separately.
@@ -158,58 +164,36 @@ class TemplateScreen extends Component {
                                 layoutID={item.id} // Passes the id of the Layout.
                             >
                                 <FlatList
-                                    data={ this.state.formsByLayouts[index].slice(0, 5) } /* Renders the forms from the state array
-                                                                                 with the help of an index from the earlier
-                                                                                 renderItem function. */
-                                    renderItem={({ item }) =>
-                                        <ListItem
-                                            key={item.title}
-                                            containerStyle={ styles.ListItemStyle }
-                                            title={item.title}
-                                            subtitle={item.dateCreated}
-                                            hideChevron={true}
-                                        />
-                                    }
-                                    keyExtractor={item => item.orderNo}
-                                />
-                            </Layout>
+                                    data={ this.state.formsByLayouts[index].slice(0, 5) } /* Renders the first 5 forms from the state array
+                                                                                             with the help of an index from the earlier
+                                                                                             renderItem function. */
+                                        renderItem={({ item }) =>
+                                            <ListItem
+                                                key={item.title}
+                                                containerStyle={ layoutStyles.ListItemStyle }
+                                                title={item.title}
+                                                subtitle={item.dateCreated}
+                                                titleStyle = { layoutStyles.listTitleStyle }
+                                                subtitleStyle = {layoutStyles.listTitleStyle }
+                                                hideChevron={true}
+                                                badge = {{ element: this.badge(item.dateAccepted) }}
+                                            />
+                                        }
+                                        keyExtractor={item => item.orderNo}
+                                    />
+                                </Layout>
 
-                        }
-                        keyExtractor={item => item.id}
-                        refreshing={this.state.refreshing}
+                            }
+                            keyExtractor={item => item.id}
+                            refreshing={this.state.refreshing}
+                        />
 
-                    />
 
-
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
+            </LinearGradient>
         );
     }
 }
-
-
-const styles = StyleSheet.create({
-
-
-    activityIndicator: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 80
-    },
-
-    MainContainer: {
-        justifyContent: 'center',
-        flex: 1,
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-    },
-    ListItemStyle: {
-        height: 50
-    },
-    container: {
-        flex: 1,
-        backgroundColor: 'white'
-    }
-});
 
 export default TemplateScreen;
