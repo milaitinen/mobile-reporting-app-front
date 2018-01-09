@@ -1,21 +1,21 @@
-import { StyleSheet } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const forgottenPasswordStyles = StyleSheet.create({
+const forgottenPasswordStyles = EStyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '$primaryWhite',
         alignItems: 'center',
         justifyContent: 'center',
     },
     button: {
-        backgroundColor: '#4F6D7A',
+        backgroundColor: '$darkBlue',
         width: 250,
         height: 50,
         justifyContent: 'center',
     },
     text: {
         textAlign: 'center',
-        color: '#fff',
+        color: '$primaryWhite',
     }
 });
 

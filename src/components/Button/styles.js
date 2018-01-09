@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
 
     buttonContainer: {
         backgroundColor: '#9dcbe5',
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#274752',
-        fontFamily: 'Roboto-Light',
+        fontFamily: '$primaryFont',
         fontSize: 15,
         textAlign: 'center',
     },

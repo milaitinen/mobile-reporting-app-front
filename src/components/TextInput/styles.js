@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     InputContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     InputStyle: {
         width: 215,
         height: 40,
-        fontFamily: 'Roboto-Light',
+        fontFamily: '$primaryFont',
         fontSize: 16,
         color: 'white',
         alignSelf: 'center',

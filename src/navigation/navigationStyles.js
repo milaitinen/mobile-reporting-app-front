@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const navigationStyles = StyleSheet.create({
+const navigationStyles = EStyleSheet.create({
 
     HeaderContainer: {
-        backgroundColor: '#455fa1',
+        backgroundColor: '$darkBlue',
         borderBottomWidth: 0,
         borderBottomColor: 'transparent',
         elevation: 0,
@@ -15,7 +15,7 @@ const navigationStyles = StyleSheet.create({
         alignSelf: 'flex-start',
         color: '#fff',
         fontWeight: 'normal',
-        fontFamily: 'Roboto-Light',
+        fontFamily: '$primaryFont',
         fontSize: 30,
         paddingLeft: 0,
     },

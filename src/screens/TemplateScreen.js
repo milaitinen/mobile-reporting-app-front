@@ -6,14 +6,13 @@ import {
     ScrollView,
     StatusBar
 } from 'react-native';
-import { SearchBar } from 'react-native-elements';
-import templateScreenStyles from './style/templateScreenStyles';
-import LinearGradient from 'react-native-linear-gradient';
 
+import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
 import { fetchData } from './api';
-
+import { AppBackground } from '../components/AppBackground';
+import { ReportSearchBar } from '../components/ReportSearchBar';
 
 
 class TemplateScreen extends Component {
@@ -82,40 +81,27 @@ class TemplateScreen extends Component {
     };
 
 
-
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={[templateScreenStyles.loadingViewContainer]}>
+                <AppBackground>
                     <ActivityIndicator
                         animating={this.state.animating}
                         style={[templateScreenStyles.activityIndicator, { height: 80 }]}
                         size='large'
                         color={'#88daf2'}
                     />
-                </View>
+                </AppBackground>
             );
         }
 
         return (
-            <LinearGradient
-                colors={['#455fa1', '#364a7d', '#2e3f6b']}
-                style={templateScreenStyles.gradientBg}
-            >
-
+            <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>
-                    <StatusBar
-                        backgroundColor="#455fa1"
-                        barStyle="light-content"
-                    />
+                    <StatusBar backgroundColor={templateScreenStyles.statusBar} barStyle='light-content' />
 
                     {/*At the moment this doesn't do anything.*/}
-                    <SearchBar
-                        lightTheme
-                        containerStyle = {templateScreenStyles.searchBarContainer}
-                        inputStyle = { templateScreenStyles.searchBarInput }
-                        icon = {{ style: templateScreenStyles.searchIcon }}
-                        placeholder='Search for reports' />
+                    <ReportSearchBar/>
 
                     <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
 
@@ -141,7 +127,7 @@ class TemplateScreen extends Component {
                         />
                     </ScrollView>
                 </View>
-            </LinearGradient>
+            </AppBackground>
         );
     }
 }

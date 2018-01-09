@@ -1,17 +1,9 @@
-import { StyleSheet } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const loginStyles = StyleSheet.create({
-    gradientBg: {
-        padding: 20,
-        flex: 1,
-        width: null,
-        height: null,
-        backgroundColor: 'transparent',
-        justifyContent: 'center',
-    },
+const loginStyles = EStyleSheet.create({
 
     title: {
-        fontFamily: 'Roboto-Light',
+        fontFamily: '$primaryFont',
         fontSize: 30,
         textAlign: 'center',
         marginTop: 10,
@@ -32,7 +24,7 @@ const loginStyles = StyleSheet.create({
     forgotPassword: {
         color: 'white',
         paddingTop: 20,
-        fontFamily: 'Roboto-Light',
+        fontFamily: '$primaryFont',
         fontSize: 14,
         textAlign: 'center',
     },
@@ -40,13 +32,13 @@ const loginStyles = StyleSheet.create({
     signUp: {
         color: '#78d3f2',
         paddingTop: 25,
-        fontFamily: 'Roboto-Light',
+        fontFamily: '$primaryFont',
         fontSize: 15,
         textAlign: 'center',
     },
 
     copyright: {
-        fontFamily: 'Roboto-Light',
+        fontFamily: '$primaryFont',
         color: 'white',
         textAlign: 'center',
         marginTop: 50,

@@ -1,10 +1,12 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const templateScreenStyles = StyleSheet.create({
+const templateScreenStyles = EStyleSheet.create({
+    $statusBar: '$darkBlue',
 
     loadingViewContainer: {
         flex: 1,
-        backgroundColor: '#455fa1'
+        backgroundColor: '$darkBlue'
     },
 
     activityIndicator: {
@@ -14,44 +16,14 @@ const templateScreenStyles = StyleSheet.create({
         height: 80,
     },
 
-    gradientBg: {
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingBottom: 0,
-        flex: 1,
-        width: null,
-        height: null,
-        backgroundColor: 'transparent',
-        justifyContent: 'center',
-    },
-
     viewContainer: {
         flex: 1,
         paddingTop: 5,
         paddingRight: 0,
         paddingLeft: 0,
         borderTopWidth: 1,
-        borderTopColor: '#fff',
+        borderTopColor: '$primaryWhite',
 
-    },
-
-    searchBarContainer: {
-        paddingBottom: (Platform.OS === 'ios') ? 20 : 5,
-        backgroundColor: 'transparent',
-        borderBottomWidth: 0,
-        borderTopWidth:0,
-        paddingRight: 35,
-        paddingLeft: 35,
-    },
-
-    searchBarInput: {
-        backgroundColor: '#fff',
-    },
-
-    searchIcon: {
-        paddingLeft: 32,
-        paddingRight: 5,
-        fontSize: 20,
     },
 
     scrollView: {

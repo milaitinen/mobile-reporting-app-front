@@ -1,6 +1,7 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const newReportStyles = StyleSheet.create({
+const newReportStyles = EStyleSheet.create({
     MainContainer: {
         justifyContent: 'center',
         flex: 1,

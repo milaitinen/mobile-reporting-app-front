@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const layoutStyles = StyleSheet.create({
+const layoutStyles = EStyleSheet.create({
 
     badgeTextStyle: {
         color: '#666666',
@@ -45,7 +45,7 @@ const layoutStyles = StyleSheet.create({
     templateContainer: {
         height: 60,
         borderRadius: 5,
-        backgroundColor: '#fff',
+        backgroundColor: '$primaryWhite',
         paddingTop: 0,
         paddingRight: 0,
         paddingLeft: 1,
@@ -93,12 +93,12 @@ const layoutStyles = StyleSheet.create({
 
     titleStyle: {
         paddingTop: 5,
-        fontFamily: 'Roboto-Light',
+        fontFamily: '$primaryFont',
         fontSize: 18,
     },
 
     listTitleStyle :{
-        fontFamily: 'Roboto-Light',
+        fontFamily: '$primaryFont',
         fontSize: 16,
         marginRight: 0,
     },
