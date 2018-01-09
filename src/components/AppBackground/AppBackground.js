@@ -5,8 +5,8 @@ import styles from './styles';
 const AppBackground = ({ children }) => {
     return (
         <LinearGradient
-            colors={[styles.$blue1, '#364a7d', '#2e3f6b']}
-            style={styles.contentContainer}
+            colors={[styles.$blue1, styles.$blue2, styles.$blue3]}
+            style={styles.gradientBg}
         >
             {children}
         </LinearGradient>

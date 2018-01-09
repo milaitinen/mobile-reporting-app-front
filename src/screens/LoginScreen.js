@@ -22,9 +22,7 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return (
-            <LinearGradient
-                colors={['#3d4f7c', '#31456f', '#1b3055']}
-                style={loginStyles.gradientBg}
+            <AppBackground
             >
 
                 <StatusBar
@@ -72,7 +70,7 @@ export default class LoginScreen extends React.Component {
                 <Text style={loginStyles.copyright}>
                     Copyright © Arter Oy 2017
                 </Text>
-            </LinearGradient>
+            </AppBackground>
         );
     }
 }

@@ -34,7 +34,7 @@ const loginStyles = StyleSheet.create({
         paddingTop: 20,
         fontFamily: 'Roboto-Light',
         fontSize: 14,
-        textAlign: 'center'
+        textAlign: 'center',
     },
 
     signUp: {
@@ -42,7 +42,7 @@ const loginStyles = StyleSheet.create({
         paddingTop: 25,
         fontFamily: 'Roboto-Light',
         fontSize: 15,
-        textAlign: 'center'
+        textAlign: 'center',
     },
 
     copyright: {
