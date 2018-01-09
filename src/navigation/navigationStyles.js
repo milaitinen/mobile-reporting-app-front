@@ -1,8 +1,8 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const navigationStyles = StyleSheet.create({
 
-    reportHeader: {
+    HeaderContainer: {
         backgroundColor: '#455fa1',
         borderBottomWidth: 0,
         borderBottomColor: 'transparent',
@@ -11,7 +11,7 @@ const navigationStyles = StyleSheet.create({
         paddingRight: 10,
     },
 
-    reportHeaderTitle: {
+    ScreenHeader: {
         alignSelf: 'flex-start',
         color: '#fff',
         fontWeight: 'normal',
@@ -20,7 +20,7 @@ const navigationStyles = StyleSheet.create({
         paddingLeft: 0,
     },
 
-    headerLeft: {
+    menuIcon: {
         paddingLeft: 20,
         paddingRight: 0,
     },

@@ -23,7 +23,7 @@ export default class LoginScreen extends React.Component {
         return (
             <LinearGradient
                 colors={['#3d4f7c', '#31456f', '#1b3055']}
-                style={loginStyles.contentContainer}
+                style={loginStyles.gradientBg}
             >
 
                 <StatusBar
@@ -60,7 +60,7 @@ export default class LoginScreen extends React.Component {
                     Sign In
                 </SignInButton>
 
-                <Text style={loginStyles.textLink} onPress={() => this.props.navigation.navigate('forgottenPasswordScreen')}>
+                <Text style={loginStyles.forgotPassword} onPress={() => this.props.navigation.navigate('forgottenPasswordScreen')}>
                     Forgot password?
                 </Text>
 

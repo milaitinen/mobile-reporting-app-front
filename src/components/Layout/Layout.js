@@ -101,22 +101,22 @@ class Layout extends Component{
 
         return (
             <Animated.View
-                style={[layoutStyles.container,{ height: this.state.animation }]}>
+                style={[layoutStyles.animatedContainer,{ height: this.state.animation }]}>
                 <View onLayout={this._setMinHeight.bind(this)}>
                     <ListItem
-                        containerStyle={ layoutStyles.ListItemTitleStyle }
+                        containerStyle={ layoutStyles.templateContainer }
                         onPress={this.toggle.bind(this)} // Opens or closes the layout.
-                        title={this.state.title} // Title of the layout.
+                        title={this.state.title} // Title of the template.
                         subtitle={this.state.nofReports + ' Reports'} // Number of reports as a subtitle.
-                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.rightIconStyle,  }}
-                        leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.leftIconStyle, }}
+                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
+                        leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
                         onPressRightIcon={() => this.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
                                                                                         pressed.*/
                     />
 
                 </View>
 
-                <View style={layoutStyles.body} onLayout={this._setMaxHeight.bind(this)}>
+                <View style={layoutStyles.reportListContainer} onLayout={this._setMaxHeight.bind(this)}>
                     <FlatList
                         data={ this.state.data.slice(0, this.state.itemsCount) }
                         extraData={ this.state.itemsCount }
@@ -126,7 +126,7 @@ class Layout extends Component{
                         renderItem={({ item }) =>
                             <ListItem
                                 key={item.title}
-                                containerStyle={ layoutStyles.ListItemStyle }
+                                containerStyle={ layoutStyles.reportContainer }
                                 title={item.title}
                                 subtitle={item.dateCreated}
                                 hideChevron={true}

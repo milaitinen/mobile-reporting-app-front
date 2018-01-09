@@ -86,7 +86,7 @@ class TemplateScreen extends Component {
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={[templateScreenStyles.container]}>
+                <View style={[templateScreenStyles.loadingViewContainer]}>
                     <ActivityIndicator
                         animating={this.state.animating}
                         style={[templateScreenStyles.activityIndicator, { height: 80 }]}
@@ -100,7 +100,7 @@ class TemplateScreen extends Component {
         return (
             <LinearGradient
                 colors={['#455fa1', '#364a7d', '#2e3f6b']}
-                style={templateScreenStyles.gradient}
+                style={templateScreenStyles.gradientBg}
             >
 
                 <View style={templateScreenStyles.viewContainer}>
@@ -117,7 +117,7 @@ class TemplateScreen extends Component {
                         icon = {{ style: templateScreenStyles.searchIcon }}
                         placeholder='Search for reports' />
 
-                    <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
+                    <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
 
                         <FlatList
                             /* Lists the templates in a FlatList component. Each FlatList item is rendered using a

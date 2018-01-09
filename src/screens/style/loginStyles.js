@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const loginStyles = StyleSheet.create({
-    contentContainer: {
+    gradientBg: {
         padding: 20,
         flex: 1,
         width: null,
@@ -10,7 +10,26 @@ const loginStyles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-    textLink: {
+    title: {
+        fontFamily: 'Roboto-Light',
+        fontSize: 30,
+        textAlign: 'center',
+        marginTop: 10,
+        paddingBottom: 30,
+        color: 'white',
+    },
+
+    slogan: {
+        fontSize: 30,
+        width: 200,
+        textAlign: 'center',
+        paddingBottom: 30,
+        color: 'white',
+        fontFamily: 'Qwigley-Regular',
+        alignSelf: 'center',
+    },
+
+    forgotPassword: {
         color: 'white',
         paddingTop: 20,
         fontFamily: 'Roboto-Light',
@@ -26,32 +45,10 @@ const loginStyles = StyleSheet.create({
         textAlign: 'center'
     },
 
-    title: {
-        fontFamily: 'Roboto-Light',
-        fontSize: 30,
-        textAlign: 'center',
-        marginTop: 10,
-        paddingBottom: 30,
-        color: 'white',
-        // fontWeight: 'bold'
-    },
-
-    slogan: {
-        fontSize: 30,
-        width: 200,
-        textAlign: 'center',
-        paddingBottom: 30,
-        color: 'white',
-        fontFamily: 'Qwigley-Regular',
-        alignSelf: 'center',
-        // fontWeight: 'bold'
-    },
-
     copyright: {
         fontFamily: 'Roboto-Light',
         color: 'white',
         textAlign: 'center',
-
         marginTop: 50,
     }
 });

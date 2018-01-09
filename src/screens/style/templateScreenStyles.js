@@ -2,7 +2,19 @@ import { Platform, StyleSheet } from 'react-native';
 
 const templateScreenStyles = StyleSheet.create({
 
-    gradient: {
+    loadingViewContainer: {
+        flex: 1,
+        backgroundColor: '#455fa1'
+    },
+
+    activityIndicator: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 80,
+    },
+
+    gradientBg: {
         paddingLeft: 15,
         paddingRight: 15,
         paddingBottom: 0,
@@ -11,13 +23,6 @@ const templateScreenStyles = StyleSheet.create({
         height: null,
         backgroundColor: 'transparent',
         justifyContent: 'center',
-    },
-
-    activityIndicator: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 80,
     },
 
     viewContainer: {
@@ -30,19 +35,6 @@ const templateScreenStyles = StyleSheet.create({
 
     },
 
-    MainContainer: {
-        justifyContent: 'center',
-        flex: 1,
-        backgroundColor: 'transparent',
-        paddingLeft: 0,
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-    },
-
-    container: {
-        flex: 1,
-        backgroundColor: '#455fa1'
-    },
-
     searchBarContainer: {
         paddingBottom: (Platform.OS === 'ios') ? 20 : 5,
         backgroundColor: 'transparent',
@@ -52,15 +44,24 @@ const templateScreenStyles = StyleSheet.create({
         paddingLeft: 35,
     },
 
+    searchBarInput: {
+        backgroundColor: '#fff',
+    },
+
     searchIcon: {
         paddingLeft: 32,
         paddingRight: 5,
         fontSize: 20,
     },
 
-    searchBarInput: {
-        backgroundColor: '#fff',
-    }
+    scrollView: {
+        justifyContent: 'center',
+        flex: 1,
+        backgroundColor: 'transparent',
+        paddingLeft: 0,
+        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
+    },
+
 });
 
 export default templateScreenStyles;

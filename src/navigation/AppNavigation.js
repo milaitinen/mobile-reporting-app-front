@@ -18,15 +18,15 @@ const TemplateStack = StackNavigator({
         navigationOptions: ({ navigation }) => ({
             flex: 0.3,
             headerTitle: 'Templates',
-            headerTitleStyle: navigationStyles.reportHeaderTitle,
-            headerStyle: navigationStyles.reportHeader,
+            headerStyle: navigationStyles.HeaderContainer,
+            headerTitleStyle: navigationStyles.ScreenHeader,
             headerLeft:
                 <Icon
                     name={'menu'}
                     type={'feather'}
                     color={'#fff'}
                     size={35}
-                    containerStyle={navigationStyles.headerLeft}
+                    containerStyle={navigationStyles.menuIcon}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
                 </Icon>
         })
