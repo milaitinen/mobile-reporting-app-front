@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { View, Text, TouchableHighlight } from 'react-native';
+import signUpStyles from './style/signUpStyles';
 
 export default class SignUpScreen extends React.Component {
 
@@ -9,30 +10,11 @@ export default class SignUpScreen extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <TouchableHighlight style={styles.button} onPress={() => this.handleButtonPress()}>
-                    <Text style={styles.text}>SignUp Screen</Text>
+            <View style={signUpStyles.container}>
+                <TouchableHighlight style={signUpStyles.button} onPress={() => this.handleButtonPress()}>
+                    <Text style={signUpStyles.text}>SignUp Screen</Text>
                 </TouchableHighlight>
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    button: {
-        backgroundColor: '#4F6D7A',
-        width: 250,
-        height: 50,
-        justifyContent: 'center',
-    },
-    text: {
-        textAlign: 'center',
-        color: '#fff',
-    }
-});

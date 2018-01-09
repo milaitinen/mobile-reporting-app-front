@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, StatusBar } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import loginStyles from './style/styles';
+import loginStyles from './style/loginStyles';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 

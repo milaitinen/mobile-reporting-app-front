@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Platform, Alert, Button } from 'react-native';
+import { View, TextInput, Alert, Button } from 'react-native';
 import { url } from './urlsetting';
 import { NavigationActions } from 'react-navigation';
+import newReportStyles from './style/newReportStyles';
+
 export default class NewFormScreen extends React.Component {
 
 
@@ -87,7 +89,7 @@ export default class NewFormScreen extends React.Component {
 
     render() {
         return (
-            <View style={styles.MainContainer}>
+            <View style={newReportStyles.MainContainer}>
                 <TextInput
                     placeholder='Enter Report Name'
 
@@ -95,7 +97,7 @@ export default class NewFormScreen extends React.Component {
 
                     underlineColorAndroid='transparent'
 
-                    style={styles.TextInputStyleClass}
+                    style={newReportStyles.TextInputStyleClass}
                 />
                 <Button
                     title='Create new report'
@@ -107,18 +109,3 @@ export default class NewFormScreen extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    MainContainer: {
-        justifyContent: 'center',
-        flex: 1,
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-    },
-
-    TextInputStyleClass: {
-        textAlign: 'center',
-        marginBottom: 7,
-        height: 40,
-        borderWidth: 1,
-        borderColor: '#FF5722',
-    },
-});
