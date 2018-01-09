@@ -75,6 +75,10 @@ const DrawerStack = DrawerNavigator({
     //This loads the contents of the drawer from the custom Sidebar
     contentComponent: Sidebar,
 
+    //These fix a bug with the drawer navigator
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    drawerToggleRoute: 'DrawerToggle',
 });
 
 const LoginStack = StackNavigator({
