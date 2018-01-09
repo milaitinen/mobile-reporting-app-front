@@ -6,7 +6,9 @@ export default EStyleSheet.create({
     $blue3: '$darkestBlue',
 
     gradientBg: {
-        padding: 20,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingBottom: 0,
         flex: 1,
         width: null,
         height: null,
