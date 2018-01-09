@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
@@ -12,7 +13,9 @@ import ReportsScreen from '../screens/ReportsScreen';
 
 import navigationStyles from '../screens/style/navigationStyles'
 
+import Sidebar from '../navigation/Sidebar';
 
+//The stack that is contained within the drawer stack
 const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
@@ -68,6 +71,14 @@ const DrawerStack = DrawerNavigator({
         screen: TemplateStack,
         navigationOptions: { title: 'Templates' }
     },
+}, {
+    //This loads the contents of the drawer from the custom Sidebar
+    contentComponent: Sidebar,
+
+    //These fix a bug with the drawer navigator
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    drawerToggleRoute: 'DrawerToggle',
 });
 
 const LoginStack = StackNavigator({
