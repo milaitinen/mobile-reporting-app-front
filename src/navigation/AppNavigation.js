@@ -1,13 +1,17 @@
 import React from 'react';
-import { Text, View, AppRegistry } from 'react-native';
-import { StackNavigator, DrawerNavigator, NavigationActions } from 'react-navigation';
+
+import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements';
+
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 
-import MockFormScreen from '../screens/MockFormScreen';
 import TemplateScreen from '../screens/TemplateScreen';
 import NewFormScreen from '../screens/NewFormScreen';
+import ReportsScreen from '../screens/ReportsScreen';
+
+import navigationStyles from '../screens/style/navigationStyles'
 
 import Sidebar from '../navigation/Sidebar';
 
@@ -16,15 +20,19 @@ const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
-            headerTitle: 'Forms',
-            headerTitleStyle: { color: '#fff' },
-            headerStyle: { backgroundColor: '#3d4f7c', borderBottomWidth: 1, borderBottomColor: '#fff' },
+            flex: 0.3,
+            headerTitle: 'Templates',
+            headerTitleStyle: navigationStyles.formHeaderTitle,
+            headerStyle: navigationStyles.formHeader ,
             headerLeft:
-                <Text
-                    style={{ fontSize: 30, fontWeight:'bold', paddingLeft: 15, color: '#fff' }}
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={35}
+                    containerStyle={navigationStyles.headerLeft}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
-                    ☰
-                </Text>
+                </Icon>
         })
     },
     Reports: {
@@ -35,6 +43,27 @@ const TemplateStack = StackNavigator({
         screen: NewFormScreen,
         navigationOptions: { title: 'Create new report' }
     },
+    ReportsPage: {
+        screen: ReportsScreen,
+        navigationOptions: ({ navigation }) => ({
+
+            headerTitle: 'Reports',
+            headerTitleStyle: navigationStyles.formHeaderTitle,
+            headerStyle: navigationStyles.formHeader,
+            headerLeft:
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={35}
+                    containerStyle={navigationStyles.headerLeft}
+                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
+                </Icon>
+        })
+    },
+
+}, {
+    // is this part necessary?
 });
 
 const DrawerStack = DrawerNavigator({
@@ -42,13 +71,10 @@ const DrawerStack = DrawerNavigator({
         screen: TemplateStack,
         navigationOptions: { title: 'Templates' }
     },
-    MockForms: {
-        screen: MockFormScreen,
-        navigationOptions: { title: 'Mock forms' }
-    },
 }, {
     //This loads the contents of the drawer from the custom Sidebar
     contentComponent: Sidebar,
+
 });
 
 const LoginStack = StackNavigator({
@@ -79,7 +105,7 @@ const MainScreenNavigator = StackNavigator({
     // Default config for all screens
     headerMode: 'none',
     title: 'Main',
-    initialRouteName: 'loginStack'
+    initialRouteName: 'loginStack',
 });
 
 export default MainScreenNavigator;

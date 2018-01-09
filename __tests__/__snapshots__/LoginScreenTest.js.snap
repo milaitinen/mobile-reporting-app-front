@@ -227,59 +227,61 @@ exports[`renders correctly 1`] = `
       underlineColorAndroid="transparent"
     />
   </View>
-  <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
-    accessible={true}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
-    isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Array [
-        Object {
-          "backgroundColor": "transparent",
-        },
-        Object {
-          "backgroundColor": "#9dcbe5",
-          "borderColor": "#9dcbe5",
-          "borderRadius": 10,
-          "borderWidth": 1,
-          "marginBottom": 25,
-          "marginLeft": 115,
-          "marginRight": 115,
-          "marginTop": 30,
-          "paddingBottom": 10,
-          "paddingTop": 10,
-        },
-      ]
-    }
-    testID={undefined}
-    tvParallaxProperties={undefined}
-  >
-    <Text
+  <View>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
       accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "color": "#274752",
-          "fontFamily": "Roboto-Light",
-          "fontSize": 15,
-          "textAlign": "center",
-        }
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "backgroundColor": "#9dcbe5",
+            "borderColor": "#9dcbe5",
+            "borderRadius": 10,
+            "borderWidth": 1,
+            "marginBottom": 25,
+            "marginLeft": 115,
+            "marginRight": 115,
+            "marginTop": 30,
+            "paddingBottom": 10,
+            "paddingTop": 10,
+          },
+        ]
       }
+      testID={undefined}
+      tvParallaxProperties={undefined}
     >
-      Sign In
-    </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#274752",
+            "fontFamily": "Roboto-Light",
+            "fontSize": 15,
+            "textAlign": "center",
+          }
+        }
+      >
+        Sign In
+      </Text>
+    </View>
   </View>
   <Text
     accessible={true}

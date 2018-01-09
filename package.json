@@ -32,7 +32,6 @@
     "react-native-linear-gradient": "^2.4.0",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.21",
-    "redux": "^3.7.2",
-    "react-redux": "^5.0.6"
+    "color": "^2.0.1"
   }
 }
