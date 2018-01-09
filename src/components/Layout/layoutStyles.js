@@ -85,24 +85,6 @@ const layoutStyles = EStyleSheet.create({
 
     },
 
-    titleContainer: {
-        flexDirection: 'row',
-        paddingRight: 2,
-        paddingLeft: 0,
-    },
-
-    titleStyle: {
-        paddingTop: 5,
-        fontFamily: '$primaryFont',
-        fontSize: 18,
-    },
-
-    listTitleStyle :{
-        fontFamily: '$primaryFont',
-        fontSize: 16,
-        marginRight: 0,
-    },
-
     more: {
         color: '#6da7e7',
         textDecorationLine: 'underline',

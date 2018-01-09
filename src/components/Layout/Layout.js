@@ -4,7 +4,6 @@ import { ListItem, Badge } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
 
 
-
 class Layout extends Component{
     constructor(props){
         super(props);
@@ -12,13 +11,13 @@ class Layout extends Component{
             itemsCount : 5,
             data       : this.props.data,
             updated    : false,
-            title      : props.title,           // Title which the layout inherits from TemplateScreen.
-            nofReports   : props.nofReports,        // Number of reports which the layout inherits from TemplateScreen.
-            templateID   : props.templateID,        // The specific templateID which the layout inherits from TemplateScreen.
+            title      : props.title,           // Title which the layout component inherits from TemplateScreen.
+            nofReports   : props.nofReports,        // Number of reports which the layout component inherits from TemplateScreen.
+            templateID   : props.templateID,        // The specific templateID which the layout component inherits from TemplateScreen.
             expanded   : false,                 // Checks whether the reports of the template are shown or not.
             animation  : new Animated.Value(60), /* Initializes the animation state as 50 (same height as the ListItem
-                                                   component which includes the title of the Template etc.)
-                                                   This is the minimum height when the layout isn't expanded. */
+                                                   component which includes the title of the Layout etc.)
+                                                   This is the minimum height when the layout component isn't expanded. */
         };
     }
 
@@ -40,7 +39,7 @@ class Layout extends Component{
             expanded : !this.state.expanded
         });
     }
-    // Toggle function for closing and expanding the layout.
+    // Toggle function for closing and expanding the layout component.
 
 
     toggle(){
@@ -95,8 +94,8 @@ class Layout extends Component{
     };
 
     render(){
-        /* Renders the Layout and its children, which are defined in the TemplateScreen class.
-           The TemplateScreen uses FlatList component as the Layout components child.
+        /* Renders the layout componenet and its children, which are defined in the TemplateScreen class.
+           The TemplateScreen uses FlatList component as the layout components child.
          */
 
         return (
@@ -105,7 +104,7 @@ class Layout extends Component{
                 <View onLayout={this._setMinHeight.bind(this)}>
                     <ListItem
                         containerStyle={ layoutStyles.templateContainer }
-                        onPress={this.toggle.bind(this)} // Opens or closes the layout.
+                        onPress={this.toggle.bind(this)} // Opens or closes the layout component.
                         title={this.state.title} // Title of the template.
                         subtitle={this.state.nofReports + ' Reports'} // Number of reports as a subtitle.
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}

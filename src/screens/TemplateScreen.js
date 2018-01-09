@@ -45,7 +45,7 @@ class TemplateScreen extends Component {
     */
     getTemplatesAndReports = () => {
 
-        fetchData(url + '/layouts')  // ***NOTE*** Change this to /reports when the API call has been changed.
+        fetchData(url + '/layouts')  // ***NOTE*** Change this to /templates when the API call has been changed.
             .then(responseJson => this.setState({ dataTemplates: responseJson }))
             .then(() => {
                 const reportsByTemplateID = [];
