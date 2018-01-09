@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import loginStyles from './style/loginStyles';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
+import { AppBackground } from '../components/AppBackground';
 
 export default class LoginScreen extends React.Component {
 

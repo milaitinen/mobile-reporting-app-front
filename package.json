@@ -23,15 +23,16 @@
   },
   "dependencies": {
     "babel-eslint": "^8.0.3",
+    "color": "^2.0.1",
     "eslint": "^4.12.1",
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-react-native": "^3.2.0",
     "react": "16.0.0",
     "react-native": "0.50.3",
     "react-native-elements": "^0.18.5",
+    "react-native-extended-stylesheet": "^0.8.0",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-vector-icons": "^4.4.2",
-    "react-navigation": "^1.0.0-beta.21",
-    "color": "^2.0.1"
+    "react-navigation": "^1.0.0-beta.21"
   }
 }
