@@ -4,7 +4,7 @@ import { url } from './urlsetting';
 import { NavigationActions } from 'react-navigation';
 import newReportStyles from './style/newReportStyles';
 
-export default class NewFormScreen extends React.Component {
+export default class NewReportScreen extends React.Component {
 
 
     constructor(props)
@@ -53,7 +53,7 @@ export default class NewFormScreen extends React.Component {
             },
 
             body: JSON.stringify({
-                templateID: this.props.navigation.state.params.templateID,
+                layoutID: this.props.navigation.state.params.templateID, //***NOTE*** Change to templateID
                 title: this.state.TextInputName,
                 dateCreated: date,
                 answers: [
