@@ -4,11 +4,6 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 const templateScreenStyles = EStyleSheet.create({
     $statusBar: '$darkBlue',
 
-    loadingViewContainer: {
-        flex: 1,
-        backgroundColor: '$darkBlue'
-    },
-
     activityIndicator: {
         flex: 1,
         justifyContent: 'center',

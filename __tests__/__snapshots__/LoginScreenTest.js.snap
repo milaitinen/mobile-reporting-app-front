@@ -4,36 +4,18 @@ exports[`renders correctly 1`] = `
 <View
   colors={
     Array [
-      "#3d4f7c",
-      "#31456f",
-      "#1b3055",
+      undefined,
+      undefined,
+      undefined,
     ]
   }
-  style={
-    Object {
-      "backgroundColor": "transparent",
-      "flex": 1,
-      "height": null,
-      "justifyContent": "center",
-      "padding": 20,
-      "width": null,
-    }
-  }
+  style={undefined}
 >
   <Text
     accessible={true}
     allowFontScaling={true}
     ellipsizeMode="tail"
-    style={
-      Object {
-        "color": "white",
-        "fontFamily": "Roboto-Light",
-        "fontSize": 30,
-        "marginTop": 10,
-        "paddingBottom": 30,
-        "textAlign": "center",
-      }
-    }
+    style={undefined}
   >
     MR-Application
   </Text>
@@ -41,35 +23,12 @@ exports[`renders correctly 1`] = `
     accessible={true}
     allowFontScaling={true}
     ellipsizeMode="tail"
-    style={
-      Object {
-        "alignSelf": "center",
-        "color": "white",
-        "fontFamily": "Qwigley-Regular",
-        "fontSize": 30,
-        "paddingBottom": 30,
-        "textAlign": "center",
-        "width": 200,
-      }
-    }
+    style={undefined}
   >
     Keep calm and keep reporting
   </Text>
   <View
-    style={
-      Object {
-        "alignItems": "center",
-        "alignSelf": "center",
-        "backgroundColor": "transparent",
-        "borderBottomColor": "white",
-        "borderBottomWidth": 1,
-        "flexDirection": "row",
-        "height": 40,
-        "justifyContent": "center",
-        "margin": 10,
-        "width": 250,
-      }
-    }
+    style={undefined}
   >
     <Text
       accessible={true}
@@ -98,35 +57,12 @@ exports[`renders correctly 1`] = `
       onChangeText={[Function]}
       placeholder="Email"
       placeholderTextColor="white"
-      style={
-        Object {
-          "alignSelf": "center",
-          "color": "white",
-          "fontFamily": "Roboto-Light",
-          "fontSize": 16,
-          "height": 40,
-          "marginLeft": 5,
-          "width": 215,
-        }
-      }
+      style={undefined}
       underlineColorAndroid="transparent"
     />
   </View>
   <View
-    style={
-      Object {
-        "alignItems": "center",
-        "alignSelf": "center",
-        "backgroundColor": "transparent",
-        "borderBottomColor": "white",
-        "borderBottomWidth": 1,
-        "flexDirection": "row",
-        "height": 40,
-        "justifyContent": "center",
-        "margin": 10,
-        "width": 250,
-      }
-    }
+    style={undefined}
   >
     <Text
       accessible={true}
@@ -156,35 +92,12 @@ exports[`renders correctly 1`] = `
       placeholder="Password"
       placeholderTextColor="white"
       secureTextEntry={true}
-      style={
-        Object {
-          "alignSelf": "center",
-          "color": "white",
-          "fontFamily": "Roboto-Light",
-          "fontSize": 16,
-          "height": 40,
-          "marginLeft": 5,
-          "width": 215,
-        }
-      }
+      style={undefined}
       underlineColorAndroid="transparent"
     />
   </View>
   <View
-    style={
-      Object {
-        "alignItems": "center",
-        "alignSelf": "center",
-        "backgroundColor": "transparent",
-        "borderBottomColor": "white",
-        "borderBottomWidth": 1,
-        "flexDirection": "row",
-        "height": 40,
-        "justifyContent": "center",
-        "margin": 10,
-        "width": 250,
-      }
-    }
+    style={undefined}
   >
     <Text
       accessible={true}
@@ -213,17 +126,7 @@ exports[`renders correctly 1`] = `
       onChangeText={[Function]}
       placeholder="Server url"
       placeholderTextColor="white"
-      style={
-        Object {
-          "alignSelf": "center",
-          "color": "white",
-          "fontFamily": "Roboto-Light",
-          "fontSize": 16,
-          "height": 40,
-          "marginLeft": 5,
-          "width": 215,
-        }
-      }
+      style={undefined}
       underlineColorAndroid="transparent"
     />
   </View>
@@ -249,18 +152,7 @@ exports[`renders correctly 1`] = `
           Object {
             "backgroundColor": "transparent",
           },
-          Object {
-            "backgroundColor": "#9dcbe5",
-            "borderColor": "#9dcbe5",
-            "borderRadius": 10,
-            "borderWidth": 1,
-            "marginBottom": 25,
-            "marginLeft": 115,
-            "marginRight": 115,
-            "marginTop": 30,
-            "paddingBottom": 10,
-            "paddingTop": 10,
-          },
+          undefined,
         ]
       }
       testID={undefined}
@@ -270,14 +162,7 @@ exports[`renders correctly 1`] = `
         accessible={true}
         allowFontScaling={true}
         ellipsizeMode="tail"
-        style={
-          Object {
-            "color": "#274752",
-            "fontFamily": "Roboto-Light",
-            "fontSize": 15,
-            "textAlign": "center",
-          }
-        }
+        style={undefined}
       >
         Sign In
       </Text>
@@ -288,15 +173,7 @@ exports[`renders correctly 1`] = `
     allowFontScaling={true}
     ellipsizeMode="tail"
     onPress={[Function]}
-    style={
-      Object {
-        "color": "white",
-        "fontFamily": "Roboto-Light",
-        "fontSize": 14,
-        "paddingTop": 20,
-        "textAlign": "center",
-      }
-    }
+    style={undefined}
   >
     Forgot password?
   </Text>
@@ -305,15 +182,7 @@ exports[`renders correctly 1`] = `
     allowFontScaling={true}
     ellipsizeMode="tail"
     onPress={[Function]}
-    style={
-      Object {
-        "color": "#78d3f2",
-        "fontFamily": "Roboto-Light",
-        "fontSize": 15,
-        "paddingTop": 25,
-        "textAlign": "center",
-      }
-    }
+    style={undefined}
   >
     Sign up
   </Text>
@@ -321,14 +190,7 @@ exports[`renders correctly 1`] = `
     accessible={true}
     allowFontScaling={true}
     ellipsizeMode="tail"
-    style={
-      Object {
-        "color": "white",
-        "fontFamily": "Roboto-Light",
-        "marginTop": 50,
-        "textAlign": "center",
-      }
-    }
+    style={undefined}
   >
     Copyright © Arter Oy 2017
   </Text>

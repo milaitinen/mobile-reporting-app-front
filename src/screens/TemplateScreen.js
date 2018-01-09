@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 
 import templateScreenStyles from './style/templateScreenStyles';
-import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
+import { Layout } from '../components/Layout';
 import { fetchData } from './api';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
@@ -98,8 +98,10 @@ class TemplateScreen extends Component {
         return (
             <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>
-                    <StatusBar backgroundColor={templateScreenStyles.statusBar} barStyle='light-content' />
-
+                    <StatusBar
+                        backgroundColor={templateScreenStyles.statusBar}
+                        barStyle='light-content'
+                    />
                     {/*At the moment this doesn't do anything.*/}
                     <ReportSearchBar/>
 

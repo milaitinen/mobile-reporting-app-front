@@ -1,12 +1,12 @@
 import 'react-native';
 import React from 'react';
-import NewFormScreen from '../src/screens/NewFormScreen';
+import NewReportScreen from '../src/screens/NewReportScreen';
 
 import renderer from 'react-test-renderer';
 
 it('renders correctly', () => {
     const tree = renderer.create(
-        <NewFormScreen />
+        <NewReportScreen />
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });
