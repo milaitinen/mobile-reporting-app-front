@@ -1,4 +1,3 @@
-//Redux is not currently used, but this is kept for possible future use
 /*
 import * as ReactNavigation from 'react-navigation';
 import React from 'react';
@@ -18,4 +17,5 @@ function ReduxNavigation (props) {
 
 const mapStateToProps = state => ({ nav: state.nav });
 export default connect(mapStateToProps)(ReduxNavigation);
+
 */
