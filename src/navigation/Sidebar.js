@@ -4,26 +4,30 @@ import { View, Button } from 'react-native';
 
 export default class Sidebar extends React.Component {
 
+    signOutDestinationRouteName = 'loginStack';
 
-    //TODO: improve code style
-    logout = (route) => {
+    signOut = () => {
         //perform other logging out related tasks here
-        console.log('logging out');
-        console.log(`2 + 2 = ${2 + 2}`);
 
+
+        /*
+        This sets the navigation back to the beginning, i.e. to the login screen.
+        This means that the back button in Android will not return to the signed in part of the app,
+        but will instead exit the app.
+         */
         const actionToDispatch = NavigationActions.reset({
             index: 0,
             key: null,
-            actions: [NavigationActions.navigate({ routeName: route })]
+            actions: [NavigationActions.navigate({ routeName: this.signOutDestinationRouteName })]
         });
         this.props.navigation.dispatch(actionToDispatch);
-    }
+    };
 
-    //TODO: update the look
+    //TODO: update the look and consider removing inline style
     render () {
         return (
             <View style={ { padding: 20 } }>
-                <Button onPress={() => this.logout('loginStack')} title={'Sign out'}/>
+                <Button onPress={() => this.signOut()} title={'Sign out'}/>
             </View>
         );
     }
