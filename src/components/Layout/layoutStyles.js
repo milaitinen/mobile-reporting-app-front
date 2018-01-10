@@ -9,7 +9,7 @@ const layoutStyles = EStyleSheet.create({
 
     badgeContainerStyleA: {
         backgroundColor: '#77a482',
-        elevation: 5,
+        elevation: 3,
         borderRadius: 5,
         shadowOffset: {
             width: 0,
