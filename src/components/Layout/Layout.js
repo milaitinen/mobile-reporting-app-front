@@ -13,11 +13,11 @@ class Layout extends Component{
             data       : this.props.data,
             updated    : false,
             title      : props.title,           // Title which the layout inherits from TemplateScreen.
-            nofForms   : props.nofForms,        // Number of forms which the layout inherits from TemplateScreen.
-            layoutID   : props.layoutID,        // The specific layoutID which the layout inherits from TemplateScreen.
-            expanded   : false,                 // Checks whether the forms of the layout are shown or not.
+            nofReports   : props.nofReports,        // Number of reports which the layout inherits from TemplateScreen.
+            templateID   : props.templateID,        // The specific templateID which the layout inherits from TemplateScreen.
+            expanded   : false,                 // Checks whether the reports of the template are shown or not.
             animation  : new Animated.Value(60), /* Initializes the animation state as 50 (same height as the ListItem
-                                                   component which includes the title of the Layout etc.)
+                                                   component which includes the title of the Template etc.)
                                                    This is the minimum height when the layout isn't expanded. */
         };
     }
@@ -64,8 +64,8 @@ class Layout extends Component{
 
 
     // Calls the inherited createNew function which is explained in TemplateScreen class.
-    createNew(layoutID) {
-        this.props.createNew(layoutID);
+    createNew(templateID) {
+        this.props.createNew(templateID);
     }
 
     showMore() {
@@ -101,32 +101,32 @@ class Layout extends Component{
 
         return (
             <Animated.View
-                style={[layoutStyles.container,{ height: this.state.animation }]}>
+                style={[layoutStyles.animatedContainer,{ height: this.state.animation }]}>
                 <View onLayout={this._setMinHeight.bind(this)}>
                     <ListItem
-                        containerStyle={ layoutStyles.ListItemTitleStyle }
+                        containerStyle={ layoutStyles.templateContainer }
                         onPress={this.toggle.bind(this)} // Opens or closes the layout.
-                        title={this.state.title} // Title of the layout.
-                        subtitle={this.state.nofForms + ' Forms'} // Number of forms as a subtitle.
-                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.rightIconStyle,  }}
-                        leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.leftIconStyle, }}
-                        onPressRightIcon={() => this.createNew(this.state.layoutID)} /* Navigates to NewReportScreen when
+                        title={this.state.title} // Title of the template.
+                        subtitle={this.state.nofReports + ' Reports'} // Number of reports as a subtitle.
+                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
+                        leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
+                        onPressRightIcon={() => this.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
                                                                                         pressed.*/
                     />
 
                 </View>
 
-                <View style={layoutStyles.body} onLayout={this._setMaxHeight.bind(this)}>
+                <View style={layoutStyles.reportListContainer} onLayout={this._setMaxHeight.bind(this)}>
                     <FlatList
                         data={ this.state.data.slice(0, this.state.itemsCount) }
                         extraData={ this.state.itemsCount }
-                        /* Renders the forms from the state array
+                        /* Renders the reports from the state array
                           with the help of an index from the earlier
                           renderItem function. */
                         renderItem={({ item }) =>
                             <ListItem
                                 key={item.title}
-                                containerStyle={ layoutStyles.ListItemStyle }
+                                containerStyle={ layoutStyles.reportContainer }
                                 title={item.title}
                                 subtitle={item.dateCreated}
                                 hideChevron={true}
@@ -138,8 +138,7 @@ class Layout extends Component{
                             (this.state.data.length > this.state.itemsCount) ?
                                 <Text
                                     style={layoutStyles.more}
-                                    onPress={() =>
-                                        this.showMore() }
+                                    onPress={() => this.showMore() }
                                 >
                                     Show more
                                 </Text>

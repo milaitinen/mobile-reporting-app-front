@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, StatusBar } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 
-import loginStyles from './style/styles';
+import loginStyles from './style/loginStyles';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
+import { AppBackground } from '../components/AppBackground';
 
 export default class LoginScreen extends React.Component {
 
@@ -21,15 +21,8 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return (
-            <LinearGradient
-                colors={['#3d4f7c', '#31456f', '#1b3055']}
-                style={loginStyles.contentContainer}
-            >
-
-                <StatusBar
-                    backgroundColor="#3d4f7c"
-                    barStyle="light-content"
-                />
+            <AppBackground>
+                <StatusBar backgroundColor='#3d4f7c' barStyle='light-content'/>
 
                 <Text style={loginStyles.title}>
                     MR-Application
@@ -60,7 +53,7 @@ export default class LoginScreen extends React.Component {
                     Sign In
                 </SignInButton>
 
-                <Text style={loginStyles.textLink} onPress={() => this.props.navigation.navigate('forgottenPasswordScreen')}>
+                <Text style={loginStyles.forgotPassword} onPress={() => this.props.navigation.navigate('forgottenPasswordScreen')}>
                     Forgot password?
                 </Text>
 
@@ -71,7 +64,7 @@ export default class LoginScreen extends React.Component {
                 <Text style={loginStyles.copyright}>
                     Copyright © Arter Oy 2017
                 </Text>
-            </LinearGradient>
+            </AppBackground>
         );
     }
 }

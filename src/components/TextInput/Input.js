@@ -6,12 +6,12 @@ import styles from './styles';
 
 const Input = (props) => {
     return (
-        <View style={styles.SectionStyle}>
+        <View style={styles.InputContainer}>
             <Icon name={props.name} color={'white'} size={16} />
             <TextInput
                 onChangeText={props.onChangeText}
                 underlineColorAndroid='transparent'
-                style={styles.TextInputStyleClass}
+                style={styles.InputStyle}
                 placeholderTextColor='white'
                 {...props}
             />

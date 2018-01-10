@@ -1,17 +1,7 @@
-import { StyleSheet } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const styles = StyleSheet.create({
-    ImageStyle: {
-        paddingTop: 10,
-        paddingBottom: 15,
-        paddingRight: 10,
-        margin: 5,
-        height: 25,
-        width: 25,
-        resizeMode : 'stretch',
-        alignItems: 'center'
-    },
-    SectionStyle: {
+const styles = EStyleSheet.create({
+    InputContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -23,21 +13,16 @@ const styles = StyleSheet.create({
         width: 250,
         margin: 10
     },
-    TextInputStyleClass: {
 
-    // textAlign: 'center',
+    InputStyle: {
         width: 215,
         height: 40,
-        fontFamily: 'Roboto-Light',
+        fontFamily: '$primaryFont',
         fontSize: 16,
         color: 'white',
         alignSelf: 'center',
         marginLeft: 5,
-    // borderWidth: 1,
-    // borderColor: '#FF5722',
 
-    // Set border Radius.
-    // borderRadius: 10 ,
     },
 });
 

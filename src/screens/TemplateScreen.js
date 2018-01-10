@@ -6,14 +6,13 @@ import {
     ScrollView,
     StatusBar
 } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+
 import templateScreenStyles from './style/templateScreenStyles';
-import LinearGradient from 'react-native-linear-gradient';
-
-import { Layout } from '../components/Layout';
 import { url } from './urlsetting';
+import { Layout } from '../components/Layout';
 import { fetchData } from './api';
-
+import { AppBackground } from '../components/AppBackground';
+import { ReportSearchBar } from '../components/ReportSearchBar';
 
 
 class TemplateScreen extends Component {
@@ -21,8 +20,8 @@ class TemplateScreen extends Component {
     {
         super(props);
         this.state = {
-            dataLayouts     : [],
-            formsByLayouts  : [],    // Array in which the forms will be appended to by their specific LayoutID.
+            dataTemplates     : [],
+            reportsByTemplates  : [],    // Array in which the reports will be appended to by their specific TemplateID.
             isLoading       : true,  // Checks whether the app is loading or not.
             refreshing      : false, // Checks whether the app and its data is refreshing or not.
         };
@@ -30,32 +29,32 @@ class TemplateScreen extends Component {
 
     /*
      componentDidMount() is invoked immediately after the component is mounted. Initialization that requires
-     DOM nodes happens here. The function calls getLayouts which loads data from a remote url,
+     DOM nodes happens here. The function calls getTemplates which loads data from a remote url,
      and instantiates the network request.
     */
     componentDidMount() {
-        this.getLayoutsAndForms();
+        this.getTemplatesAndReports();
     }
 
     /*
      Fetches the data from the server in two parts.
-     1) Fetches the layouts from the server
-     2) Fetches the forms under their specific layout by making a separate fetch request using
+     1) Fetches the templates from the server
+     2) Fetches the reports under their specific template by making a separate fetch request using
         Promise.all. After the all the promises have been fetched, the function updates the state
-        of formsByLayouts, and sets isLoading and refreshing to false.
+        of reportsByTemplates, and sets isLoading and refreshing to false.
     */
-    getLayoutsAndForms = () => {
+    getTemplatesAndReports = () => {
 
-        fetchData(url + '/layouts')
-            .then(responseJson => this.setState({ dataLayouts: responseJson }))
+        fetchData(url + '/layouts')  // ***NOTE*** Change this to /reports when the API call has been changed.
+            .then(responseJson => this.setState({ dataTemplates: responseJson }))
             .then(() => {
-                const formsByLayoutID = [];
-                for (let i = 1; i <= this.state.dataLayouts.length; i++) {
-                    const orgReposUrl = url + '/forms?layoutid=' + i;
-                    formsByLayoutID.push(fetchData(orgReposUrl));
+                const reportsByTemplateID = [];
+                for (let i = 1; i <= this.state.dataTemplates.length; i++) {
+                    const orgReposUrl = url + '/forms?layoutid=' + i;       // ***NOTE*** Change this to '/reports?templateid='
+                    reportsByTemplateID.push(fetchData(orgReposUrl));
                 }
-                Promise.all(formsByLayoutID)
-                    .then(data => { this.setState({ formsByLayouts: data, isLoading: false, refreshing: false, }); })
+                Promise.all(reportsByTemplateID)
+                    .then(data => { this.setState({ reportsByTemplates: data, isLoading: false, refreshing: false, }); })
                     .catch(err => console.error(err));
             })
 
@@ -67,73 +66,62 @@ class TemplateScreen extends Component {
     handleRefresh = () => {
         this.setState(
             { refreshing: true, },
-            () => { this.getLayoutsAndForms(); }
+            () => { this.getTemplatesAndReports(); }
         );
     };
 
     /*
-     Function that passes navigation props and navigates to NewFormScreen.
+     Function that passes navigation props and navigates to NewReportScreen.
      This makes it possible for the Layout component to navigate.
-     Also passes the refresh function and the specific layoutID so that the
-     app knows to which layout the new report has to be added.
+     Also passes the refresh function and the specific TemplateID so that the
+     app knows to which template the new report has to be added.
     */
-    createNew = (layoutID) => {
-        this.props.navigation.navigate('NewForm', { refresh: this.handleRefresh, layoutID: layoutID });
+    createNew = (templateID) => {
+        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, templateID: templateID });
     };
-
 
 
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={[templateScreenStyles.container]}>
+                <AppBackground>
                     <ActivityIndicator
                         animating={this.state.animating}
                         style={[templateScreenStyles.activityIndicator, { height: 80 }]}
                         size='large'
                         color={'#88daf2'}
                     />
-                </View>
+                </AppBackground>
             );
         }
 
         return (
-            <LinearGradient
-                colors={['#455fa1', '#364a7d', '#2e3f6b']}
-                style={templateScreenStyles.gradient}
-            >
-
+            <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>
                     <StatusBar
-                        backgroundColor="#455fa1"
-                        barStyle="light-content"
+                        backgroundColor={templateScreenStyles.statusBar}
+                        barStyle='light-content'
                     />
-
                     {/*At the moment this doesn't do anything.*/}
-                    <SearchBar
-                        lightTheme
-                        containerStyle = {templateScreenStyles.searchBarContainer}
-                        inputStyle = { templateScreenStyles.searchBarInput }
-                        icon = {{ style: templateScreenStyles.searchIcon }}
-                        placeholder='Search for reports' />
+                    <ReportSearchBar/>
 
-                    <ScrollView contentContainerStyle={templateScreenStyles.MainContainer}>
+                    <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
 
                         <FlatList
-                            /* Lists the layouts in a FlatList component. Each FlatList item is rendered using a
+                            /* Lists the templates in a FlatList component. Each FlatList item is rendered using a
                                custom Layout component. The Layout component has a FlatList component as its child
-                               component, which lists the specific forms under the right layout. The component and its
+                               component, which lists the specific reports under the right template. The component and its
                                props are explained in its class more specifically.
                              */
-                            data={ this.state.dataLayouts } // The data in which the layouts are stored.
-                            renderItem={({ item, index }) => // Renders each layout separately.
+                            data={ this.state.dataTemplates } // The data in which the templates are stored.
+                            renderItem={({ item, index }) => // Renders each template separately.
                                 <Layout
-                                    title={item.title} // Title of the layout
+                                    title={item.title} // Title of the template
                                     createNew={this.createNew} // Passes the createNew function to the Layout component.
-                                    nofForms={this.state.formsByLayouts[index].length} /* Passes the number of reports to
-                                                                                      Layout component. */
-                                    layoutID={item.id} // Passes the id of the Layout.
-                                    data={this.state.formsByLayouts[index]}
+                                    nofReports={item.formCount} // ***NOTE *** Change to reportCount
+                                    // /* Passes the number of reports to Layout component. */
+                                    templateID={item.id} // Passes the id of the template.
+                                    data={this.state.reportsByTemplates[index]}
                                 />
                             }
                             keyExtractor={item => item.id}
@@ -141,7 +129,7 @@ class TemplateScreen extends Component {
                         />
                     </ScrollView>
                 </View>
-            </LinearGradient>
+            </AppBackground>
         );
     }
 }

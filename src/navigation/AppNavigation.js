@@ -8,10 +8,9 @@ import SignUpScreen from '../screens/SignUpScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 
 import TemplateScreen from '../screens/TemplateScreen';
-import NewFormScreen from '../screens/NewFormScreen';
-import ReportsScreen from '../screens/ReportsScreen';
+import NewReportScreen from '../screens/NewReportScreen';
 
-import navigationStyles from '../screens/style/navigationStyles'
+import navigationStyles from './navigationStyles';
 
 import Sidebar from '../navigation/Sidebar';
 
@@ -22,15 +21,15 @@ const TemplateStack = StackNavigator({
         navigationOptions: ({ navigation }) => ({
             flex: 0.3,
             headerTitle: 'Templates',
-            headerTitleStyle: navigationStyles.formHeaderTitle,
-            headerStyle: navigationStyles.formHeader ,
+            headerStyle: navigationStyles.HeaderContainer,
+            headerTitleStyle: navigationStyles.ScreenHeader,
             headerLeft:
                 <Icon
                     name={'menu'}
                     type={'feather'}
                     color={'#fff'}
                     size={35}
-                    containerStyle={navigationStyles.headerLeft}
+                    containerStyle={navigationStyles.menuIcon}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
                 </Icon>
         })
@@ -39,27 +38,9 @@ const TemplateStack = StackNavigator({
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({ title: navigation.state.routeName })
     },
-    NewForm: {
-        screen: NewFormScreen,
+    NewReport: {
+        screen: NewReportScreen,
         navigationOptions: { title: 'Create new report' }
-    },
-    ReportsPage: {
-        screen: ReportsScreen,
-        navigationOptions: ({ navigation }) => ({
-
-            headerTitle: 'Reports',
-            headerTitleStyle: navigationStyles.formHeaderTitle,
-            headerStyle: navigationStyles.formHeader,
-            headerLeft:
-                <Icon
-                    name={'menu'}
-                    type={'feather'}
-                    color={'#fff'}
-                    size={35}
-                    containerStyle={navigationStyles.headerLeft}
-                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
-                </Icon>
-        })
     },
 
 }, {

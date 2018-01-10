@@ -1,17 +1,8 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-const templateScreenStyles = StyleSheet.create({
-
-    gradient: {
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingBottom: 0,
-        flex: 1,
-        width: null,
-        height: null,
-        backgroundColor: 'transparent',
-        justifyContent: 'center',
-    },
+const templateScreenStyles = EStyleSheet.create({
+    $statusBar: '$darkBlue',
 
     activityIndicator: {
         flex: 1,
@@ -26,11 +17,11 @@ const templateScreenStyles = StyleSheet.create({
         paddingRight: 0,
         paddingLeft: 0,
         borderTopWidth: 1,
-        borderTopColor: '#fff',
+        borderTopColor: '$primaryWhite',
 
     },
 
-    MainContainer: {
+    scrollView: {
         justifyContent: 'center',
         flex: 1,
         backgroundColor: 'transparent',
@@ -38,29 +29,6 @@ const templateScreenStyles = StyleSheet.create({
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
 
-    container: {
-        flex: 1,
-        backgroundColor: '#455fa1'
-    },
-
-    searchBarContainer: {
-        paddingBottom: (Platform.OS === 'ios') ? 20 : 5,
-        backgroundColor: 'transparent',
-        borderBottomWidth: 0,
-        borderTopWidth:0,
-        paddingRight: 35,
-        paddingLeft: 35,
-    },
-
-    searchIcon: {
-        paddingLeft: 32,
-        paddingRight: 5,
-        fontSize: 20,
-    },
-
-    searchBarInput: {
-        backgroundColor: '#fff',
-    }
 });
 
 export default templateScreenStyles;

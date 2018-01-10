@@ -1,23 +1,24 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Platform, Alert, Button } from 'react-native';
+import { View, TextInput, Alert, Button } from 'react-native';
 import { url } from './urlsetting';
 import { NavigationActions } from 'react-navigation';
-export default class NewFormScreen extends React.Component {
+import newReportStyles from './style/newReportStyles';
+
+export default class NewReportScreen extends React.Component {
 
 
     constructor(props)
     {
         super(props);
         this.state = {
-            TextInputName  : '',                                      // Text input is initialized as an empty string.
-            layoutID       : '',  /* LayoutID that is inherited from navigation
-                                                                         parameters as stated in TemplateScreen class. */
-
+            TextInputName  : '',    // Text input is initialized as an empty string.
+            templateID     : '',    /* TemplateID that is inherited from navigation parameters
+                                       as stated in TemplateScreen class. */
         };
 
     }
 
-    // Gets the current date and return it as a string.
+    // Gets the current date and returns it as a string.
 
     getDate = () => {
 
@@ -35,7 +36,7 @@ export default class NewFormScreen extends React.Component {
         }
 
         return yyyy + '-' + mm + '-' + dd;
-    }
+    };
 
 
     // Inserts data to server with a post method.
@@ -44,7 +45,7 @@ export default class NewFormScreen extends React.Component {
 
         const date = this.getDate();
 
-        fetch(url + '/users/1/forms', {
+        fetch(url + '/users/1/forms', {     // ***NOTE*** Change to /reports when API has been changed too.
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -52,7 +53,7 @@ export default class NewFormScreen extends React.Component {
             },
 
             body: JSON.stringify({
-                layoutID: this.props.navigation.state.params.layoutID,
+                layoutID: this.props.navigation.state.params.templateID, //***NOTE*** Change to templateID
                 title: this.state.TextInputName,
                 dateCreated: date,
                 answers: [
@@ -84,11 +85,11 @@ export default class NewFormScreen extends React.Component {
             console.error(error);
         });
 
-    }
+    };
 
     render() {
         return (
-            <View style={styles.MainContainer}>
+            <View style={newReportStyles.MainContainer}>
                 <TextInput
                     placeholder='Enter Report Name'
 
@@ -96,7 +97,7 @@ export default class NewFormScreen extends React.Component {
 
                     underlineColorAndroid='transparent'
 
-                    style={styles.TextInputStyleClass}
+                    style={newReportStyles.TextInputStyleClass}
                 />
                 <Button
                     title='Create new report'
@@ -108,19 +109,3 @@ export default class NewFormScreen extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    MainContainer: {
-        justifyContent: 'center',
-        // alignItems: 'center',
-        flex: 1,
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-    },
-
-    TextInputStyleClass: {
-        textAlign: 'center',
-        marginBottom: 7,
-        height: 40,
-        borderWidth: 1,
-        borderColor: '#FF5722',
-    },
-});
