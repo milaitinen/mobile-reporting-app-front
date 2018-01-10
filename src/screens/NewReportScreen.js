@@ -91,10 +91,9 @@ export default class NewReportScreen extends React.Component {
         return (
             <View style={newReportStyles.MainContainer}>
                 <TextInput
+                    style={styles.TextInputStyleClass}
                     placeholder='Enter Report Name'
-
-                    onChangeText={TextInputName => this.setState({ TextInputName })}
-
+                    onChangeText={(TextInputName) => this.setState({ TextInputName })}
                     underlineColorAndroid='transparent'
 
                     style={newReportStyles.TextInputStyleClass}
