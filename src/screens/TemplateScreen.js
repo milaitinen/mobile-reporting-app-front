@@ -45,12 +45,12 @@ class TemplateScreen extends Component {
     */
     getTemplatesAndReports = () => {
 
-        fetchData(url + '/layouts')  // ***NOTE*** Change this to /reports when the API call has been changed.
+        fetchData(url + '/templates')
             .then(responseJson => this.setState({ dataTemplates: responseJson }))
             .then(() => {
                 const reportsByTemplateID = [];
                 for (let i = 1; i <= this.state.dataTemplates.length; i++) {
-                    const orgReposUrl = url + '/forms?layoutid=' + i;       // ***NOTE*** Change this to '/reports?templateid='
+                    const orgReposUrl = url + '/reports?templateid=' + i;
                     reportsByTemplateID.push(fetchData(orgReposUrl));
                 }
                 Promise.all(reportsByTemplateID)
@@ -118,8 +118,7 @@ class TemplateScreen extends Component {
                                 <Layout
                                     title={item.title} // Title of the template
                                     createNew={this.createNew} // Passes the createNew function to the Layout component.
-                                    nofReports={item.formCount} // ***NOTE *** Change to reportCount
-                                    // /* Passes the number of reports to Layout component. */
+                                    nofReports={item.reportCount} // Passes the number of reports to Layout component.
                                     templateID={item.id} // Passes the id of the template.
                                     data={this.state.reportsByTemplates[index]}
                                 />

@@ -45,7 +45,7 @@ export default class NewReportScreen extends React.Component {
 
         const date = this.getDate();
 
-        fetch(url + '/users/1/forms', {     // ***NOTE*** Change to /reports when API has been changed too.
+        fetch(url + '/users/1/reports', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -53,7 +53,7 @@ export default class NewReportScreen extends React.Component {
             },
 
             body: JSON.stringify({
-                layoutID: this.props.navigation.state.params.templateID, //***NOTE*** Change to templateID
+                templateID: this.props.navigation.state.params.templateID,
                 title: this.state.TextInputName,
                 dateCreated: date,
                 answers: [
