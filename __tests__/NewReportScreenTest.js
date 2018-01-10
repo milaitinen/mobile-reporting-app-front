@@ -1,6 +1,7 @@
 import 'react-native';
 import React from 'react';
 import NewReportScreen from '../src/screens/NewReportScreen';
+import { url } from '../src/screens/urlsetting';
 
 import renderer from 'react-test-renderer';
 import { shallow, configure } from 'enzyme';
@@ -16,8 +17,8 @@ it('renders correctly', () => {
 });
 
 it('sets the correct date on the forms', () => {
-    const date = '2018-01-08';
-    const wrapper = shallow(<NewFormScreen/>);
+    const date = '2018-01-10';
+    const wrapper = shallow(<NewReportScreen/>);
 
     expect(wrapper.instance().getDate()).toBe(date);
 });
