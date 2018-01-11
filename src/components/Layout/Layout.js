@@ -126,7 +126,7 @@ class Layout extends Component{
                             <ListItem
                                 key={item.title}
                                 containerStyle={ layoutStyles.reportContainer }
-                                title={item.title}
+                                title={item.orderNo + '\t' + item.title}
                                 subtitle={item.dateCreated}
                                 hideChevron={true}
                                 badge = {{ element: this.badge(item.dateAccepted) }}
