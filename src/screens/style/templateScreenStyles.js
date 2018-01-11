@@ -26,7 +26,6 @@ const templateScreenStyles = EStyleSheet.create({
         flex: 1,
         backgroundColor: 'transparent',
         paddingLeft: 0,
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
 
 });

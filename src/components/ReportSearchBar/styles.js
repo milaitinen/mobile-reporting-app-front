@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 
 export default EStyleSheet.create({
     searchBarContainer: {
-        paddingBottom: (Platform.OS === 'ios') ? 20 : 5,
+        paddingBottom: 5,
         backgroundColor: 'transparent',
         borderBottomWidth: 0,
         borderTopWidth:0,
