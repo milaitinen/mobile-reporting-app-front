@@ -15,7 +15,6 @@ export default class NewReportScreen extends React.Component {
             templateID     : '',    /* TemplateID that is inherited from navigation parameters
                                        as stated in TemplateScreen class. */
         };
-
     }
 
     // Gets the current date and returns it as a string.
@@ -30,11 +29,9 @@ export default class NewReportScreen extends React.Component {
         if (dd < 10) {
             dd = '0' + dd;
         }
-
         if (mm < 10) {
             mm = '0' + mm;
         }
-
         return yyyy + '-' + mm + '-' + dd;
     };
 
@@ -66,9 +63,7 @@ export default class NewReportScreen extends React.Component {
                         answer: 'Answer 2'
                     }
                 ]
-
             })
-
         }).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
@@ -84,7 +79,6 @@ export default class NewReportScreen extends React.Component {
         }).catch((error) => {
             console.error(error);
         });
-
     };
 
     render() {
@@ -92,11 +86,8 @@ export default class NewReportScreen extends React.Component {
             <View style={newReportStyles.MainContainer}>
                 <TextInput
                     placeholder='Enter Report Name'
-
                     onChangeText={(TextInputName) => this.setState({ TextInputName })}
-
                     underlineColorAndroid='transparent'
-
                     style={newReportStyles.TextInputStyleClass}
                 />
                 <Button

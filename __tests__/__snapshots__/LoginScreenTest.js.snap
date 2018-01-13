@@ -172,24 +172,6 @@ exports[`renders correctly 1`] = `
     accessible={true}
     allowFontScaling={true}
     ellipsizeMode="tail"
-    onPress={[Function]}
-    style={undefined}
-  >
-    Forgot password?
-  </Text>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    onPress={[Function]}
-    style={undefined}
-  >
-    Sign up
-  </Text>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
     style={undefined}
   >
     Copyright © Arter Oy 2017
