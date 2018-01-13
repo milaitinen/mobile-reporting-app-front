@@ -4,8 +4,6 @@ import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import LoginScreen from '../screens/LoginScreen';
-import SignUpScreen from '../screens/SignUpScreen';
-import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 
 import TemplateScreen from '../screens/TemplateScreen';
 import NewReportScreen from '../screens/NewReportScreen';
@@ -66,14 +64,7 @@ const LoginStack = StackNavigator({
     loginScreen: {
         screen: LoginScreen
     },
-    signUpScreen: {
-        screen: SignUpScreen,
-        navigationOptions: { title: 'Create an account' }
-    },
-    forgottenPasswordScreen: {
-        screen: ForgottenPasswordScreen,
-        navigationOptions: { title: 'Forgot Password' }
-    },
+
 }, {
     headerMode: 'screen',
     navigationOptions: {
