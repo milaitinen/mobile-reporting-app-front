@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Animated, FlatList, Text } from 'react-native';
-import { ListItem, Badge } from 'react-native-elements';
+import { ListItem, Badge, Icon, Button } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
+import navigationStyles from '../../navigation/navigationStyles';
+import SignInButton from '../Button/SignInButton';
 
 
 class Layout extends Component{
@@ -81,15 +83,22 @@ class Layout extends Component{
     }
 
     badge = (dateAccepted) => {
+
         if (dateAccepted != null){
-            return <Badge textStyle = {layoutStyles.badgeTextStyle}
-                containerStyle = {layoutStyles.badgeContainerStyleA}
-                value={'Approved'}
+            return  <Button
+                disabled
+                title='Approved'
+                textStyle={layoutStyles.badgeTextStyle}
+                disabledStyle={layoutStyles.badgeContainerStyleA}
+                iconRight={{ name: 'check', type: 'feather', color: '#666666' }}
             />;
         }
-        return <Badge textStyle = {layoutStyles.badgeTextStyle}
-            containerStyle = {layoutStyles.badgeContainerStyleP}
-            value={' Pending  '}
+        return  <Button
+            disabled
+            title='Pending'
+            textStyle={layoutStyles.badgeTextStyle}
+            disabledStyle={layoutStyles.badgeContainerStyleP}
+            iconRight={{ name: 'clock', type: 'feather', color: '#666666' }}
         />;
     };
 
@@ -128,8 +137,8 @@ class Layout extends Component{
                                 containerStyle={ layoutStyles.reportContainer }
                                 title={item.orderNo + '\t' + item.title}
                                 subtitle={item.dateCreated}
-                                hideChevron={true}
-                                badge = {{ element: this.badge(item.dateAccepted) }}
+                                hideChevron = {true}
+                                badge ={{ element: this.badge(item.dateAccepted) }}
                             />
                         }
                         keyExtractor={item => item.orderNo}

@@ -4,11 +4,11 @@ const layoutStyles = EStyleSheet.create({
 
     badgeTextStyle: {
         color: '#666666',
-        padding: 1
+        padding: 0
     },
 
     badgeContainerStyleA: {
-        backgroundColor: '#77a482',
+        backgroundColor: '#99d9ad',
         elevation: 3,
         borderRadius: 5,
         shadowOffset: {
@@ -19,6 +19,16 @@ const layoutStyles = EStyleSheet.create({
 
     badgeContainerStyleP: {
         backgroundColor: '#f3fe99',
+        elevation: 3,
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        borderRadius: 5,
+    },
+
+    badgeContainerStyleD: {
+        backgroundColor: '#9dcbe5',
         elevation: 3,
         shadowOffset: {
             width: 0,
