@@ -17,7 +17,6 @@ export default class NewReportScreen extends React.Component {
     }
 
     // Inserts data to server with a post method.
-
     send = () => {
         const report = {
             templateID: this.props.navigation.state.params.templateID,
@@ -46,12 +45,11 @@ export default class NewReportScreen extends React.Component {
         }).then((message) => {
             // Showing response message coming from server after inserting records.
             Alert.alert(message);
-
         }).catch((error) => {
             console.error(error);
         });
-
     };
+
 
     render() {
         return (

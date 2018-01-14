@@ -9,9 +9,9 @@ import {
 
 import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
-import { fetchReportsByTemplateID, fetchTemplates } from './api';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
+import { fetchReportsByTemplateID, fetchTemplates } from './api';
 
 
 class TemplateScreen extends Component {
@@ -20,9 +20,9 @@ class TemplateScreen extends Component {
         super(props);
         this.state = {
             dataTemplates     : [],
-            reportsByTemplates  : [],    // Array in which the reports will be appended to by their specific TemplateID.
-            isLoading       : true,  // Checks whether the app is loading or not.
-            refreshing      : false, // Checks whether the app and its data is refreshing or not.
+            reportsByTemplates  : [],   // Array in which the reports will be appended to by their specific TemplateID.
+            isLoading       : true,     // Checks whether the app is loading or not.
+            refreshing      : false,    // Checks whether the app and its data is refreshing or not.
         };
     }
 
@@ -39,18 +39,14 @@ class TemplateScreen extends Component {
      Fetches the data from the server in two parts.
      1) Fetches the templates from the server
      2) Fetches the reports under their specific template by making a separate fetch request using
-        Promise.all. After the all the promises have been fetched, the function updates the state
+        Promise.all. After all the promises have been fetched, the function updates the state
         of reportsByTemplates, and sets isLoading and refreshing to false.
     */
     getTemplatesAndReports = () => {
-
         fetchTemplates()
             .then(responseJson => this.setState({ dataTemplates: responseJson }))
             .then(() => {
-                const reportsByTemplateID = [];
-                for (let i = 1; i <= this.state.dataTemplates.length; i++) { //map?
-                    reportsByTemplateID.push(fetchReportsByTemplateID(i));
-                }
+                const reportsByTemplateID = this.state.dataTemplates.map((t, i) => fetchReportsByTemplateID(i + 1));
                 Promise.all(reportsByTemplateID)
                     .then(data => { this.setState({ reportsByTemplates: data, isLoading: false, refreshing: false, }); })
                     .catch(err => console.error(err));
@@ -77,7 +73,6 @@ class TemplateScreen extends Component {
         this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, templateID: templateID });
     };
 
-
     render() {
         if (this.state.isLoading) {
             return (
@@ -101,9 +96,7 @@ class TemplateScreen extends Component {
                     />
                     {/*At the moment this doesn't do anything.*/}
                     <ReportSearchBar/>
-
                     <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
-
                         <FlatList
                             /* Lists the templates in a FlatList component. Each FlatList item is rendered using a
                                custom Layout component. The Layout component has a FlatList component as its child
