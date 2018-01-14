@@ -53,14 +53,6 @@ export default class LoginScreen extends React.Component {
                     Sign In
                 </SignInButton>
 
-                <Text style={loginStyles.forgotPassword} onPress={() => this.props.navigation.navigate('forgottenPasswordScreen')}>
-                    Forgot password?
-                </Text>
-
-                <Text style={loginStyles.signUp} onPress={() => this.props.navigation.navigate('signUpScreen')}>
-                    Sign up
-                </Text>
-
                 <Text style={loginStyles.copyright}>
                     Copyright © Arter Oy 2017
                 </Text>

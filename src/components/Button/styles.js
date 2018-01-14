@@ -9,7 +9,7 @@ const styles = EStyleSheet.create({
         paddingBottom:10,
         marginLeft:115,
         marginRight:115,
-        marginBottom: 25,
+        marginBottom: 60,
         borderRadius:10,
         borderWidth: 1,
         borderColor: '#9dcbe5',

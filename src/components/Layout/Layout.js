@@ -82,10 +82,19 @@ class Layout extends Component{
 
     badge = (dateAccepted) => {
         if (dateAccepted != null){
-            return <Badge textStyle = {layoutStyles.badgeTextStyle}
-                containerStyle = {layoutStyles.badgeContainerStyleA}
-                value={'Approved'}
-            />;
+            return (
+                <View style={layoutStyles.BadgeViewContainer}>
+                    <Badge textStyle = {layoutStyles.badgeTextStyle}
+                        containerStyle = {layoutStyles.badgeContainerStyleA}
+                        value={'Approved'}
+                    />
+                    <Text style={layoutStyles.dateAccepted}>
+                        {dateAccepted}
+                    </Text>
+                </View>
+
+
+            );
         }
         return <Badge textStyle = {layoutStyles.badgeTextStyle}
             containerStyle = {layoutStyles.badgeContainerStyleP}

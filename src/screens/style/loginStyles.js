@@ -16,32 +16,17 @@ const loginStyles = EStyleSheet.create({
         width: 200,
         textAlign: 'center',
         paddingBottom: 30,
+        marginBottom: 10,
         color: 'white',
         fontFamily: 'Qwigley-Regular',
         alignSelf: 'center',
-    },
-
-    forgotPassword: {
-        color: 'white',
-        paddingTop: 20,
-        fontFamily: '$primaryFont',
-        fontSize: 14,
-        textAlign: 'center',
-    },
-
-    signUp: {
-        color: '#78d3f2',
-        paddingTop: 25,
-        fontFamily: '$primaryFont',
-        fontSize: 15,
-        textAlign: 'center',
     },
 
     copyright: {
         fontFamily: '$primaryFont',
         color: 'white',
         textAlign: 'center',
-        marginTop: 50,
+        marginTop: 60,
     }
 });
 

@@ -18,6 +18,7 @@ it('renders correctly', () => {
 
 /*it('sets the correct date on the forms', () => {
     const date = '2018-01-14';
+
     const wrapper = shallow(<NewReportScreen/>);
 
     expect(wrapper.instance().getDate()).toBe(date);
