@@ -8,9 +8,8 @@ import {
 } from 'react-native';
 
 import templateScreenStyles from './style/templateScreenStyles';
-import { url } from './urlsetting';
 import { Layout } from '../components/Layout';
-import { fetchData } from './api';
+import { fetchReportsByTemplateID, fetchTemplates } from './api';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
 
@@ -45,19 +44,17 @@ class TemplateScreen extends Component {
     */
     getTemplatesAndReports = () => {
 
-        fetchData(url + '/templates')
+        fetchTemplates()
             .then(responseJson => this.setState({ dataTemplates: responseJson }))
             .then(() => {
                 const reportsByTemplateID = [];
-                for (let i = 1; i <= this.state.dataTemplates.length; i++) {
-                    const orgReposUrl = url + '/reports?templateid=' + i;
-                    reportsByTemplateID.push(fetchData(orgReposUrl));
+                for (let i = 1; i <= this.state.dataTemplates.length; i++) { //map?
+                    reportsByTemplateID.push(fetchReportsByTemplateID(i));
                 }
                 Promise.all(reportsByTemplateID)
                     .then(data => { this.setState({ reportsByTemplates: data, isLoading: false, refreshing: false, }); })
                     .catch(err => console.error(err));
             })
-
             .catch(error => console.error(error) )
             .done();
     };
