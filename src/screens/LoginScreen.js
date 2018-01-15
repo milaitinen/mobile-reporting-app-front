@@ -2,6 +2,8 @@ import React from 'react';
 import { Text, StatusBar } from 'react-native';
 
 import loginStyles from './style/loginStyles';
+import { strings } from '../locales/i18n';
+
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
@@ -29,7 +31,7 @@ export default class LoginScreen extends React.Component {
                 </Text>
 
                 <Text style={loginStyles.slogan}>
-                    Keep calm and keep reporting
+                    {strings('login.slogan')}
                 </Text>
 
                 <Input

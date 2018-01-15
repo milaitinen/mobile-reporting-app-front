@@ -1,0 +1,34 @@
+//en.json
+
+{
+  "login": {
+    "title": "MR-Application",
+    "slogan": "Keep calm and keep reporting",
+    "email": "Email",
+    "password": "Password",
+    "serverUrl": "Server url",
+    "signIn": "'Sign in'"
+  },
+
+  "templates": {
+    "templates": "Templates",
+    "search": "Search..",
+    "reports": "Reports",
+    "approved": "Approved",
+    "sent": "Sent",
+    "draft:": "Draft",
+    "showMore": "Show more",
+  },
+
+  "createNew": {
+    "createNew": "Create new report",
+    "enterNew": "Enter report name",
+    "reportAdded": "Report sent",
+  },
+
+  "navigation": {
+    "signOut": "Sign out",
+  },
+
+
+}
