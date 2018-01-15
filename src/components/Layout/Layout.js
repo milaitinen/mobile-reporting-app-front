@@ -84,22 +84,46 @@ class Layout extends Component{
 
     badge = (dateAccepted) => {
 
-        if (dateAccepted != null){
-            return  <Button
-                disabled
-                title='Approved'
-                textStyle={layoutStyles.badgeTextStyle}
-                disabledStyle={layoutStyles.badgeContainerStyleA}
-                iconRight={{ name: 'check', type: 'feather', color: '#666666' }}
-            />;
+        /*
+        if(JOKU DRAFTEHTO) {
+           return (
+            <View style={layoutStyles.BadgeViewContainer}>
+                 <Badge textStyle = {layoutStyles.badgeTextStyle}
+                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#9dcbe5' }]}>
+                    <Text style={layoutStyles.badgeTextStyle}>Draft</Text>
+                    <Icon name={'edit-2'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
+                </Badge>
+            </View>
+        );
         }
-        return  <Button
-            disabled
-            title='Pending'
-            textStyle={layoutStyles.badgeTextStyle}
-            disabledStyle={layoutStyles.badgeContainerStyleP}
-            iconRight={{ name: 'clock', type: 'feather', color: '#666666' }}
-        />;
+         */
+
+
+
+        if (dateAccepted != null){
+            return (
+                <View style={layoutStyles.BadgeViewContainer}>
+                    <Badge textStyle = {layoutStyles.badgeTextStyle}
+                        containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
+
+                        <Text style={layoutStyles.badgeTextStyle}>Approved</Text>
+                        <Icon name={'check'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
+                    </Badge>
+                    <Text style={layoutStyles.dateAccepted}>
+                        {dateAccepted}
+                    </Text>
+                </View>
+            );
+        }
+        return (
+            <View style={layoutStyles.BadgeViewContainer}>
+                <Badge textStyle = {layoutStyles.badgeTextStyle}
+                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
+                    <Text style={layoutStyles.badgeTextStyle}>Sent</Text>
+                    <Icon name={'clock'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
+                </Badge>
+            </View>
+        );
     };
 
     render(){

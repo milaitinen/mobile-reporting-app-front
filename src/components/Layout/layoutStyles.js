@@ -1,40 +1,43 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import normalize from 'react-native-elements/src/helpers/normalizeText';
 
 const layoutStyles = EStyleSheet.create({
 
+    BadgeViewContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
     badgeTextStyle: {
         color: '#666666',
-        padding: 0
+        padding: 0,
     },
 
-    badgeContainerStyleA: {
-        backgroundColor: '#99d9ad',
+    badgeIconStyle: {
+        color: '#666666',
+        paddingLeft: 5,
+        justifyContent: 'flex-end',
+        fontSize: 20,
+    },
+
+    badgeContainerStyle: {
         elevation: 3,
+        width: 100,
         borderRadius: 5,
+        flexDirection: 'row',
         shadowOffset: {
             width: 0,
             height: 3,
         },
     },
 
-    badgeContainerStyleP: {
-        backgroundColor: '#f3fe99',
-        elevation: 3,
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        borderRadius: 5,
-    },
+    dateAccepted: {
+        paddingTop: 2,
+        color: '#86939e',
+        fontSize: normalize(12),    // Normalizes the size of fonts across devices.
+        fontWeight: 'bold',
 
-    badgeContainerStyleD: {
-        backgroundColor: '#9dcbe5',
-        elevation: 3,
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        borderRadius: 5,
+
     },
 
     animatedContainer: {
