@@ -15,6 +15,9 @@ I18n.translations = {
     fi
 };
 
+//TODO: REMOVE THIS: used for testing
+I18n.locale = 'fi';
+
 export function strings(name, params = {}) {
     return I18n.t(name, params);
 }
