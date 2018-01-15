@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, TextInput, Alert, Button } from 'react-native';
-import { url } from './urlsetting';
 import { NavigationActions } from 'react-navigation';
+import moment from 'moment';
+
+import { createNewReport } from './api';
 import newReportStyles from './style/newReportStyles';
 
 export default class NewReportScreen extends React.Component {
-
-
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
         this.state = {
             TextInputName  : '',    // Text input is initialized as an empty string.
@@ -17,54 +16,25 @@ export default class NewReportScreen extends React.Component {
         };
     }
 
-    // Gets the current date and returns it as a string.
-
-    getDate = () => {
-
-        const today = new Date();
-        let dd = today.getDate();
-        let mm = today.getMonth() + 1; // January is 0!
-        const yyyy = today.getFullYear();
-
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        return yyyy + '-' + mm + '-' + dd;
-    };
-
-
     // Inserts data to server with a post method.
-
-    InsertDataToServer = () => {
-
-        const date = this.getDate();
-
-        fetch(url + '/users/1/reports', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-
-            body: JSON.stringify({
-                templateID: this.props.navigation.state.params.templateID,
-                title: this.state.TextInputName,
-                dateCreated: date,
-                answers: [
-                    {
-                        fieldID: 1,
-                        answer: 'Answer 1'
-                    },
-                    {
-                        fieldID: 2,
-                        answer: 'Answer 2'
-                    }
-                ]
-            })
-        }).then(response => {
+    send = () => {
+        const report = {
+            templateID: this.props.navigation.state.params.templateID,
+            title: this.state.TextInputName,
+            dateCreated: moment().format('YYYY-MM-DD'),
+            answers: [
+                {
+                    fieldID: 1,
+                    answer: 'Answer 1'
+                },
+                {
+                    fieldID: 2,
+                    answer: 'Answer 2'
+                }
+            ]
+        };
+        // hardcoded templateID
+        createNewReport(1, report).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
@@ -75,11 +45,11 @@ export default class NewReportScreen extends React.Component {
         }).then((message) => {
             // Showing response message coming from server after inserting records.
             Alert.alert(message);
-
         }).catch((error) => {
             console.error(error);
         });
     };
+
 
     render() {
         return (
@@ -92,7 +62,7 @@ export default class NewReportScreen extends React.Component {
                 />
                 <Button
                     title='Create new report'
-                    onPress={ this.InsertDataToServer }
+                    onPress={ this.send }
                 >
                 </Button>
             </View>
