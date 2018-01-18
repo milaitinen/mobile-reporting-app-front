@@ -63,8 +63,8 @@ class Layout extends Component{
 
 
     // Calls the inherited createNew function which is explained in TemplateScreen class.
-    createNew(templateID) {
-        this.props.createNew(templateID);
+    createNew(templateID, isEditable) {
+        this.props.createNew(templateID, isEditable);
     }
 
     showMore() {
@@ -118,8 +118,9 @@ class Layout extends Component{
                         subtitle={this.state.nofReports + ' Reports'} // Number of reports as a subtitle.
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
                         leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
-                        onPressRightIcon={() => this.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
-                                                                                        pressed.*/
+                        onPressRightIcon={() => this.createNew(this.state.templateID, true)} /* Navigates to NewReportScreen when
+                                                                                                pressed.*/
+                        leftIconOnPress={() => this.createNew(this.state.templateID, false)}
                     />
 
                 </View>
