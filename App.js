@@ -9,7 +9,6 @@ EStyleSheet.build({
     $darkerBlue: '#31456f',
     $darkestBlue: '#1b3055',
     $primaryWhite: '#fff',
-
     $primaryFont: 'Roboto-Light',
 });
 

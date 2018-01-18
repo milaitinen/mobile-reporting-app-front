@@ -106,10 +106,12 @@ class Layout extends Component{
                         <Text style={layoutStyles.badgeTextStyle}>Approved</Text>
                         <Icon name={'check'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
                     </Badge>
+
                     <Text style={layoutStyles.dateAccepted}>
                         {dateAccepted}
                     </Text>
                 </View>
+
             );
         }
         return (
