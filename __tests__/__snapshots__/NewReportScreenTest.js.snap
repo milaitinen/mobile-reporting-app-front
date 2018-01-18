@@ -7,7 +7,7 @@ exports[`renders correctly 1`] = `
   <TextInput
     allowFontScaling={true}
     onChangeText={[Function]}
-    placeholder="Enter Report Name"
+    placeholder="Raportin nimi"
     style={undefined}
     underlineColorAndroid="transparent"
   />
@@ -62,7 +62,7 @@ exports[`renders correctly 1`] = `
           ]
         }
       >
-        Create new report
+        Luo uusi raportti
       </Text>
     </View>
   </View>

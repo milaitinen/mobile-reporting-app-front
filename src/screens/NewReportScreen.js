@@ -5,6 +5,8 @@ import moment from 'moment';
 
 import { createNewReport } from './api';
 import newReportStyles from './style/newReportStyles';
+import { strings } from '../locales/i18n';
+
 
 export default class NewReportScreen extends React.Component {
     constructor(props) {
@@ -38,7 +40,7 @@ export default class NewReportScreen extends React.Component {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
-                return 'Report added';
+                return strings('createNew.reportAdded');
             } else {
                 return response.status;
             }
@@ -55,13 +57,13 @@ export default class NewReportScreen extends React.Component {
         return (
             <View style={newReportStyles.MainContainer}>
                 <TextInput
-                    placeholder='Enter Report Name'
+                    placeholder={ strings('createNew.enterNew') }
                     onChangeText={(TextInputName) => this.setState({ TextInputName })}
                     underlineColorAndroid='transparent'
                     style={newReportStyles.TextInputStyleClass}
                 />
                 <Button
-                    title='Create new report'
+                    title={ strings('createNew.createNew') }
                     onPress={ this.send }
                 >
                 </Button>
@@ -69,4 +71,3 @@ export default class NewReportScreen extends React.Component {
         );
     }
 }
-
