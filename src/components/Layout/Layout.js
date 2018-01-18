@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { View, Animated, FlatList, Text } from 'react-native';
-import { ListItem, Badge, Icon, Button } from 'react-native-elements';
+import { ListItem, Badge, Icon } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
-import navigationStyles from '../../navigation/navigationStyles';
-import SignInButton from '../Button/SignInButton';
 
 
 class Layout extends Component{
@@ -89,7 +87,7 @@ class Layout extends Component{
            return (
             <View style={layoutStyles.BadgeViewContainer}>
                  <Badge textStyle = {layoutStyles.badgeTextStyle}
-                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#9dcbe5' }]}>
+                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
                     <Text style={layoutStyles.badgeTextStyle}>Draft</Text>
                     <Icon name={'edit-2'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
                 </Badge>
@@ -105,7 +103,6 @@ class Layout extends Component{
                 <View style={layoutStyles.BadgeViewContainer}>
                     <Badge textStyle = {layoutStyles.badgeTextStyle}
                         containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
-
                         <Text style={layoutStyles.badgeTextStyle}>Approved</Text>
                         <Icon name={'check'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
                     </Badge>
@@ -119,7 +116,7 @@ class Layout extends Component{
             <View style={layoutStyles.BadgeViewContainer}>
                 <Badge textStyle = {layoutStyles.badgeTextStyle}
                     containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
-                    <Text style={layoutStyles.badgeTextStyle}>Sent</Text>
+                    <Text style={ layoutStyles.badgeTextStyle }>Sent</Text>
                     <Icon name={'clock'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
                 </Badge>
             </View>

@@ -25,6 +25,8 @@ const layoutStyles = EStyleSheet.create({
         width: 100,
         borderRadius: 5,
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         shadowOffset: {
             width: 0,
             height: 3,
@@ -36,8 +38,6 @@ const layoutStyles = EStyleSheet.create({
         color: '#86939e',
         fontSize: normalize(12),    // Normalizes the size of fonts across devices.
         fontWeight: 'bold',
-
-
     },
 
     animatedContainer: {
