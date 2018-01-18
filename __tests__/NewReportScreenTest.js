@@ -2,9 +2,10 @@ import 'react-native';
 import React from 'react';
 import NewReportScreen from '../src/screens/NewReportScreen';
 import { url } from '../src/screens/urlsetting';
+import 'isomorphic-fetch';
 
 import renderer from 'react-test-renderer';
-import { shallow, configure } from 'enzyme';
+import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
