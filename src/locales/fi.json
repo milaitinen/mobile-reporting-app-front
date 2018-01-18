@@ -1,5 +1,3 @@
-//fi.json
-
 {
   "login": {
     "title": "MR-Application",
@@ -17,17 +15,16 @@
     "approved": "Hyväksytty",
     "sent": "Käsittelyssä",
     "draft:": "Luonnos",
-    "showMore": "Näytä lisää",
+    "showMore": "Näytä lisää"
   },
 
   "createNew": {
     "createNew": "Luo uusi raportti",
     "enterNew": "Raportin nimi",
-    "reportAdded": "Raportti lähetetty",
+    "reportAdded": "Raportti lähetetty"
   },
 
   "navigation": {
-    "signOut": "Kirjaudu ulos",
-  },
-
+    "signOut": "Kirjaudu ulos"
+  }
 }
