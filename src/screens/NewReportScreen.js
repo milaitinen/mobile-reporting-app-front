@@ -4,6 +4,7 @@ import { NavigationActions } from 'react-navigation';
 import CheckBox from 'react-native-check-box';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
+import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByID } from './api';
@@ -113,8 +114,8 @@ export default class NewReportScreen extends React.Component {
                 case 1: // Name
                     return (
                         <TextInput
-                            editable={this.state.isEditable}
                             key={index}
+                            editable={this.state.isEditable}
                             placeholder={field.defaultValue}
                             onChangeText={(TextInputName) => this.setState({ TextInputName })}
                             underlineColorAndroid='transparent'
@@ -126,26 +127,37 @@ export default class NewReportScreen extends React.Component {
 
                     return (
                         <CheckBox
-                            disabled={!this.state.isEditable}
                             key={index}
+                            disabled={!this.state.isEditable}
                             onClick={()=>console.log('L0L0L0L0L0L0L')}
                             isChecked={ (field.defaultValue === '0') ? false : true }
                             leftText={ 'This is a nice checkbox' }
                         />
                     );
 
-                /*
-                TODO: Dropdown here
                 case 3: // Dropdown
-                    ...
-                */
+
+                    return (
+                        <ModalDropdown
+                            key={index}
+                            disabled={!this.state.isEditable}
+                            options={['option 1', 'option 2']}
+                            renderRow={() =>
+                                <View>
+                                    <ModalDropdown
+                                        options={['option 3', 'option 4']}>
+                                    </ModalDropdown>
+                                </View>
+                            }
+                        />
+                    );
 
                 case 4: // TextRow (One row text field)
 
                     return (
                         <TextInput
-                            editable={this.state.isEditable}
                             key={index}
+                            editable={this.state.isEditable}
                             placeholder={field.defaultValue}
                             underlineColorAndroid='transparent'
                             style={newReportStyles.TextInputStyleClass}
@@ -244,16 +256,20 @@ export default class NewReportScreen extends React.Component {
                         <Text
                             key={index}
                             style={{ color: 'blue' }}
-                            onPress={() => Linking.openURL('http://google.com')}>
-                            Link to Google
+                            onPress={() => Linking.openURL(field.defaultValue)}>
+                            Link to somewhere
                         </Text>
                     );
 
-                /*
-                TODO: User dropdown here
                 case 12: // User dropdown
-                    ...
-                */
+
+                    return (
+                        <ModalDropdown
+                            key={index}
+                            disabled={!this.state.isEditable}
+                            options={JSON.parse(field.defaultValue)}
+                        />
+                    );
 
                 default:
                     return (
@@ -268,6 +284,8 @@ export default class NewReportScreen extends React.Component {
                 <ScrollView keyboardShouldPersistTaps={'handled'} >
 
                     {renderedFields}
+
+
 
                 </ScrollView>
             </View>
