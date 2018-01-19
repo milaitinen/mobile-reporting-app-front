@@ -3,6 +3,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import 'isomorphic-fetch';
 
 import NewReportScreen from '../src/screens/NewReportScreen';
 import { url } from '../src/screens/urlsetting';
