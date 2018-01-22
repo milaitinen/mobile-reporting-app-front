@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Animated, FlatList, Text, TouchableHighlight } from 'react-native';
-import { ListItem, Badge, Icon } from 'react-native-elements';
+import { View, Animated, FlatList, Text } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
 
 import { RightButton } from '../RightButton';
+import { StatusBadge } from '../StatusBadge';
 
 
 class Layout extends Component{
@@ -82,51 +83,6 @@ class Layout extends Component{
         );
     }
 
-    badge(dateAccepted) {
-
-        /*
-        if(JOKU DRAFTEHTO) {
-           return (
-            <View style={layoutStyles.BadgeViewContainer}>
-                 <Badge textStyle = {layoutStyles.badgeTextStyle}
-                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
-                    <Text style={layoutStyles.badgeTextStyle}>Draft</Text>
-                    <Icon name={'edit-2'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
-                </Badge>
-            </View>
-        );
-        }
-         */
-
-
-
-        if (dateAccepted != null){
-            return (
-                <View style={layoutStyles.BadgeViewContainer}>
-                    <Badge textStyle = {layoutStyles.badgeTextStyle}
-                        containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
-                        <Text style={layoutStyles.badgeTextStyle}>Approved</Text>
-                        <Icon name={'check'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
-                    </Badge>
-
-                    <Text style={layoutStyles.dateAccepted}>
-                        {dateAccepted}
-                    </Text>
-                </View>
-
-            );
-        }
-        return (
-            <View style={layoutStyles.BadgeViewContainer}>
-                <Badge textStyle = {layoutStyles.badgeTextStyle}
-                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
-                    <Text style={ layoutStyles.badgeTextStyle }>Sent</Text>
-                    <Icon name={'clock'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
-                </Badge>
-            </View>
-        );
-    }
-
 
     render(){
         /* Renders the layout componenet and its children, which are defined in the TemplateScreen class.
@@ -167,7 +123,7 @@ class Layout extends Component{
                                 title={item.orderNo + '\t' + item.title}
                                 subtitle={item.dateCreated}
                                 hideChevron = {true}
-                                badge ={{ element: this.badge(item.dateAccepted) }}
+                                badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
                             />
                         }
                         keyExtractor={item => item.orderNo}
