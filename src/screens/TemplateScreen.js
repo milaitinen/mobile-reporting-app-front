@@ -69,8 +69,8 @@ class TemplateScreen extends Component {
      Also passes the refresh function and the specific TemplateID so that the
      app knows to which template the new report has to be added.
     */
-    createNew = (templateID) => {
-        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, templateID: templateID });
+    createNew = (templateID, isEditable) => {
+        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, templateID: templateID, isEditable: isEditable });
     };
 
     render() {

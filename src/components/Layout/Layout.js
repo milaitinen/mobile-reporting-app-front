@@ -53,6 +53,11 @@ class Layout extends Component{
         this.setState({ minHeight : event.nativeEvent.layout.height });
     };
 
+    // Calls the inherited createNew function which is explained in TemplateScreen class.
+    createNew = (templateID, isEditable) => {
+        this.props.createNew(templateID, isEditable);
+    }
+
     showMore = () => {
         this.setState(
             {
@@ -116,8 +121,8 @@ class Layout extends Component{
                         subtitle={`${this.state.nofReports} ${(this.state.nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
                         leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
-                        onPressRightIcon={() => this.props.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
-                                                                                            pressed.*/
+                        onPressRightIcon={() => this.createNew(this.state.templateID, true)} // Navigates to NewReportScreen when pressed.
+                        leftIconOnPress={() => this.createNew(this.state.templateID, false)}
                     />
                 </View>
 

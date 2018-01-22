@@ -3,7 +3,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const newReportStyles = EStyleSheet.create({
     MainContainer: {
-        justifyContent: 'center',
+        //justifyContent: 'center',
         flex: 1,
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
