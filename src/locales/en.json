@@ -5,12 +5,13 @@
     "email": "Email",
     "password": "Password",
     "serverUrl": "Server url",
-    "signIn": "'Sign in'"
+    "signIn": "Sign in"
   },
 
   "templates": {
     "templates": "Templates",
     "search": "Search..",
+    "report": "Report",
     "reports": "Reports",
     "approved": "Approved",
     "sent": "Sent",

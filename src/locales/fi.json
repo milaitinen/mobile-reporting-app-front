@@ -2,7 +2,7 @@
   "login": {
     "title": "MR-Application",
     "slogan": "Suomenkielinen slogan",
-    "email": "Email",
+    "email": "Sähköposti",
     "password": "Salasana",
     "serverUrl": "Palvelimen osoite",
     "signIn": "Kirjaudu sisään"
@@ -11,7 +11,8 @@
   "templates": {
     "templates": "Lomakepohjat",
     "search": "Hae..",
-    "reports": "Raportit",
+    "report": "Raportti",
+    "reports": "Raporttia",
     "approved": "Hyväksytty",
     "sent": "Käsittelyssä",
     "draft:": "Luonnos",
