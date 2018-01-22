@@ -171,7 +171,7 @@ class Layout extends Component{
                                     style={layoutStyles.more}
                                     onPress={() => this.showMore() }
                                 >
-                                    Show more
+                                    { strings('templates.showMore') }
                                 </Text>
                                 :
                                 null
