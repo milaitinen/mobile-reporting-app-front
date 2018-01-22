@@ -21,8 +21,6 @@ export default class NewReportScreen extends React.Component {
             templateID     : this.props.navigation.state.params.templateID,    /* TemplateID that is inherited from navigation parameters
                                                                                  as stated in TemplateScreen class. */
             number         : '',
-            date           : moment().format('YYYY-MM-DD'),
-            time           : '20:00'
         };
         console.log(this.state.isEditable + 'isEditable');
     }
@@ -188,7 +186,7 @@ export default class NewReportScreen extends React.Component {
                             key={index}
                             disabled={!this.state.isEditable}
                             style={{ width: 200 }}
-                            date={this.state.date}
+                            date={field.defaultValue}
                             mode="date"
                             placeholder="select date"
                             format="YYYY-MM-DD"
@@ -227,7 +225,7 @@ export default class NewReportScreen extends React.Component {
                             key={index}
                             disabled={!this.state.isEditable}
                             style={{ width: 200 }}
-                            date={this.state.time}
+                            date={field.defaultValue}
                             mode="time"
                             format="HH:mm"
                             confirmBtnText="Confirm"
