@@ -137,7 +137,8 @@ class Layout extends Component{
                         containerStyle={ layoutStyles.templateContainer }
                         onPress={this.toggle.bind(this)} // Opens or closes the layout component.
                         title={this.state.title} // Title of the template.
-                        subtitle={this.state.nofReports + ' ' + strings('templates.reports')} // Number of reports as a subtitle.
+                        //Number of reports as a subtitle
+                        subtitle={`${this.state.nofReports} ${(this.state.nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
                         leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
                         onPressRightIcon={() => this.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
