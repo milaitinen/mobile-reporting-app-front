@@ -9,7 +9,6 @@ import { SignInButton } from '../src/components/Button';
 
 configure({ adapter: new Adapter() });
 
-
 it('renders correctly', () => {
     const tree = renderer.create(
         <LoginScreen />

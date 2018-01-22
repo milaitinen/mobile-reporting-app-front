@@ -8,38 +8,31 @@ class Layout extends Component{
     constructor(props){
         super(props);
         this.state = {
-            maxHeight   : 0,
+            maxHeight  : 0,
             minHeight  : 0,
             itemsCount : 5,
             data       : this.props.data,
             updated    : false,
-            title      : props.title,           // Title which the layout component inherits from TemplateScreen.
-            nofReports : props.nofReports,        // Number of reports which the layout component inherits from TemplateScreen.
-            templateID : props.templateID,        // The specific templateID which the layout component inherits from TemplateScreen.
-            expanded   : false,                 // Checks whether the reports of the template are shown or not.
-            animation  : new Animated.Value(60), /* Initializes the animation state as 50 (same height as the ListItem
-                                                   component which includes the title of the Layout etc.)
-                                                   This is the minimum height when the layout component isn't expanded. */
+            title      : this.props.title,          // Title which the layout component inherits from TemplateScreen.
+            nofReports : this.props.nofReports,     // Number of reports which the layout component inherits from TemplateScreen.
+            templateID : this.props.templateID,     // The specific templateID which the layout component inherits from TemplateScreen.
+            expanded   : false,                     // Checks whether the reports of the template are shown or not.
+            animation  : new Animated.Value(60),    /* Initializes the animation state as 50 (same height as the ListItem
+                                                    component which includes the title of the Layout etc.)
+                                                    This is the minimum height when the layout component isn't expanded. */
         };
     }
 
     updateHeight = (more = false) => {
-        const
-            finalValue = this.state.expanded && !more ? this.state.minHeight : this.state.maxHeight;
+        const finalValue = this.state.expanded && !more ? this.state.minHeight : this.state.maxHeight;
 
         Animated.spring(
-            this.state.animation,
-            {
-                toValue: finalValue,
-                bounciness: 1
-            }
+            this.state.animation, { toValue: finalValue, bounciness: 1 }
         ).start();
     };
 
     toggleExpanded = () => {
-        this.setState({
-            expanded : !this.state.expanded
-        });
+        this.setState({ expanded : !this.state.expanded });
     };
 
 
@@ -51,21 +44,12 @@ class Layout extends Component{
 
     // Sets maximum height when opened.
     _setMaxHeight = (event) => {
-        this.setState({
-            maxHeight   : event.nativeEvent.layout.height + 60
-        });
+        this.setState({ maxHeight : event.nativeEvent.layout.height + 60 });
     };
 
     // Sets minimum height when closed.
     _setMinHeight = (event) => {
-        this.setState({
-            minHeight   : event.nativeEvent.layout.height
-        });
-    };
-
-    // Calls the inherited createNew function which is explained in TemplateScreen class.
-    createNew = (templateID) => {
-        this.props.createNew(templateID);
+        this.setState({ minHeight : event.nativeEvent.layout.height });
     };
 
     showMore = () => {
@@ -75,9 +59,7 @@ class Layout extends Component{
                 updated: true,
                 maxHeight: this.state.maxHeight + 300
             },
-            () => {
-                this.updateHeight(true);
-            }
+            () => { this.updateHeight(true); }
         );
     };
 
@@ -97,8 +79,7 @@ class Layout extends Component{
         }
          */
 
-
-        if (dateAccepted != null){
+        if (dateAccepted != null) {
             return (
                 <View style={layoutStyles.BadgeViewContainer}>
                     <Badge
@@ -115,8 +96,10 @@ class Layout extends Component{
         }
         return (
             <View style={layoutStyles.BadgeViewContainer}>
-                <Badge textStyle = {layoutStyles.badgeTextStyle}
-                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
+                <Badge
+                    textStyle = {layoutStyles.badgeTextStyle}
+                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}
+                >
                     <Text style={ layoutStyles.badgeTextStyle }>Sent</Text>
                     <Icon name={'clock'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
                 </Badge>
@@ -125,27 +108,23 @@ class Layout extends Component{
     };
 
     render(){
-        /* Renders the layout componenet and its children, which are defined in the TemplateScreen class.
-           The TemplateScreen uses FlatList component as the layout components child.
-         */
-
         return (
             <Animated.View
                 style={[layoutStyles.animatedContainer,{ height: this.state.animation }]}>
-                <View onLayout={this._setMinHeight.bind(this)}>
+                <View onLayout={this._setMinHeight}>
                     <ListItem
                         containerStyle={ layoutStyles.templateContainer }
-                        onPress={this.toggle.bind(this)} // Opens or closes the layout component.
+                        onPress={this.toggle} // Opens or closes the layout component.
                         title={this.state.title} // Title of the template.
                         subtitle={this.state.nofReports + ' Reports'} // Number of reports as a subtitle.
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
                         leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
-                        onPressRightIcon={() => this.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
-                                                                                        pressed.*/
+                        onPressRightIcon={() => this.props.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
+                                                                                            pressed.*/
                     />
                 </View>
 
-                <View style={layoutStyles.reportListContainer} onLayout={this._setMaxHeight.bind(this)}>
+                <View style={layoutStyles.reportListContainer} onLayout={this._setMaxHeight}>
                     <FlatList
                         data={ this.state.data.slice(0, this.state.itemsCount) }
                         extraData={ this.state.itemsCount }
@@ -165,7 +144,7 @@ class Layout extends Component{
                         keyExtractor={item => item.orderNo}
                         ListFooterComponent={
                             (this.state.data.length > this.state.itemsCount)
-                                ? <Text style={layoutStyles.more} onPress={() => this.showMore()}>Show more</Text>
+                                ? <Text style={layoutStyles.more}  onPress={() => this.showMore()}>Show more</Text>
                                 : null
                         }
                     />
