@@ -2,6 +2,17 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
 
+    backgroundStyle: {
+        flexDirection: 'row',
+        backgroundColor: 'transparent',
+        borderRadius: 5,
+    },
+
+    separator:{
+        borderRightWidth: 1,
+        borderColor: '#fff',
+    },
+
     iconStyle: {
         marginRight: 0,
         marginTop: 0,

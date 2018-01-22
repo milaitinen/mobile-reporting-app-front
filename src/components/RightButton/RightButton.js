@@ -6,11 +6,11 @@ import styles from './styles';
 const RightButton = ({ onPressPrev, onPressNew }) => {
 
     return (
-        <View style={{ flexDirection: 'row', backgroundColor: '#99d9ad'  }}>
+        <View style={styles.backgroundStyle}>
             <TouchableHighlight
                 onPress={onPressPrev}
                 style = {styles.buttonContainer}>
-                <View><Icon name={'find-in-page'} type={'Materialicons'} iconStyle={styles.iconStyle} /></View>
+                <View style={styles.separator}><Icon name={'find-in-page'} type={'Materialicons'} iconStyle={styles.iconStyle} /></View>
             </TouchableHighlight>
             <TouchableHighlight
                 onPress={onPressNew}
