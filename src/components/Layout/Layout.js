@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { View, Animated, FlatList, Text } from 'react-native';
+import { View, Animated, FlatList, Text, TouchableHighlight } from 'react-native';
 import { ListItem, Badge, Icon } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
+
+import { RightButton } from '../RightButton';
 
 
 class Layout extends Component{
@@ -80,7 +82,7 @@ class Layout extends Component{
         );
     }
 
-    badge = (dateAccepted) => {
+    badge(dateAccepted) {
 
         /*
         if(JOKU DRAFTEHTO) {
@@ -123,7 +125,8 @@ class Layout extends Component{
                 </Badge>
             </View>
         );
-    };
+    }
+
 
     render(){
         /* Renders the layout componenet and its children, which are defined in the TemplateScreen class.
@@ -139,7 +142,10 @@ class Layout extends Component{
                         onPress={this.toggle.bind(this)} // Opens or closes the layout component.
                         title={this.state.title} // Title of the template.
                         subtitle={this.state.nofReports + ' Reports'} // Number of reports as a subtitle.
-                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
+                        //rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
+                        hideChevron={true}
+                        badge={ { element: <RightButton onPressNew={() => this.createNew(this.state.templateID)}
+                            onPressPrev={() => this.createNew(this.state.templateID)}/> }}
                         leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
                         onPressRightIcon={() => this.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
                                                                                         pressed.*/
