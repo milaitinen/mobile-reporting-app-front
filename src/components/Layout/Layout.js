@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Animated, FlatList, Text } from 'react-native';
 import { ListItem, Badge, Icon } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
+import { strings } from '../../locales/i18n';
 
 
 class Layout extends Component{
@@ -71,7 +72,7 @@ class Layout extends Component{
             <View style={layoutStyles.BadgeViewContainer}>
                  <Badge textStyle = {layoutStyles.badgeTextStyle}
                     containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
-                    <Text style={layoutStyles.badgeTextStyle}>Draft</Text>
+                    <Text style={layoutStyles.badgeTextStyle}>{strings('templates.draft')}</Text>
                     <Icon name={'edit-2'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
                 </Badge>
             </View>
@@ -82,11 +83,9 @@ class Layout extends Component{
         if (dateAccepted != null) {
             return (
                 <View style={layoutStyles.BadgeViewContainer}>
-                    <Badge
-                        textStyle = {layoutStyles.badgeTextStyle}
-                        containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}
-                    >
-                        <Text style={layoutStyles.badgeTextStyle}>Approved</Text>
+                    <Badge textStyle = {layoutStyles.badgeTextStyle}
+                        containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
+                        <Text style={layoutStyles.badgeTextStyle}>{strings('templates.approved')}</Text>
                         <Icon name={'check'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
                     </Badge>
                     <Text style={layoutStyles.dateAccepted}>{dateAccepted}</Text>
@@ -94,17 +93,14 @@ class Layout extends Component{
 
             );
         }
-        return (
-            <View style={layoutStyles.BadgeViewContainer}>
-                <Badge
-                    textStyle = {layoutStyles.badgeTextStyle}
-                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}
-                >
-                    <Text style={ layoutStyles.badgeTextStyle }>Sent</Text>
-                    <Icon name={'clock'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
-                </Badge>
-            </View>
-        );
+    
+        return <View style={layoutStyles.BadgeViewContainer}>
+            <Badge textStyle={layoutStyles.badgeTextStyle}
+                containerStyle={[layoutStyles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
+                <Text style={layoutStyles.badgeTextStyle}>{strings('templates.sent')}</Text>
+                <Icon name={'clock'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle}/>
+            </Badge>
+        </View>;
     };
 
     render(){
@@ -116,7 +112,8 @@ class Layout extends Component{
                         containerStyle={ layoutStyles.templateContainer }
                         onPress={this.toggle} // Opens or closes the layout component.
                         title={this.state.title} // Title of the template.
-                        subtitle={this.state.nofReports + ' Reports'} // Number of reports as a subtitle.
+                        //Number of reports as a subtitle
+                        subtitle={`${this.state.nofReports} ${(this.state.nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
                         leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
                         onPressRightIcon={() => this.props.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
@@ -143,9 +140,15 @@ class Layout extends Component{
                         }
                         keyExtractor={item => item.orderNo}
                         ListFooterComponent={
-                            (this.state.data.length > this.state.itemsCount)
-                                ? <Text style={layoutStyles.more}  onPress={() => this.showMore()}>Show more</Text>
-                                : null
+                            (this.state.data.length > this.state.itemsCount) ?
+                                <Text
+                                    style={layoutStyles.more}
+                                    onPress={() => this.showMore() }
+                                >
+                                    { strings('templates.showMore') }
+                                </Text>
+                                :
+                                null
                         }
                     />
                 </View>
