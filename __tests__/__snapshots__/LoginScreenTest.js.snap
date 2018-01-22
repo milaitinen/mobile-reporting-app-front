@@ -25,7 +25,7 @@ exports[`renders correctly 1`] = `
     ellipsizeMode="tail"
     style={undefined}
   >
-    Keep calm and keep reporting
+    Suomenkielinen slogan
   </Text>
   <View
     style={undefined}
@@ -89,7 +89,7 @@ exports[`renders correctly 1`] = `
       allowFontScaling={true}
       name="lock"
       onChangeText={[Function]}
-      placeholder="Password"
+      placeholder="Salasana"
       placeholderTextColor="white"
       secureTextEntry={true}
       style={undefined}
@@ -124,7 +124,7 @@ exports[`renders correctly 1`] = `
       allowFontScaling={true}
       name="globe"
       onChangeText={[Function]}
-      placeholder="Server url"
+      placeholder="Palvelimen osoite"
       placeholderTextColor="white"
       style={undefined}
       underlineColorAndroid="transparent"
@@ -164,7 +164,7 @@ exports[`renders correctly 1`] = `
         ellipsizeMode="tail"
         style={undefined}
       >
-        Sign In
+        Kirjaudu sisään
       </Text>
     </View>
   </View>

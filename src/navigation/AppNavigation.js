@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Text from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
@@ -12,13 +12,16 @@ import navigationStyles from './navigationStyles';
 
 import Sidebar from '../navigation/Sidebar';
 
+import { strings } from '../locales/i18n';
+
+
 //The stack that is contained within the drawer stack
 const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
             flex: 0.3,
-            headerTitle: 'Templates',
+            headerTitle: strings('templates.templates') ,
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerLeft:
@@ -38,7 +41,7 @@ const TemplateStack = StackNavigator({
     },
     NewReport: {
         screen: NewReportScreen,
-        navigationOptions: { title: 'Create new report' }
+        navigationOptions: strings('createNew.createNew')
     },
 
 }, {
@@ -48,7 +51,7 @@ const TemplateStack = StackNavigator({
 const DrawerStack = DrawerNavigator({
     Menu: {
         screen: TemplateStack,
-        navigationOptions: { title: 'Templates' }
+        navigationOptions: strings('templates.templates')
     },
 }, {
     //This loads the contents of the drawer from the custom Sidebar

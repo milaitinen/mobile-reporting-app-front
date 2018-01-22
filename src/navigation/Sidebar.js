@@ -1,6 +1,7 @@
 import { NavigationActions } from 'react-navigation';
 import React from 'react';
 import { View, Button } from 'react-native';
+import { strings } from '../locales/i18n';
 
 export default class Sidebar extends React.Component {
 
@@ -27,7 +28,7 @@ export default class Sidebar extends React.Component {
     render () {
         return (
             <View style={ { padding: 20 } }>
-                <Button onPress={() => this.signOut()} title={'Sign out'}/>
+                <Button onPress={() => this.signOut()} title={strings('navigation.signOut')}/>
             </View>
         );
     }

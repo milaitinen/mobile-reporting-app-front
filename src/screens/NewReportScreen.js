@@ -10,6 +10,8 @@ import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByID } from './api';
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
+import { strings } from '../locales/i18n';
+
 
 export default class NewReportScreen extends React.Component {
     constructor(props) {
@@ -61,7 +63,7 @@ export default class NewReportScreen extends React.Component {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
-                return 'Report added';
+                return strings('createNew.reportAdded');
             } else {
                 return response.status;
             }
@@ -279,30 +281,26 @@ export default class NewReportScreen extends React.Component {
 
         return (
             <View style={newReportStyles.MainContainer}>
+          
                 <ScrollView keyboardShouldPersistTaps={'handled'} >
 
                     {renderedFields}
 
-
-
                 </ScrollView>
             </View>
             /*
-            <TextInput
-                editable={this.state.isEditable}
-                placeholder='Create new report'
-                onChangeText={(TextInputName) => this.setState({ TextInputName })}
-                underlineColorAndroid='transparent'
-                style={newReportStyles.TextInputStyleClass}
-            />
-            <Button
-                disabled={!this.state.isEditable}
-                onPress={ this.send }
-                title={'Create new report'}
-            >
-            </Button>
+                <TextInput
+                    placeholder={ strings('createNew.enterNew') }
+                    onChangeText={(TextInputName) => this.setState({ TextInputName })}
+                    underlineColorAndroid='transparent'
+                    style={newReportStyles.TextInputStyleClass}
+                />
+                <Button
+                    title={ strings('createNew.createNew') }
+                    onPress={ this.send }
+                >
+                </Button>
             */
         );
     }
 }
-

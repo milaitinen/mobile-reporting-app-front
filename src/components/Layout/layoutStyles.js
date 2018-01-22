@@ -10,13 +10,23 @@ const layoutStyles = EStyleSheet.create({
 
     badgeTextStyle: {
         color: '#666666',
-        padding: 1
+        padding: 0,
     },
 
-    badgeContainerStyleA: {
-        backgroundColor: '#77a482',
+    badgeIconStyle: {
+        color: '#666666',
+        paddingLeft: 5,
+        justifyContent: 'flex-end',
+        fontSize: 20,
+    },
+
+    badgeContainerStyle: {
         elevation: 3,
+        //width: 100,
         borderRadius: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         shadowOffset: {
             width: 0,
             height: 3,
@@ -28,18 +38,6 @@ const layoutStyles = EStyleSheet.create({
         color: '#86939e',
         fontSize: normalize(12),    // Normalizes the size of fonts across devices.
         fontWeight: 'bold',
-
-
-    },
-
-    badgeContainerStyleP: {
-        backgroundColor: '#f3fe99',
-        elevation: 3,
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        borderRadius: 5,
     },
 
     animatedContainer: {
