@@ -1,6 +1,9 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import Navigator from './src/navigation/AppNavigation';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { Provider } from 'react-redux';
+import store from './src/config/store'
 
 // global variables declared here - they can be used anywhere inside src directory.
 EStyleSheet.build({
@@ -12,10 +15,18 @@ EStyleSheet.build({
     $primaryFont: 'Roboto-Light',
 });
 
-export default class App extends React.Component {
+/*export default class App extends React.Component {
     render() {
         return (
             <Navigator/>
         );
     }
-}
+}*/
+
+export default () => {
+    return (
+        <Provider store={store}>
+            <Navigator/>
+        </Provider>
+    );
+};

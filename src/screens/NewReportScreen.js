@@ -117,7 +117,7 @@ export default class NewReportScreen extends React.Component {
                             key={index}
                             editable={this.state.isEditable}
                             placeholder={field.defaultValue}
-                            onChangeText={(TextInputName) => this.setState({ TextInputName })}
+                            onSubmitEditing={(TextInputName) => this.setState({ TextInputName })}
                             underlineColorAndroid='transparent'
                             style={newReportStyles.TextInputStyleClass}
                         />
@@ -245,7 +245,7 @@ export default class NewReportScreen extends React.Component {
                             editable={this.state.isEditable}
                             placeholder={field.defaultValue}
                             keyboardType = 'numeric'
-                            onChangeText = {(text)=> this.onChanged(text)}
+                            onSubmitEditing= {(text)=> this.onChanged(text)}
                             value = {this.state.number}
                         />
                     );
@@ -281,7 +281,7 @@ export default class NewReportScreen extends React.Component {
 
         return (
             <View style={newReportStyles.MainContainer}>
-          
+
                 <ScrollView keyboardShouldPersistTaps={'handled'} >
 
                     {renderedFields}

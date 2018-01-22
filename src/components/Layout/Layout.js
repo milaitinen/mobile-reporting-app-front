@@ -36,7 +36,6 @@ class Layout extends Component{
         this.setState({ expanded : !this.state.expanded });
     };
 
-
     // Toggle function for closing and expanding the layout component.
     toggle = () => {
         this.toggleExpanded();
@@ -145,15 +144,11 @@ class Layout extends Component{
                         }
                         keyExtractor={item => item.orderNo}
                         ListFooterComponent={
-                            (this.state.data.length > this.state.itemsCount) ?
-                                <Text
-                                    style={layoutStyles.more}
-                                    onPress={() => this.showMore() }
-                                >
+                            (this.state.data.length > this.state.itemsCount)
+                                ? <Text  style={layoutStyles.more} onPress={() => this.showMore()}>
                                     { strings('templates.showMore') }
                                 </Text>
-                                :
-                                null
+                                : null
                         }
                     />
                 </View>

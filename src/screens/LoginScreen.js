@@ -1,20 +1,21 @@
 import React from 'react';
 import { Text, StatusBar } from 'react-native';
+import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
 import { strings } from '../locales/i18n';
-
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
+import { insertEmail } from '../actions/user';
 
-export default class LoginScreen extends React.Component {
+class LoginScreen extends React.Component {
 
     constructor(props)
     {
         super(props);
         this.state = {
-            isLoading: true,
+            //isLoading: true,
             TextInputUser: '',
             TextInputPassword: '',
             TextInputServer: ''
@@ -37,7 +38,7 @@ export default class LoginScreen extends React.Component {
                 <Input
                     name={'user'}
                     placeholder={ strings('login.email') }
-                    onChangeText={TextInputUser => this.setState({ TextInputUser })}
+                    onChangeText={address => this.props.dispatch(insertEmail(address))}
                 />
                 <Input
                     name={'lock'}
@@ -62,3 +63,5 @@ export default class LoginScreen extends React.Component {
         );
     }
 }
+
+export default connect()(LoginScreen);
