@@ -15,6 +15,38 @@ export const createNewReport = (userID, report) => {
     });
 };
 
+export const fetchFieldsByID = (id) => {
+    return isNetworkConnected()
+        .then((isConnected) => {
+            if (!isConnected) { return fetchLocalFieldsByID(id); }
+            return fetchRemoteFieldsByID(id);
+        })
+        .then((fieldsByID) => {
+            saveData(`${url}/templates/` + id + '/fields', fieldsByID);
+            return fieldsByID;
+        });
+};
+
+const fetchLocalFieldsByID = (id) => {
+    return AsyncStorage.getItem(`${url}/templates/` + id + '/fields')
+        .then(data => {
+            if (data !== null) {
+                return JSON.parse(data);
+            } else {
+                return [];
+            }
+        });
+};
+
+const fetchRemoteFieldsByID = (id) => {
+    return (
+        fetch(`${url}/templates/` + id + '/fields')
+            .then(response => {
+                return response.json();
+            })
+    );
+};
+
 // Fetch templates from the server or ASyncStorage, depending on the availability of internet connection
 export const fetchTemplates = () => {
     return isNetworkConnected()
