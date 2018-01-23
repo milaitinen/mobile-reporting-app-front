@@ -6,14 +6,17 @@ import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'reac
 import DatePicker from 'react-native-datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
+import { connect } from 'react-redux';
+
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByID } from './api';
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import { strings } from '../locales/i18n';
+import { insertEmail, insertPassword, insertServerUrl } from '../actions/user';
 
 
-export default class NewReportScreen extends React.Component {
+class NewReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,15 +34,13 @@ export default class NewReportScreen extends React.Component {
         this.getFieldsByID();
     }
 
-
     getFieldsByID = () => {
         fetchFieldsByID(this.state.templateID)
-            .then(responseJson =>
-                this.setState({ dataFieldsByID: responseJson, isLoading: false }))
+            .then(responseJson => this.setState({ dataFieldsByID: responseJson, isLoading: false }))
             .then(() => console.log(this.state.dataFieldsByID))
             .catch(error => console.error(error) )
             .done();
-    }
+    };
 
     // Inserts data to server with a post method.
     send = () => {
@@ -58,8 +59,9 @@ export default class NewReportScreen extends React.Component {
                 }
             ]
         };
+
         // hardcoded templateID
-        createNewReport(1, report).then(response => {
+        createNewReport(this.props.userID, report).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
@@ -94,7 +96,6 @@ export default class NewReportScreen extends React.Component {
 
     render() {
 
-
         if (this.state.isLoading) {
             return (
                 <AppBackground>
@@ -110,7 +111,6 @@ export default class NewReportScreen extends React.Component {
 
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
             switch (field.typeID) {
-
                 case 1: // Name
                     return (
                         <TextInput
@@ -122,9 +122,7 @@ export default class NewReportScreen extends React.Component {
                             style={newReportStyles.TextInputStyleClass}
                         />
                     );
-
                 case 2: // Checkbox
-
                     return (
                         <CheckBox
                             key={index}
@@ -134,9 +132,7 @@ export default class NewReportScreen extends React.Component {
                             leftText={ 'This is a nice checkbox' }
                         />
                     );
-
                 case 3: // Dropdown
-
                     return (
                         <ModalDropdown
                             key={index}
@@ -151,9 +147,7 @@ export default class NewReportScreen extends React.Component {
                             }
                         />
                     );
-
                 case 4: // TextRow (One row text field)
-
                     return (
                         <TextInput
                             key={index}
@@ -163,9 +157,7 @@ export default class NewReportScreen extends React.Component {
                             style={newReportStyles.TextInputStyleClass}
                         />
                     );
-
                 case 5: // Choice (Yes/No)
-
                     return (
                         <RadioForm
                             key={index}
@@ -180,9 +172,7 @@ export default class NewReportScreen extends React.Component {
                             formHorizontal={true}
                         />
                     );
-
                 case 6: // Calendar
-
                     return (
                         <DatePicker
                             key={index}
@@ -199,18 +189,14 @@ export default class NewReportScreen extends React.Component {
                             onDateChange={(date) => {this.setState({ date: date });}}
                         />
                     );
-
                 case 7: // Instruction
-
                     return (
                         <Text
                             key={index} >
                             {field.defaultValue}
                         </Text>
                     );
-
                 case 8: // Text (Multiple row text field)
-
                     return (
                         <TextInput
                             key={index}
@@ -219,9 +205,7 @@ export default class NewReportScreen extends React.Component {
                             multiline={true}
                         />
                     );
-
                 case 9: // Time
-
                     return (
                         <DatePicker
                             key={index}
@@ -236,9 +220,7 @@ export default class NewReportScreen extends React.Component {
                             onDateChange={(time) => {this.setState({ time: time });}}
                         />
                     );
-
                 case 10: // Digits (Text input that only accepts numeric characters)
-
                     return (
                         <TextInput
                             key={index}
@@ -249,9 +231,7 @@ export default class NewReportScreen extends React.Component {
                             value = {this.state.number}
                         />
                     );
-
                 case 11: // Link
-
                     return (
                         <Text
                             key={index}
@@ -260,9 +240,7 @@ export default class NewReportScreen extends React.Component {
                             Link to somewhere
                         </Text>
                     );
-
                 case 12: // User dropdown
-
                     return (
                         <ModalDropdown
                             key={index}
@@ -270,7 +248,6 @@ export default class NewReportScreen extends React.Component {
                             options={JSON.parse(field.defaultValue)}
                         />
                     );
-
                 default:
                     return (
                         null
@@ -281,11 +258,8 @@ export default class NewReportScreen extends React.Component {
 
         return (
             <View style={newReportStyles.MainContainer}>
-
                 <ScrollView keyboardShouldPersistTaps={'handled'} >
-
                     {renderedFields}
-
                 </ScrollView>
             </View>
             /*
@@ -304,3 +278,13 @@ export default class NewReportScreen extends React.Component {
         );
     }
 }
+
+// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+const mapStateToProps = (state) => {
+    const userID = state.user.userID;
+    return {
+        userID
+    };
+};
+
+export default connect(mapStateToProps)(NewReportScreen);

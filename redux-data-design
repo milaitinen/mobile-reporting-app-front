@@ -10,23 +10,25 @@
 		id: <String>,
 		authenticated: <Boolean>,
 		templates: {
-			[templateID]: {
-				title: <String>,
-				isLoading: <Boolean>,
-				// isRefreshing: <Boolean>.
-				reports: {
-					[reportID]: {
-						reportName: <String>,
-						dateWritten: <Date>,
-						dateApproved: <Date>,
-						fields: {
-							[fieldID]: {
-								title: <String>,
-								type: <Int>
-							}
-						}
-					}
-				}
+			[userID]: {
+			    [templateID]: {
+			        title: <String>,
+                    isLoading: <Boolean>,
+                    // isRefreshing: <Boolean>.
+                    reports: {
+                        [reportID]: {
+                            reportName: <String>,
+                            dateWritten: <Date>,
+                            dateApproved: <Date>,
+                            fields: {
+                                [fieldID]: {
+                                    title: <String>,
+                                    type: <Int>
+                                }
+                            }
+                        }
+                    }
+			    }
 			}
 		}
 	}
@@ -44,55 +46,57 @@
 		id: '23a41afd',
 		authenticated: true,
 		templates: {
-			[1]: {
-				title: 'Herbology'
-				isLoading: false,
-				reports: {
-					[1]: {
-						reportName: 'Bob's first report',
-						dateWritten: '12.4.2017',
-						dateApproved: '23.4.2017'
-						fields: {
-							[1]: {
-								title: 'water pH'
-								type: 3
-							},
-							[2]: {
-								title: 'color',
-								type: 1
-							}
-						}
-					},
-					[2]: {
-						reportName: 'Bob's second report',
-						dateWritten: '22.5.2017',
-						dateApproved: '27.6.2017'
-						fields: {
-							[1]: {
-								title: 'weight(g)',
-								type: 2
-							}
-						}
-					}
-				}
-			},
-			[2]: {
-				title: 'Care of magical creatures'
-				isLoading: false,
-				reports: {
-					[13]: {
-						reportName: 'Bob's crappy report',
-						dateWritten: '12.8.2017',
-						dateApproved: '23.12.2017'
-						fields: {
-							[1]: {
-								title: 'blood-type',
-								type: 6
-							}
-						}
-					}
-				}
-			}
+		    [1(=userID)]: {
+		        [1(=templateID)]: {
+                    title: 'Herbology'
+                    isLoading: false,
+                    reports: {
+                        [1(=reportID)]: {
+                            reportName: 'Bob's first report',
+                            dateWritten: '12.4.2017',
+                            dateApproved: '23.4.2017'
+                            fields: {
+                                [1]: {
+                                    title: 'water pH'
+                                    type: 3
+                                },
+                                [2]: {
+                                    title: 'color',
+                                    type: 1
+                                }
+                            }
+                        },
+                        [2(=reportID)]: {
+                            reportName: 'Bob's second report',
+                            dateWritten: '22.5.2017',
+                            dateApproved: '27.6.2017'
+                            fields: {
+                                [1]: {
+                                    title: 'weight(g)',
+                                    type: 2
+                                }
+                            }
+                        }
+                    }
+                },
+                [2(=templateID)]: {
+                    title: 'Care of magical creatures'
+                    isLoading: false,
+                    reports: {
+                        [13]: {
+                            reportName: 'Bob's crappy report',
+                            dateWritten: '12.8.2017',
+                            dateApproved: '23.12.2017'
+                            fields: {
+                                [1]: {
+                                    title: 'blood-type',
+                                    type: 6
+                                }
+                            }
+                        }
+                    }
+                }
+		    }
 		}
 	}
 }

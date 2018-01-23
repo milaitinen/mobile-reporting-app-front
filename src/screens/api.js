@@ -48,14 +48,15 @@ const fetchRemoteFieldsByID = (id) => {
 };
 
 // Fetch templates from the server or ASyncStorage, depending on the availability of internet connection
-export const fetchTemplates = () => {
+// Fetch templates that the user has rights to
+export const fetchTemplatesByUserID = (ID) => {
     return isNetworkConnected()
         .then((isConnected) => {
-            if (!isConnected) { return fetchLocalTemplates(); }
-            return fetchRemoteTemplates();
+            if (!isConnected) { return fetchLocalTemplatesByUserID(ID); }
+            return fetchRemoteTemplatesByUserID(ID);
         })
         .then((templates) => {
-            saveData(`${url}/templates`, templates);
+            saveData(`${url}users/${ID}/templates`, templates);
             return templates;
         });
 };
@@ -75,8 +76,8 @@ export const fetchReportsByTemplateID = (ID) => {
 
 /* Fetch all templates from ASyncStorage in case there is no internet connection.
    If no data has been stored an empty value will be returned. */
-const fetchLocalTemplates = () => {
-    return AsyncStorage.getItem(`${url}/templates`)
+const fetchLocalTemplatesByUserID = (ID) => {
+    return AsyncStorage.getItem(`${url}users/${ID}/templates`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -100,9 +101,9 @@ const fetchLocalReportsByTemplateID = (ID) => {
 };
 
 // Fetch all templates from the server
-const fetchRemoteTemplates = () => {
+const fetchRemoteTemplatesByUserID = (ID) => {
     return (
-        fetch(`${url}/templates`)
+        fetch(`${url}users/${ID}/templates`)
             .then(response => {
                 return response.json();
             })

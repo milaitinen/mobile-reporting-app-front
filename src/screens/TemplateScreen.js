@@ -6,12 +6,14 @@ import {
     ScrollView,
     StatusBar
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplates } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUserID } from './api';
+import { addTemplatesToData } from '../actions/user';
 
 
 class TemplateScreen extends Component {
@@ -43,10 +45,11 @@ class TemplateScreen extends Component {
         of reportsByTemplates, and sets isLoading and refreshing to false.
     */
     getTemplatesAndReports = () => {
-        fetchTemplates()
-            .then(responseJson => this.setState({ dataTemplates: responseJson }))
+        fetchTemplatesByUserID(this.props.userID)
+            //TODO TODO TODO TODO TODO
+            .then(responseJson => this.props.dispatch(addTemplatesToData(responseJson)))
             .then(() => {
-                const reportsByTemplateID = this.state.dataTemplates.map((t, i) => fetchReportsByTemplateID(i + 1));
+                const reportsByTemplateID = this.props.templates.map((t, i) => fetchReportsByTemplateID(i + 1));
                 Promise.all(reportsByTemplateID)
                     .then(data => { this.setState({ reportsByTemplates: data, isLoading: false, refreshing: false, }); })
                     .catch(err => console.error(err));
@@ -102,8 +105,8 @@ class TemplateScreen extends Component {
                                custom Layout component. The Layout component has a FlatList component as its child
                                component, which lists the specific reports under the right template. The component and its
                                props are explained in its class more specifically.
-                             */
-                            data={ this.state.dataTemplates } // The data in which the templates are stored.
+                             */ß
+                            data={ this.props.templates } // The data in which the templates are stored.
                             renderItem={({ item, index }) => // Renders each template separately.
                                 <Layout
                                     title={item.title} // Title of the template
@@ -123,4 +126,14 @@ class TemplateScreen extends Component {
     }
 }
 
-export default TemplateScreen;
+// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+const mapStateToProps = (state) => {
+    const userID = state.user.userID;
+    const templates = state.user.templates;
+    return {
+        userID,
+        templates
+    };
+};
+
+export default connect(mapStateToProps)(TemplateScreen);
