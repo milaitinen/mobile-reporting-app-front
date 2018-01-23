@@ -1,10 +1,12 @@
 /* eslint-disable no-undef */
-import { INSERT_EMAIL } from '../actions/user';
+import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL } from '../actions/user';
 
 const initialState = {
-    email: ' ',
-    id: 0,
-    authenticated: false,
+    email: null,
+    password: null,
+    serverUrl: null,
+    id: 1,
+    authenticated: true,
     templates: {},
 };
 
@@ -13,7 +15,17 @@ const reducer = (state = initialState, action) => {
         case INSERT_EMAIL:
             return {
                 ...state,
-                email: action.email || ''
+                email: action.email || null
+            };
+        case INSERT_PASSWORD:
+            return {
+                ...state,
+                password: action.password || null
+            };
+        case INSERT_SERVERURL:
+            return {
+                ...state,
+                serverUrl: action.serverUrl || null
             };
         default:
             return state;

@@ -3,7 +3,8 @@ import React from 'react';
 import Navigator from './src/navigation/AppNavigation';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Provider } from 'react-redux';
-import store from './src/config/store'
+
+import store from './src/config/store';
 
 // global variables declared here - they can be used anywhere inside src directory.
 EStyleSheet.build({
@@ -23,6 +24,7 @@ EStyleSheet.build({
     }
 }*/
 
+// <Navigator onNavigationStateChange={null} /> useful in dev-mode?
 export default () => {
     return (
         <Provider store={store}>

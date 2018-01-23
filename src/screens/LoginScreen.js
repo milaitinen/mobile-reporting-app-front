@@ -7,20 +7,27 @@ import { strings } from '../locales/i18n';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
-import { insertEmail } from '../actions/user';
+import { insertEmail, insertPassword, insertServerUrl } from '../actions/user';
 
 class LoginScreen extends React.Component {
 
-    constructor(props)
+    /*constructor(props)
     {
         super(props);
         this.state = {
             //isLoading: true,
-            TextInputUser: '',
-            TextInputPassword: '',
-            TextInputServer: ''
+            //TextInputUser: '',
+            //TextInputPassword: '',
+            //TextInputServer: ''
         };
-    }
+    }*/
+
+    logIn = () => {
+        console.log('authentication',this.props.authenticated);
+        if (this.props.authenticated) {
+            this.props.navigation.navigate('drawerStack');
+        }
+    };
 
     render() {
         return (
@@ -44,15 +51,15 @@ class LoginScreen extends React.Component {
                     name={'lock'}
                     secureTextEntry={true}
                     placeholder={ strings('login.password') }
-                    onChangeText={TextInputPassword => this.setState({ TextInputPassword })}
+                    onChangeText={password => this.props.dispatch(insertPassword(password))}
                 />
                 <Input
                     name={'globe'}
                     placeholder={ strings('login.serverUrl') }
-                    onChangeText={TextInputServer => this.setState({ TextInputServer })}
+                    onChangeText={url => this.props.dispatch(insertServerUrl(url))}
                 />
 
-                <SignInButton onPress={() => this.props.navigation.navigate('drawerStack')}>
+                <SignInButton onPress={this.logIn}>
                     { strings('login.signIn') }
                 </SignInButton>
 
@@ -64,4 +71,18 @@ class LoginScreen extends React.Component {
     }
 }
 
-export default connect()(LoginScreen);
+// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+const mapStateToProps = (state) => {
+    const email = state.user.email;
+    const password = state.user.password;
+    const serverUrl = state.user.serverUrl;
+    const authenticated = state.user.authenticated;
+    return {
+        email,
+        password,
+        serverUrl,
+        authenticated,
+    };
+};
+
+export default connect(mapStateToProps)(LoginScreen);

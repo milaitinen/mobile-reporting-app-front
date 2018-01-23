@@ -3,6 +3,7 @@ import logger from 'redux-logger';
 
 import reducers from '../reducers';
 
+// facilitates debugging HUUUGELY
 const middleware = [];
 if (process.env.NODE_ENV === 'development') {
     middleware.push(logger);

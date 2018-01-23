@@ -4,14 +4,10 @@ import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import LoginScreen from '../screens/LoginScreen';
-
 import TemplateScreen from '../screens/TemplateScreen';
 import NewReportScreen from '../screens/NewReportScreen';
-
 import navigationStyles from './navigationStyles';
-
 import Sidebar from '../navigation/Sidebar';
-
 import { strings } from '../locales/i18n';
 
 
