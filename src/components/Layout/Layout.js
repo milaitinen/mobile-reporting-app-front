@@ -16,7 +16,6 @@ class Layout extends Component{
             updated    : false,
             title      : this.props.title,          // Title which the layout component inherits from TemplateScreen.
             nofReports : this.props.nofReports,     // Number of reports which the layout component inherits from TemplateScreen.
-            templateID : this.props.templateID,     // The specific templateID which the layout component inherits from TemplateScreen.
             expanded   : false,                     // Checks whether the reports of the template are shown or not.
             animation  : new Animated.Value(60),    /* Initializes the animation state as 50 (same height as the ListItem
                                                     component which includes the title of the Layout etc.)
@@ -51,11 +50,6 @@ class Layout extends Component{
     _setMinHeight = (event) => {
         this.setState({ minHeight : event.nativeEvent.layout.height });
     };
-
-    // Calls the inherited createNew function which is explained in TemplateScreen class.
-    createNew = (templateID, isEditable) => {
-        this.props.createNew(templateID, isEditable);
-    }
 
     showMore = () => {
         this.setState(
@@ -120,8 +114,8 @@ class Layout extends Component{
                         subtitle={`${this.state.nofReports} ${(this.state.nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
                         leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
-                        onPressRightIcon={() => this.createNew(this.state.templateID, true)} // Navigates to NewReportScreen when pressed.
-                        leftIconOnPress={() => this.createNew(this.state.templateID, false)}
+                        onPressRightIcon={() => this.props.createNew(this.props.templateID, true)} // Navigates to NewReportScreen when pressed.
+                        leftIconOnPress={() => this.props.createNew(this.props.templateID, false)}
                     />
                 </View>
 

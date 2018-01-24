@@ -2,7 +2,9 @@
 export const INSERT_EMAIL = 'INSERT_EMAIL';
 export const INSERT_PASSWORD = 'INSERT_PASSWORD';
 export const INSERT_SERVERURL = 'INSERT_SERVERURL';
-export const ADD_TEMPLATES = 'ADD_TEMPLATES';
+export const STORE_TEMPLATES = 'STORE_TEMPLATES';
+export const STORE_REPORTS = 'STORE_REPORTS';
+export const IS_LOADING = 'IS_LOADING';
 
 // return an object
 export const insertEmail = (address) => ({
@@ -20,7 +22,17 @@ export const insertServerUrl = (url) => ({
     serverUrl: url
 });
 
-export const addTemplatesToData = (templates) => ({
-    type: ADD_TEMPLATES,
+export const storeTemplates = (templates) => ({
+    type: STORE_TEMPLATES,
     templates: templates
+});
+
+export const setIsLoading = (boolean) => ({
+    type: IS_LOADING,
+    isLoading: boolean
+});
+
+export const storeReports = (reports) => ({
+    type: STORE_REPORTS,
+    reports: reports
 });

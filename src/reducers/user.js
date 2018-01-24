@@ -1,16 +1,16 @@
 /* eslint-disable no-undef */
-import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL, ADD_TEMPLATES } from '../actions/user';
+import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL, STORE_TEMPLATES, IS_LOADING, STORE_REPORTS } from '../actions/user';
 
 const initialState = {
     email: null,
     password: null,
     serverUrl: null,
     userID: 1,
+    isLoading: true,
     authenticated: true,
-    templates: [],
 };
 
-const reducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case INSERT_EMAIL:
             return {
@@ -27,10 +27,20 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 serverUrl: action.serverUrl || null
             };
-        case ADD_TEMPLATES:
+        case STORE_TEMPLATES:
             return {
                 ...state,
-                templates: action.templates || []
+                templates: action.templates || null
+            };
+        case IS_LOADING:
+            return {
+                ...state,
+                isLoading: action.isLoading
+            };
+        case STORE_REPORTS:
+            return {
+                ...state,
+                reports: action.reports || null
             };
         default:
             return state;
@@ -38,4 +48,4 @@ const reducer = (state = initialState, action) => {
 };
 
 console.log('initialState', initialState);
-export default reducer;
+export default userReducer;

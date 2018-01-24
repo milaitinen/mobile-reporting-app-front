@@ -13,7 +13,8 @@ import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
 import { fetchReportsByTemplateID, fetchTemplatesByUserID } from './api';
-import { addTemplatesToData } from '../actions/user';
+import { storeReports, setIsLoading } from '../actions/user';
+import { storeTemplates } from '../actions/templates';
 
 
 class TemplateScreen extends Component {
@@ -21,11 +22,15 @@ class TemplateScreen extends Component {
     {
         super(props);
         this.state = {
-            dataTemplates     : [],
-            reportsByTemplates  : [],   // Array in which the reports will be appended to by their specific TemplateID.
-            isLoading       : true,     // Checks whether the app is loading or not.
+            //dataTemplates     : [],
+            //reportsByTemplates  : [],   // Array in which the reports will be appended to by their specific TemplateID.
+            //isLoading       : true,     // Checks whether the app is loading or not.
             refreshing      : false,    // Checks whether the app and its data is refreshing or not.
         };
+    }
+
+    componentWillMount() {
+        this.props.dispatch(setIsLoading(true));
     }
 
     /*
@@ -46,15 +51,18 @@ class TemplateScreen extends Component {
     */
     getTemplatesAndReports = () => {
         fetchTemplatesByUserID(this.props.userID)
-            //TODO TODO TODO TODO TODO
-            .then(responseJson => this.props.dispatch(addTemplatesToData(responseJson)))
+            .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
             .then(() => {
-                const reportsByTemplateID = this.props.templates.map((t, i) => fetchReportsByTemplateID(i + 1));
+                const reportsByTemplateID = Object.keys(this.props.templates).map((id) => fetchReportsByTemplateID(id));
                 Promise.all(reportsByTemplateID)
-                    .then(data => { this.setState({ reportsByTemplates: data, isLoading: false, refreshing: false, }); })
+                    .then(data => {
+                        this.props.dispatch(storeReports(data));
+                        this.props.dispatch(setIsLoading(false));
+                        this.setState({ refreshing: false, });
+                    })
                     .catch(err => console.error(err));
             })
-            .catch(error => console.error(error) )
+            .catch(error => console.error(error))
             .done();
     };
 
@@ -77,7 +85,7 @@ class TemplateScreen extends Component {
     };
 
     render() {
-        if (this.state.isLoading) {
+        if (this.props.isLoading) {
             return (
                 <AppBackground>
                     <ActivityIndicator
@@ -101,19 +109,14 @@ class TemplateScreen extends Component {
                     <ReportSearchBar/>
                     <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
                         <FlatList
-                            /* Lists the templates in a FlatList component. Each FlatList item is rendered using a
-                               custom Layout component. The Layout component has a FlatList component as its child
-                               component, which lists the specific reports under the right template. The component and its
-                               props are explained in its class more specifically.
-                             */ß
-                            data={ this.props.templates } // The data in which the templates are stored.
-                            renderItem={({ item, index }) => // Renders each template separately.
+                            data={ Object.values(this.props.templates) }
+                            renderItem={({ item, index }) =>
                                 <Layout
-                                    title={item.title} // Title of the template
-                                    createNew={this.createNew} // Passes the createNew function to the Layout component.
-                                    nofReports={item.reportCount} // Passes the number of reports to Layout component.
-                                    templateID={item.id} // Passes the id of the template.
-                                    data={this.state.reportsByTemplates[index]}
+                                    title={item.title}
+                                    createNew={this.createNew}
+                                    nofReports={item.reportCount}
+                                    templateID={item.id}
+                                    data={this.props.reports[index]}
                                 />
                             }
                             keyExtractor={item => item.id}
@@ -129,10 +132,14 @@ class TemplateScreen extends Component {
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
     const userID = state.user.userID;
-    const templates = state.user.templates;
+    const templates = state.templates;
+    const isLoading = state.user.isLoading;
+    const reports = state.user.reports;
     return {
         userID,
-        templates
+        templates,
+        isLoading,
+        reports
     };
 };
 

@@ -17,7 +17,7 @@
     },
     templates: {
         [templateID]: {
-            templateID: <Int>,
+            id: <Int>,
             title: <String>,
             reports: [reportID]
         }
