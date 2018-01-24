@@ -12,9 +12,10 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUserID } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUserID, fetchReportsByUserID } from './api';
 import { setIsLoading } from '../actions/user';
 import { storeTemplates } from '../actions/templates';
+import { storeReportsByTemplateID } from '../actions/reportsByTemplateID';
 import { storeReports } from '../actions/reports';
 
 
@@ -23,10 +24,7 @@ class TemplateScreen extends Component {
     {
         super(props);
         this.state = {
-            //dataTemplates     : [],
-            //reportsByTemplates  : [],   // Array in which the reports will be appended to by their specific TemplateID.
-            //isLoading       : true,     // Checks whether the app is loading or not.
-            refreshing      : false,    // Checks whether the app and its data is refreshing or not.
+            refreshing: false,    // Checks whether the app and its data is refreshing or not.
         };
     }
 
@@ -41,6 +39,10 @@ class TemplateScreen extends Component {
     */
     componentDidMount() {
         this.getTemplatesAndReports();
+        fetchReportsByUserID(this.props.userID)
+            .then(responseJson => this.props.dispatch(storeReports(responseJson)))
+            .catch(error => console.error(error))
+            .done();
     }
 
     /*
@@ -52,12 +54,12 @@ class TemplateScreen extends Component {
     */
     getTemplatesAndReports = () => {
         fetchTemplatesByUserID(this.props.userID)
-            .then(responseJson => {console.log('responseJson', responseJson); this.props.dispatch(storeTemplates(responseJson));})
+            .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
             .then(() => {
                 const reportsByTemplateID = Object.keys(this.props.templates).map((id) => fetchReportsByTemplateID(id));
                 Promise.all(reportsByTemplateID)
                     .then(data => {
-                        this.props.dispatch(storeReports(data));
+                        this.props.dispatch(storeReportsByTemplateID(data));
                         this.props.dispatch(setIsLoading(false));
                         this.setState({ refreshing: false, });
                     })
@@ -117,7 +119,7 @@ class TemplateScreen extends Component {
                                     createNew={this.createNew}
                                     nofReports={item.reportCount}
                                     templateID={item.id}
-                                    data={this.props.reports[item.id]}
+                                    data={this.props.reportsByTempID[item.id]}
                                 />
                             }
                             keyExtractor={item => item.id}
@@ -135,12 +137,12 @@ const mapStateToProps = (state) => {
     const userID = state.user.userID;
     const templates = state.templates;
     const isLoading = state.user.isLoading;
-    const reports = state.reports;
+    const reportsByTempID = state.reportsByTempID;
     return {
         userID,
         templates,
         isLoading,
-        reports
+        reportsByTempID
     };
 };
 

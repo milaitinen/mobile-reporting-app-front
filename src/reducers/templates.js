@@ -12,7 +12,6 @@ const matchTemplateID = (state, action) => {
             templateObj[template.id] = template;
             return templateObj;
         }).reduce((allTemplates, currentTemplate) => Object.assign(allTemplates, currentTemplate))
-
     );
 };
 

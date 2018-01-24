@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Animated, FlatList, Text } from 'react-native';
 import { ListItem, Badge, Icon } from 'react-native-elements';
-import layoutStyles from './layoutStyles';
+import styles from './styles';
 import { strings } from '../../locales/i18n';
 
 
@@ -12,7 +12,6 @@ class Layout extends Component{
             maxHeight  : 0,
             minHeight  : 0,
             itemsCount : 5,
-            data       : this.props.data,
             updated    : false,
             title      : this.props.title,          // Title which the layout component inherits from TemplateScreen.
             nofReports : this.props.nofReports,     // Number of reports which the layout component inherits from TemplateScreen.
@@ -67,11 +66,11 @@ class Layout extends Component{
         /*
         if(JOKU DRAFTEHTO) {
            return (
-            <View style={layoutStyles.BadgeViewContainer}>
-                 <Badge textStyle = {layoutStyles.badgeTextStyle}
-                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
-                    <Text style={layoutStyles.badgeTextStyle}>{strings('templates.draft')}</Text>
-                    <Icon name={'edit-2'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
+            <View style={styles.BadgeViewContainer}>
+                 <Badge textStyle = {styles.badgeTextStyle}
+                    containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
+                    <Text style={styles.badgeTextStyle}>{strings('templates.draft')}</Text>
+                    <Icon name={'edit-2'} type={'feather'} iconStyle={styles.badgeIconStyle} />
                 </Badge>
             </View>
         );
@@ -80,48 +79,50 @@ class Layout extends Component{
 
         if (dateAccepted != null) {
             return (
-                <View style={layoutStyles.BadgeViewContainer}>
-                    <Badge textStyle = {layoutStyles.badgeTextStyle}
-                        containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
-                        <Text style={layoutStyles.badgeTextStyle}>{strings('templates.approved')}</Text>
-                        <Icon name={'check'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
+                <View style={styles.BadgeViewContainer}>
+                    <Badge textStyle = {styles.badgeTextStyle}
+                        containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
+                        <Text style={styles.badgeTextStyle}>{strings('templates.approved')}</Text>
+                        <Icon name={'check'} type={'feather'} iconStyle={styles.badgeIconStyle} />
                     </Badge>
-                    <Text style={layoutStyles.dateAccepted}>{dateAccepted}</Text>
+                    <Text style={styles.dateAccepted}>{dateAccepted}</Text>
                 </View>
 
             );
         }
 
-        return <View style={layoutStyles.BadgeViewContainer}>
-            <Badge textStyle={layoutStyles.badgeTextStyle}
-                containerStyle={[layoutStyles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
-                <Text style={layoutStyles.badgeTextStyle}>{strings('templates.sent')}</Text>
-                <Icon name={'clock'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle}/>
-            </Badge>
-        </View>;
+        return (
+            <View style={styles.BadgeViewContainer}>
+                <Badge textStyle={styles.badgeTextStyle}
+                    containerStyle={[styles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
+                    <Text style={styles.badgeTextStyle}>{strings('templates.sent')}</Text>
+                    <Icon name={'clock'} type={'feather'} iconStyle={styles.badgeIconStyle}/>
+                </Badge>
+            </View>
+        );
     };
 
     render(){
         return (
             <Animated.View
-                style={[layoutStyles.animatedContainer,{ height: this.state.animation }]}>
+                style={[styles.animatedContainer,{ height: this.state.animation }]}>
                 <View onLayout={this._setMinHeight}>
                     <ListItem
-                        containerStyle={ layoutStyles.templateContainer }
+                        containerStyle={ styles.templateContainer }
                         onPress={this.toggle} // Opens or closes the layout component.
                         title={this.state.title} // Title of the template.
                         //Number of reports as a subtitle
                         subtitle={`${this.state.nofReports} ${(this.state.nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
-                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
-                        leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
+                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: styles.addReport,  }}
+                        leftIcon = { { name: 'folder', type: 'Materialicons', style: styles.folderIcon, }}
                         onPressRightIcon={() => this.props.createNew(this.props.templateID, true)} // Navigates to NewReportScreen when pressed.
                         leftIconOnPress={() => this.props.createNew(this.props.templateID, false)}
                     />
                 </View>
 
-                <View style={layoutStyles.reportListContainer} onLayout={this._setMaxHeight}>
+                <View style={styles.reportListContainer} onLayout={this._setMaxHeight}>
                     <FlatList
-                        data={ (this.state.data === undefined) ? this.state.data : this.state.data.slice(0, this.state.itemsCount) }
+                        data={ (this.props.data === undefined) ? this.props.data : this.props.data.slice(0, this.state.itemsCount) }
                         extraData={ this.state.itemsCount }
                         /* Renders the reports from the state array
                           with the help of an index from the earlier
@@ -129,8 +130,8 @@ class Layout extends Component{
                         renderItem={({ item }) =>
                             <ListItem
                                 key={item.title}
-                                containerStyle={ layoutStyles.reportContainer }
-                                title={item.orderNo + '\t' + item.title}
+                                containerStyle={ styles.reportContainer }
+                                title={`${item.orderNo}\t${item.title}`}
                                 subtitle={item.dateCreated}
                                 hideChevron = {true}
                                 badge ={{ element: this.badge(item.dateAccepted) }}
@@ -138,8 +139,8 @@ class Layout extends Component{
                         }
                         keyExtractor={item => item.orderNo}
                         ListFooterComponent={
-                            (this.state.data !== undefined && this.state.data.length > this.state.itemsCount)
-                                ? <Text  style={layoutStyles.more} onPress={() => this.showMore()}>
+                            (this.props.data !== undefined && this.props.data.length > this.state.itemsCount)
+                                ? <Text style={styles.more} onPress={() => this.showMore()}>
                                     { strings('templates.showMore') }
                                 </Text>
                                 : null

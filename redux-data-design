@@ -33,9 +33,9 @@
         } ]
     },
     reports: {
-        [reportID]: {
+        [id]: {
             id: <Int>,
-            reportID: <Int>,
+            templateID: <Int>,
             userID: <Int>,
             orderNo: <Int>,
             title: <String>,
@@ -46,7 +46,35 @@
     },
 }
 
-// reports--------------------------------------------------------------------------------------------------------------
+// reports by userID----------------------------------------------------------------------------------------------------
+[
+    {   "templateID":1,
+        "userID":2,
+        "orderNo":9001,
+        "title":"Pekan eka raportti",
+        "dateCreated":"2017-12-06",
+        "dateAccepted":"2017-12-07",
+        "answers":[
+            {"fieldID":1,"reportID":4, "answer":"Pekka"},
+            {"fieldID":2,"reportID":4,"answer":"1"},
+            {"fieldID":3,"reportID":4,"answer":"1"}
+        ],
+        "id":4
+    },
+    {   "templateID":2,
+        "userID":2,
+        "orderNo":4,
+        "title":"Sent through API 2",
+        "dateCreated":"2017-12-27",
+        "dateAccepted":"2017-12-28",
+        "answers":[
+            {"fieldID":4,"reportID":22,"answer":"Pekka"},
+            {"fieldID":5,"reportID":22,"answer":"töttöröö"}
+        ],
+        "id":22
+    }
+]
+// reports by templateID------------------------------------------------------------------------------------------------
 [
     {   "templateID": 10,
         "userID": 1,

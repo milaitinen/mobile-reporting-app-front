@@ -22,6 +22,7 @@ class LoginScreen extends React.Component {
         };
     }*/
 
+
     logIn = () => {
         console.log('authentication',this.props.authenticated);
         if (this.props.authenticated) {
