@@ -22,17 +22,7 @@ export const insertServerUrl = (url) => ({
     serverUrl: url
 });
 
-export const storeTemplates = (templates) => ({
-    type: STORE_TEMPLATES,
-    templates: templates
-});
-
 export const setIsLoading = (boolean) => ({
     type: IS_LOADING,
     isLoading: boolean
-});
-
-export const storeReports = (reports) => ({
-    type: STORE_REPORTS,
-    reports: reports
 });

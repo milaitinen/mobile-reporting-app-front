@@ -27,20 +27,10 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 serverUrl: action.serverUrl || null
             };
-        case STORE_TEMPLATES:
-            return {
-                ...state,
-                templates: action.templates || null
-            };
         case IS_LOADING:
             return {
                 ...state,
                 isLoading: action.isLoading
-            };
-        case STORE_REPORTS:
-            return {
-                ...state,
-                reports: action.reports || null
             };
         default:
             return state;

@@ -3,5 +3,5 @@ export const STORE_REPORTS = 'STORE_REPORTS';
 
 export const storeReports = (reports) => ({
     type: STORE_REPORTS,
-    templates: reports
+    reports: reports
 });

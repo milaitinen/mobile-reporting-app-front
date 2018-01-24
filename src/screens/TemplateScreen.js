@@ -13,8 +13,9 @@ import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
 import { fetchReportsByTemplateID, fetchTemplatesByUserID } from './api';
-import { storeReports, setIsLoading } from '../actions/user';
+import { setIsLoading } from '../actions/user';
 import { storeTemplates } from '../actions/templates';
+import { storeReports } from '../actions/reports';
 
 
 class TemplateScreen extends Component {
@@ -51,7 +52,7 @@ class TemplateScreen extends Component {
     */
     getTemplatesAndReports = () => {
         fetchTemplatesByUserID(this.props.userID)
-            .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
+            .then(responseJson => {console.log('responseJson', responseJson); this.props.dispatch(storeTemplates(responseJson));})
             .then(() => {
                 const reportsByTemplateID = Object.keys(this.props.templates).map((id) => fetchReportsByTemplateID(id));
                 Promise.all(reportsByTemplateID)
@@ -110,13 +111,13 @@ class TemplateScreen extends Component {
                     <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
                         <FlatList
                             data={ Object.values(this.props.templates) }
-                            renderItem={({ item, index }) =>
+                            renderItem={({ item }) =>
                                 <Layout
                                     title={item.title}
                                     createNew={this.createNew}
                                     nofReports={item.reportCount}
                                     templateID={item.id}
-                                    data={this.props.reports[index]}
+                                    data={this.props.reports[item.id]}
                                 />
                             }
                             keyExtractor={item => item.id}
@@ -134,7 +135,7 @@ const mapStateToProps = (state) => {
     const userID = state.user.userID;
     const templates = state.templates;
     const isLoading = state.user.isLoading;
-    const reports = state.user.reports;
+    const reports = state.reports;
     return {
         userID,
         templates,

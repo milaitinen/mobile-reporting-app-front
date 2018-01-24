@@ -106,7 +106,6 @@ const fetchRemoteTemplatesByUserID = (ID) => {
         fetch(`${url}users/${ID}/templates`)
             .then(response => {
                 console.log('response', response);
-                console.log('response.json', response.json);
                 return response.json();
             })
     );

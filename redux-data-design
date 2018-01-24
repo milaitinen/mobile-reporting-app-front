@@ -6,68 +6,100 @@
 		loggedIn: <Boolean>
 	},
 	user: {
-    		email: <String>,
-    		password: <String>,
-    		id: <String>,
-    		authenticated: <Boolean>,
-    		isLoading: <Boolean>
-    		templates: [templateID]
-    		}
-        }
+        email: <String>,
+        password: <String>,
+        id: <String>,
+        authenticated: <Boolean>,
+        isLoading: <Boolean>
+        templates: [templateID]
     },
     templates: {
         [templateID]: {
-            id: <Int>,
+            templateID: <Int>,
             title: <String>,
             reports: [reportID]
         }
     },
+    reportsByTemplateID: {
+        [templateID]: [ {
+            id: <Int>,
+            reportID: <Int>,
+            userID: <Int>,
+            orderNo: <Int>,
+            title: <String>,
+            dateCreated: <Date>,
+            dateAccepted: <Date>,
+            answers: [Answers]
+        } ]
+    },
     reports: {
         [reportID]: {
+            id: <Int>,
             reportID: <Int>,
+            userID: <Int>,
+            orderNo: <Int>,
             title: <String>,
-            dateWritten: <Date>,
-            dateApproved: <Date>,
-            fields: [fieldID]
+            dateCreated: <Date>,
+            dateAccepted: <Date>,
+            answers: [Answers]
         }
+    },
+}
+
+// reports--------------------------------------------------------------------------------------------------------------
+[
+    {   "templateID": 10,
+        "userID": 1,
+        "orderNo": 1,
+        "title": "Kekepe",
+        "dateCreated": "2018-01-10",
+        "dateAccepted": null,
+        "answers":[
+            {   "fieldID":1,"reportID":1132,"answer":"Answer 1" },
+            {   "fieldID":2,"reportID":1132,"answer":"Answer 2" }
+            ],
+        "id":1132
+    },
+    {   "templateID":10,
+        "userID":1,
+        "orderNo":2,
+        "title":"Uuden Apin testaus",
+        "dateCreated":"2018-01-10",
+        "dateAccepted":null,
+        "answers":[
+            {"fieldID":1,"reportID":1139,"answer":"Answer 1"},
+            {"fieldID":2,"reportID":1139,"answer":"Answer 2"}
+            ],
+        "id":1139
     }
-}
+]
 
+// templates------------------------------------------------------------------------------------------------------------
+[
+    {
+        "title":"Eka",
+        "reportCount":39,
+        "amountOfReports":39,
+        "id":1
+    },
+    {   "title":"Toka",
+        "reportCount":14,
+        "amountOfReports":14,
+        "id":2
+    },
+    {   "title":"Quality Management",
+        "reportCount":18,
+        "amountOfReports":18,
+        "id":3
+    },
+    {   "title":"IInformation security management",
+        "reportCount":1020,
+        "amountOfReports":1020,
+        "id":4
+    }
+]
 
-
-
-
-{
-	user: {
-		email: <String>,
-		password: <String>,
-		id: <String>,
-		authenticated: <Boolean>,
-		isLoading: <Boolean>
-		templates: {
-            [templateID]: {
-                title: <String>,
-                // isRefreshing: <Boolean>.
-                reports: {
-                    [reportID]: {
-                        reportName: <String>,
-                        dateWritten: <Date>,
-                        dateApproved: <Date>,
-                        fields: {
-                            [fieldID]: {
-                                title: <String>,
-                                type: <Int>
-                            }
-                        }
-                    }
-                }
-            }
-		}
-	}
-}
-
-
-// EXAMPLE DATA
+// EXAMPLE DATA---------------------------------------------------------------------------------------------------------
 
 {	userInfo: {
 		loggedIn: true

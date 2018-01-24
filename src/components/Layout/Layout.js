@@ -121,7 +121,7 @@ class Layout extends Component{
 
                 <View style={layoutStyles.reportListContainer} onLayout={this._setMaxHeight}>
                     <FlatList
-                        data={ this.state.data.slice(0, this.state.itemsCount) }
+                        data={ (this.state.data === undefined) ? this.state.data : this.state.data.slice(0, this.state.itemsCount) }
                         extraData={ this.state.itemsCount }
                         /* Renders the reports from the state array
                           with the help of an index from the earlier
@@ -138,7 +138,7 @@ class Layout extends Component{
                         }
                         keyExtractor={item => item.orderNo}
                         ListFooterComponent={
-                            (this.state.data.length > this.state.itemsCount)
+                            (this.state.data !== undefined && this.state.data.length > this.state.itemsCount)
                                 ? <Text  style={layoutStyles.more} onPress={() => this.showMore()}>
                                     { strings('templates.showMore') }
                                 </Text>
