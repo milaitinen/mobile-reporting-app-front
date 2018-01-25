@@ -1,12 +1,11 @@
 /* eslint-disable no-undef */
-import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL, STORE_TEMPLATES, IS_LOADING, STORE_REPORTS } from '../actions/user';
+import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL, STORE_TEMPLATES, STORE_REPORTS } from '../actions/user';
 
 const initialState = {
     email: null,
     password: null,
     serverUrl: null,
     userID: 1,
-    isLoading: true,
     authenticated: true,
 };
 
@@ -26,11 +25,6 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 serverUrl: action.serverUrl || null
-            };
-        case IS_LOADING:
-            return {
-                ...state,
-                isLoading: action.isLoading
             };
         default:
             return state;

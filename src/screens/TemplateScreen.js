@@ -13,10 +13,9 @@ import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
 import { fetchReportsByTemplateID, fetchTemplatesByUserID, fetchReportsByUserID } from './api';
-import { setIsLoading } from '../actions/user';
-import { storeTemplates } from '../actions/templates';
-import { storeReportsByTemplateID } from '../actions/reportsByTemplateID';
-import { storeReports } from '../actions/reports';
+import { storeTemplates } from '../redux/actions/templates';
+import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
+import { storeReports } from '../redux/actions/reports';
 
 
 class TemplateScreen extends Component {
@@ -24,12 +23,9 @@ class TemplateScreen extends Component {
     {
         super(props);
         this.state = {
-            refreshing: false,    // Checks whether the app and its data is refreshing or not.
+            isLoading   : true,     // Checks whether the app is loading or not.
+            refreshing  : false,    // Checks whether the app and its data is refreshing or not.
         };
-    }
-
-    componentWillMount() {
-        this.props.dispatch(setIsLoading(true));
     }
 
     /*
@@ -60,8 +56,7 @@ class TemplateScreen extends Component {
                 Promise.all(reportsByTemplateID)
                     .then(data => {
                         this.props.dispatch(storeReportsByTemplateID(data));
-                        this.props.dispatch(setIsLoading(false));
-                        this.setState({ refreshing: false, });
+                        this.setState({ refreshing: false, isLoading: false });
                     })
                     .catch(err => console.error(err));
             })
@@ -88,7 +83,7 @@ class TemplateScreen extends Component {
     };
 
     render() {
-        if (this.props.isLoading) {
+        if (this.state.isLoading) {
             return (
                 <AppBackground>
                     <ActivityIndicator
@@ -136,12 +131,10 @@ class TemplateScreen extends Component {
 const mapStateToProps = (state) => {
     const userID = state.user.userID;
     const templates = state.templates;
-    const isLoading = state.user.isLoading;
     const reportsByTempID = state.reportsByTempID;
     return {
         userID,
         templates,
-        isLoading,
         reportsByTempID
     };
 };

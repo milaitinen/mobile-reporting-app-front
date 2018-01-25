@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 
-import reducers from '../reducers';
+import reducers from './reducers';
 
 // facilitates debugging HUUUGELY
 const middleware = [];

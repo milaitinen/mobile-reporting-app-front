@@ -13,7 +13,6 @@ are stored in the store - or, - that's how it should be...
         serverURL: <String>,
         userID: <String>,
         authenticated: <Boolean>,
-        isLoading: <Boolean>,
     },
 
     templates: {
@@ -65,8 +64,7 @@ USER----------------------------------------------------------------------------
         password: greatDayComingAhead,
         userID: 81,
         serverURL: something.com
-        authenticated: true,
-        isLoading: true
+        authenticated: true
     },
 }
 
@@ -74,38 +72,38 @@ REPORTS (BY USER_ID)------------------------------------------------------------
 
 {
     reports: {
-            1: {
-                id: 1,
-                templateID: 2,
-                userID: 4,
-                orderNo: 18,
-                title: 'Bob's greatest report',
-                dateCreated: "2018-01-10",
-                dateAccepted: null,
-                answers: [Answers]
-            },
-            2: {
-                id: 2,
-                templateID: 6,
-                userID: 4,
-                orderNo: 22,
-                title: 'Bob's worst report',
-                dateCreated: "2017-08-11",
-                dateAccepted: "2017-09-09",
-                answers: [Answers]
-            }
+        1: {
+            id: 1,
+            templateID: 2,
+            userID: 4,
+            orderNo: 18,
+            title: 'Bob's greatest report',
+            dateCreated: "2018-01-10",
+            dateAccepted: null,
+            answers: [Answers]
         },
+        2: {
+            id: 2,
+            templateID: 6,
+            userID: 4,
+            orderNo: 22,
+            title: 'Bob's worst report',
+            dateCreated: "2017-08-11",
+            dateAccepted: "2017-09-09",
+            answers: [Answers]
+        }
+    },
 }
 
 REPORTS_BY_TEMPLATE_ID--------------------------------------------------------------------------------------------------
 
 {
     reportsByTemplateID: {
-            1: [ { (reportA object) }, { (reportK object) }, { (reportM object) } ],
-            2: [ { (reportB object) }, { (reportL object) }, { (reportN object) } ],
-            3: [ { (reportZ object) }, { (reportP object) }, { (reportU object) } ],
-            9: [ { (reportW object) }, { (reportO object) }, { (reportT object) } ],
-        },
+        1: [ { (reportA object) }, { (reportK object) }, { (reportM object) } ],
+        2: [ { (reportB object) }, { (reportL object) }, { (reportN object) } ],
+        3: [ { (reportZ object) }, { (reportP object) }, { (reportU object) } ],
+        9: [ { (reportW object) }, { (reportO object) }, { (reportT object) } ],
+    },
 }
 
 TEMPLATES---------------------------------------------------------------------------------------------------------------

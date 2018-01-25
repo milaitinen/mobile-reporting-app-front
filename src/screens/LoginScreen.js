@@ -7,7 +7,7 @@ import { strings } from '../locales/i18n';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
-import { insertEmail, insertPassword, insertServerUrl } from '../actions/user';
+// import { insertEmail, insertPassword, insertServerUrl } from '../actions/user';
 
 class LoginScreen extends React.Component {
 
@@ -75,14 +75,8 @@ class LoginScreen extends React.Component {
 // maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 // NOTE: only 'authenticated' is currently in use. Others are not kept track of in Redux.
 const mapStateToProps = (state) => {
-    const email = state.user.email;
-    const password = state.user.password;
-    const serverUrl = state.user.serverUrl;
     const authenticated = state.user.authenticated;
     return {
-        email,
-        password,
-        serverUrl,
         authenticated,
     };
 };

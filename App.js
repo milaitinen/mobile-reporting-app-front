@@ -4,7 +4,7 @@ import Navigator from './src/navigation/AppNavigation';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Provider } from 'react-redux';
 
-import store from './src/config/store';
+import store from './src/redux/store';
 
 // global variables declared here - they can be used anywhere inside src directory.
 EStyleSheet.build({

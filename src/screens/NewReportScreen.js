@@ -13,7 +13,7 @@ import { createNewReport, fetchFieldsByID } from './api';
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import { strings } from '../locales/i18n';
-import { insertEmail, insertPassword, insertServerUrl } from '../actions/user';
+import { insertEmail, insertPassword, insertServerUrl } from '../redux/actions/user';
 
 
 class NewReportScreen extends React.Component {
