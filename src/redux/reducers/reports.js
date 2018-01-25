@@ -19,7 +19,7 @@ const reportsReducer = (state = initialState, action) => {
         case STORE_REPORTS: {
             const newReports = match(state, action);
             // Object.assign merges the given parameters together and returns an object
-            return Object.assign(state.reports, newReports);
+            return Object.assign(state.reports || {}, newReports);
         }
         default:
             return state;
