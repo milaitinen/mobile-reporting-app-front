@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Alert, Button, Text, ActivityIndicator, Linking } from 'react-native';
+import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import CheckBox from 'react-native-check-box';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
@@ -27,12 +27,16 @@ class NewReportScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getFieldsByID();
+        this.getFieldsByID(this.props.templateID);
     }
 
-    getFieldsByID = () => {
-        fetchFieldsByID(this.props.templateID)
-            .then(responseJson => this.setState({ dataFieldsByID: responseJson, isLoading: false }))
+    getFieldsByID = (ID) => {
+        console.log('ID', ID);
+        fetchFieldsByID(ID)
+            .then(responseJson => {
+                this.setState({ dataFieldsByID: responseJson, isLoading: false });
+                console.log('this.state.dataFieldsByID', this.state.dataFieldsByID);
+            })
             .then(() => console.log(this.state.dataFieldsByID))
             .catch(error => console.error(error) )
             .done();
@@ -86,8 +90,6 @@ class NewReportScreen extends React.Component {
         this.setState({ number: newText });
     };
 
-
-
     render() {
 
         if (this.state.isLoading) {
@@ -103,7 +105,7 @@ class NewReportScreen extends React.Component {
             );
         }
 
-        const { isEditable } = this.props.isEditable;
+        const { isEditable } = this.props;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
             switch (field.typeID) {
                 case 1: // Name
