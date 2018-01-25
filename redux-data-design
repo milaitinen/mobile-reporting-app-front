@@ -3,8 +3,13 @@ REDUX: GENERAL INFO
 
 --> an open-source JavaScript library designed for managing application state.
 --> the state of the whole application is stored in an object tree within a single store.
+
+WHY REDUX?
+
 --> helps to manage complex and ever-changing UI state
 --> 3 principles: single source of truth, state is read-only, changes are made with pure functions
+--> no need to go through the daunting task of keeping track of states in every component when one component has been updated
+--> easy testing
 
 --> consists of: actions, reducers, and a store.
 
@@ -60,7 +65,7 @@ DATA FLOW-----------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------
 
-DATA DESIGN (how our application information is stored in the store)
+DATA DESIGN FOR OUR APPLICATION (how application information is stored in the store)
 
 NOTE: This is not EXACTLY how the data is currently stored, but similar.
 As not all states need Redux to be kept track of (e.g. isLoading when a page loads), only the most important core data
