@@ -10,7 +10,7 @@ const RightButton = ({ onPressPrev, onPressNew }) => {
             <TouchableHighlight
                 onPress={onPressPrev}
                 style = {styles.buttonContainer}>
-                <View style={styles.separator}><Icon name={'find-in-page'} type={'Materialicons'} iconStyle={styles.iconStyle} /></View>
+                <View style={styles.separator}><Icon name={'find-in-page'} type={'Materialicons'} iconStyle={styles.iconStyleA} /></View>
             </TouchableHighlight>
             <TouchableHighlight
                 onPress={onPressNew}
