@@ -9,7 +9,8 @@ import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
 // import { insertEmail, insertPassword, insertServerUrl } from '../actions/user';
 
-class LoginScreen extends React.Component {
+//"export" necessary in order to test component without Redux store
+export class LoginScreen extends React.Component {
 
     constructor(props)
     {

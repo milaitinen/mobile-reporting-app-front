@@ -53,6 +53,7 @@ exports[`renders correctly 1`] = `
     </Text>
     <TextInput
       allowFontScaling={true}
+      autoCapitalize="none"
       name="user"
       onChangeText={[Function]}
       placeholder="Email"
@@ -87,6 +88,7 @@ exports[`renders correctly 1`] = `
     </Text>
     <TextInput
       allowFontScaling={true}
+      autoCapitalize="none"
       name="lock"
       onChangeText={[Function]}
       placeholder="Password"
@@ -122,6 +124,7 @@ exports[`renders correctly 1`] = `
     </Text>
     <TextInput
       allowFontScaling={true}
+      autoCapitalize="none"
       name="globe"
       onChangeText={[Function]}
       placeholder="Server url"

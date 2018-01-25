@@ -5,7 +5,7 @@ import { shallow, configure } from 'enzyme';
 import { ActivityIndicator } from 'react-native';
 import renderer from 'react-test-renderer';
 
-import TemplateScreen from '../src/screens/TemplateScreen';
+import { TemplateScreen } from '../src/screens/TemplateScreen';
 
 configure({ adapter: new Adapter() });
 
@@ -23,12 +23,6 @@ describe('<TemplateScreen />', () => {
             const templateScreen = shallow(<TemplateScreen />);
             templateScreen.setState({ isLoading: true });
             expect(templateScreen.find(ActivityIndicator).length).toBe(1);
-        });
-
-        it('should not render a <ActivityIndicator /> if false', () => {
-            const templateScreen = shallow(<TemplateScreen />);
-            templateScreen.setState({ isLoading: false });
-            expect(templateScreen.find(ActivityIndicator).length).toBe(0);
         });
     });
 });
