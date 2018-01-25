@@ -13,8 +13,6 @@ class Layout extends Component{
             minHeight  : 0,
             itemsCount : 5,
             updated    : false,
-            title      : this.props.title,          // Title which the layout component inherits from TemplateScreen.
-            nofReports : this.props.nofReports,     // Number of reports which the layout component inherits from TemplateScreen.
             expanded   : false,                     // Checks whether the reports of the template are shown or not.
             animation  : new Animated.Value(60),    /* Initializes the animation state as 50 (same height as the ListItem
                                                     component which includes the title of the Layout etc.)
@@ -103,6 +101,8 @@ class Layout extends Component{
     };
 
     render(){
+        // simplifies referencing (instead of this.props.title, title is enough)
+        const { title, nofReports, templateID, data } = this.props;
         return (
             <Animated.View
                 style={[styles.animatedContainer,{ height: this.state.animation }]}>
@@ -110,19 +110,19 @@ class Layout extends Component{
                     <ListItem
                         containerStyle={ styles.templateContainer }
                         onPress={this.toggle} // Opens or closes the layout component.
-                        title={this.state.title} // Title of the template.
+                        title={title} // Title of the template.
                         //Number of reports as a subtitle
-                        subtitle={`${this.state.nofReports} ${(this.state.nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
+                        subtitle={`${nofReports} ${(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: styles.addReport,  }}
                         leftIcon = { { name: 'folder', type: 'Materialicons', style: styles.folderIcon, }}
-                        onPressRightIcon={() => this.props.createNew(this.props.templateID, true)} // Navigates to NewReportScreen when pressed.
-                        leftIconOnPress={() => this.props.createNew(this.props.templateID, false)}
+                        onPressRightIcon={() => this.props.createNew(templateID, true)} // Navigates to NewReportScreen when pressed.
+                        leftIconOnPress={() => this.props.createNew(templateID, false)}
                     />
                 </View>
 
                 <View style={styles.reportListContainer} onLayout={this._setMaxHeight}>
                     <FlatList
-                        data={ (this.props.data === undefined) ? this.props.data : this.props.data.slice(0, this.state.itemsCount) }
+                        data={ (data === undefined) ? data : data.slice(0, this.state.itemsCount) }
                         extraData={ this.state.itemsCount }
                         /* Renders the reports from the state array
                           with the help of an index from the earlier
@@ -139,7 +139,7 @@ class Layout extends Component{
                         }
                         keyExtractor={item => item.orderNo}
                         ListFooterComponent={
-                            (this.props.data !== undefined && this.props.data.length > this.state.itemsCount)
+                            (data !== undefined && data.length > this.state.itemsCount)
                                 ? <Text style={styles.more} onPress={() => this.showMore()}>
                                     { strings('templates.showMore') }
                                 </Text>
