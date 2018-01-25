@@ -72,7 +72,7 @@ class NewReportScreen extends React.Component {
         });
     };
 
-    onChanged(text) {
+    onChanged = (text) => {
         let newText = '';
         const numbers = '0123456789';
 
@@ -84,7 +84,7 @@ class NewReportScreen extends React.Component {
             }
         }
         this.setState({ number: newText });
-    }
+    };
 
 
 
@@ -112,7 +112,7 @@ class NewReportScreen extends React.Component {
                             key={index}
                             editable={isEditable}
                             placeholder={field.defaultValue}
-                            onSubmitEditing={(title) => this.props.dispatch(insertTitle(title))}
+                            onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                             underlineColorAndroid='transparent'
                             style={newReportStyles.TextInputStyleClass}
                         />

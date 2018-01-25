@@ -26,5 +26,4 @@ const newReportReducer = (state = initialState, action) => {
     }
 };
 
-console.log('initialState', initialState);
 export default newReportReducer;

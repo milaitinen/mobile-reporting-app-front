@@ -17,7 +17,6 @@ const match = (state, action) => {
 const reportsReducer = (state = initialState, action) => {
     switch (action.type) {
         case STORE_REPORTS: {
-            console.log('action.reports', action.reports);
             const newReports = match(state, action);
             // Object.assign merges the given parameters together and returns an object
             return Object.assign(state.reports, newReports);

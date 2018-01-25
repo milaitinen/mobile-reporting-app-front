@@ -149,7 +149,6 @@ const fetchRemoteReportsByUserID = (ID) => {
     return (
         fetch(`${url}/users/${ID}/reports`)
             .then(response => {
-                console.log('response', response);
                 return response.json();
             })
     );
