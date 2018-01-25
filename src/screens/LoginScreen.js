@@ -15,7 +15,7 @@ class LoginScreen extends React.Component {
     {
         super(props);
         this.state = {
-            //isLoading       : true,
+            //isLoading     : true,
             emailAddress    : '',
             password        : '',
             serverUrl       : ''
@@ -24,7 +24,6 @@ class LoginScreen extends React.Component {
 
 
     logIn = () => {
-        console.log('authentication',this.props.authenticated);
         if (this.props.authenticated) {
             this.props.navigation.navigate('drawerStack');
         }

@@ -16,6 +16,7 @@ import { fetchReportsByTemplateID, fetchTemplatesByUserID, fetchReportsByUserID 
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
 import { storeReports } from '../redux/actions/reports';
+import { createReport } from '../redux/actions/newReport';
 
 
 class TemplateScreen extends Component {
@@ -79,7 +80,8 @@ class TemplateScreen extends Component {
      app knows to which template the new report has to be added.
     */
     createNew = (templateID, isEditable) => {
-        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, templateID: templateID, isEditable: isEditable });
+        this.props.dispatch(createReport(templateID, isEditable));
+        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh });
     };
 
     render() {

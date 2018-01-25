@@ -49,6 +49,13 @@ are stored in the store - or, - that's how it should be...
             answers: [Answers]
         }
     },
+
+    newReportScreen: {
+        templateID: <Int> ,
+        isEditable: <Boolean>,
+        title: <String>,
+        number: <Int>,
+    }
 }
 
 ------------------------------------------------------------------------------------------------------------------------
