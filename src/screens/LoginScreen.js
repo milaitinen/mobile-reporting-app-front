@@ -11,16 +11,16 @@ import { insertEmail, insertPassword, insertServerUrl } from '../actions/user';
 
 class LoginScreen extends React.Component {
 
-    /*constructor(props)
+    constructor(props)
     {
         super(props);
         this.state = {
-            //isLoading: true,
-            //TextInputUser: '',
-            //TextInputPassword: '',
-            //TextInputServer: ''
+            //isLoading       : true,
+            emailAddress    : '',
+            password        : '',
+            serverUrl       : ''
         };
-    }*/
+    }
 
 
     logIn = () => {
@@ -46,18 +46,18 @@ class LoginScreen extends React.Component {
                 <Input
                     name={'user'}
                     placeholder={ strings('login.email') }
-                    onChangeText={address => this.props.dispatch(insertEmail(address))}
+                    onChangeText={emailAddress => this.setState({ emailAddress })}
                 />
                 <Input
                     name={'lock'}
                     secureTextEntry={true}
                     placeholder={ strings('login.password') }
-                    onChangeText={password => this.props.dispatch(insertPassword(password))}
+                    onChangeText={password => this.setState({ password })}
                 />
                 <Input
                     name={'globe'}
                     placeholder={ strings('login.serverUrl') }
-                    onChangeText={url => this.props.dispatch(insertServerUrl(url))}
+                    onChangeText={serverUrl => this.setState({ serverUrl })}
                 />
 
                 <SignInButton onPress={this.logIn}>
@@ -72,7 +72,8 @@ class LoginScreen extends React.Component {
     }
 }
 
-// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+// maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+// NOTE: only 'authenticated' is currently in use. Others are not kept track of in Redux.
 const mapStateToProps = (state) => {
     const email = state.user.email;
     const password = state.user.password;
