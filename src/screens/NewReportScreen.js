@@ -23,7 +23,6 @@ class NewReportScreen extends React.Component {
             isLoading      : true,
             number         : '',
         };
-        console.log('this.props.isEditable', this.props.isEditable);
     }
 
     componentDidMount() {
@@ -31,11 +30,9 @@ class NewReportScreen extends React.Component {
     }
 
     getFieldsByID = (ID) => {
-        console.log('ID', ID);
         fetchFieldsByID(ID)
             .then(responseJson => {
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
-                console.log('this.state.dataFieldsByID', this.state.dataFieldsByID);
             })
             .then(() => console.log(this.state.dataFieldsByID))
             .catch(error => console.error(error) )
