@@ -19,7 +19,7 @@ const templatesReducer = (state = initialState, action) => {
     switch (action.type) {
         case STORE_TEMPLATES: {
             const newTemplates = matchTemplateID(state, action);
-            //console.log(state.templates)
+            // console.log(state.templates)
             const newState = Object.assign(state.templates || {}, newTemplates);
             return newState;
         }

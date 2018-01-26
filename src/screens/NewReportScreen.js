@@ -15,7 +15,7 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/newReport';
 
-//"export" necessary in order to test component without Redux store
+// "export" necessary in order to test component without Redux store
 export class NewReportScreen extends React.Component {
     constructor(props) {
         super(props);

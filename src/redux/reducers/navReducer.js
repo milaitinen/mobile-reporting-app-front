@@ -10,7 +10,7 @@ const initialNavState = Navigator.router.getStateForAction(NavigationActions.res
             routeName: 'loginStack',
         }),
     ],
-}))
+}));
 
 
 const navReducer = (state = initialNavState, action) => {

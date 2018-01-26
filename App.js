@@ -1,15 +1,12 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import AppNavigator from './src/navigation/AppNavigation';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Provider, connect } from 'react-redux';
+import { addNavigationHelpers, NavigationActions } from 'react-navigation';
+import { BackHandler } from 'react-native';
 
+import AppNavigator from './src/navigation/AppNavigation';
 import createStore from './src/redux/store';
-import { addNavigationHelpers } from 'react-navigation';
-
-//TODO: Fix android hardware back button navigation and jest tests:
-//see: https://reactnavigation.org/docs/guides/redux#Mocking-tests
-//and: https://reactnavigation.org/docs/guides/redux#Handling-the-Hardware-Back-Button-in-Android
 
 // global variables declared here - they can be used anywhere inside src directory.
 EStyleSheet.build({
@@ -22,13 +19,32 @@ EStyleSheet.build({
 });
 
 class App extends React.Component {
+
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+
+    onBackPress = () => {
+        const { dispatch, nav } = this.props;
+        if (nav.index === 0) {
+            return false;
+        }
+        dispatch(NavigationActions.back());
+        return true;
+    };
+
     render() {
-        return (
-            <AppNavigator navigation={addNavigationHelpers({
-                dispatch: this.props.dispatch,
-                state: this.props.nav,
-            })} />
-        );
+        const { dispatch, nav } = this.props;
+        const navigation = addNavigationHelpers({
+            dispatch,
+            state: nav
+        });
+
+        return <AppNavigator navigation={navigation} />;
     }
 }
 
@@ -36,7 +52,7 @@ const mapStateToProps = (state) => ({
     nav: state.nav
 });
 
-const AppWithNavigationState = connect(mapStateToProps)(App)
+const AppWithNavigationState = connect(mapStateToProps)(App);
 
 const store = createStore;
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL, STORE_TEMPLATES, STORE_REPORTS } from '../actions/user';
+import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL } from '../actions/user';
 
 const initialState = {
     email: null,

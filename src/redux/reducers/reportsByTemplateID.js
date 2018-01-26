@@ -25,7 +25,7 @@ const reportsByTemplateIDReducer = (state = initialState, action) => {
             const newReports = matchArrayWithTemplateID(state, action);
             // Object.assign merges the given parameters together and returns an object
             return Object.assign(state.reportsByTempID || {}, newReports);
-            
+
         }
         default:
             return state;

@@ -111,7 +111,7 @@ class Layout extends Component{
                         containerStyle={ styles.templateContainer }
                         onPress={this.toggle} // Opens or closes the layout component.
                         title={title} // Title of the template.
-                        //Number of reports as a subtitle
+                        // Number of reports as a subtitle
                         subtitle={`${nofReports} ${(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
                         rightIcon={{ name: 'note-add', type: 'Materialicons', style: styles.addReport,  }}
                         leftIcon = { { name: 'folder', type: 'Materialicons', style: styles.folderIcon, }}

@@ -18,7 +18,7 @@ import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
 import { storeReports } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 
-//"export" necessary in order to test component without Redux store
+// "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
     constructor(props)
     {
@@ -105,7 +105,7 @@ export class TemplateScreen extends Component {
                         backgroundColor={templateScreenStyles.statusBar}
                         barStyle='light-content'
                     />
-                    {/*At the moment this doesn't do anything.*/}
+                    {/* At the moment this doesn't do anything.*/}
                     <ReportSearchBar/>
                     <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
                         <FlatList
