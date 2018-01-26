@@ -22,13 +22,13 @@ export const fetchFieldsByID = (id) => {
             return fetchRemoteFieldsByID(id);
         })
         .then((fieldsByID) => {
-            saveData(`${url}/templates/` + id + '/fields', fieldsByID);
+            saveData(`${url}/templates/${id}/fields`, fieldsByID);
             return fieldsByID;
         });
 };
 
 const fetchLocalFieldsByID = (id) => {
-    return AsyncStorage.getItem(`${url}/templates/` + id + '/fields')
+    return AsyncStorage.getItem(`${url}/templates/${id}/fields`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -40,7 +40,7 @@ const fetchLocalFieldsByID = (id) => {
 
 const fetchRemoteFieldsByID = (id) => {
     return (
-        fetch(`${url}/templates/` + id + '/fields')
+        fetch(`${url}/templates/${id}/fields`)
             .then(response => {
                 return response.json();
             })
@@ -48,16 +48,40 @@ const fetchRemoteFieldsByID = (id) => {
 };
 
 // Fetch templates from the server or ASyncStorage, depending on the availability of internet connection
-export const fetchTemplates = () => {
+// Fetch templates that the user has rights to
+export const fetchTemplatesByUserID = (ID) => {
     return isNetworkConnected()
         .then((isConnected) => {
-            if (!isConnected) { return fetchLocalTemplates(); }
-            return fetchRemoteTemplates();
+            if (!isConnected) { return fetchLocalTemplatesByUserID(ID); }
+            return fetchRemoteTemplatesByUserID(ID);
         })
         .then((templates) => {
-            saveData(`${url}/templates`, templates);
+            saveData(`${url}/users/${ID}/templates`, templates);
             return templates;
         });
+};
+
+/* Fetch all templates from ASyncStorage in case there is no internet connection.
+   If no data has been stored an empty value will be returned. */
+const fetchLocalTemplatesByUserID = (ID) => {
+    return AsyncStorage.getItem(`${url}/users/${ID}/templates`)
+        .then(data => {
+            if (data !== null) {
+                return JSON.parse(data);
+            } else {
+                return [];
+            }
+        });
+};
+
+// Fetch all templates from the server
+const fetchRemoteTemplatesByUserID = (ID) => {
+    return (
+        fetch(`${url}/users/${ID}/templates`)
+            .then(response => {
+                return response.json();
+            })
+    );
 };
 
 // Fetch reports by their templateID from the server if online, ASyncStorage otherwise
@@ -70,19 +94,6 @@ export const fetchReportsByTemplateID = (ID) => {
         .then((templates) => {
             saveData(`${url}/reports?templateid=${ID}`, templates);
             return templates;
-        });
-};
-
-/* Fetch all templates from ASyncStorage in case there is no internet connection.
-   If no data has been stored an empty value will be returned. */
-const fetchLocalTemplates = () => {
-    return AsyncStorage.getItem(`${url}/templates`)
-        .then(data => {
-            if (data !== null) {
-                return JSON.parse(data);
-            } else {
-                return [];
-            }
         });
 };
 
@@ -99,20 +110,43 @@ const fetchLocalReportsByTemplateID = (ID) => {
         });
 };
 
-// Fetch all templates from the server
-const fetchRemoteTemplates = () => {
+// Fetch reports by templateID from the server
+const fetchRemoteReportsByTemplateID = (ID) => {
     return (
-        fetch(`${url}/templates`)
+        fetch(`${url}/reports?templateid=${ID}`)
             .then(response => {
                 return response.json();
             })
     );
 };
 
-// Fetch reports by templateID from the server
-const fetchRemoteReportsByTemplateID = (ID) => {
+// might come in handy???
+export const fetchReportsByUserID = (ID) => {
+    return isNetworkConnected()
+        .then((isConnected) => {
+            if (!isConnected) { return fetchLocalReportsByUserID(ID); }
+            return fetchRemoteReportsByUserID(ID);
+        })
+        .then((reports) => {
+            saveData(`${url}/users/${ID}/reports`, reports);
+            return reports;
+        });
+};
+
+const fetchLocalReportsByUserID = (ID) => {
+    return AsyncStorage.getItem(`${url}/users/${ID}/reports`)
+        .then(data => {
+            if (data !== null) {
+                return JSON.parse(data);
+            } else {
+                return [];
+            }
+        });
+};
+
+const fetchRemoteReportsByUserID = (ID) => {
     return (
-        fetch(`${url}/reports?templateid=${ID}`)
+        fetch(`${url}/users/${ID}/reports`)
             .then(response => {
                 return response.json();
             })

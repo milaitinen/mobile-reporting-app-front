@@ -1,25 +1,34 @@
 import React from 'react';
 import { Text, StatusBar } from 'react-native';
+import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
 import { strings } from '../locales/i18n';
-
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
+import { insertEmail, insertPassword, insertServerUrl } from '../redux/actions/user';
 
-export default class LoginScreen extends React.Component {
+// "export" necessary in order to test component without Redux store
+export class LoginScreen extends React.Component {
 
     constructor(props)
     {
         super(props);
         this.state = {
-            isLoading: true,
-            TextInputUser: '',
-            TextInputPassword: '',
-            TextInputServer: ''
+            // isLoading     : true,
+            emailAddress    : '',
+            password        : '',
+            serverUrl       : ''
         };
     }
+
+
+    logIn = () => {
+        if (this.props.authenticated) {
+            this.props.navigation.navigate('drawerStack');
+        }
+    };
 
     render() {
         return (
@@ -37,21 +46,21 @@ export default class LoginScreen extends React.Component {
                 <Input
                     name={'user'}
                     placeholder={ strings('login.email') }
-                    onChangeText={TextInputUser => this.setState({ TextInputUser })}
+                    onChangeText={emailAddress => this.props.dispatch(insertEmail(emailAddress))}
                 />
                 <Input
                     name={'lock'}
                     secureTextEntry={true}
                     placeholder={ strings('login.password') }
-                    onChangeText={TextInputPassword => this.setState({ TextInputPassword })}
+                    onChangeText={password => this.setState({ password })}
                 />
                 <Input
                     name={'globe'}
                     placeholder={ strings('login.serverUrl') }
-                    onChangeText={TextInputServer => this.setState({ TextInputServer })}
+                    onChangeText={serverUrl => this.setState({ serverUrl })}
                 />
 
-                <SignInButton onPress={() => this.props.navigation.navigate('drawerStack')}>
+                <SignInButton onPress={this.logIn}>
                     { strings('login.signIn') }
                 </SignInButton>
 
@@ -62,3 +71,14 @@ export default class LoginScreen extends React.Component {
         );
     }
 }
+
+// maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+// NOTE: only 'authenticated' is currently in use. Others are not kept track of in Redux.
+const mapStateToProps = (state) => {
+    const authenticated = state.user.authenticated;
+    return {
+        authenticated,
+    };
+};
+
+export default connect(mapStateToProps)(LoginScreen);

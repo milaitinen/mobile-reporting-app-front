@@ -10,6 +10,7 @@ const Input = (props) => {
             style={styles.InputContainer}>
             <Icon name={props.name} color={'white'} size={16} />
             <TextInput
+                autoCapitalize = 'none'
                 onChangeText={props.onChangeText}
                 underlineColorAndroid='transparent'
                 style={styles.InputStyle}

@@ -7,7 +7,7 @@ const navigationStyles = EStyleSheet.create({
         borderBottomWidth: 0,
         borderBottomColor: 'transparent',
         elevation: 0,
-        //shadowOffset: 0,
+        // shadowOffset: 0,
         paddingRight: 10,
     },
 

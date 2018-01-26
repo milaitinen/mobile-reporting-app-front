@@ -1,6 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-const layoutStyles = EStyleSheet.create({
+export default EStyleSheet.create({
 
     animatedContainer: {
         backgroundColor: '#e0e8eb',
@@ -53,5 +53,3 @@ const layoutStyles = EStyleSheet.create({
         textAlign: 'center',
     },
 });
-
-export default layoutStyles;

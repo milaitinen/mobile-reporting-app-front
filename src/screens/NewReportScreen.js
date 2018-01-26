@@ -1,51 +1,48 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Alert, Button, Text, ActivityIndicator, Linking } from 'react-native';
+import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import CheckBox from 'react-native-check-box';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
+import { connect } from 'react-redux';
+
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByID } from './api';
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import { strings } from '../locales/i18n';
+import { insertTitle } from '../redux/actions/newReport';
 
-
-export default class NewReportScreen extends React.Component {
+// "export" necessary in order to test component without Redux store
+export class NewReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isEditable     : this.props.navigation.state.params.isEditable,
             isLoading      : true,
-            TextInputName  : '',                                              // Text input is initialized as an empty string.
-            templateID     : this.props.navigation.state.params.templateID,    /* TemplateID that is inherited from navigation parameters
-                                                                                 as stated in TemplateScreen class. */
             number         : '',
         };
-        console.log(this.state.isEditable + 'isEditable');
     }
 
     componentDidMount() {
-        this.getFieldsByID();
+        this.getFieldsByID(this.props.templateID);
     }
 
-
-    getFieldsByID = () => {
-        fetchFieldsByID(this.state.templateID)
-            .then(responseJson =>
-                this.setState({ dataFieldsByID: responseJson, isLoading: false }))
-            .then(() => console.log(this.state.dataFieldsByID))
+    getFieldsByID = (ID) => {
+        fetchFieldsByID(ID)
+            .then(responseJson => {
+                this.setState({ dataFieldsByID: responseJson, isLoading: false });
+            })
             .catch(error => console.error(error) )
             .done();
-    }
+    };
 
     // Inserts data to server with a post method.
     send = () => {
         const report = {
-            templateID: this.state.templateID,
-            title: this.state.TextInputName,
+            templateID: this.props.templateID,
+            title: this.props.title,
             dateCreated: moment().format('YYYY-MM-DD'),
             answers: [
                 {
@@ -58,8 +55,8 @@ export default class NewReportScreen extends React.Component {
                 }
             ]
         };
-        // hardcoded templateID
-        createNewReport(1, report).then(response => {
+
+        createNewReport(this.props.userID, report).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
@@ -75,25 +72,21 @@ export default class NewReportScreen extends React.Component {
         });
     };
 
-    onChanged(text) {
+    onChanged = (text) => {
         let newText = '';
         const numbers = '0123456789';
 
         for (let i=0; i < text.length; i++) {
             if (numbers.indexOf(text[i]) > -1 ) {
                 newText = newText + text[i];
-            }
-            else {
+            } else {
                 alert('Please enter numbers only');
             }
         }
         this.setState({ number: newText });
-    }
-
-
+    };
 
     render() {
-
 
         if (this.state.isLoading) {
             return (
@@ -108,39 +101,35 @@ export default class NewReportScreen extends React.Component {
             );
         }
 
+        const { isEditable } = this.props;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
             switch (field.typeID) {
-
                 case 1: // Name
                     return (
                         <TextInput
                             key={index}
-                            editable={this.state.isEditable}
+                            editable={isEditable}
                             placeholder={field.defaultValue}
-                            onChangeText={(TextInputName) => this.setState({ TextInputName })}
+                            onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                             underlineColorAndroid='transparent'
                             style={newReportStyles.TextInputStyleClass}
                         />
                     );
-
                 case 2: // Checkbox
-
                     return (
                         <CheckBox
                             key={index}
-                            disabled={!this.state.isEditable}
+                            disabled={!isEditable}
                             onClick={()=>console.log('L0L0L0L0L0L0L')}
-                            isChecked={ (field.defaultValue === '0') ? false : true }
+                            isChecked={ (field.defaultValue !== '0') }
                             leftText={ 'This is a nice checkbox' }
                         />
                     );
-
                 case 3: // Dropdown
-
                     return (
                         <ModalDropdown
                             key={index}
-                            disabled={!this.state.isEditable}
+                            disabled={!isEditable}
                             options={['option 1', 'option 2']}
                             renderRow={() =>
                                 <View>
@@ -151,25 +140,21 @@ export default class NewReportScreen extends React.Component {
                             }
                         />
                     );
-
                 case 4: // TextRow (One row text field)
-
                     return (
                         <TextInput
                             key={index}
-                            editable={this.state.isEditable}
+                            editable={isEditable}
                             placeholder={field.defaultValue}
                             underlineColorAndroid='transparent'
                             style={newReportStyles.TextInputStyleClass}
                         />
                     );
-
                 case 5: // Choice (Yes/No)
-
                     return (
                         <RadioForm
                             key={index}
-                            disabled={!this.state.isEditable}
+                            disabled={!isEditable}
                             radio_props={ [
                                 { label: 'No', value: 0 },
                                 { label: 'Yes', value: 1 }
@@ -180,13 +165,11 @@ export default class NewReportScreen extends React.Component {
                             formHorizontal={true}
                         />
                     );
-
                 case 6: // Calendar
-
                     return (
                         <DatePicker
                             key={index}
-                            disabled={!this.state.isEditable}
+                            disabled={!isEditable}
                             style={{ width: 200 }}
                             date={field.defaultValue}
                             mode="date"
@@ -199,33 +182,27 @@ export default class NewReportScreen extends React.Component {
                             onDateChange={(date) => {this.setState({ date: date });}}
                         />
                     );
-
                 case 7: // Instruction
-
                     return (
                         <Text
                             key={index} >
                             {field.defaultValue}
                         </Text>
                     );
-
                 case 8: // Text (Multiple row text field)
-
                     return (
                         <TextInput
                             key={index}
-                            editable={this.state.isEditable}
+                            editable={isEditable}
                             placeholder={field.defaultValue}
                             multiline={true}
                         />
                     );
-
                 case 9: // Time
-
                     return (
                         <DatePicker
                             key={index}
-                            disabled={!this.state.isEditable}
+                            disabled={!isEditable}
                             style={{ width: 200 }}
                             date={field.defaultValue}
                             mode="time"
@@ -236,22 +213,18 @@ export default class NewReportScreen extends React.Component {
                             onDateChange={(time) => {this.setState({ time: time });}}
                         />
                     );
-
                 case 10: // Digits (Text input that only accepts numeric characters)
-
                     return (
                         <TextInput
                             key={index}
-                            editable={this.state.isEditable}
+                            editable={isEditable}
                             placeholder={field.defaultValue}
                             keyboardType = 'numeric'
-                            onChangeText = {(text)=> this.onChanged(text)}
+                            onSubmitEditing= {(text)=> this.onChanged(text)}
                             value = {this.state.number}
                         />
                     );
-
                 case 11: // Link
-
                     return (
                         <Text
                             key={index}
@@ -260,17 +233,14 @@ export default class NewReportScreen extends React.Component {
                             Link to somewhere
                         </Text>
                     );
-
                 case 12: // User dropdown
-
                     return (
                         <ModalDropdown
                             key={index}
-                            disabled={!this.state.isEditable}
+                            disabled={!isEditable}
                             options={JSON.parse(field.defaultValue)}
                         />
                     );
-
                 default:
                     return (
                         null
@@ -281,11 +251,8 @@ export default class NewReportScreen extends React.Component {
 
         return (
             <View style={newReportStyles.MainContainer}>
-          
                 <ScrollView keyboardShouldPersistTaps={'handled'} >
-
                     {renderedFields}
-
                 </ScrollView>
             </View>
             /*
@@ -304,3 +271,21 @@ export default class NewReportScreen extends React.Component {
         );
     }
 }
+
+// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+const mapStateToProps = (state) => {
+    const userID = state.user.userID;
+    const isEditable = state.newReport.isEditable;
+    const templateID = state.newReport.templateID;
+    const title = state.newReport.title;
+    const number = state.newReport.number;
+    return {
+        userID,
+        isEditable,
+        templateID,
+        title,
+        number
+    };
+};
+
+export default connect(mapStateToProps)(NewReportScreen);

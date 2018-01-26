@@ -1,0 +1,201 @@
+REDUX: GENERAL INFO
+(https://redux.js.org/)
+
+--> an open-source JavaScript library designed for managing application state.
+--> the state of the whole application is stored in an object tree within a single store.
+
+WHY REDUX?
+
+--> helps to manage complex and ever-changing UI state
+--> 3 principles: single source of truth, state is read-only, changes are made with pure functions
+--> no need to go through the daunting task of keeping track of states in every component when one component has been updated
+--> easy testing
+
+--> consists of: actions, reducers, and a store.
+
+actions-----------------------------------------------
+
+- sends data from the application to the store
+- ONLY source of information for the store
+- plain JS (action) object with the property 'type' and arbitrary number of other properties that is optional
+- usually sent through Action Creators, that are functions, which, as the name suggests, creates actions.
+
+    e.g. "insertEmail" action creator that creates an action object with type 'INSERT_EMAIL'
+
+        export const insertEmail = (address) => ({
+            type: 'INSERT_EMAIL',
+            email: address
+        });
+
+reducers----------------------------------------------
+
+- specify how the application state changes in response to actions sent to the store
+- actions ONLY describe the fact that something happened. Reducers instead are the ones that handle the state changes
+
+    e.g. const initialState = {
+             email: null,
+             password: null
+         };
+
+        const userReducer = (state = initialState, action) => {
+             switch (action.type) {
+                 case 'INSERT_EMAIL':
+                     return {
+                         ...state,
+                         email: action.email
+                     };
+                 default:
+                     return state;
+             }
+         };
+
+store-------------------------------------------------
+
+- the object that brings actions and reducers together
+- only one store per application. Multiple reducers are used in case you want to split data handling logic
+
+DATA FLOW---------------------------------------------------------------------------------------------------------------
+(https://redux.js.org/docs/basics/DataFlow.html)
+
+4 steps:
+    1. an action is called ( store.dispatch(action) )
+    2. the store passes two arguments to the reducer: the current state tree and the action
+    3. the root reducer possibly combines the output of multiple reducers into a single tree (combineReducers())
+    4. the store saves the complete state tree returned by the root reducer
+
+------------------------------------------------------------------------------------------------------------------------
+
+DATA DESIGN FOR OUR APPLICATION (how application information is stored in the store)
+
+NOTE: This is not EXACTLY how the data is currently stored, but similar.
+As not all states need Redux to be kept track of (e.g. isLoading when a page loads), only the most important core data
+are stored in the store - or - that's how it should be...
+(https://dev.bleacherreport.com/3-things-i-learned-about-working-with-data-in-redux-5fa0d5f89c8b)
+
+---> user, templates, reportsByTemplateID, and reports are all
+
+{
+	user: {
+        email: <String>,
+        password: <String>,
+        serverURL: <String>,
+        userID: <String>,
+        authenticated: <Boolean>,
+    },
+
+    templates: {
+        [templateID]: {
+            id: <Int>,
+            amountOfReports: <Int>,
+            reportCount: <Int>,
+            title: <String>,
+        }
+    },
+
+    reportsByTemplateID: {
+        [templateID]: [ {
+            id: <Int>,
+            reportID: <Int>,
+            userID: <Int>,
+            orderNo: <Int>,
+            title: <String>,
+            dateCreated: <Date>,
+            dateAccepted: <Date>,
+            answers: [Answers]
+        } ]
+    },
+
+    reports: {
+        [id]: {
+            id: <Int>,
+            templateID: <Int>,
+            userID: <Int>,
+            orderNo: <Int>,
+            title: <String>,
+            dateCreated: <Date>,
+            dateAccepted: <Date>,
+            answers: [Answers]
+        }
+    },
+
+    newReportScreen: {
+        templateID: <Int> ,
+        isEditable: <Boolean>,
+        title: <String>,
+        number: <Int>,
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------
+EXAMPLES
+------------------------------------------------------------------------------------------------------------------------
+
+
+USER--------------------------------------------------------------------------------------------------------------------
+
+{
+    user: {
+        email: bob@gmail.com,
+        password: greatDayComingAhead,
+        userID: 81,
+        serverURL: something.com
+        authenticated: true
+    },
+}
+
+REPORTS (BY USER_ID)----------------------------------------------------------------------------------------------------
+
+{
+    reports: {
+        1: {
+            id: 1,
+            templateID: 2,
+            userID: 4,
+            orderNo: 18,
+            title: 'Bob's greatest report',
+            dateCreated: "2018-01-10",
+            dateAccepted: null,
+            answers: [Answers]
+        },
+        2: {
+            id: 2,
+            templateID: 6,
+            userID: 4,
+            orderNo: 22,
+            title: 'Bob's worst report',
+            dateCreated: "2017-08-11",
+            dateAccepted: "2017-09-09",
+            answers: [Answers]
+        }
+    },
+}
+
+REPORTS_BY_TEMPLATE_ID--------------------------------------------------------------------------------------------------
+
+{
+    reportsByTemplateID: {
+        1: [ { (reportA object) }, { (reportK object) }, { (reportM object) } ],
+        2: [ { (reportB object) }, { (reportL object) }, { (reportN object) } ],
+        3: [ { (reportZ object) }, { (reportP object) }, { (reportU object) } ],
+        9: [ { (reportW object) }, { (reportO object) }, { (reportT object) } ],
+    },
+}
+
+TEMPLATES---------------------------------------------------------------------------------------------------------------
+
+{
+    templates: {
+        1: {
+            id: 1
+            amountOfReports: 40
+            reportCount: 40
+            title: "Herbology"
+        },
+        2: {
+            id: 2
+            amountOfReports: 11
+            reportCount: 11
+            title: "Care of magical creatures"
+        }
+    },
+}

@@ -8,7 +8,7 @@ export default class Sidebar extends React.Component {
     signOutDestinationRouteName = 'loginStack';
 
     signOut = () => {
-        //perform other logging out related tasks here
+        // perform other logging out related tasks here
 
 
         /*
@@ -24,7 +24,7 @@ export default class Sidebar extends React.Component {
         this.props.navigation.dispatch(actionToDispatch);
     };
 
-    //TODO: update the look and consider removing inline style
+    // TODO: update the look and consider removing inline style
     render () {
         return (
             <View style={ { padding: 20 } }>
