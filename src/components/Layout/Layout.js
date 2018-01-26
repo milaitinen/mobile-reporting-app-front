@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { View, Animated, FlatList, Text } from 'react-native';
-import { ListItem, Badge, Icon } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 import layoutStyles from './layoutStyles';
 import { strings } from '../../locales/i18n';
+
+import { RightButton } from '../RightButton';
+import { StatusBadge } from '../StatusBadge';
 
 
 class Layout extends Component{
@@ -69,44 +72,6 @@ class Layout extends Component{
         );
     };
 
-    badge = (dateAccepted) => {
-
-        /*
-        if(JOKU DRAFTEHTO) {
-           return (
-            <View style={layoutStyles.BadgeViewContainer}>
-                 <Badge textStyle = {layoutStyles.badgeTextStyle}
-                    containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
-                    <Text style={layoutStyles.badgeTextStyle}>{strings('templates.draft')}</Text>
-                    <Icon name={'edit-2'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
-                </Badge>
-            </View>
-        );
-        }
-         */
-
-        if (dateAccepted != null) {
-            return (
-                <View style={layoutStyles.BadgeViewContainer}>
-                    <Badge textStyle = {layoutStyles.badgeTextStyle}
-                        containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
-                        <Text style={layoutStyles.badgeTextStyle}>{strings('templates.approved')}</Text>
-                        <Icon name={'check'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
-                    </Badge>
-                    <Text style={layoutStyles.dateAccepted}>{dateAccepted}</Text>
-                </View>
-
-            );
-        }
-
-        return <View style={layoutStyles.BadgeViewContainer}>
-            <Badge textStyle={layoutStyles.badgeTextStyle}
-                containerStyle={[layoutStyles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
-                <Text style={layoutStyles.badgeTextStyle}>{strings('templates.sent')}</Text>
-                <Icon name={'clock'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle}/>
-            </Badge>
-        </View>;
-    };
 
     render(){
         return (
@@ -119,10 +84,11 @@ class Layout extends Component{
                         title={this.state.title} // Title of the template.
                         //Number of reports as a subtitle
                         subtitle={`${this.state.nofReports} ${(this.state.nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
-                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
-                        leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
-                        onPressRightIcon={() => this.createNew(this.state.templateID, true)} // Navigates to NewReportScreen when pressed.
-                        leftIconOnPress={() => this.createNew(this.state.templateID, false)}
+                        hideChevron={true}
+                        badge={ { element: <RightButton onPressNew={() => this.createNew(this.state.templateID, true)}
+                            onPressPrev={() => this.createNew(this.state.templateID, false)}/> }} /*Navigates to NewReportScreen when pressed.*/
+                        leftIcon = { { name: 'assignment', type: 'Materialicons', style: layoutStyles.folderIcon, }}
+                        //folder, assignment
                     />
                 </View>
 
@@ -140,7 +106,7 @@ class Layout extends Component{
                                 title={item.orderNo + '\t' + item.title}
                                 subtitle={item.dateCreated}
                                 hideChevron = {true}
-                                badge ={{ element: this.badge(item.dateAccepted) }}
+                                badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
                             />
                         }
                         keyExtractor={item => item.orderNo}
