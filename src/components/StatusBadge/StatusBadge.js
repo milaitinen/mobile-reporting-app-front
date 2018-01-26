@@ -2,13 +2,12 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Badge, Icon } from 'react-native-elements';
 import styles from './styles';
-import layoutStyles from '../Layout/layoutStyles';
 
 const StatusBadge = ({ dateAccepted }) =>{
     /*
     if(JOKU DRAFTEHTO) {
        return (
-        <View style={layoutStyles.BadgeViewContainer}>
+        <View style={styles.BadgeViewContainer}>
              <Badge textStyle = {layoutStyles.badgeTextStyle}
                 containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
                 <Text style={layoutStyles.badgeTextStyle}>Draft</Text>
@@ -21,14 +20,14 @@ const StatusBadge = ({ dateAccepted }) =>{
 
     if (dateAccepted != null){
         return (
-            <View style={layoutStyles.BadgeViewContainer}>
+            <View style={styles.BadgeViewContainer}>
                 <Badge textStyle = {styles.badgeTextStyle}
                     containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
                     <Text style={styles.badgeTextStyle}>Approved</Text>
                     <Icon name={'check'} type={'feather'} iconStyle={styles.badgeIconStyle} />
                 </Badge>
 
-                <Text style={layoutStyles.dateAccepted}>
+                <Text style={styles.dateAccepted}>
                     {dateAccepted}
                 </Text>
             </View>
@@ -36,7 +35,7 @@ const StatusBadge = ({ dateAccepted }) =>{
         );
     }
     return (
-        <View style={layoutStyles.BadgeViewContainer}>
+        <View style={styles.BadgeViewContainer}>
             <Badge textStyle = {styles.badgeTextStyle}
                 containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
                 <Text style={ styles.badgeTextStyle }>Sent</Text>

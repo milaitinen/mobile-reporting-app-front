@@ -1,4 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import normalize from "react-native-elements/src/helpers/normalizeText";
 
 const styles = EStyleSheet.create({
 
@@ -32,6 +33,14 @@ const styles = EStyleSheet.create({
             height: 3,
         },
     },
+
+    dateAccepted: {
+        paddingTop: 2,
+        color: '#86939e',
+        fontSize: normalize(12),    // Normalizes the size of fonts across devices.
+        fontWeight: 'bold',
+    },
+
 
 
 

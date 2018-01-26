@@ -102,7 +102,8 @@ class Layout extends Component{
                         hideChevron={true}
                         badge={ { element: <RightButton onPressNew={() => this.createNew(this.state.templateID)}
                             onPressPrev={() => this.createNew(this.state.templateID)}/> }}
-                        leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
+                        leftIcon = { { name: 'assignment', type: 'Materialicons', style: layoutStyles.folderIcon, }}
+                        //folder, assignment
                         onPressRightIcon={() => this.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
                                                                                         pressed.*/
                     />

@@ -6,10 +6,12 @@ const styles = EStyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'transparent',
         borderRadius: 5,
+        justifyContent: 'flex-end',
+        flex: 0,
     },
 
     separator:{
-        borderRightWidth: 1,
+        borderRightWidth: 0,
         borderColor: '#fff',
     },
 
@@ -18,27 +20,11 @@ const styles = EStyleSheet.create({
         marginTop: 0,
         marginBottom: 0,
         fontSize: 50,
-        color: '#77a482',
-        backgroundColor: '#99d9ad',
         paddingLeft: 8,
         paddingRight: 5,
         paddingTop: 5,
         paddingBottom: 6,
-        borderRadius: 5,
-    },
-
-    iconStyleA: {
-        marginRight: 0,
-        marginTop: 0,
-        marginBottom: 0,
-        fontSize: 50,
-        color: '#A4CBE7',
-        backgroundColor: 'transparent',
-        paddingLeft: 8,
-        paddingRight: 5,
-        paddingTop: 5,
-        paddingBottom: 6,
-        borderRadius: 5,
+       // borderRadius: 5,
     },
 
 
