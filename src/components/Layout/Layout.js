@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { View, Animated, FlatList, Text } from 'react-native';
-import { ListItem, Badge, Icon } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
+
 import styles from './styles';
 import { strings } from '../../locales/i18n';
+import { RightButton } from '../RightButton';
+import { StatusBadge } from '../StatusBadge';
 
 
 class Layout extends Component{
@@ -59,47 +62,6 @@ class Layout extends Component{
         );
     };
 
-    badge = (dateAccepted) => {
-
-        /*
-        if(JOKU DRAFTEHTO) {
-           return (
-            <View style={styles.BadgeViewContainer}>
-                 <Badge textStyle = {styles.badgeTextStyle}
-                    containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
-                    <Text style={styles.badgeTextStyle}>{strings('templates.draft')}</Text>
-                    <Icon name={'edit-2'} type={'feather'} iconStyle={styles.badgeIconStyle} />
-                </Badge>
-            </View>
-        );
-        }
-         */
-
-        if (dateAccepted != null) {
-            return (
-                <View style={styles.BadgeViewContainer}>
-                    <Badge textStyle = {styles.badgeTextStyle}
-                        containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
-                        <Text style={styles.badgeTextStyle}>{strings('templates.approved')}</Text>
-                        <Icon name={'check'} type={'feather'} iconStyle={styles.badgeIconStyle} />
-                    </Badge>
-                    <Text style={styles.dateAccepted}>{dateAccepted}</Text>
-                </View>
-
-            );
-        }
-
-        return (
-            <View style={styles.BadgeViewContainer}>
-                <Badge textStyle={styles.badgeTextStyle}
-                    containerStyle={[styles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
-                    <Text style={styles.badgeTextStyle}>{strings('templates.sent')}</Text>
-                    <Icon name={'clock'} type={'feather'} iconStyle={styles.badgeIconStyle}/>
-                </Badge>
-            </View>
-        );
-    };
-
     render(){
         // simplifies referencing (instead of this.props.title, title is enough)
         const { title, nofReports, templateID, data } = this.props;
@@ -111,12 +73,14 @@ class Layout extends Component{
                         containerStyle={ styles.templateContainer }
                         onPress={this.toggle} // Opens or closes the layout component.
                         title={title} // Title of the template.
-                        // Number of reports as a subtitle
+                        //Number of reports as a subtitle
                         subtitle={`${nofReports} ${(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
-                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: styles.addReport,  }}
-                        leftIcon = { { name: 'folder', type: 'Materialicons', style: styles.folderIcon, }}
-                        onPressRightIcon={() => this.props.createNew(templateID, true)} // Navigates to NewReportScreen when pressed.
-                        leftIconOnPress={() => this.props.createNew(templateID, false)}
+                        hideChevron={true}
+                        badge={{ element: <RightButton
+                            onPressNew={() => this.props.createNew(templateID, true)}
+                            onPressPrev={() => this.props.createNew(templateID, false)}/> }} /*Navigates to NewReportScreen when pressed.*/
+                        leftIcon = { { name: 'assignment', type: 'Materialicons', style: styles.folderIcon, }}
+                        //folder, assignment
                     />
                 </View>
 
@@ -134,7 +98,7 @@ class Layout extends Component{
                                 title={`${item.orderNo}\t${item.title}`}
                                 subtitle={item.dateCreated}
                                 hideChevron = {true}
-                                badge ={{ element: this.badge(item.dateAccepted) }}
+                                badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
                             />
                         }
                         keyExtractor={item => item.orderNo}

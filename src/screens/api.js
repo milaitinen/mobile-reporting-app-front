@@ -16,7 +16,6 @@ export const createNewReport = (userID, report) => {
 };
 
 export const fetchFieldsByID = (id) => {
-    console.log('fetchFieldsByID', id);
     return isNetworkConnected()
         .then((isConnected) => {
             if (!isConnected) { return fetchLocalFieldsByID(id); }
@@ -29,7 +28,6 @@ export const fetchFieldsByID = (id) => {
 };
 
 const fetchLocalFieldsByID = (id) => {
-    console.log('fetchLocalFieldsByID', id);
     return AsyncStorage.getItem(`${url}/templates/${id}/fields`)
         .then(data => {
             if (data !== null) {
@@ -41,7 +39,6 @@ const fetchLocalFieldsByID = (id) => {
 };
 
 const fetchRemoteFieldsByID = (id) => {
-    console.log('fetchRemoteFieldsByID', id);
     return (
         fetch(`${url}/templates/${id}/fields`)
             .then(response => {
@@ -82,7 +79,6 @@ const fetchRemoteTemplatesByUserID = (ID) => {
     return (
         fetch(`${url}/users/${ID}/templates`)
             .then(response => {
-                console.log('response', response);
                 return response.json();
             })
     );

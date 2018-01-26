@@ -34,7 +34,6 @@ export class NewReportScreen extends React.Component {
             .then(responseJson => {
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
-            .then(() => console.log(this.state.dataFieldsByID))
             .catch(error => console.error(error) )
             .done();
     };

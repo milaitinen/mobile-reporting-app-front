@@ -10,19 +10,31 @@ const styles = EStyleSheet.create({
         borderBottomColor: 'white',
         alignSelf: 'center',
         height: 40,
-        width: 250,
-        margin: 10
+        '@media (max-width: 350)': {
+            width: 190,
+            margin: 5,
+        },
+        '@media (min-width: 350)': {
+            width: 250,
+            margin: 10,
+        },
     },
 
     InputStyle: {
-        width: 215,
-        height: 40,
         fontFamily: '$primaryFont',
-        fontSize: 16,
         color: 'white',
+        height: 40,
         alignSelf: 'center',
-        marginLeft: 5,
-
+        '@media (max-width: 350)': {
+            width: 160,
+            fontSize: 12,
+            marginLeft: 5,
+        },
+        '@media (min-width: 350)': {
+            width: 215,
+            fontSize: 16,
+            marginLeft: 5,
+        }
     },
 });
 
