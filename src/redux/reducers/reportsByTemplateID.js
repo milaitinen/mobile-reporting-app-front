@@ -1,8 +1,6 @@
 import { STORE_REPORTS_BY_TEMPLATE_ID } from '../actions/reportsByTemplateID';
 
-const initialState = {
-    reportsByTempID: {}
-};
+const initialState = {};
 
 // return Array(Array(reports)) as object that has templateID as its keys and matching reports as its values (in Array)
 const matchArrayWithTemplateID = (state, action) => {

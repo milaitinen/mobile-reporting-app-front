@@ -1,8 +1,6 @@
 import { STORE_REPORTS } from '../actions/reports';
 
-const initialState = {
-    reports: {}
-};
+const initialState = {};
 
 const match = (state, action) => {
     return (

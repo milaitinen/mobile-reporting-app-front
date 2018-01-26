@@ -7,7 +7,7 @@ import { strings } from '../locales/i18n';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
-// import { insertEmail, insertPassword, insertServerUrl } from '../actions/user';
+import { insertEmail, insertPassword, insertServerUrl } from '../redux/actions/user';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
@@ -46,7 +46,7 @@ export class LoginScreen extends React.Component {
                 <Input
                     name={'user'}
                     placeholder={ strings('login.email') }
-                    onChangeText={emailAddress => this.setState({ emailAddress })}
+                    onChangeText={emailAddress => this.props.dispatch(insertEmail(emailAddress))}
                 />
                 <Input
                     name={'lock'}
