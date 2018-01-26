@@ -35,12 +35,25 @@ export class TemplateScreen extends Component {
      and instantiates the network request.
     */
     componentDidMount() {
-        this.getTemplatesAndReports();
-        fetchReportsByUserID(this.props.userID)
-            .then(responseJson => this.props.dispatch(storeReports(responseJson)))
-            .catch(error => console.error(error))
-            .done();
+        // TEMPORARY: not sure if this is the best solution
+        if (this.isEmpty(this.props.templates)) {
+            this.getTemplatesAndReports();
+            fetchReportsByUserID(this.props.userID)
+                .then(responseJson => this.props.dispatch(storeReports(responseJson)))
+                .catch(error => console.error(error))
+                .done();
+        } else {
+            this.setState({ refreshing: false, isLoading: false });
+        }
     }
+
+    isEmpty = (obj) => {
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    };
 
     /*
      Fetches the data from the server in two parts.
