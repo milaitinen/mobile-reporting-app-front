@@ -130,15 +130,20 @@ export class NewReportScreen extends React.Component {
                         <ModalDropdown
                             key={index}
                             disabled={!isEditable}
+                            style={ newReportStyles.DropContainer }
+                            dropdownStyle={ newReportStyles.DropStyleClass }
                             options={['option 1', 'option 2']}
                             renderRow={() =>
                                 <View>
                                     <ModalDropdown
+                                        style = { {marginTop: 3, marginBottom: 3} }
+                                        dropdownStyle={ newReportStyles.DropStyleClass }
                                         options={['option 3', 'option 4']}>
                                     </ModalDropdown>
                                 </View>
                             }
-                        />
+                        >
+                        </ModalDropdown>
                     );
                 case 4: // TextRow (One row text field)
                     return (
@@ -161,7 +166,7 @@ export class NewReportScreen extends React.Component {
                             ] }
                             initial={JSON.parse(field.defaultValue)}
                             onPress={(value) => { this.setState({ value: value }); }}
-                            buttonColor={'#50C900'}
+                            buttonColor={'#0006c9'}
                             formHorizontal={true}
                         />
                     );
@@ -170,7 +175,7 @@ export class NewReportScreen extends React.Component {
                         <DatePicker
                             key={index}
                             disabled={!isEditable}
-                            style={{ width: 200 }}
+                            style={ newReportStyles.DateContainer }
                             date={field.defaultValue}
                             mode="date"
                             placeholder="select date"
@@ -203,7 +208,7 @@ export class NewReportScreen extends React.Component {
                         <DatePicker
                             key={index}
                             disabled={!isEditable}
-                            style={{ width: 200 }}
+                            style={ newReportStyles.DateContainer }
                             date={field.defaultValue}
                             mode="time"
                             format="HH:mm"
@@ -228,7 +233,7 @@ export class NewReportScreen extends React.Component {
                     return (
                         <Text
                             key={index}
-                            style={{ color: 'blue' }}
+                            style={newReportStyles.LinkContainer}
                             onPress={() => Linking.openURL(field.defaultValue)}>
                             Link to somewhere
                         </Text>
@@ -237,6 +242,8 @@ export class NewReportScreen extends React.Component {
                     return (
                         <ModalDropdown
                             key={index}
+                            style={ newReportStyles.DropContainer }
+                            dropdownStyle={ newReportStyles.DropStyleClass }
                             disabled={!isEditable}
                             options={JSON.parse(field.defaultValue)}
                         />
@@ -250,11 +257,13 @@ export class NewReportScreen extends React.Component {
         });
 
         return (
-            <View style={newReportStyles.MainContainer}>
-                <ScrollView keyboardShouldPersistTaps={'handled'} >
-                    {renderedFields}
-                </ScrollView>
-            </View>
+            <AppBackground>
+                <View style={newReportStyles.MainContainer}>
+                    <ScrollView keyboardShouldPersistTaps={'handled'} >
+                        {renderedFields}
+                    </ScrollView>
+                </View>
+            </AppBackground>
             /*
                 <TextInput
                     placeholder={ strings('createNew.enterNew') }
