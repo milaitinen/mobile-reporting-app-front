@@ -120,7 +120,7 @@ export class NewReportScreen extends React.Component {
                         <CheckBox
                             key={index}
                             disabled={!isEditable}
-                            onClick={()=>console.log('L0L0L0L0L0L0L')}
+                            onClick={()=>console.log('checkbox checked!')}
                             isChecked={ (field.defaultValue !== '0') }
                             leftText={ 'This is a nice checkbox' }
                         />
@@ -130,20 +130,20 @@ export class NewReportScreen extends React.Component {
                         <ModalDropdown
                             key={index}
                             disabled={!isEditable}
-                            style={ newReportStyles.DropContainer }
-                            dropdownStyle={ newReportStyles.DropStyleClass }
+                            style={ newReportStyles.MainDropdownStyleClass }
                             options={['option 1', 'option 2']}
-                            renderRow={() =>
+
+                            renderRow={ () =>
                                 <View>
                                     <ModalDropdown
-                                        style = { {marginTop: 3, marginBottom: 3} }
+                                        options={['option 3', 'option 4']}
+                                        style={ newReportStyles.LowerDropdownStyleClass }
                                         dropdownStyle={ newReportStyles.DropStyleClass }
-                                        options={['option 3', 'option 4']}>
-                                    </ModalDropdown>
+                                    />
                                 </View>
                             }
-                        >
-                        </ModalDropdown>
+                        />
+
                     );
                 case 4: // TextRow (One row text field)
                     return (
@@ -166,7 +166,7 @@ export class NewReportScreen extends React.Component {
                             ] }
                             initial={JSON.parse(field.defaultValue)}
                             onPress={(value) => { this.setState({ value: value }); }}
-                            buttonColor={'#0006c9'}
+                            buttonColor={'#0000bd'}
                             formHorizontal={true}
                         />
                     );
@@ -190,8 +190,10 @@ export class NewReportScreen extends React.Component {
                 case 7: // Instruction
                     return (
                         <Text
+                            style = { { marginTop: 4, marginBottom: 4 } }
                             key={index} >
                             {field.defaultValue}
+
                         </Text>
                     );
                 case 8: // Text (Multiple row text field)
@@ -199,6 +201,7 @@ export class NewReportScreen extends React.Component {
                         <TextInput
                             key={index}
                             editable={isEditable}
+                            style = { newReportStyles.TextInputStyleClass }
                             placeholder={field.defaultValue}
                             multiline={true}
                         />
@@ -223,9 +226,10 @@ export class NewReportScreen extends React.Component {
                         <TextInput
                             key={index}
                             editable={isEditable}
+                            style={ newReportStyles.TextInputStyleClass }
                             placeholder={field.defaultValue}
                             keyboardType = 'numeric'
-                            onSubmitEditing= {(text)=> this.onChanged(text)}
+                            onChangeText={(text)=> this.onChanged(text)}
                             value = {this.state.number}
                         />
                     );
@@ -242,7 +246,7 @@ export class NewReportScreen extends React.Component {
                     return (
                         <ModalDropdown
                             key={index}
-                            style={ newReportStyles.DropContainer }
+                            style={ newReportStyles.MainDropdownStyleClass }
                             dropdownStyle={ newReportStyles.DropStyleClass }
                             disabled={!isEditable}
                             options={JSON.parse(field.defaultValue)}

@@ -28,29 +28,40 @@ const newReportStyles = EStyleSheet.create({
     },
 
     LinkContainer: {
-        color: 'blue',
+        color: '#FFF',
         marginBottom: 6,
         marginTop: 6
     },
 
-    DropContainer: {
+    MainDropdownStyleClass: {
         flex: 1,
         backgroundColor: '#9dcbe5',
+        paddingLeft: 10,
         paddingTop:5,
         paddingBottom:5,
         borderRadius:10,
-        borderWidth: 5,
+        borderWidth: 8,
         borderColor: '#9dcbe5',
-        marginRight: 230,
-        marginTop: 4
+        marginRight: 210,
+        marginTop: 6
+    },
+
+    LowerDropdownStyleClass: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingRight: 5,
+        paddingLeft: 5,
+        width: 140
     },
 
     DropStyleClass: {
         flex: 1,
-        marginTop: 0,
-        marginBottom: 0,
-        width: 100,
-        height: 120,
+        marginRight: 2,
+        marginLeft: 2,
+        marginTop: 2,
+        marginBottom: 2,
+        width: 180,
+        height: 120
     },
 
     TextInputStyleClass: {
@@ -60,7 +71,7 @@ const newReportStyles = EStyleSheet.create({
         height: 40,
         borderWidth: 2,
         borderColor: '#0000bd',
-        backgroundColor: '#FFF',
+        backgroundColor: '#FFF'
     },
 });
 
