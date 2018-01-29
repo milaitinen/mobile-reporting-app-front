@@ -11,6 +11,20 @@ const newReportStyles = EStyleSheet.create({
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
 
+    ReportContainer: {
+
+        flex: 1,
+        backgroundColor: '#FFF',
+        marginRight: 3,
+        marginLeft: 3,
+        marginTop: 10,
+        marginBottom: 10,
+        paddingTop: 3,
+        paddingLeft: 5,
+        paddingRight: 5,
+
+    },
+
     ViewContainer: {
         flex: 1,
         paddingTop: 5,
@@ -20,20 +34,20 @@ const newReportStyles = EStyleSheet.create({
         borderTopColor: '$primaryWhite',
     },
 
-    DateContainer: {
-        width: 200,
+    dateStyleClass: {
+        width: 180,
         backgroundColor: '#FFF',
         marginBottom: 6,
-        marginTop: 6
+        marginTop: 5,
     },
 
-    LinkContainer: {
-        color: '#FFF',
+    linkStyleClass: {
+        color: '#0016a4',
         marginBottom: 6,
-        marginTop: 6
+        marginTop: 5,
     },
 
-    MainDropdownStyleClass: {
+    mainDropdownStyleClass: {
         flex: 1,
         backgroundColor: '#9dcbe5',
         paddingLeft: 10,
@@ -43,35 +57,35 @@ const newReportStyles = EStyleSheet.create({
         borderWidth: 8,
         borderColor: '#9dcbe5',
         marginRight: 210,
-        marginTop: 6
+        marginTop: 5,
     },
 
-    LowerDropdownStyleClass: {
+    lowerDropdownStyleClass: {
         paddingTop: 6,
         paddingBottom: 6,
         paddingRight: 5,
         paddingLeft: 5,
-        width: 140
+        width: 140,
     },
 
-    DropStyleClass: {
+    dropStyleClass: {
         flex: 1,
         marginRight: 2,
         marginLeft: 2,
         marginTop: 2,
         marginBottom: 2,
         width: 180,
-        height: 120
+        height: 120,
     },
 
-    TextInputStyleClass: {
+    textInputStyleClass: {
         textAlign: 'center',
         marginBottom: 6,
         marginTop: 6,
         height: 40,
         borderWidth: 2,
-        borderColor: '#0000bd',
-        backgroundColor: '#FFF'
+        borderColor: '#000000',
+        backgroundColor: '#FFF',
     },
 });
 

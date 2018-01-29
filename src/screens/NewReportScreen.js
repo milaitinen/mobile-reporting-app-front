@@ -95,7 +95,7 @@ export class NewReportScreen extends React.Component {
                         animating={this.state.animating}
                         style={[templateScreenStyles.activityIndicator, { height: 80 }]}
                         size='large'
-                        color={'#88daf2'}
+                        color={'#9dcbe5'}
                     />
                 </AppBackground>
             );
@@ -112,7 +112,7 @@ export class NewReportScreen extends React.Component {
                             placeholder={field.defaultValue}
                             onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                             underlineColorAndroid='transparent'
-                            style={newReportStyles.TextInputStyleClass}
+                            style={newReportStyles.textInputStyleClass}
                         />
                     );
                 case 2: // Checkbox
@@ -130,15 +130,15 @@ export class NewReportScreen extends React.Component {
                         <ModalDropdown
                             key={index}
                             disabled={!isEditable}
-                            style={ newReportStyles.MainDropdownStyleClass }
+                            style={ newReportStyles.mainDropdownStyleClass }
                             options={['option 1', 'option 2']}
 
                             renderRow={ () =>
                                 <View>
                                     <ModalDropdown
                                         options={['option 3', 'option 4']}
-                                        style={ newReportStyles.LowerDropdownStyleClass }
-                                        dropdownStyle={ newReportStyles.DropStyleClass }
+                                        style={ newReportStyles.lowerDropdownStyleClass }
+                                        dropdownStyle={ newReportStyles.dropStyleClass }
                                     />
                                 </View>
                             }
@@ -152,7 +152,7 @@ export class NewReportScreen extends React.Component {
                             editable={isEditable}
                             placeholder={field.defaultValue}
                             underlineColorAndroid='transparent'
-                            style={newReportStyles.TextInputStyleClass}
+                            style={newReportStyles.textInputStyleClass}
                         />
                     );
                 case 5: // Choice (Yes/No)
@@ -175,7 +175,7 @@ export class NewReportScreen extends React.Component {
                         <DatePicker
                             key={index}
                             disabled={!isEditable}
-                            style={ newReportStyles.DateContainer }
+                            style={ newReportStyles.dateStyleClass }
                             date={field.defaultValue}
                             mode="date"
                             placeholder="select date"
@@ -201,7 +201,7 @@ export class NewReportScreen extends React.Component {
                         <TextInput
                             key={index}
                             editable={isEditable}
-                            style = { newReportStyles.TextInputStyleClass }
+                            style = { newReportStyles.textInputStyleClass }
                             placeholder={field.defaultValue}
                             multiline={true}
                         />
@@ -211,13 +211,15 @@ export class NewReportScreen extends React.Component {
                         <DatePicker
                             key={index}
                             disabled={!isEditable}
-                            style={ newReportStyles.DateContainer }
+                            style={ newReportStyles.dateStyleClass }
                             date={field.defaultValue}
                             mode="time"
                             format="HH:mm"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
                             minuteInterval={10}
+                            showIcon={false}
+                            //iconComponent={ <Icon name={'check'} type={'feather'} iconStyle={styles.badgeIconStyle}/>}
                             onDateChange={(time) => {this.setState({ time: time });}}
                         />
                     );
@@ -226,7 +228,7 @@ export class NewReportScreen extends React.Component {
                         <TextInput
                             key={index}
                             editable={isEditable}
-                            style={ newReportStyles.TextInputStyleClass }
+                            style={ newReportStyles.textInputStyleClass }
                             placeholder={field.defaultValue}
                             keyboardType = 'numeric'
                             onChangeText={(text)=> this.onChanged(text)}
@@ -237,7 +239,7 @@ export class NewReportScreen extends React.Component {
                     return (
                         <Text
                             key={index}
-                            style={newReportStyles.LinkContainer}
+                            style={ newReportStyles.linkStyleClass }
                             onPress={() => Linking.openURL(field.defaultValue)}>
                             Link to somewhere
                         </Text>
@@ -246,8 +248,8 @@ export class NewReportScreen extends React.Component {
                     return (
                         <ModalDropdown
                             key={index}
-                            style={ newReportStyles.MainDropdownStyleClass }
-                            dropdownStyle={ newReportStyles.DropStyleClass }
+                            style={ newReportStyles.mainDropdownStyleClass }
+                            dropdownStyle={ newReportStyles.dropStyleClass }
                             disabled={!isEditable}
                             options={JSON.parse(field.defaultValue)}
                         />
@@ -262,10 +264,12 @@ export class NewReportScreen extends React.Component {
 
         return (
             <AppBackground>
-                <View style={newReportStyles.MainContainer}>
-                    <ScrollView keyboardShouldPersistTaps={'handled'} >
-                        {renderedFields}
-                    </ScrollView>
+                <View style={ newReportStyles.ReportContainer }>
+                    <View style={ newReportStyles.MainContainer }>
+                        <ScrollView keyboardShouldPersistTaps={'handled'} >
+                            {renderedFields}
+                        </ScrollView>
+                    </View>
                 </View>
             </AppBackground>
             /*
@@ -273,7 +277,7 @@ export class NewReportScreen extends React.Component {
                     placeholder={ strings('createNew.enterNew') }
                     onChangeText={(TextInputName) => this.setState({ TextInputName })}
                     underlineColorAndroid='transparent'
-                    style={newReportStyles.TextInputStyleClass}
+                    style={newReportStyles.textInputStyleClass}
                 />
                 <Button
                     title={ strings('createNew.createNew') }
