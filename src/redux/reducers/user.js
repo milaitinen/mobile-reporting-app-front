@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import {INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL, TOGGLE_AUTHENTICATED} from '../actions/user';
+import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL, SET_AUTHENTICATED } from '../actions/user';
 
 const initialState = {
     email: null,
@@ -26,10 +26,10 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 serverUrl: action.serverUrl || null
             };
-        case TOGGLE_AUTHENTICATED:
+        case SET_AUTHENTICATED:
             return {
                 ...state,
-                authenticated: !state.authenticated,
+                authenticated: action.state,
             };
         default:
             return state;

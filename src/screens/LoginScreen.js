@@ -7,7 +7,7 @@ import { strings } from '../locales/i18n';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
-import {insertEmail, insertPassword, insertServerUrl, toggleAuthenticated } from '../redux/actions/user';
+import { insertEmail, insertPassword, insertServerUrl, setAuthenticated } from '../redux/actions/user';
 import { login, mockLogin, invalidCredentialsResponse } from './api';
 
 // "export" necessary in order to test component without Redux store
@@ -16,12 +16,14 @@ export class LoginScreen extends React.Component {
     constructor(props)
     {
         super(props);
+        /*
         this.state = {
             // isLoading     : true,
             emailAddress    : '',
             password        : '',
             serverUrl       : ''
         };
+        */
     }
 
 
@@ -37,7 +39,9 @@ export class LoginScreen extends React.Component {
             alert('Invalid username or password'); //todo: get string from locales
         }
         else {
-            this.props.dispatch(toggleAuthenticated());
+            this.props.dispatch(setAuthenticated(true));
+            this.props.dispatch(insertEmail(this.props.email));
+            this.props.dispatch(insertPassword(this.props.password));
             this.props.navigation.navigate('drawerStack');
         }
     };
@@ -64,7 +68,7 @@ export class LoginScreen extends React.Component {
                     name={'lock'}
                     secureTextEntry={true}
                     placeholder={ strings('login.password') }
-                    onChangeText={password => this.setState({ password })}
+                    onChangeText={password => this.props.dispatch(insertPassword(password))}
                 />
                 <Input
                     name={'globe'}

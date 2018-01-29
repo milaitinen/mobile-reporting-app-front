@@ -4,7 +4,7 @@ export const INSERT_PASSWORD = 'INSERT_PASSWORD';
 export const INSERT_SERVERURL = 'INSERT_SERVERURL';
 export const STORE_TEMPLATES = 'STORE_TEMPLATES';
 export const STORE_REPORTS = 'STORE_REPORTS';
-export const TOGGLE_AUTHENTICATED = 'TOGGLE_AUTHENTICATED';
+export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
 
 // return an object
 export const insertEmail = (address) => ({
@@ -22,6 +22,7 @@ export const insertServerUrl = (url) => ({
     serverUrl: url
 });
 
-export const toggleAuthenticated = () => ({
-    type: TOGGLE_AUTHENTICATED,
+export const setAuthenticated = (state) => ({
+    type: SET_AUTHENTICATED,
+    state: state
 });

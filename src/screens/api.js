@@ -22,7 +22,10 @@ export const login = (username, password) => {
 };
 
 export const mockLogin = (username, password) => {
-    return `sent username ${username} and password ${password} to the server`;
+    const debugResponse = `sent username ${username} and password ${password} to the server`;
+    console.log(debugResponse);
+    return debugResponse;
+    //return invalidCredentialsResponse;
 }
 
 // Send a new report to the server, along with the userID
