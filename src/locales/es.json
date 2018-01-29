@@ -1,0 +1,31 @@
+{
+  "login": {
+    "title": "MR-Application",
+    "slogan": "Eslogan en español",
+    "email": "Dirección de e-mail",
+    "password": "Contraseña",
+    "serverUrl": "Dirección de servidor",
+    "signIn": "Iniciar sesión"
+  },
+
+  "templates": {
+    "templates": "Plantillas",
+    "search": "Busca..",
+    "report": "Reportaje",
+    "reports": "Reportajes",
+    "approved": "Aprobado",
+    "sent": "Despachado",
+    "draft:": "Boceto",
+    "showMore": "Enseña más"
+  },
+
+  "createNew": {
+    "createNew": "Crea un nuevo reportaje",
+    "enterNew": "Entra el nombre del reportaje",
+    "reportAdded": "Reportaje despachado"
+  },
+
+  "navigation": {
+    "signOut": "Cerrar sesión"
+  }
+}
