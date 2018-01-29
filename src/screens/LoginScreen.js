@@ -7,7 +7,8 @@ import { strings } from '../locales/i18n';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
-import { insertEmail, insertPassword, insertServerUrl } from '../redux/actions/user';
+import {insertEmail, insertPassword, insertServerUrl, toggleAuthenticated } from '../redux/actions/user';
+import { login, mockLogin, invalidCredentialsResponse } from './api';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
@@ -25,7 +26,18 @@ export class LoginScreen extends React.Component {
 
 
     logIn = () => {
+        /*
         if (this.props.authenticated) {
+            this.props.navigation.navigate('drawerStack');
+        }
+        */
+        const loginResponse = mockLogin(this.props.email, this.props.password);
+        if (loginResponse === invalidCredentialsResponse) {
+            //todo: some other actions?
+            alert('Invalid username or password'); //todo: get string from locales
+        }
+        else {
+            this.props.dispatch(toggleAuthenticated());
             this.props.navigation.navigate('drawerStack');
         }
     };
@@ -76,8 +88,12 @@ export class LoginScreen extends React.Component {
 // NOTE: only 'authenticated' is currently in use. Others are not kept track of in Redux.
 const mapStateToProps = (state) => {
     const authenticated = state.user.authenticated;
+    const email = state.user.email;
+    const password = state.user.password;
     return {
         authenticated,
+        email,
+        password,
     };
 };
 

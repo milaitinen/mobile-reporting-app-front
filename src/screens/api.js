@@ -3,8 +3,10 @@ import { Platform, AsyncStorage, NetInfo } from 'react-native';
 import { url } from './urlsetting';
 
 
+export const invalidCredentialsResponse = 'invalid credentials'; //TODO: update to match backend
+
 export const login = (username, password) => {
-    return fetch(`${url}/users/login`, {//TODO: check with database api
+    return fetch(`${url}/users/login`, {//TODO: update to match backend
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -14,9 +16,14 @@ export const login = (username, password) => {
             username: username,
             password: password,
         })
-    })  .then(response => { return response.json; })
-        .catch(err => alert(err));
+    }).then(response => {
+        return response.json;
+    }).catch(err => alert(err));
 };
+
+export const mockLogin = (username, password) => {
+    return `sent username ${username} and password ${password} to the server`;
+}
 
 // Send a new report to the server, along with the userID
 export const createNewReport = (userID, report, token) => {
