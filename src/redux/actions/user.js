@@ -5,6 +5,7 @@ export const INSERT_SERVERURL = 'INSERT_SERVERURL';
 export const STORE_TEMPLATES = 'STORE_TEMPLATES';
 export const STORE_REPORTS = 'STORE_REPORTS';
 export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
+export const INSERT_TOKEN = 'INSERT_TOKEN';
 
 // return an object
 export const insertEmail = (address) => ({
@@ -25,4 +26,9 @@ export const insertServerUrl = (url) => ({
 export const setAuthenticated = (state) => ({
     type: SET_AUTHENTICATED,
     state: state
+});
+
+export const insertToken = (token) => ({
+    type: INSERT_TOKEN,
+    token: token
 });

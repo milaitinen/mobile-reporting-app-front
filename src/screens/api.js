@@ -21,11 +21,21 @@ export const login = (username, password) => {
     }).catch(err => alert(err));
 };
 
-export const mockLogin = (username, password) => {
-    const debugResponse = `sent username ${username} and password ${password} to the server`;
+export const mockLogin = (email, password) => {
+    const debugResponse = `sent email ${email} and password ${password} to the server`;
     console.log(debugResponse);
-    return debugResponse;
+    const mockResponse = {
+        email: email,
+        password: password,
+        token: 'loremipsum'
+    }
+    return mockResponse;
     //return invalidCredentialsResponse;
+}
+
+export const verifyToken = (token) => {
+    //TODO
+    return null;
 }
 
 // Send a new report to the server, along with the userID

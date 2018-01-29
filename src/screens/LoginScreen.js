@@ -7,8 +7,8 @@ import { strings } from '../locales/i18n';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
-import { insertEmail, insertPassword, insertServerUrl, setAuthenticated } from '../redux/actions/user';
-import { login, mockLogin, invalidCredentialsResponse } from './api';
+import { insertEmail, insertPassword, insertServerUrl, setAuthenticated, insertToken } from '../redux/actions/user';
+import { login, mockLogin, verifyToken, invalidCredentialsResponse } from './api';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
@@ -24,24 +24,31 @@ export class LoginScreen extends React.Component {
             serverUrl       : ''
         };
         */
+
+
+        if (this.props.token != null) {
+            //TODO: verify token
+            /*
+            const response = verifyToken(this.props.user.token);
+            if (someCondition(response)) {
+            }
+            */
+            this.props.navigation.navigate('drawerStack');
+        }
     }
 
 
     logIn = () => {
-        /*
-        if (this.props.authenticated) {
-            this.props.navigation.navigate('drawerStack');
-        }
-        */
         const loginResponse = mockLogin(this.props.email, this.props.password);
         if (loginResponse === invalidCredentialsResponse) {
             //todo: some other actions?
             alert('Invalid username or password'); //todo: get string from locales
         }
         else {
+            const { token } = loginResponse;
             this.props.dispatch(setAuthenticated(true));
-            this.props.dispatch(insertEmail(this.props.email));
-            this.props.dispatch(insertPassword(this.props.password));
+            this.props.dispatch(insertToken(token));
+
             this.props.navigation.navigate('drawerStack');
         }
     };

@@ -2,7 +2,7 @@ import { NavigationActions } from 'react-navigation';
 import React from 'react';
 import { View, Button } from 'react-native';
 import { strings } from '../locales/i18n';
-import { insertEmail, insertPassword, setAuthenticated } from '../redux/actions/user';
+import { insertEmail, insertPassword, insertToken, setAuthenticated } from '../redux/actions/user';
 import { connect } from 'react-redux';
 
 class Sidebar extends React.Component {
@@ -15,6 +15,7 @@ class Sidebar extends React.Component {
         this.props.dispatch(setAuthenticated(false));
         this.props.dispatch(insertEmail(null));
         this.props.dispatch(insertPassword(null));
+        this.props.dispatch(insertToken(null));
 
         /*
         This sets the navigation back to the beginning, i.e. to the login screen.
