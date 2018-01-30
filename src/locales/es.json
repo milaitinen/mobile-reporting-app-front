@@ -4,24 +4,24 @@
     "slogan": "Eslogan en español",
     "email": "Dirección de e-mail",
     "password": "Contraseña",
-    "serverUrl": "Dirección de servidor",
+    "serverUrl": "Dirección del servidor",
     "signIn": "Iniciar sesión"
   },
 
   "templates": {
     "templates": "Plantillas",
-    "search": "Busca..",
+    "search": "Buscar..",
     "report": "Reportaje",
     "reports": "Reportajes",
     "approved": "Aprobado",
     "sent": "Despachado",
     "draft:": "Boceto",
-    "showMore": "Enseña más"
+    "showMore": "Enseñar más"
   },
 
   "createNew": {
-    "createNew": "Crea un nuevo reportaje",
-    "enterNew": "Entra el nombre del reportaje",
+    "createNew": "Crear un nuevo reportaje",
+    "enterNew": "Entrar el nombre del reportaje",
     "reportAdded": "Reportaje despachado"
   },
 
