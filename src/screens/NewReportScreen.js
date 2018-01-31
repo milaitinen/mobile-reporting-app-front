@@ -14,6 +14,7 @@ import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/newReport';
+import { Icon } from 'react-native-elements';
 
 // "export" necessary in order to test component without Redux store
 export class NewReportScreen extends React.Component {
@@ -218,8 +219,7 @@ export class NewReportScreen extends React.Component {
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
                             minuteInterval={10}
-                            showIcon={false}
-                            //iconComponent={ <Icon name={'check'} type={'feather'} iconStyle={styles.badgeIconStyle}/>}
+                            iconComponent={<Icon name={'alarm'} type={'MaterialIcons'} iconStyle={ newReportStyles.timeIconStyle }/>}
                             onDateChange={(time) => {this.setState({ time: time });}}
                         />
                     );

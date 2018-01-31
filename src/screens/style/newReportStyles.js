@@ -19,7 +19,7 @@ const newReportStyles = EStyleSheet.create({
         marginLeft: 3,
         marginTop: 10,
         marginBottom: 10,
-        paddingTop: 3,
+        paddingTop: 2,
         paddingLeft: 5,
         paddingRight: 5,
 
@@ -76,6 +76,14 @@ const newReportStyles = EStyleSheet.create({
         marginBottom: 2,
         width: 180,
         height: 120,
+    },
+
+    timeIconStyle: {
+        color: '#000000',
+        paddingLeft: 5,
+        paddingRight: 10,
+        justifyContent: 'flex-end',
+        fontSize: 27,
     },
 
     textInputStyleClass: {
