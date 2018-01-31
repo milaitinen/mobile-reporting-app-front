@@ -18,9 +18,9 @@ export const login = (username, password) => {
         .catch(err => alert(err));
 };
 
-// Send a new report to the server, along with the userID
-export const createNewReport = (userID, report, token) => {
-    return fetch(`${url}/users/${userID}/reports`, {
+// Send a new report to the server, along with the username and token.
+export const createNewReport = (username, report, token) => {
+    return fetch(`${url}/users/${username}/reports`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -31,20 +31,20 @@ export const createNewReport = (userID, report, token) => {
     });
 };
 
-export const fetchFieldsByID = (id, token) => {
+export const fetchFieldsByID = (templateId, token) => {
     return isNetworkConnected()
         .then((isConnected) => {
-            if (!isConnected) { return fetchLocalFieldsByID(id); }
-            return fetchRemoteFieldsByID(id, token);
+            if (!isConnected) { return fetchLocalFieldsByID(templateId); }
+            return fetchRemoteFieldsByID(templateId, token);
         })
         .then((fieldsByID) => {
-            saveData(`${url}/templates/${id}/fields`, fieldsByID);
+            saveData(`${url}/templates/${templateId}/fields`, fieldsByID);
             return fieldsByID;
         });
 };
 
-const fetchLocalFieldsByID = (id) => {
-    return AsyncStorage.getItem(`${url}/templates/${id}/fields`)
+const fetchLocalFieldsByID = (templateId) => {
+    return AsyncStorage.getItem(`${url}/templates/${templateId}/fields`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -54,9 +54,9 @@ const fetchLocalFieldsByID = (id) => {
         });
 };
 
-const fetchRemoteFieldsByID = (id, token) => {
+const fetchRemoteFieldsByID = (templateId, token) => {
     return (
-        fetch(`${url}/templates/${id}/fields`, {
+        fetch(`${url}/templates/${templateId}/fields`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
