@@ -8,7 +8,7 @@ export const STORE_REPORTS = 'STORE_REPORTS';
 // return an object
 export const insertEmail = (address) => ({
     type: INSERT_EMAIL,
-    email: address
+    username: address
 });
 
 export const insertPassword = (password) => ({

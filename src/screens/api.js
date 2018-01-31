@@ -31,20 +31,20 @@ export const createNewReport = (username, report, token) => {
     });
 };
 
-export const fetchFieldsByID = (templateId, token) => {
+export const fetchFieldsByID = (username, templateId, token) => {
     return isNetworkConnected()
         .then((isConnected) => {
-            if (!isConnected) { return fetchLocalFieldsByID(templateId); }
-            return fetchRemoteFieldsByID(templateId, token);
+            if (!isConnected) { return fetchLocalFieldsByID(username, templateId); }
+            return fetchRemoteFieldsByID(username, templateId, token);
         })
         .then((fieldsByID) => {
-            saveData(`${url}/templates/${templateId}/fields`, fieldsByID);
+            saveData(`${url}/users/${username}/templates/${templateId}/fields`, fieldsByID);
             return fieldsByID;
         });
 };
 
-const fetchLocalFieldsByID = (templateId) => {
-    return AsyncStorage.getItem(`${url}/templates/${templateId}/fields`)
+const fetchLocalFieldsByID = (username, templateId) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateId}/fields`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -54,9 +54,9 @@ const fetchLocalFieldsByID = (templateId) => {
         });
 };
 
-const fetchRemoteFieldsByID = (templateId, token) => {
+const fetchRemoteFieldsByID = (username, templateId, token) => {
     return (
-        fetch(`${url}/templates/${templateId}/fields`, {
+        fetch(`${url}/users/${username}/templates/${templateId}/fields`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
@@ -67,24 +67,24 @@ const fetchRemoteFieldsByID = (templateId, token) => {
     );
 };
 
-// Fetch templates from the server or ASyncStorage, depending on the availability of internet connection
-// Fetch templates that the user has rights to
-export const fetchTemplatesByUserID = (ID, token) => {
+/* Fetch templates from the server or ASyncStorage, depending on the availability of internet connection
+   Fetch templates that the user has rights to. */
+export const fetchTemplatesByUsername = (username, token) => {
     return isNetworkConnected()
         .then((isConnected) => {
-            if (!isConnected) { return fetchLocalTemplatesByUserID(ID); }
-            return fetchRemoteTemplatesByUserID(ID, token);
+            if (!isConnected) { return fetchLocalTemplatesByUsername(username); }
+            return fetchRemoteTemplatesByUsername(username, token);
         })
         .then((templates) => {
-            saveData(`${url}/users/${ID}/templates`, templates);
+            saveData(`${url}/users/${username}/templates`, templates);
             return templates;
         });
 };
 
 /* Fetch all templates from ASyncStorage in case there is no internet connection.
    If no data has been stored an empty value will be returned. */
-const fetchLocalTemplatesByUserID = (ID) => {
-    return AsyncStorage.getItem(`${url}/users/${ID}/templates`)
+const fetchLocalTemplatesByUsername = (username) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/templates`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -95,9 +95,9 @@ const fetchLocalTemplatesByUserID = (ID) => {
 };
 
 // Fetch all templates from the server
-const fetchRemoteTemplatesByUserID = (ID, token) => {
+const fetchRemoteTemplatesByUsername = (username, token) => {
     return (
-        fetch(`${url}/users/${ID}/templates`, {
+        fetch(`${url}/users/${username}/templates`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
@@ -109,22 +109,22 @@ const fetchRemoteTemplatesByUserID = (ID, token) => {
 };
 
 // Fetch reports by their templateID from the server if online, ASyncStorage otherwise
-export const fetchReportsByTemplateID = (ID, token) => {
+export const fetchReportsByTemplateID = (username, templateID, token) => {
     return isNetworkConnected()
         .then((isConnected) => {
-            if (!isConnected) { return fetchLocalReportsByTemplateID(ID); }
-            return fetchRemoteReportsByTemplateID(ID, token);
+            if (!isConnected) { return fetchLocalReportsByTemplateID(username, templateID); }
+            return fetchRemoteReportsByTemplateID(username, templateID, token);
         })
-        .then((templates) => {
-            saveData(`${url}/reports?templateid=${ID}`, templates);
-            return templates;
+        .then((reports) => {
+            saveData(`${url}/users/${username}/templates/${templateID}/reports`, reports);
+            return reports;
         });
 };
 
 /* Fetch Reports by TemplateID from ASyncStorage in case there is no internet connection.
    If no data has been stored an empty value will be returned. */
-const fetchLocalReportsByTemplateID = (ID) => {
-    return AsyncStorage.getItem(`${url}/reports?templateid=${ID}`)
+const fetchLocalReportsByTemplateID = (username, templateID) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -135,9 +135,9 @@ const fetchLocalReportsByTemplateID = (ID) => {
 };
 
 // Fetch reports by templateID from the server
-const fetchRemoteReportsByTemplateID = (ID, token) => {
+const fetchRemoteReportsByTemplateID = (username, templateID, token) => {
     return (
-        fetch(`${url}/reports?templateid=${ID}`, {
+        fetch(`${url}/users/${username}/templates/${templateID}/reports`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
@@ -148,21 +148,21 @@ const fetchRemoteReportsByTemplateID = (ID, token) => {
     );
 };
 
-// might come in handy???
-export const fetchReportsByUserID = (ID, token) => {
+/* Returns all the reports made by the user specified by the username. */
+export const fetchReportsByUsername = (username, token) => {
     return isNetworkConnected()
         .then((isConnected) => {
-            if (!isConnected) { return fetchLocalReportsByUserID(ID); }
-            return fetchRemoteReportsByUserID(ID, token);
+            if (!isConnected) { return fetchLocalReportsByUsername(username); }
+            return fetchRemoteReportsByUsername(username, token);
         })
         .then((reports) => {
-            saveData(`${url}/users/${ID}/reports`, reports);
+            saveData(`${url}/users/${username}/reports`, reports);
             return reports;
         });
 };
 
-const fetchLocalReportsByUserID = (ID) => {
-    return AsyncStorage.getItem(`${url}/users/${ID}/reports`)
+const fetchLocalReportsByUsername = (username) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/reports`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -172,9 +172,9 @@ const fetchLocalReportsByUserID = (ID) => {
         });
 };
 
-const fetchRemoteReportsByUserID = (ID, token) => {
+const fetchRemoteReportsByUsername = (username, token) => {
     return (
-        fetch(`${url}/users/${ID}/reports`, {
+        fetch(`${url}/users/${username}/reports`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }

@@ -2,7 +2,7 @@
   "login": {
     "title": "MR-Application",
     "slogan": "Suomenkielinen slogan",
-    "email": "Sähköposti",
+    "username": "Käyttäjänimi",
     "password": "Salasana",
     "serverUrl": "Palvelimen osoite",
     "signIn": "Kirjaudu sisään"

@@ -2,7 +2,7 @@
 import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL } from '../actions/user';
 
 const initialState = {
-    email: null,
+    username: null,
     password: null,
     serverUrl: null,
     userID: 1,
@@ -14,7 +14,7 @@ const userReducer = (state = initialState, action) => {
         case INSERT_EMAIL:
             return {
                 ...state,
-                email: action.email || null
+                username: action.username || null
             };
         case INSERT_PASSWORD:
             return {

@@ -2,7 +2,7 @@
   "login": {
     "title": "MR-Application",
     "slogan": "Eslogan en español",
-    "email": "Dirección de e-mail",
+    "username": "Nombre de usuario",
     "password": "Contraseña",
     "serverUrl": "Dirección del servidor",
     "signIn": "Iniciar sesión"

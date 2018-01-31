@@ -12,7 +12,7 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUserID, fetchReportsByUserID } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchReportsByUsername } from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
 import { storeReports } from '../redux/actions/reports';
@@ -38,7 +38,7 @@ export class TemplateScreen extends Component {
         // TEMPORARY: not sure if this is the best solution
         if (this.isEmpty(this.props.templates)) {
             this.getTemplatesAndReports();
-            fetchReportsByUserID(this.props.userID)
+            fetchReportsByUsername(this.props.userID)
                 .then(responseJson => this.props.dispatch(storeReports(responseJson)))
                 .catch(error => console.error(error))
                 .done();
@@ -63,7 +63,7 @@ export class TemplateScreen extends Component {
         of reportsByTemplates, and sets isLoading and refreshing to false.
     */
     getTemplatesAndReports = () => {
-        fetchTemplatesByUserID(this.props.userID)
+        fetchTemplatesByUsername(this.props.userID)
             .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
             .then(() => {
                 const reportsByTemplateID = Object.keys(this.props.templates).map((id) => fetchReportsByTemplateID(id));
@@ -144,11 +144,11 @@ export class TemplateScreen extends Component {
 
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
-    const userID = state.user.userID;
+    const username = state.user.username;
     const templates = state.templates;
     const reportsByTempID = state.reportsByTempID;
     return {
-        userID,
+        username: username,
         templates,
         reportsByTempID
     };
