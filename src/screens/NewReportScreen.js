@@ -9,7 +9,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, fetchFieldsByID } from './api';
+import { createNewReport, fetchFieldsByTemplateID } from './api';
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import { strings } from '../locales/i18n';
@@ -26,11 +26,11 @@ export class NewReportScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getFieldsByID(this.props.templateID);
+        this.getFieldsByTemplateID(this.props.templateID);
     }
 
-    getFieldsByID = (ID) => {
-        fetchFieldsByID(ID)
+    getFieldsByTemplateID = (templateID) => {
+        fetchFieldsByTemplateID(templateID)
             .then(responseJson => {
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
