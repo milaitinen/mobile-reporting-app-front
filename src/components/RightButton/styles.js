@@ -10,21 +10,25 @@ const styles = EStyleSheet.create({
         flex: 0,
     },
 
-    separator:{
-        borderRightWidth: 0,
-        borderColor: '#fff',
-    },
-
     iconStyle: {
         marginRight: 0,
         marginTop: 0,
         marginBottom: 0,
-        fontSize: 50,
-        paddingLeft: 8,
-        paddingRight: 5,
-        paddingTop: 5,
-        paddingBottom: 6,
-       // borderRadius: 5,
+        // borderRadius: 5,
+        '@media (max-width: 350)': {
+            fontSize: 40,
+            paddingRight: 2,
+            paddingLeft: 2,
+            paddingTop: 4,
+            paddingBottom: 5,
+        },
+        '@media (min-width: 350)': {
+            fontSize: 50,
+            paddingRight: 5,
+            paddingLeft: 8,
+            paddingTop: 5,
+            paddingBottom: 6,
+        },
     },
 
 

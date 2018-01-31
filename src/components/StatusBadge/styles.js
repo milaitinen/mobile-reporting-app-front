@@ -12,13 +12,21 @@ const styles = EStyleSheet.create({
     badgeTextStyle: {
         color: '#666666',
         padding: 0,
+        '@media (max-width: 350)': {
+            fontSize: 12,
+        },
     },
 
     badgeIconStyle: {
         color: '#666666',
         paddingLeft: 5,
         justifyContent: 'flex-end',
-        fontSize: 20,
+        '@media (max-width: 350)': {
+            fontSize: 15
+        },
+        '@media (min-width: 350)':{
+            fontSize: 20
+        },
     },
 
     badgeContainerStyle: {
@@ -32,6 +40,7 @@ const styles = EStyleSheet.create({
             width: 0,
             height: 3,
         },
+
     },
 
     dateAccepted: {
