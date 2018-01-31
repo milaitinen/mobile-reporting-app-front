@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 import CheckBox from 'react-native-check-box';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
@@ -10,11 +11,11 @@ import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByID } from './api';
-import newReportStyles from './style/newReportStyles';
-import templateScreenStyles from './style/templateScreenStyles';
 import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/newReport';
-import { Icon } from 'react-native-elements';
+
+import newReportStyles from './style/newReportStyles';
+import templateScreenStyles from './style/templateScreenStyles';
 
 // "export" necessary in order to test component without Redux store
 export class NewReportScreen extends React.Component {
@@ -105,6 +106,7 @@ export class NewReportScreen extends React.Component {
         const { isEditable } = this.props;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
             switch (field.typeID) {
+
                 case 1: // Name
                     return (
                         <TextInput
@@ -116,6 +118,7 @@ export class NewReportScreen extends React.Component {
                             style={newReportStyles.textInputStyleClass}
                         />
                     );
+
                 case 2: // Checkbox
                     return (
                         <CheckBox
@@ -126,13 +129,15 @@ export class NewReportScreen extends React.Component {
                             leftText={ 'This is a nice checkbox' }
                         />
                     );
+
                 case 3: // Dropdown
                     return (
                         <ModalDropdown
                             key={index}
                             disabled={!isEditable}
-                            style={ newReportStyles.mainDropdownStyleClass }
                             options={['option 1', 'option 2']}
+                            style={ newReportStyles.mainDropdownStyleClass }
+                            dropdownStyle={ newReportStyles.dropStyleClass }
 
                             renderRow={ () =>
                                 <View>
@@ -143,9 +148,11 @@ export class NewReportScreen extends React.Component {
                                     />
                                 </View>
                             }
+
                         />
 
                     );
+
                 case 4: // TextRow (One row text field)
                     return (
                         <TextInput
@@ -156,6 +163,7 @@ export class NewReportScreen extends React.Component {
                             style={newReportStyles.textInputStyleClass}
                         />
                     );
+
                 case 5: // Choice (Yes/No)
                     return (
                         <RadioForm
@@ -167,10 +175,12 @@ export class NewReportScreen extends React.Component {
                             ] }
                             initial={JSON.parse(field.defaultValue)}
                             onPress={(value) => { this.setState({ value: value }); }}
-                            buttonColor={'#0000bd'}
+                            buttonColor={'#9dcbe5'}
+                            labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
                             formHorizontal={true}
                         />
                     );
+
                 case 6: // Calendar
                     return (
                         <DatePicker
@@ -185,9 +195,11 @@ export class NewReportScreen extends React.Component {
                             maxDate="2018-06-01"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
+                            iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.timeIconStyle }/>}
                             onDateChange={(date) => {this.setState({ date: date });}}
                         />
                     );
+
                 case 7: // Instruction
                     return (
                         <Text
@@ -197,16 +209,18 @@ export class NewReportScreen extends React.Component {
 
                         </Text>
                     );
+
                 case 8: // Text (Multiple row text field)
                     return (
                         <TextInput
                             key={index}
                             editable={isEditable}
-                            style = { newReportStyles.textInputStyleClass }
+                            style = { newReportStyles.multilinedTextInputStyleClass }
                             placeholder={field.defaultValue}
                             multiline={true}
                         />
                     );
+
                 case 9: // Time
                     return (
                         <DatePicker
@@ -219,10 +233,11 @@ export class NewReportScreen extends React.Component {
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
                             minuteInterval={10}
-                            iconComponent={<Icon name={'alarm'} type={'MaterialIcons'} iconStyle={ newReportStyles.timeIconStyle }/>}
+                            iconComponent={<Icon name={'schedule'} type={'MaterialIcons'} iconStyle={ newReportStyles.timeIconStyle }/>}
                             onDateChange={(time) => {this.setState({ time: time });}}
                         />
                     );
+
                 case 10: // Digits (Text input that only accepts numeric characters)
                     return (
                         <TextInput
@@ -235,6 +250,7 @@ export class NewReportScreen extends React.Component {
                             value = {this.state.number}
                         />
                     );
+
                 case 11: // Link
                     return (
                         <Text
@@ -244,6 +260,7 @@ export class NewReportScreen extends React.Component {
                             Link to somewhere
                         </Text>
                     );
+
                 case 12: // User dropdown
                     return (
                         <ModalDropdown
@@ -254,6 +271,7 @@ export class NewReportScreen extends React.Component {
                             options={JSON.parse(field.defaultValue)}
                         />
                     );
+
                 default:
                     return (
                         null
@@ -264,8 +282,8 @@ export class NewReportScreen extends React.Component {
 
         return (
             <AppBackground>
-                <View style={ newReportStyles.ReportContainer }>
-                    <View style={ newReportStyles.MainContainer }>
+                <View style={ newReportStyles.ViewContainer }>
+                    <View style={ newReportStyles.ReportContainer }>
                         <ScrollView keyboardShouldPersistTaps={'handled'} >
                             {renderedFields}
                         </ScrollView>

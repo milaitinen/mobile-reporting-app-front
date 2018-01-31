@@ -36,7 +36,21 @@ const TemplateStack = StackNavigator({
     },
     NewReport: {
         screen: NewReportScreen,
-        navigationOptions: strings('createNew.createNew')
+        navigationOptions: ({ navigation }) => ({
+            flex: 0.3,
+            headerTitle: strings('createNew.createNew') ,
+            headerStyle: navigationStyles.HeaderContainer,
+            headerTitleStyle: navigationStyles.ScreenHeader,
+            headerLeft:
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={35}
+                    containerStyle={navigationStyles.menuIcon}
+                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
+                </Icon>
+        })
     },
 
 }, {
