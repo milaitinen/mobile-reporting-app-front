@@ -124,7 +124,7 @@ export class NewReportScreen extends React.Component {
                         <Checkbox
                             key={index}
                             title={'This is a nice checkbox'}
-                            isEditable={false}
+                            editable={isEditable}
                         />
                     );
 

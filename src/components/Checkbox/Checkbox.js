@@ -14,7 +14,7 @@ class Checkbox extends Component {
             <CheckBox
                 title={this.props.title}
                 checked={this.state.checked}
-                disabled={!this.props.isEditable}
+                disabled={!this.props.editable}
                 checkedColor={'#A4CBE7'}
                 onPress={() => this.setState({ checked: !this.state.checked })}
             />

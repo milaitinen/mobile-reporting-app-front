@@ -16,6 +16,10 @@ EStyleSheet.build({
     $darkestBlue: '#1b3055',
     $primaryWhite: '#fff',
     $primaryFont: 'Roboto-Light',
+
+
+    $containerBorderRadius: 5,
+    $buttonBorderRadius: 10,
 });
 
 class App extends React.Component {

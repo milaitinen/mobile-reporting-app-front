@@ -5,7 +5,7 @@ const styles = EStyleSheet.create({
     backgroundStyle: {
         flexDirection: 'row',
         backgroundColor: 'transparent',
-        borderRadius: 5,
+        borderRadius: '$containerBorderRadius',
         justifyContent: 'flex-end',
         flex: 0,
     },

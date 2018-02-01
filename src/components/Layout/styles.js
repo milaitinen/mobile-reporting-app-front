@@ -8,7 +8,7 @@ export default EStyleSheet.create({
         marginLeft:0,
         marginRight: 0,
         overflow:'hidden',
-        borderRadius: 5,
+        borderRadius: '$containerBorderRadius',
         height: 60,
         elevation: 3,
         shadowOffset: {
@@ -19,7 +19,7 @@ export default EStyleSheet.create({
 
     templateContainer: {
         height: 60,
-        borderRadius: 5,
+        borderRadius: '$containerBorderRadius',
         backgroundColor: '$primaryWhite',
         paddingTop: 0,
         paddingRight: 0,

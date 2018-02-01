@@ -6,7 +6,7 @@ const styles = EStyleSheet.create({
         backgroundColor: '#9dcbe5',
         paddingTop:10,
         paddingBottom:10,
-        borderRadius:10,
+        borderRadius: '$buttonBorderRadius',
         borderWidth: 1,
         borderColor: '#9dcbe5',
         '@media (max-width: 350)': {
