@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByID } from './api';
 import { strings } from '../locales/i18n';
-import { insertTitle } from '../redux/actions/newReport';
+import { insertTitle } from '../redux/actions/preview';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
