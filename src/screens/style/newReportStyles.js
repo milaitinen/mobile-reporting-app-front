@@ -29,9 +29,15 @@ const newReportStyles = EStyleSheet.create({
 
     dateStyleClass: {
         width: 180,
-        //backgroundColor: '#e0e8eb',
+        backgroundColor: '#e0e8eb',
+        borderRadius: 10,
         marginBottom: 6,
         marginTop: 6,
+    },
+
+    textStyleClass: {
+        fontSize: 16,
+        marginTop: 8,
     },
 
     linkStyleClass: {
@@ -43,7 +49,7 @@ const newReportStyles = EStyleSheet.create({
     mainDropdownStyleClass: {
         flex: 1,
         backgroundColor: '#9dcbe5',
-        paddingLeft: 10,
+        paddingLeft: 5,
         paddingTop:5,
         paddingBottom:5,
         borderRadius:10,
@@ -73,7 +79,24 @@ const newReportStyles = EStyleSheet.create({
         height: 120,
     },
 
-    timeIconStyle: {
+    dropIconStyle: {
+        color: '#000000',
+        justifyContent: 'flex-end',
+        fontSize: 18,
+        flex: 1,
+        left: 53,
+        //paddingleft: 10,
+    },
+
+    linkIconStyle: {
+        color: '#000000',
+        justifyContent: 'flex-end',
+        fontSize: 18,
+        paddingRight: 10,
+        paddingLeft: 4,
+    },
+
+    dateIconStyle: {
         color: '#000000',
         paddingLeft: 5,
         paddingRight: 10,
