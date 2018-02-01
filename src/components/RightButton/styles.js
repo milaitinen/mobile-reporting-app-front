@@ -24,7 +24,7 @@ const styles = EStyleSheet.create({
         paddingRight: 5,
         paddingTop: 5,
         paddingBottom: 6,
-       // borderRadius: 5,
+        // borderRadius: 5,
     },
 
 

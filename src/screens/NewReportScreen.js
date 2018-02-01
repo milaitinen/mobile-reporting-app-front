@@ -2,12 +2,12 @@ import React from 'react';
 import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import CheckBox from 'react-native-check-box';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
 import { connect } from 'react-redux';
+import { Checkbox } from '../components/Checkbox';
 
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByID } from './api';
@@ -121,12 +121,9 @@ export class NewReportScreen extends React.Component {
 
                 case 2: // Checkbox
                     return (
-                        <CheckBox
+                        <Checkbox
                             key={index}
-                            disabled={!isEditable}
-                            onClick={()=>console.log('checkbox checked!')}
-                            isChecked={ (field.defaultValue !== '0') }
-                            leftText={ 'This is a nice checkbox' }
+                            title={'This is a nice checkbox'}
                         />
                     );
 

@@ -5,7 +5,7 @@
     "email": "Sähköposti",
     "password": "Salasana",
     "serverUrl": "Palvelimen osoite",
-    "signIn": "Kirjaudu sisään"
+    "signIn": "Kirjaudu"
   },
 
   "templates": {
