@@ -6,37 +6,39 @@ import { url } from './urlsetting';
 export const invalidCredentialsResponse = 'invalid credentials'; //TODO: update to match backend
 
 export const login = (username, password) => {
-    return fetch(`${url}/users/login`, {//TODO: update to match backend
+    return fetch(`${url}/login`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            username: username,
-            password: password,
+            "username": username,
+            "password": password,
         })
     }).then(response => {
+        console.log(response);
         return response.json;
     }).catch(err => alert(err));
 };
 
 export const mockLogin = (email, password) => {
+
     const debugResponse = `sent email ${email} and password ${password} to the server`;
     console.log(debugResponse);
+    //todo: check invalid response here
     const mockResponse = {
-        email: email,
-        password: password,
-        token: 'loremipsum'
-    }
+        token: 'djdsfkdsk.dfkdfkldfkhd.gdgkjdkj'
+    };
     return mockResponse;
     //return invalidCredentialsResponse;
-}
+};
 
 export const verifyToken = (token) => {
     //TODO
     return null;
 }
+
 
 // Send a new report to the server, along with the userID
 export const createNewReport = (userID, report, token) => {

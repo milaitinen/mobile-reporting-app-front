@@ -39,7 +39,8 @@ export class LoginScreen extends React.Component {
 
 
     logIn = () => {
-        const loginResponse = mockLogin(this.props.email, this.props.password);
+        const loginResponse = login(this.props.email, this.props.password);
+        console.log(loginResponse);
         if (loginResponse === invalidCredentialsResponse) {
             //todo: some other actions?
             alert('Invalid username or password'); //todo: get string from locales

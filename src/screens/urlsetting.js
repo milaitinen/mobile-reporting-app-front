@@ -1,1 +1,1 @@
-export const url = 'http://aaltodev.arter.fi:8080'; //TODO: https
+export const url = 'https://aaltodev.arter.fi:8443';
