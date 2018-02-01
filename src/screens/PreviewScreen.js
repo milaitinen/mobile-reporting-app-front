@@ -10,6 +10,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
+import { EditButton } from '../components/EditButton';
 import { createNewReport, fetchFieldsByID } from './api';
 import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/preview';
@@ -282,10 +283,12 @@ export class NewReportScreen extends React.Component {
             <AppBackground>
                 <View style={ newReportStyles.ViewContainer }>
                     <View style={ newReportStyles.ReportContainer }>
+    <EditButton /*onPress={this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh} )}*/ />
                         <ScrollView keyboardShouldPersistTaps={'handled'} >
                             {renderedFields}
                         </ScrollView>
-                    </View>
+
+            </View>
                 </View>
             </AppBackground>
             /*
