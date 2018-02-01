@@ -133,7 +133,7 @@ export class NewReportScreen extends React.Component {
 
                 case 3: // Dropdown
                     return (
-                        <View key={index} >
+                        <View key={index}>
                             <ModalDropdown
                                 key={index}
                                 disabled={!isEditable}

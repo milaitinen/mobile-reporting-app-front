@@ -52,7 +52,7 @@ const newReportStyles = EStyleSheet.create({
         paddingLeft: 5,
         paddingTop: 5,
         paddingBottom: 5,
-        borderRadius: '$containerBorderRadius',
+        borderRadius: '$dropdownRadius',
         borderWidth: 8,
         borderColor: '#9dcbe5',
         marginRight: 210,
