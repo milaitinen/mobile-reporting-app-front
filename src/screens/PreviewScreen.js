@@ -310,10 +310,10 @@ export class NewReportScreen extends React.Component {
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
     const userID = state.user.userID;
-    const isEditable = state.newReport.isEditable;
-    const templateID = state.newReport.templateID;
-    const title = state.newReport.title;
-    const number = state.newReport.number;
+    const isEditable = state.preview.isEditable;
+    const templateID = state.preview.templateID;
+    const title = state.preview.title;
+    const number = state.preview.number;
     return {
         userID,
         isEditable,

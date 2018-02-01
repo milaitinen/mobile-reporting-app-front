@@ -1,5 +1,5 @@
 // easier to refactor later and debug
-export const PREVIEW = 'CREATE_REPORT';
+export const PREVIEW = 'PREVIEW';
 export const INSERT_TITLE = 'INSERT_TITLE';
 
 // return an object
