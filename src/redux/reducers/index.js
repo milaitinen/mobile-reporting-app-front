@@ -6,6 +6,7 @@ import reportsByTempID from './reportsByTemplateID';
 import reports from './reports';
 import newReport from './newReport';
 import navReducer from './navReducer';
+import preview from './preview';
 
 export default combineReducers ({
     user,
@@ -14,4 +15,5 @@ export default combineReducers ({
     reports,
     newReport,
     nav: navReducer,
+    preview,
 });
