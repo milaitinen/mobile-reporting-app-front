@@ -21,16 +21,14 @@ const newReportStyles = EStyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         paddingTop: 20,
-        paddingLeft: 7,
-        paddingRight: 7,
+        paddingLeft: 13,
+        paddingRight: 13,
         borderRadius: '$containerBorderRadius',
 
     },
 
     dateStyleClass: {
-        width: 180,
-        backgroundColor: '#e0e8eb',
-        borderRadius: '$containerBorderRadius',
+        width: 160,
         marginBottom: 6,
         marginTop: 6,
     },
@@ -38,6 +36,7 @@ const newReportStyles = EStyleSheet.create({
     textStyleClass: {
         fontSize: 16,
         marginTop: 8,
+        flexDirection: 'row',
     },
 
     linkStyleClass: {
@@ -48,44 +47,45 @@ const newReportStyles = EStyleSheet.create({
 
     mainDropdownStyleClass: {
         flex: 1,
-        backgroundColor: '#9dcbe5',
+        flexDirection: 'row',
+        backgroundColor: '#e0e8eb',
         paddingLeft: 5,
         paddingTop: 5,
         paddingBottom: 5,
         borderRadius: '$dropdownRadius',
         borderWidth: 8,
-        borderColor: '#9dcbe5',
-        marginRight: 210,
+        borderColor: '#e0e8eb',
         marginTop: 6,
         marginBottom: 6,
         width: 160,
     },
 
     lowerDropdownStyleClass: {
-        paddingTop: 6,
-        paddingBottom: 6,
-        paddingRight: 5,
-        paddingLeft: 5,
-        width: 120,
+        flex: 1,
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingRight: 8,
+        paddingLeft: 8,
     },
 
     dropStyleClass: {
         flex: 1,
-        marginRight: 2,
-        marginLeft: 2,
-        marginTop: 2,
-        marginBottom: 2,
-        width: 120,
-        height: 120,
+        width: 160,
+        height: 160,
     },
 
     dropIconStyle: {
         color: '#000000',
-        justifyContent: 'flex-end',
-        fontSize: 18,
+        fontSize: 20,
         flex: 1,
-        left: 53,
+        left: 30,
         //paddingleft: 10,
+    },
+
+    checkboxStyle: {
+        marginTop: 6,
+        marginBottom: 6,
+        borderRadius: '$containerBorderRadius',
     },
 
     linkIconStyle: {
@@ -106,6 +106,7 @@ const newReportStyles = EStyleSheet.create({
 
     multilinedTextInputStyleClass: {
         textAlign: 'center',
+        paddingTop: 6,
         marginBottom: 6,
         marginTop: 6,
         height: 80,

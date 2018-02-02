@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking,  Image } from 'react-native';
+import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking,  TouchableHighlight } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
@@ -112,7 +112,6 @@ export class NewReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>Name</Text>
                             <TextInput
-                                key={index}
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
                                 onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
@@ -126,6 +125,7 @@ export class NewReportScreen extends React.Component {
                     return (
                         <Checkbox
                             key={index}
+                            style={ newReportStyles.checkboxStyle }
                             title={'This is a nice checkbox'}
                             editable={isEditable}
                         />
@@ -133,12 +133,10 @@ export class NewReportScreen extends React.Component {
 
                 case 3: // Dropdown
                     return (
-                        <View key={index}>
+                        <View key={index} style={newReportStyles.mainDropdownStyleClass}>
                             <ModalDropdown
-                                key={index}
                                 disabled={!isEditable}
                                 options={['option 1', 'option 2']}
-                                style={ newReportStyles.mainDropdownStyleClass }
                                 dropdownStyle={ newReportStyles.dropStyleClass }
 
                                 renderRow={ () =>
@@ -150,9 +148,8 @@ export class NewReportScreen extends React.Component {
                                         />
                                     </View>
                                 }
-                            >
-                                <Icon name={'arrow-down'} type={'feather'} iconStyle={ newReportStyles.dropIconStyle }/>
-                            </ModalDropdown>
+                            />
+                            <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
                         </View>
 
                     );
@@ -162,7 +159,6 @@ export class NewReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>Text Field</Text>
                             <TextInput
-                                key={index}
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
                                 underlineColorAndroid='transparent'
@@ -190,15 +186,17 @@ export class NewReportScreen extends React.Component {
 
                 case 6: // Calendar
                     return (
-                        <View key={index}>
+                        <View key={index} >
                             <Text style={ newReportStyles.textStyleClass }>Date</Text>
                             <DatePicker
                                 disabled={!isEditable}
                                 style={ newReportStyles.dateStyleClass }
                                 customStyles={{
                                     dateInput: {
-                                        borderWidth:0,
-                                    }
+                                        borderColor: '#e0e8eb',
+                                        backgroundColor: '#e0e8eb',
+                                        borderRadius: 5,
+                                    },
                                 }}
                                 date={field.defaultValue}
                                 mode="date"
@@ -216,12 +214,13 @@ export class NewReportScreen extends React.Component {
 
                 case 7: // Instruction
                     return (
-                        <Text
-                            style = { newReportStyles.textStyleClass }
-                            key={index} >
-                            Instructions{'\n'}
-                            {field.defaultValue}
-                        </Text>
+                        <View key={index} >
+                            <Text style={ newReportStyles.textStyleClass }>Instructions</Text>
+                            <Text
+                                style = { newReportStyles.multilinedTextInputStyleClass }>
+                                {field.defaultValue}
+                            </Text>
+                        </View>
                     );
 
                 case 8: // Text (Multiple row text field)
@@ -229,7 +228,6 @@ export class NewReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>Description</Text>
                             <TextInput
-                                key={index}
                                 editable={isEditable}
                                 style = { newReportStyles.multilinedTextInputStyleClass }
                                 placeholder={field.defaultValue}
@@ -243,12 +241,13 @@ export class NewReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>Time</Text>
                             <DatePicker
-                                key={index}
                                 disabled={!isEditable}
                                 style={ newReportStyles.dateStyleClass }
                                 customStyles={{
                                     dateInput: {
-                                        borderWidth:0,
+                                        borderColor: '#e0e8eb',
+                                        backgroundColor: '#e0e8eb',
+                                        borderRadius: 5,
                                     }
                                 }}
                                 date={field.defaultValue}
@@ -268,7 +267,6 @@ export class NewReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>Numerical Field</Text>
                             <TextInput
-                                key={index}
                                 editable={isEditable}
                                 style={ newReportStyles.textInputStyleClass }
                                 placeholder={field.defaultValue}
@@ -293,13 +291,13 @@ export class NewReportScreen extends React.Component {
 
                 case 12: // User dropdown
                     return (
-                        <ModalDropdown
-                            key={index}
-                            style={ newReportStyles.mainDropdownStyleClass }
-                            dropdownStyle={ newReportStyles.dropStyleClass }
-                            disabled={!isEditable}
-                            options={JSON.parse(field.defaultValue)}
-                        />
+                        <View key={index} style={ newReportStyles.mainDropdownStyleClass }>
+                            <ModalDropdown
+                                dropdownStyle={ newReportStyles.dropStyleClass }
+                                disabled={!isEditable}
+                                options={JSON.parse(field.defaultValue)}/>
+                            <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
+                        </View>
                     );
 
                 default:
@@ -336,6 +334,7 @@ export class NewReportScreen extends React.Component {
         );
     }
 }
+
 
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
