@@ -19,7 +19,7 @@ export class LoginScreen extends React.Component {
         /*
         this.state = {
             // isLoading     : true,
-            emailAddress    : '',
+            username    : '',
             password        : '',
             serverUrl       : ''
         };
@@ -73,8 +73,8 @@ export class LoginScreen extends React.Component {
 
                 <Input
                     name={'user'}
-                    placeholder={ strings('login.email') }
-                    onChangeText={emailAddress => this.props.dispatch(insertEmail(emailAddress))}
+                    placeholder={ strings('login.username') }
+                    onChangeText={username => this.props.dispatch(insertUsername(username))}
                 />
                 <Input
                     name={'lock'}

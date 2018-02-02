@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Animated, FlatList, Text } from 'react-native';
+import { View, Animated, FlatList, Text, Dimensions } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import styles from './styles';
@@ -7,17 +7,17 @@ import { strings } from '../../locales/i18n';
 import { RightButton } from '../RightButton';
 import { StatusBadge } from '../StatusBadge';
 
-
 class Layout extends Component{
     constructor(props){
         super(props);
+
         this.state = {
             maxHeight  : 0,
             minHeight  : 0,
             itemsCount : 5,
             updated    : false,
             expanded   : false,                     // Checks whether the reports of the template are shown or not.
-            animation  : new Animated.Value(60),    /* Initializes the animation state as 50 (same height as the ListItem
+            animation  : new Animated.Value(Dimensions.get('window').width < 350 ? 50 : 60),    /* Initializes the animation state as 60 (same height as the ListItem
                                                     component which includes the title of the Layout etc.)
                                                     This is the minimum height when the layout component isn't expanded. */
         };
@@ -43,7 +43,8 @@ class Layout extends Component{
 
     // Sets maximum height when opened.
     _setMaxHeight = (event) => {
-        this.setState({ maxHeight : event.nativeEvent.layout.height + 60 });
+        const h = Dimensions.get('window').width < 350 ? 50 : 60;
+        this.setState({ maxHeight : event.nativeEvent.layout.height + h });
     };
 
     // Sets minimum height when closed.
@@ -52,15 +53,18 @@ class Layout extends Component{
     };
 
     showMore = () => {
+        const h = Dimensions.get('window').width < 350 ? 50 : 60;
         this.setState(
             {
                 itemsCount: (this.state.itemsCount + 5),
                 updated: true,
-                maxHeight: this.state.maxHeight + 300
+                maxHeight: this.state.maxHeight + 5 * h,
             },
             () => { this.updateHeight(true); }
         );
     };
+
+
 
     render(){
         // simplifies referencing (instead of this.props.title, title is enough)
@@ -73,6 +77,7 @@ class Layout extends Component{
                         containerStyle={ styles.templateContainer }
                         onPress={this.toggle} // Opens or closes the layout component.
                         title={title} // Title of the template.
+                        titleStyle = { styles.templateTitle }
                         //Number of reports as a subtitle
                         subtitle={`${nofReports} ${(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
                         hideChevron={true}
@@ -95,6 +100,7 @@ class Layout extends Component{
                             <ListItem
                                 key={item.title}
                                 containerStyle={ styles.reportContainer }
+                                titleStyle = { styles.reportTitle }
                                 title={`${item.orderNo}\t${item.title}`}
                                 subtitle={item.dateCreated}
                                 hideChevron = {true}

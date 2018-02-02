@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
 import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL, SET_AUTHENTICATED, INSERT_TOKEN } from '../actions/user';
 
+
 const initialState = {
-    email: null,
+    username: null,
     password: null,
     serverUrl: null,
     userID: 1,
@@ -12,10 +13,10 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case INSERT_EMAIL:
+        case INSERT_USERNAME:
             return {
                 ...state,
-                email: action.email || null
+                username: action.username || null
             };
         case INSERT_PASSWORD:
             return {

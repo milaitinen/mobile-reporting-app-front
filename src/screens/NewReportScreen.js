@@ -9,7 +9,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, fetchFieldsByID } from './api';
+import { createNewReport, fetchFieldsByTemplateID } from './api';
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import { strings } from '../locales/i18n';
@@ -26,11 +26,11 @@ export class NewReportScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getFieldsByID(this.props.templateID);
+        this.getFieldsByTemplateID(this.props.templateID);
     }
 
-    getFieldsByID = (ID) => {
-        fetchFieldsByID(ID)
+    getFieldsByTemplateID = (templateID) => {
+        fetchFieldsByTemplateID(templateID)
             .then(responseJson => {
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
@@ -56,7 +56,7 @@ export class NewReportScreen extends React.Component {
             ]
         };
 
-        createNewReport(this.props.userID, report).then(response => {
+        createNewReport(this.props.username, report).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
@@ -274,13 +274,13 @@ export class NewReportScreen extends React.Component {
 
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
-    const userID = state.user.userID;
+    const username = state.user.username;
     const isEditable = state.newReport.isEditable;
     const templateID = state.newReport.templateID;
     const title = state.newReport.title;
     const number = state.newReport.number;
     return {
-        userID,
+        username,
         isEditable,
         templateID,
         title,
