@@ -30,8 +30,9 @@ export class NewReportScreen extends React.Component {
     }
 
     getFieldsByTemplateID = (templateID) => {
-        fetchFieldsByTemplateID(templateID)
+        fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
             .then(responseJson => {
+                console.log('responseJson', responseJson);
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .catch(error => console.error(error) )
@@ -56,7 +57,7 @@ export class NewReportScreen extends React.Component {
             ]
         };
 
-        createNewReport(this.props.username, report).then(response => {
+        createNewReport(this.props.username, report, this.props.token).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
@@ -279,12 +280,14 @@ const mapStateToProps = (state) => {
     const templateID = state.newReport.templateID;
     const title = state.newReport.title;
     const number = state.newReport.number;
+    const token = state.user.token;
     return {
         username,
         isEditable,
         templateID,
         title,
-        number
+        number,
+        token
     };
 };
 
