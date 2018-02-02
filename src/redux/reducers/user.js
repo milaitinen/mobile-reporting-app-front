@@ -33,10 +33,11 @@ const userReducer = (state = initialState, action) => {
                 authenticated: action.state,
             };
         case INSERT_TOKEN:
+            console.log('action.token', action.token);
             return {
                 ...state,
                 token: action.token
-            }
+            };
         default:
             return state;
     }

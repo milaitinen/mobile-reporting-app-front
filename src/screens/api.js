@@ -13,12 +13,11 @@ export const login = (username, password) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            "username": username,
-            "password": password,
+            'username': username,
+            'password': password,
         })
     }).then(response => {
-        console.log(response);
-        return response.json;
+        return JSON.parse(response._bodyInit).token;
     }).catch(err => alert(err));
 };
 
@@ -37,7 +36,7 @@ export const mockLogin = (email, password) => {
 export const verifyToken = (token) => {
     //TODO
     return null;
-}
+};
 
 
 // Send a new report to the server, along with the userID
@@ -77,8 +76,10 @@ const fetchLocalFieldsByID = (id) => {
 };
 
 const fetchRemoteFieldsByID = (id, token) => {
+    console.log('Bearer ${token}', `Bearer ${token}`)
     return (
         fetch(`${url}/templates/${id}/fields`, {
+            method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
@@ -92,12 +93,14 @@ const fetchRemoteFieldsByID = (id, token) => {
 // Fetch templates from the server or ASyncStorage, depending on the availability of internet connection
 // Fetch templates that the user has rights to
 export const fetchTemplatesByUserID = (ID, token) => {
+    console.log('Bearer ${token}', `Bearer ${token}`)
     return isNetworkConnected()
         .then((isConnected) => {
             if (!isConnected) { return fetchLocalTemplatesByUserID(ID); }
             return fetchRemoteTemplatesByUserID(ID, token);
         })
         .then((templates) => {
+            console.log('templates', templates);
             saveData(`${url}/users/${ID}/templates`, templates);
             return templates;
         });
@@ -117,11 +120,12 @@ const fetchLocalTemplatesByUserID = (ID) => {
 };
 
 // Fetch all templates from the server
-const fetchRemoteTemplatesByUserID = (ID, token) => {
+const fetchRemoteTemplatesByUserID = (userName, token) => {
     return (
-        fetch(`${url}/users/${ID}/templates`, {
+        fetch(`${url}/users/${userName}/templates`, {
+            method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`
             }
         })
             .then(response => {
@@ -160,8 +164,9 @@ const fetchLocalReportsByTemplateID = (ID) => {
 const fetchRemoteReportsByTemplateID = (ID, token) => {
     return (
         fetch(`${url}/reports?templateid=${ID}`, {
+            method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`
             }
         })
             .then(response => {
@@ -197,8 +202,9 @@ const fetchLocalReportsByUserID = (ID) => {
 const fetchRemoteReportsByUserID = (ID, token) => {
     return (
         fetch(`${url}/users/${ID}/reports`, {
+            method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`
             }
         })
             .then(response => {

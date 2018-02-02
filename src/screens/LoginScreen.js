@@ -37,21 +37,25 @@ export class LoginScreen extends React.Component {
         }
     }
 
-
-    logIn = () => {
-        const loginResponse = login(this.props.email, this.props.password);
-        console.log(loginResponse);
-        if (loginResponse === invalidCredentialsResponse) {
-            //todo: some other actions?
-            alert('Invalid username or password'); //todo: get string from locales
-        }
-        else {
-            const { token } = loginResponse;
+    checkValidity = (response) => {
+        if (response === invalidCredentialsResponse) {
+            alert('Invalid username or password');
+        } else {
+            const token = response;
+            console.log('token', token);
             this.props.dispatch(setAuthenticated(true));
             this.props.dispatch(insertToken(token));
-
             this.props.navigation.navigate('drawerStack');
         }
+    };
+
+
+    logIn = () => {
+        login(this.props.email, this.props.password)
+            .then(response => {
+                console.log('response', response);
+                this.checkValidity(response);
+            });
     };
 
     render() {
