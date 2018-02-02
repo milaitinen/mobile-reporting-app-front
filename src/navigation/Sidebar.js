@@ -2,7 +2,7 @@ import { NavigationActions } from 'react-navigation';
 import React from 'react';
 import { View, Button } from 'react-native';
 import { strings } from '../locales/i18n';
-import { insertEmail, insertPassword, insertToken, setAuthenticated } from '../redux/actions/user';
+import { insertUsername, insertPassword, insertToken, setAuthenticated } from '../redux/actions/user';
 import { connect } from 'react-redux';
 
 class Sidebar extends React.Component {
@@ -13,7 +13,7 @@ class Sidebar extends React.Component {
         // perform other logging out related tasks here
 
         this.props.dispatch(setAuthenticated(false));
-        this.props.dispatch(insertEmail(null));
+        this.props.dispatch(insertUsername(null));
         this.props.dispatch(insertPassword(null));
         this.props.dispatch(insertToken(null));
 
@@ -44,6 +44,6 @@ const mapStateToProps = (store) => {
     return  {
         authenticated: store.user.authenticated,
     };
-}
+};
 
 export default connect(mapStateToProps)(Sidebar);

@@ -38,7 +38,7 @@ export class TemplateScreen extends Component {
         // TEMPORARY: not sure if this is the best solution
         if (this.isEmpty(this.props.templates)) {
             this.getTemplatesAndReports();
-            fetchReportsByUsername(this.props.username)
+            fetchReportsByUsername(this.props.username, this.props.token)
                 .then(responseJson => this.props.dispatch(storeReports(responseJson)))
                 .catch(error => console.error(error))
                 .done();
@@ -63,10 +63,10 @@ export class TemplateScreen extends Component {
         of reportsByTemplates, and sets isLoading and refreshing to false.
     */
     getTemplatesAndReports = () => {
-        fetchTemplatesByUsername(this.props.username)
+        fetchTemplatesByUsername(this.props.username, this.props.token)
             .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
             .then(() => {
-                const reportsByTemplateID = Object.keys(this.props.templates).map((templateID) => fetchReportsByTemplateID(this.props.username, templateID));
+                const reportsByTemplateID = Object.keys(this.props.templates).map((templateID) => fetchReportsByTemplateID(this.props.username, templateID, this.props.token));
                 Promise.all(reportsByTemplateID)
                     .then(data => {
                         this.props.dispatch(storeReportsByTemplateID(data));
@@ -149,7 +149,7 @@ const mapStateToProps = (state) => {
     const reportsByTempID = state.reportsByTempID;
     const token = state.user.token;
     return {
-        username: username,
+        username,
         templates,
         reportsByTempID,
         token

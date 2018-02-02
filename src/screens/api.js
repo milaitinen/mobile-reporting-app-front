@@ -92,6 +92,8 @@ const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
  Fetch templates from the server or ASyncStorage, depending on the availability of internet connection.
  Fetch templates that the user has rights to. */
 export const fetchTemplatesByUsername = (username, token) => {
+    console.log('username', username);
+    console.log('token', token);
     return isNetworkConnected()
         .then((isConnected) => {
             if (!isConnected) { return fetchLocalTemplatesByUsername(username); }

@@ -1,14 +1,14 @@
 /* eslint-disable no-undef */
-import { INSERT_EMAIL, INSERT_PASSWORD, INSERT_SERVERURL, SET_AUTHENTICATED, INSERT_TOKEN } from '../actions/user';
+import { INSERT_USERNAME, INSERT_PASSWORD, INSERT_SERVERURL, SET_AUTHENTICATED, INSERT_TOKEN } from '../actions/user';
 
 
 const initialState = {
-    username: null,
-    password: null,
+    username: 'Maisa',
+    password: 'password',
     serverUrl: null,
     userID: 1,
     authenticated: false,
-    token: null
+    token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNYWlzYSJ9.BjXpm0pVywX1eJaB5pDy_LkVCJd6cvUHRUcB0ZQu958'
 };
 
 const userReducer = (state = initialState, action) => {

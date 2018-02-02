@@ -7,7 +7,7 @@ import { strings } from '../locales/i18n';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
-import { insertEmail, insertPassword, insertServerUrl, setAuthenticated, insertToken } from '../redux/actions/user';
+import { insertUsername, insertPassword, insertServerUrl, setAuthenticated, insertToken } from '../redux/actions/user';
 import { login, mockLogin, verifyToken, invalidCredentialsResponse } from './api';
 
 // "export" necessary in order to test component without Redux store
@@ -26,7 +26,7 @@ export class LoginScreen extends React.Component {
         */
 
 
-        if (this.props.token != null) {
+        if (this.props.token !== null) {
             //TODO: verify token
             /*
             const response = verifyToken(this.props.user.token);
@@ -37,24 +37,17 @@ export class LoginScreen extends React.Component {
         }
     }
 
-    checkValidity = (response) => {
-        if (response === invalidCredentialsResponse) {
-            alert('Invalid username or password');
-        } else {
-            const token = response;
-            console.log('token', token);
-            this.props.dispatch(setAuthenticated(true));
-            this.props.dispatch(insertToken(token));
-            this.props.navigation.navigate('drawerStack');
-        }
-    };
-
-
     logIn = () => {
-        login(this.props.email, this.props.password)
+        login(this.props.username, this.props.password)
             .then(response => {
-                console.log('response', response);
-                this.checkValidity(response);
+                if (response === undefined) { // TODO change undefined to invalidCredentialsResponse?
+                    alert('Invalid username or password');
+                } else {
+                    const token = response;
+                    this.props.dispatch(setAuthenticated(true));
+                    this.props.dispatch(insertToken(token));
+                    this.props.navigation.navigate('drawerStack');
+                }
             });
     };
 
@@ -104,12 +97,12 @@ export class LoginScreen extends React.Component {
 // NOTE: only 'authenticated' is currently in use. Others are not kept track of in Redux.
 const mapStateToProps = (state) => {
     const authenticated = state.user.authenticated;
-    const email = state.user.email;
     const password = state.user.password;
+    const username = state.user.username;
     return {
         authenticated,
-        email,
         password,
+        username
     };
 };
 
