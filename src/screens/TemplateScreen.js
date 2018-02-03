@@ -12,11 +12,11 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchReportsByUsername } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, /*fetchReportsByUsername*/ } from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
-import { storeReports } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
+// import { storeReports } from '../redux/actions/reports';
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
@@ -38,10 +38,6 @@ export class TemplateScreen extends Component {
         // TEMPORARY: not sure if this is the best solution
         if (this.isEmpty(this.props.templates)) {
             this.getTemplatesAndReports();
-            fetchReportsByUsername(this.props.username, this.props.token)
-                .then(responseJson => this.props.dispatch(storeReports(responseJson)))
-                .catch(error => console.error(error))
-                .done();
         } else {
             this.setState({ refreshing: false, isLoading: false });
         }
@@ -76,6 +72,13 @@ export class TemplateScreen extends Component {
             })
             .catch(error => console.error(error))
             .done();
+
+        /*
+        fetchReportsByUsername(this.props.username, this.props.token)
+            .then(responseJson => this.props.dispatch(storeReports(responseJson)))
+            .catch(error => console.error(error))
+            .done();
+        */
     };
 
     // Handler function for refreshing the data and refetching.
