@@ -4,6 +4,7 @@ const initialState = {};
 
 // return Array(Array(reports)) as object that has templateID as its keys and matching reports as its values (in Array)
 const matchArrayWithTemplateID = (state, action) => {
+    if (action.reportsByTempID.length < 1) return {};
     return (
         action.reportsByTempID.map((report) => {
             const reportsByID = {};

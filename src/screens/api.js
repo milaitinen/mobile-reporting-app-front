@@ -128,6 +128,10 @@ const fetchRemoteTemplatesByUsername = (username, token) => {
             }
         })
             .then(response => {
+                const templates = (response._bodyText === '') ? response._bodyText = '[]' : response;
+                console.log('templates', templates);
+                console.log('responseA', response);
+                //console.log('responseA.json()', response.json());
                 return response.json();
             })
     );
@@ -205,6 +209,8 @@ const fetchRemoteReportsByUsername = (username, token) => {
             }
         })
             .then(response => {
+                console.log('responseB', response);
+                //console.log('responseB.json()', response.json());
                 return response.json();
             })
     );
