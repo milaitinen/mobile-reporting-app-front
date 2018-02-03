@@ -46,7 +46,7 @@ const newReportStyles = EStyleSheet.create({
     },
 
     mainDropdownStyleClass: {
-        flex: 1,
+        //flex: 1,
         flexDirection: 'row',
         backgroundColor: '#e0e8eb',
         paddingLeft: 5,
@@ -78,7 +78,7 @@ const newReportStyles = EStyleSheet.create({
         color: '#000000',
         fontSize: 20,
         flex: 1,
-        left: 30,
+        left: 25,
         //paddingleft: 10,
     },
 

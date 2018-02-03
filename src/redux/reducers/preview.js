@@ -14,7 +14,7 @@ const previewReducer = (state = initialState, action) => {
             return {
                 ...state,
                 templateID: action.templateID || null,
-                isEditable: action.isEditable || null
+                isEditable: action.isEditable
             };
         case INSERT_TITLE:
             return {

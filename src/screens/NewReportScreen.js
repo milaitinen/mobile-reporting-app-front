@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking,  TouchableHighlight } from 'react-native';
+import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import RadioForm from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
@@ -291,8 +291,9 @@ export class NewReportScreen extends React.Component {
 
                 case 12: // User dropdown
                     return (
-                        <View key={index} style={ newReportStyles.mainDropdownStyleClass }>
+                        <View key={index} style={ newReportStyles.mainDropdownStyleClass } onPress={() => this.modalDropdown.show() }>
                             <ModalDropdown
+                                ref={ ModalDrop => this.modalDropdown = ModalDrop }
                                 dropdownStyle={ newReportStyles.dropStyleClass }
                                 disabled={!isEditable}
                                 options={JSON.parse(field.defaultValue)}/>
@@ -307,6 +308,7 @@ export class NewReportScreen extends React.Component {
 
             }
         });
+
 
         return (
             <AppBackground>

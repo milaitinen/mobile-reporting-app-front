@@ -3,7 +3,7 @@ import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } 
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import { Checkbox } from '../components/Checkbox';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import RadioForm from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
@@ -109,20 +109,23 @@ export class NewReportScreen extends React.Component {
 
                 case 1: // Name
                     return (
-                        <TextInput
-                            key={index}
-                            editable={isEditable}
-                            placeholder={field.defaultValue}
-                            onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
-                            underlineColorAndroid='transparent'
-                            style={newReportStyles.textInputStyleClass}
-                        />
+                        <View key={index}>
+                            <Text style={ newReportStyles.textStyleClass }>Name</Text>
+                            <TextInput
+                                editable={!isEditable}
+                                placeholder={field.defaultValue}
+                                onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
+                                underlineColorAndroid='transparent'
+                                style={newReportStyles.textInputStyleClass}
+                            />
+                        </View>
                     );
 
                 case 2: // Checkbox
                     return (
                         <Checkbox
                             key={index}
+                            style={ newReportStyles.checkboxStyle }
                             title={'This is a nice checkbox'}
                             editable={isEditable}
                         />
@@ -130,36 +133,38 @@ export class NewReportScreen extends React.Component {
 
                 case 3: // Dropdown
                     return (
-                        <ModalDropdown
-                            key={index}
-                            disabled={!isEditable}
-                            options={['option 1', 'option 2']}
-                            style={ newReportStyles.mainDropdownStyleClass }
-                            dropdownStyle={ newReportStyles.dropStyleClass }
+                        <View key={index} style={newReportStyles.mainDropdownStyleClass}>
+                            <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
+                            <ModalDropdown
+                                disabled={!isEditable}
+                                options={['option 1', 'option 2']}
+                                dropdownStyle={ newReportStyles.dropStyleClass }
 
-                            renderRow={ () =>
-                                <View>
-                                    <ModalDropdown
-                                        options={['option 3', 'option 4']}
-                                        style={ newReportStyles.lowerDropdownStyleClass }
-                                        dropdownStyle={ newReportStyles.dropStyleClass }
-                                    />
-                                </View>
-                            }
-
-                        />
+                                renderRow={ () =>
+                                    <View>
+                                        <ModalDropdown
+                                            options={['option 3', 'option 4']}
+                                            style={ newReportStyles.lowerDropdownStyleClass }
+                                            dropdownStyle={ newReportStyles.dropStyleClass }
+                                        />
+                                    </View>
+                                }
+                            />
+                        </View>
 
                     );
 
                 case 4: // TextRow (One row text field)
                     return (
-                        <TextInput
-                            key={index}
-                            editable={isEditable}
-                            placeholder={field.defaultValue}
-                            underlineColorAndroid='transparent'
-                            style={newReportStyles.textInputStyleClass}
-                        />
+                        <View key={index}>
+                            <Text style={ newReportStyles.textStyleClass }>Text Field</Text>
+                            <TextInput
+                                editable={!isEditable}
+                                placeholder={field.defaultValue}
+                                underlineColorAndroid='transparent'
+                                style={newReportStyles.textInputStyleClass}
+                            />
+                        </View>
                     );
 
                 case 5: // Choice (Yes/No)
@@ -181,93 +186,118 @@ export class NewReportScreen extends React.Component {
 
                 case 6: // Calendar
                     return (
-                        <DatePicker
-                            key={index}
-                            disabled={!isEditable}
-                            style={ newReportStyles.dateStyleClass }
-                            date={field.defaultValue}
-                            mode="date"
-                            placeholder="select date"
-                            format="YYYY-MM-DD"
-                            minDate="2018-05-01"
-                            maxDate="2018-06-01"
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.timeIconStyle }/>}
-                            onDateChange={(date) => {this.setState({ date: date });}}
-                        />
+                        <View key={index} >
+                            <Text style={ newReportStyles.textStyleClass }>Date</Text>
+                            <DatePicker
+                                disabled={!isEditable}
+                                style={ newReportStyles.dateStyleClass }
+                                customStyles={{
+                                    dateInput: {
+                                        borderColor: '#e0e8eb',
+                                        backgroundColor: '#e0e8eb',
+                                        borderRadius: 5,
+                                    },
+                                }}
+                                date={field.defaultValue}
+                                mode="date"
+                                placeholder="select date"
+                                format="YYYY-MM-DD"
+                                minDate="2018-05-01"
+                                maxDate="2018-06-01"
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}
+                                onDateChange={(date) => {this.setState({ date: date });}}
+                            />
+                        </View>
                     );
 
                 case 7: // Instruction
                     return (
-                        <Text
-                            style = { { marginTop: 4, marginBottom: 4 } }
-                            key={index} >
-                            {field.defaultValue}
-
-                        </Text>
+                        <View key={index} >
+                            <Text style={ newReportStyles.textStyleClass }>Instructions</Text>
+                            <Text
+                                style = { newReportStyles.multilinedTextInputStyleClass }>
+                                {field.defaultValue}
+                            </Text>
+                        </View>
                     );
 
                 case 8: // Text (Multiple row text field)
                     return (
-                        <TextInput
-                            key={index}
-                            editable={isEditable}
-                            style = { newReportStyles.multilinedTextInputStyleClass }
-                            placeholder={field.defaultValue}
-                            multiline={true}
-                        />
+                        <View key={index}>
+                            <Text style={ newReportStyles.textStyleClass }>Description</Text>
+                            <TextInput
+                                editable={!isEditable}
+                                style = { newReportStyles.multilinedTextInputStyleClass }
+                                placeholder={field.defaultValue}
+                                multiline={true}
+                            />
+                        </View>
                     );
 
                 case 9: // Time
                     return (
-                        <DatePicker
-                            key={index}
-                            disabled={!isEditable}
-                            style={ newReportStyles.dateStyleClass }
-                            date={field.defaultValue}
-                            mode="time"
-                            format="HH:mm"
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            minuteInterval={10}
-                            iconComponent={<Icon name={'schedule'} type={'MaterialIcons'} iconStyle={ newReportStyles.timeIconStyle }/>}
-                            onDateChange={(time) => {this.setState({ time: time });}}
-                        />
+                        <View key={index}>
+                            <Text style={ newReportStyles.textStyleClass }>Time</Text>
+                            <DatePicker
+                                disabled={!isEditable}
+                                style={ newReportStyles.dateStyleClass }
+                                customStyles={{
+                                    dateInput: {
+                                        borderColor: '#e0e8eb',
+                                        backgroundColor: '#e0e8eb',
+                                        borderRadius: 5,
+                                    }
+                                }}
+                                date={field.defaultValue}
+                                mode="time"
+                                format="HH:mm"
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                minuteInterval={10}
+                                iconComponent={<Icon name={'schedule'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}
+                                onDateChange={(time) => {this.setState({ time: time });}}
+                            />
+                        </View>
                     );
 
                 case 10: // Digits (Text input that only accepts numeric characters)
                     return (
-                        <TextInput
-                            key={index}
-                            editable={isEditable}
-                            style={ newReportStyles.textInputStyleClass }
-                            placeholder={field.defaultValue}
-                            keyboardType = 'numeric'
-                            onChangeText={(text)=> this.onChanged(text)}
-                            value = {this.state.number}
-                        />
+                        <View key={index}>
+                            <Text style={ newReportStyles.textStyleClass }>Numerical Field</Text>
+                            <TextInput
+                                editable={!isEditable}
+                                style={ newReportStyles.textInputStyleClass }
+                                placeholder={field.defaultValue}
+                                keyboardType = 'numeric'
+                                onChangeText={(text)=> this.onChanged(text)}
+                                value = {this.state.number}
+                            />
+                        </View>
                     );
 
                 case 11: // Link
                     return (
-                        <Text
-                            key={index}
-                            style={ newReportStyles.linkStyleClass }
-                            onPress={() => Linking.openURL(field.defaultValue)}>
-                            Link to somewhere
-                        </Text>
+                        <View key={index} style={{ flexDirection: 'row' }}>
+                            <Icon name={'link'} type={'feather'} iconStyle={ newReportStyles.linkIconStyle }/>
+                            <Text
+                                style={ newReportStyles.linkStyleClass }
+                                onPress={() => Linking.openURL(field.defaultValue)}>
+                                Link to somewhere
+                            </Text>
+                        </View>
                     );
 
                 case 12: // User dropdown
                     return (
-                        <ModalDropdown
-                            key={index}
-                            style={ newReportStyles.mainDropdownStyleClass }
-                            dropdownStyle={ newReportStyles.dropStyleClass }
-                            disabled={!isEditable}
-                            options={JSON.parse(field.defaultValue)}
-                        />
+                        <View key={index} style={ newReportStyles.mainDropdownStyleClass } onPress={ this.onPress } >
+                            <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
+                            <ModalDropdown
+                                dropdownStyle={ newReportStyles.dropStyleClass }
+                                disabled={!isEditable}
+                                options={JSON.parse(field.defaultValue)}/>
+                        </View>
                     );
 
                 default:
