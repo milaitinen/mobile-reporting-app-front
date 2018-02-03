@@ -3,7 +3,7 @@ import { Platform, AsyncStorage, NetInfo } from 'react-native';
 import { url } from './urlsetting';
 
 
-export const invalidCredentialsResponse = 'invalid credentials'; //TODO: update to match backend
+export const invalidCredentialsResponse = 'invalid credentials'; // TODO: update to match backend
 
 export const login = (username, password) => {
     return fetch(`${url}/login`, {
@@ -92,8 +92,6 @@ const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
  Fetch templates from the server or ASyncStorage, depending on the availability of internet connection.
  Fetch templates that the user has rights to. */
 export const fetchTemplatesByUsername = (username, token) => {
-    console.log('username', username);
-    console.log('token', token);
     return isNetworkConnected()
         .then((isConnected) => {
             if (!isConnected) { return fetchLocalTemplatesByUsername(username); }
@@ -128,10 +126,7 @@ const fetchRemoteTemplatesByUsername = (username, token) => {
             }
         })
             .then(response => {
-                const templates = (response._bodyText === '') ? response._bodyText = '[]' : response;
-                console.log('templates', templates);
-                console.log('responseA', response);
-                //console.log('responseA.json()', response.json());
+                (response._bodyText === '') ? response._bodyText = '[]' : response;
                 return response.json();
             })
     );

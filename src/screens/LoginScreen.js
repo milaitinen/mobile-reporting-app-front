@@ -7,7 +7,7 @@ import { strings } from '../locales/i18n';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
-import { insertUsername, insertPassword, /*insertServerUrl,*/ setAuthenticated, insertToken } from '../redux/actions/user';
+import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from '../redux/actions/user';
 import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
 
 // "export" necessary in order to test component without Redux store
@@ -26,7 +26,7 @@ export class LoginScreen extends React.Component {
         */
 
 
-        if (this.props.token != null) {
+        if (this.props.token) { // this.props.token != null
             //TODO: verify token
             /*
             const response = verifyToken(this.props.user.token);
@@ -44,7 +44,6 @@ export class LoginScreen extends React.Component {
                     alert('Invalid username or password');
                 } else {
                     const token = response;
-                    this.props.dispatch(setAuthenticated(true));
                     this.props.dispatch(insertToken(token));
                     this.props.navigation.navigate('drawerStack');
                 }
@@ -94,13 +93,10 @@ export class LoginScreen extends React.Component {
 }
 
 // maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.username
-// NOTE: only 'authenticated' is currently in use. Others are not kept track of in Redux.
 const mapStateToProps = (state) => {
-    const authenticated = state.user.authenticated;
     const password = state.user.password;
     const username = state.user.username;
     return {
-        authenticated,
         password,
         username
     };
