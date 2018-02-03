@@ -13,8 +13,8 @@ const newReportReducer = (state = initialState, action) => {
         case CREATE_REPORT:
             return {
                 ...state,
-                templateID: action.templateID || null,
-                isEditable: action.isEditable || null
+                templateID: action.templateID,
+                isEditable: action.isEditable
             };
         case INSERT_TITLE:
             return {
