@@ -2,17 +2,19 @@ import React from 'react';
 import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
+import { Checkbox } from '../components/Checkbox';
 import RadioForm from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { Checkbox } from '../components/Checkbox';
 
 import { AppBackground } from '../components/AppBackground';
+import { EditButton } from '../components/EditButton';
 import { createNewReport, fetchFieldsByTemplateID } from './api';
 import { strings } from '../locales/i18n';
-import { insertTitle } from '../redux/actions/newReport';
+import { insertTitle, preview } from '../redux/actions/preview';
+import { createReport } from '../redux/actions/newReport';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -28,13 +30,12 @@ export class NewReportScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getFieldsByTemplateID(this.props.templateID);
+        this.getFieldsByID();
     }
 
-    getFieldsByTemplateID = (templateID) => {
-        fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
+    getFieldsByID = () => {
+        fetchFieldsByTemplateID(this.props.username, this.props.templateID, this.props.token)
             .then(responseJson => {
-                console.log('responseJson', responseJson);
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .catch(error => console.error(error) )
@@ -43,7 +44,7 @@ export class NewReportScreen extends React.Component {
 
     // Inserts data to server with a post method.
     send = () => {
-        const report = {
+        /* const report = {
             templateID: this.props.templateID,
             title: this.props.title,
             dateCreated: moment().format('YYYY-MM-DD'),
@@ -59,7 +60,7 @@ export class NewReportScreen extends React.Component {
             ]
         };
 
-        createNewReport(this.props.username, report, this.props.token).then(response => {
+        createNewReport(this.props.userID, report).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
@@ -72,7 +73,12 @@ export class NewReportScreen extends React.Component {
             Alert.alert(message);
         }).catch((error) => {
             console.error(error);
-        });
+        });*/
+    };
+
+    handleOnPress = () => {
+        this.props.dispatch(createReport(this.props.templateID, true));
+        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh });
     };
 
     onChanged = (text) => {
@@ -135,6 +141,7 @@ export class NewReportScreen extends React.Component {
                 case 3: // Dropdown
                     return (
                         <View key={index} style={newReportStyles.mainDropdownStyleClass}>
+                            <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
                             <ModalDropdown
                                 disabled={!isEditable}
                                 options={['option 1', 'option 2']}
@@ -150,7 +157,6 @@ export class NewReportScreen extends React.Component {
                                     </View>
                                 }
                             />
-                            <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
                         </View>
 
                     );
@@ -292,13 +298,12 @@ export class NewReportScreen extends React.Component {
 
                 case 12: // User dropdown
                     return (
-                        <View key={index} style={ newReportStyles.mainDropdownStyleClass } onPress={() => this.modalDropdown.show() }>
+                        <View key={index} style={ newReportStyles.mainDropdownStyleClass } onPress={ this.onPress } >
+                            <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
                             <ModalDropdown
-                                ref={ ModalDrop => this.modalDropdown = ModalDrop }
                                 dropdownStyle={ newReportStyles.dropStyleClass }
                                 disabled={!isEditable}
                                 options={JSON.parse(field.defaultValue)}/>
-                            <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
                         </View>
                     );
 
@@ -310,7 +315,6 @@ export class NewReportScreen extends React.Component {
             }
         });
 
-
         return (
             <AppBackground>
                 <View style={ newReportStyles.ViewContainer }>
@@ -318,6 +322,7 @@ export class NewReportScreen extends React.Component {
                         <ScrollView keyboardShouldPersistTaps={'handled'} style={ { backgroundColor: 'transparent' } }>
                             {renderedFields}
                         </ScrollView>
+                        <EditButton onPress={() => this.handleOnPress()} />
                     </View>
                 </View>
             </AppBackground>
@@ -338,22 +343,23 @@ export class NewReportScreen extends React.Component {
     }
 }
 
-
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
-    const username = state.user.username;
-    const isEditable = state.newReport.isEditable;
-    const templateID = state.newReport.templateID;
-    const title = state.newReport.title;
-    const number = state.newReport.number;
+    const userID = state.user.userID;
+    const isEditable = state.preview.isEditable;
+    const templateID = state.preview.templateID;
+    const title = state.preview.title;
+    const number = state.preview.number;
     const token = state.user.token;
+    const username = state.user.username;
     return {
-        username,
+        userID,
         isEditable,
         templateID,
         title,
         number,
-        token
+        token,
+        username
     };
 };
 

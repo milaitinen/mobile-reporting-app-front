@@ -7,7 +7,8 @@ export default EStyleSheet.create({
         marginLeft:0,
         marginRight: 0,
         overflow:'hidden',
-        borderRadius: 5,
+        borderRadius: '$containerBorderRadius',
+        height: 60,
         elevation: 3,
         shadowOffset: {
             width: 0,

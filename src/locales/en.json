@@ -20,7 +20,7 @@
   },
 
   "createNew": {
-    "createNew": "Create new report",
+    "createNew": "Create report",
     "enterNew": "Enter report name",
     "reportAdded": "Report sent"
   },

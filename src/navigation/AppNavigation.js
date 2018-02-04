@@ -5,6 +5,7 @@ import { Icon } from 'react-native-elements';
 import LoginScreen from '../screens/LoginScreen';
 import TemplateScreen from '../screens/TemplateScreen';
 import NewReportScreen from '../screens/NewReportScreen';
+import PreviewScreen from '../screens/PreviewScreen';
 import navigationStyles from './navigationStyles';
 import Sidebar from '../navigation/Sidebar';
 import { strings } from '../locales/i18n';
@@ -35,7 +36,41 @@ const TemplateStack = StackNavigator({
     },
     NewReport: {
         screen: NewReportScreen,
-        navigationOptions: strings('createNew.createNew')
+        navigationOptions: ({ navigation }) => ({
+            flex: 0.3,
+            headerTitle: strings('createNew.createNew') ,
+            headerStyle: navigationStyles.HeaderContainer,
+            headerTitleStyle: navigationStyles.ScreenHeader,
+            headerLeft:
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={35}
+                    iconStyle={navigationStyles.menuIcon}
+                    containerStyle={navigationStyles.menuIconContainer}
+                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
+                </Icon>
+        })
+    },
+    Preview: {
+        screen: PreviewScreen,
+        navigationOptions: ({ navigation }) => ({
+            flex: 0.3,
+            headerTitle: 'Preview',
+            headerStyle: navigationStyles.HeaderContainer,
+            headerTitleStyle: navigationStyles.ScreenHeader,
+            headerLeft:
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={35}
+                    iconStyle={navigationStyles.menuIcon}
+                    containerStyle={navigationStyles.menuIconContainer}
+                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
+                </Icon>
+        })
     },
 
 }, {

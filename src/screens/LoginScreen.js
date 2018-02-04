@@ -85,7 +85,7 @@ export class LoginScreen extends React.Component {
                 </SignInButton>
 
                 <Text style={loginStyles.copyright}>
-                    Copyright © Arter Oy 2017
+                    Copyright © Arter Oy 2018
                 </Text>
             </AppBackground>
         );

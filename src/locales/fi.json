@@ -5,7 +5,7 @@
     "username": "Käyttäjänimi",
     "password": "Salasana",
     "serverUrl": "Palvelimen osoite",
-    "signIn": "Kirjaudu sisään"
+    "signIn": "Kirjaudu"
   },
 
   "templates": {
@@ -20,7 +20,7 @@
   },
 
   "createNew": {
-    "createNew": "Luo uusi raportti",
+    "createNew": "Uusi raportti",
     "enterNew": "Raportin nimi",
     "reportAdded": "Raportti lähetetty"
   },

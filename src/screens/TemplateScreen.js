@@ -16,6 +16,7 @@ import { fetchReportsByTemplateID, fetchTemplatesByUsername, /*fetchReportsByUse
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
 import { createReport } from '../redux/actions/newReport';
+import { preview } from '../redux/actions/preview';
 // import { storeReports } from '../redux/actions/reports';
 
 // "export" necessary in order to test component without Redux store
@@ -96,8 +97,14 @@ export class TemplateScreen extends Component {
      app knows to which template the new report has to be added.
     */
     createNew = (templateID, isEditable) => {
-        this.props.dispatch(createReport(templateID, isEditable));
-        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh });
+        if (isEditable) {
+            this.props.dispatch(createReport(templateID, isEditable));
+            this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh });
+        }
+        else {
+            this.props.dispatch(preview(templateID, isEditable));
+            this.props.navigation.navigate('Preview', { refresh: this.handleRefresh });
+        }
     };
 
     render() {

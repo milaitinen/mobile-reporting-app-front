@@ -1,5 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import normalize from "react-native-elements/src/helpers/normalizeText";
+import normalize from 'react-native-elements/src/helpers/normalizeText';
 
 const styles = EStyleSheet.create({
 
@@ -31,8 +31,8 @@ const styles = EStyleSheet.create({
 
     badgeContainerStyle: {
         elevation: 3,
-        //width: 100,
-        borderRadius: 5,
+        width: 100,
+        borderRadius: '$containerBorderRadius',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
