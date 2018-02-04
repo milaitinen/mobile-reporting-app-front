@@ -25,8 +25,7 @@ export default EStyleSheet.create({
     },
 
     templateContainer: {
-        height: 60,
-        borderRadius: '$containerBorderRadius',
+        borderRadius: 5,
         backgroundColor: '$primaryWhite',
         paddingTop: 0,
         paddingRight: 0,
