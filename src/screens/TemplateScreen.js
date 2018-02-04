@@ -137,7 +137,7 @@ export class TemplateScreen extends Component {
                                 <Layout
                                     title={item.title}
                                     createNew={this.createNew}
-                                    nofReports={item.reportCount}
+                                    nofReports={this.props.reportsByTempID[item.id].length}
                                     templateID={item.id}
                                     data={this.props.reportsByTempID[item.id]}
                                 />
