@@ -94,13 +94,7 @@ class Layout extends Component{
         });
     };
 
-    /*
-    // Sets minimum height when closed.
-    _setMinHeight = (event) => {
-        this.setState({ minHeight : event.nativeEvent.layout.height });
-    };
-    */
-
+    // Shows more reports.
     showMore = () => {
         this.setState(
             {
@@ -160,7 +154,9 @@ class Layout extends Component{
                                     ? <Text style={styles.more} onPress={() => this.showMore()}>
                                         { strings('templates.showMore') }
                                     </Text>
-                                    : null
+                                    : <Text style={styles.noMoreReports}>
+                                        { strings('templates.endOfReports') }
+                                    </Text>
                             }
                         />
                     </ScrollView>

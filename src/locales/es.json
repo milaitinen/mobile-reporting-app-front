@@ -16,7 +16,8 @@
     "approved": "Aprobado",
     "sent": "Despachado",
     "draft:": "Boceto",
-    "showMore": "Enseñar más"
+    "showMore": "Enseñar más",
+    "endOfReports": "no hay más reportajes"
   },
 
   "createNew": {
