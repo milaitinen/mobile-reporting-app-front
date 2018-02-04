@@ -31,7 +31,6 @@ const styles = EStyleSheet.create({
 
     badgeContainerStyle: {
         elevation: 3,
-        width: 100,
         borderRadius: '$containerBorderRadius',
         flexDirection: 'row',
         justifyContent: 'space-between',
