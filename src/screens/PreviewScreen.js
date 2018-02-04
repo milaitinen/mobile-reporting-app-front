@@ -13,10 +13,11 @@ import { AppBackground } from '../components/AppBackground';
 import { EditButton } from '../components/EditButton';
 import { createNewReport, fetchFieldsByID } from './api';
 import { strings } from '../locales/i18n';
-import { insertTitle } from '../redux/actions/preview';
+import { insertTitle, preview } from '../redux/actions/preview';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
+import { createReport } from '../redux/actions/newReport';
 
 // "export" necessary in order to test component without Redux store
 export class NewReportScreen extends React.Component {
@@ -286,7 +287,7 @@ export class NewReportScreen extends React.Component {
                         <ScrollView keyboardShouldPersistTaps={'handled'} style={ { backgroundColor: 'transparent' } }>
                             {renderedFields}
                         </ScrollView>
-                        <EditButton /*onPress={this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh} )}*/ />
+                        <EditButton /*onPress={ NAVIGOISPA :(}*/ />
                     </View>
                 </View>
             </AppBackground>
@@ -319,7 +320,7 @@ const mapStateToProps = (state) => {
         isEditable,
         templateID,
         title,
-        number
+        number,
     };
 };
 
