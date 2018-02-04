@@ -16,7 +16,8 @@
     "approved": "Approved",
     "sent": "Sent",
     "draft:": "Draft",
-    "showMore": "Show more"
+    "showMore": "Show more",
+    "endOfReports": "No more reports"
   },
 
   "createNew": {

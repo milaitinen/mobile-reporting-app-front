@@ -94,4 +94,18 @@ export default EStyleSheet.create({
             padding: 10,
         },
     },
+
+    noMoreReports: {
+        color: '#a9a9a9',
+        padding: 10,
+        textAlign: 'center',
+
+        '@media (max-width: 350)': {
+            padding: 7,
+            fontSize: 12,
+        },
+        '@media (min-width: 350)': {
+            padding: 10,
+        },
+    },
 });

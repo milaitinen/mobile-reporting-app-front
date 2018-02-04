@@ -25,8 +25,10 @@ export class TemplateScreen extends Component {
     {
         super(props);
         this.state = {
-            isLoading   : true,     // Checks whether the app is loading or not.
-            refreshing  : false,    // Checks whether the app and its data is refreshing or not.
+            isLoading       : true,     // Checks whether the app is loading or not.
+            refreshing      : false,    // Checks whether the app and its data is refreshing or not.
+            scrollEnabled   : true,     // Checks whether the template screen is scrollable or not.
+            renderFooter    : false     // If true, empty space is rendered after the last template. This is set to true while a template is opened.
         };
     }
 
@@ -90,6 +92,27 @@ export class TemplateScreen extends Component {
         );
     };
 
+    // Determines whether this screen is scrollable or not.
+    setScrollEnabled = (bool) => {
+        this.setState(
+            {
+                scrollEnabled : bool
+            }
+        );
+    };
+
+    /*
+     Determines whether empty space is rendered after the last template.
+     Without this function it wouldn't be possible to autoscroll to the last templates.
+     */
+    setRenderFooter = (bool) => {
+        this.setState(
+            {
+                renderFooter : bool
+            }
+        );
+    };
+
     /*
      Function that passes navigation props and navigates to NewReportScreen.
      This makes it possible for the Layout component to navigate.
@@ -132,15 +155,23 @@ export class TemplateScreen extends Component {
                     <ReportSearchBar/>
                     <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
                         <FlatList
+                            ref={(c) => this._flatList = c}
+                            scrollEnabled={this.state.scrollEnabled}
                             data={ Object.values(this.props.templates) }
-                            renderItem={({ item }) =>
+                            renderItem={({ item, index }) =>
                                 <Layout
                                     title={item.title}
+                                    moveToTop={(viewPosition = 0) => this._flatList.scrollToIndex({ animated: true, index: index, viewPosition: viewPosition })}
+                                    setTemplateScreenScrollEnabled={this.setScrollEnabled}
+                                    setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
                                     nofReports={this.props.reportsByTempID[item.id].length}
                                     templateID={item.id}
                                     data={this.props.reportsByTempID[item.id]}
                                 />
+                            }
+                            ListFooterComponent={
+                                (this.state.renderFooter) && <View style={{ height: 500 }}/>
                             }
                             keyExtractor={item => item.id}
                             refreshing={this.state.refreshing}

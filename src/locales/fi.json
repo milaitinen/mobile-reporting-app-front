@@ -16,7 +16,8 @@
     "approved": "Hyväksytty",
     "sent": "Käsittelyssä",
     "draft:": "Luonnos",
-    "showMore": "Näytä lisää"
+    "showMore": "Näytä lisää",
+    "endOfReports": "Ei enempää raportteja"
   },
 
   "createNew": {
