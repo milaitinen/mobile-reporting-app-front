@@ -7,7 +7,8 @@ import { strings } from '../locales/i18n';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
-import { insertEmail, insertPassword, insertServerUrl } from '../redux/actions/user';
+import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from '../redux/actions/user';
+import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
@@ -15,19 +16,38 @@ export class LoginScreen extends React.Component {
     constructor(props)
     {
         super(props);
+        /*
         this.state = {
             // isLoading     : true,
-            emailAddress    : '',
+            username    : '',
             password        : '',
             serverUrl       : ''
         };
-    }
+        */
 
 
-    logIn = () => {
-        if (this.props.authenticated) {
+        if (this.props.token) { // this.props.token != null
+            //TODO: verify token
+            /*
+            const response = verifyToken(this.props.user.token);
+            if (someCondition(response)) {
+            }
+            */
             this.props.navigation.navigate('drawerStack');
         }
+    }
+
+    logIn = () => {
+        login(this.props.username, this.props.password)
+            .then(response => {
+                if (response === undefined) { // TODO change undefined to invalidCredentialsResponse?
+                    alert('Invalid username or password');
+                } else {
+                    const token = response;
+                    this.props.dispatch(insertToken(token));
+                    this.props.navigation.navigate('drawerStack');
+                }
+            });
     };
 
     render() {
@@ -45,14 +65,14 @@ export class LoginScreen extends React.Component {
 
                 <Input
                     name={'user'}
-                    placeholder={ strings('login.email') }
-                    onChangeText={emailAddress => this.props.dispatch(insertEmail(emailAddress))}
+                    placeholder={ strings('login.username') }
+                    onChangeText={username => this.props.dispatch(insertUsername(username))}
                 />
                 <Input
                     name={'lock'}
                     secureTextEntry={true}
                     placeholder={ strings('login.password') }
-                    onChangeText={password => this.setState({ password })}
+                    onChangeText={password => this.props.dispatch(insertPassword(password))}
                 />
                 <Input
                     name={'globe'}
@@ -72,12 +92,13 @@ export class LoginScreen extends React.Component {
     }
 }
 
-// maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
-// NOTE: only 'authenticated' is currently in use. Others are not kept track of in Redux.
+// maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.username
 const mapStateToProps = (state) => {
-    const authenticated = state.user.authenticated;
+    const password = state.user.password;
+    const username = state.user.username;
     return {
-        authenticated,
+        password,
+        username
     };
 };
 

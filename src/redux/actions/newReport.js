@@ -1,6 +1,6 @@
 // easier to refactor later and debug
-export const CREATE_REPORT = 'CREATE_REPORT';
-export const INSERT_TITLE = 'INSERT_TITLE';
+export const CREATE_REPORT  = 'CREATE_REPORT';
+export const INSERT_TITLE   = 'INSERT_TITLE';
 
 // return an object
 export const createReport = ( templateID, isEditable) => ({

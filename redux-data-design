@@ -20,10 +20,10 @@ actions-----------------------------------------------
 - plain JS (action) object with the property 'type' and arbitrary number of other properties that is optional
 - usually sent through Action Creators, that are functions, which, as the name suggests, creates actions.
 
-    e.g. "insertEmail" action creator that creates an action object with type 'INSERT_EMAIL'
+    e.g. "insertUsername" action creator that creates an action object with type 'INSERT_USERNAME'
 
-        export const insertEmail = (address) => ({
-            type: 'INSERT_EMAIL',
+        export const insertUsername = (address) => ({
+            type: 'INSERT_USERNAME',
             email: address
         });
 
@@ -39,7 +39,7 @@ reducers----------------------------------------------
 
         const userReducer = (state = initialState, action) => {
              switch (action.type) {
-                 case 'INSERT_EMAIL':
+                 case 'INSERT_USERNAME':
                      return {
                          ...state,
                          email: action.email

@@ -1,9 +1,10 @@
-import { STORE_TEMPLATES } from '../actions/templates';
+import { STORE_TEMPLATES, EMPTY_TEMPLATES } from '../actions/templates';
 
 const initialState = {};
 
 // return (Array(templates)) as object that has templateID as its keys and matching report as its values
 const matchTemplateID = (state, action) => {
+    if (action.templates.length < 1) return {};
     return (
         action.templates.map((template) => {
             const templateObj = {};
@@ -19,6 +20,9 @@ const templatesReducer = (state = initialState, action) => {
             const newTemplates = matchTemplateID(state, action);
             const newState = Object.assign(state.templates || {}, newTemplates);
             return newState;
+        }
+        case EMPTY_TEMPLATES: {
+            return initialState;
         }
         default:
             return state;
