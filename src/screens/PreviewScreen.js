@@ -282,9 +282,12 @@ export class NewReportScreen extends React.Component {
         return (
             <AppBackground>
                 <View style={ newReportStyles.ViewContainer }>
-                    <ScrollView keyboardShouldPersistTaps={'handled'} style ={ newReportStyles.ReportContainer }>
-                        {renderedFields}
-                    </ScrollView>
+                    <View style={ newReportStyles.ReportContainer }>
+                        <ScrollView keyboardShouldPersistTaps={'handled'} style={ { backgroundColor: 'transparent' } }>
+                            {renderedFields}
+                        </ScrollView>
+                        <EditButton /*onPress={this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh} )}*/ />
+                    </View>
                 </View>
             </AppBackground>
             /*

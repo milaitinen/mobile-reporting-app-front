@@ -313,7 +313,7 @@ export class NewReportScreen extends React.Component {
         return (
             <AppBackground>
                 <View style={ newReportStyles.ViewContainer }>
-                    <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportContainer } >
+                    <ScrollView keyboardShouldPersistTaps={'handled'}>
                         {renderedFields}
                     </ScrollView>
                 </View>
