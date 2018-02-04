@@ -14,7 +14,7 @@ class Layout extends Component{
         this.state = {
             maxHeight  : 475,
             minHeight  : Dimensions.get('window').width < 350 ? 50 : 60,
-            itemsCount : 5,
+            itemsCount : 20,
             updated    : false,
             expanded   : false,                     // Checks whether the reports of the template are shown or not.
             animation  : new Animated.Value(Dimensions.get('window').width < 350 ? 50 : 60),    /* Initializes the animation state as 60 (same height as the ListItem
@@ -104,7 +104,7 @@ class Layout extends Component{
     showMore = () => {
         this.setState(
             {
-                itemsCount: (this.state.itemsCount + 5),
+                itemsCount: (this.state.itemsCount + 20),
                 updated: true,
             }
         );
