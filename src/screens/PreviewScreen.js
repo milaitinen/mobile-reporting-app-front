@@ -112,7 +112,7 @@ export class NewReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>Name</Text>
                             <TextInput
-                                editable={!isEditable}
+                                editable={isEditable}
                                 placeholder={field.defaultValue}
                                 onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                                 underlineColorAndroid='transparent'
@@ -159,7 +159,7 @@ export class NewReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>Text Field</Text>
                             <TextInput
-                                editable={!isEditable}
+                                editable={isEditable}
                                 placeholder={field.defaultValue}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
@@ -228,7 +228,7 @@ export class NewReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>Description</Text>
                             <TextInput
-                                editable={!isEditable}
+                                editable={isEditable}
                                 style = { newReportStyles.multilinedTextInputStyleClass }
                                 placeholder={field.defaultValue}
                                 multiline={true}
@@ -267,7 +267,7 @@ export class NewReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>Numerical Field</Text>
                             <TextInput
-                                editable={!isEditable}
+                                editable={isEditable}
                                 style={ newReportStyles.textInputStyleClass }
                                 placeholder={field.defaultValue}
                                 keyboardType = 'numeric'
