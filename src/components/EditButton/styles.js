@@ -8,7 +8,7 @@ export default EStyleSheet.create({
         elevation: 3,
         marginBottom: 10,
         marginRight: 10,
-        alignSelf: 'flex-end',
+        //alignSelf: 'flex-end',
         position: 'absolute',
         shadowOffset: {
             width: 0,
