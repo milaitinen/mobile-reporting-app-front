@@ -10,9 +10,11 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
+import { EditButton } from '../components/EditButton';
 import { createNewReport, fetchFieldsByID } from './api';
 import { strings } from '../locales/i18n';
-import { insertTitle } from '../redux/actions/preview';
+import { insertTitle, preview } from '../redux/actions/preview';
+import { createReport } from '../redux/actions/newReport';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -72,6 +74,11 @@ export class NewReportScreen extends React.Component {
         }).catch((error) => {
             console.error(error);
         });
+    };
+
+    handleOnPress = () => {
+        this.props.dispatch(createReport(this.props.templateID, true));
+        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh });
     };
 
     onChanged = (text) => {
@@ -312,9 +319,10 @@ export class NewReportScreen extends React.Component {
             <AppBackground>
                 <View style={ newReportStyles.ViewContainer }>
                     <View style={ newReportStyles.ReportContainer }>
-                        <ScrollView keyboardShouldPersistTaps={'handled'} >
+                        <ScrollView keyboardShouldPersistTaps={'handled'} style={ { backgroundColor: 'transparent' } }>
                             {renderedFields}
                         </ScrollView>
+                        <EditButton onPress={() => this.handleOnPress()} />
                     </View>
                 </View>
             </AppBackground>
@@ -347,7 +355,7 @@ const mapStateToProps = (state) => {
         isEditable,
         templateID,
         title,
-        number
+        number,
     };
 };
 

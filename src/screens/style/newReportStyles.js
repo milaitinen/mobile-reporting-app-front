@@ -4,9 +4,11 @@ const newReportStyles = EStyleSheet.create({
 
     ViewContainer: {
         flex: 1,
+        height: 100,
         paddingTop: 5,
         paddingRight: 0,
         paddingLeft: 0,
+        justifyContent: 'center',
         borderTopWidth: 1,
         borderTopColor: '$primaryWhite',
 
@@ -14,7 +16,8 @@ const newReportStyles = EStyleSheet.create({
 
     ReportContainer: {
         flex: 1,
-        backgroundColor: '#FFF',
+        height: 40,
+        backgroundColor: '#fff',
         marginVertical: 10,
         marginRight: 3,
         marginLeft: 3,
