@@ -24,9 +24,8 @@ const TemplateStack = StackNavigator({
                 <Icon
                     name={'menu'}
                     type={'feather'}
-                    color={'#fff'}
-                    size={35}
-                    containerStyle={navigationStyles.menuIcon}
+                    iconStyle={navigationStyles.menuIcon}
+                    containerStyle={navigationStyles.menuIconContainer}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
                 </Icon>
         })

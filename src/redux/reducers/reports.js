@@ -3,6 +3,7 @@ import { STORE_REPORTS } from '../actions/reports';
 const initialState = {};
 
 const match = (state, action) => {
+    if (action.reports.length < 1) return {};
     return (
         action.reports.map((report) => {
             const reportObj = {};

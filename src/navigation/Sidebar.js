@@ -2,14 +2,21 @@ import { NavigationActions } from 'react-navigation';
 import React from 'react';
 import { View, Button } from 'react-native';
 import { strings } from '../locales/i18n';
+import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
+import { emptyTemplates } from '../redux/actions/templates';
+import { connect } from 'react-redux';
 
-export default class Sidebar extends React.Component {
+class Sidebar extends React.Component {
 
     signOutDestinationRouteName = 'loginStack';
 
     signOut = () => {
         // perform other logging out related tasks here
 
+        this.props.dispatch(insertUsername(null));
+        this.props.dispatch(insertPassword(null));
+        this.props.dispatch(insertToken(null));
+        this.props.dispatch(emptyTemplates());
 
         /*
         This sets the navigation back to the beginning, i.e. to the login screen.
@@ -33,3 +40,5 @@ export default class Sidebar extends React.Component {
         );
     }
 }
+
+export default connect()(Sidebar);

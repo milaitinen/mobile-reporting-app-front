@@ -4,7 +4,6 @@ export default EStyleSheet.create({
 
     animatedContainer: {
         backgroundColor: '#e0e8eb',
-        margin: 10,
         marginLeft:0,
         marginRight: 0,
         overflow:'hidden',
@@ -14,6 +13,14 @@ export default EStyleSheet.create({
         shadowOffset: {
             width: 0,
             height: 3,
+        },
+        '@media (max-width: 350)': {
+            height: 50,
+            margin: 8,
+        },
+        '@media (min-width: 350)': {
+            height: 60,
+            margin: 10,
         }
     },
 
@@ -23,27 +30,55 @@ export default EStyleSheet.create({
         backgroundColor: '$primaryWhite',
         paddingTop: 0,
         paddingRight: 0,
-        paddingLeft: 1,
+        paddingLeft: 0,
         paddingVertical: 0,
         paddingBottom: 0,
+        '@media (max-width: 350)': {
+            height: 50,
+        },
+        '@media (min-width: 350)': {
+            height: 60,
+        }
     },
 
     folderIcon: {
         marginLeft: 0,
-        fontSize: 50,
         color: '#b4b4b4',
         paddingRight: 0,
+        '@media (max-width: 350)': {
+            fontSize: 40,
+        },
+        '@media (min-width: 350)': {
+            fontSize: 50,
+        }
     },
 
     reportListContainer: {
-        padding: 10,
         paddingTop: 0,
+        '@media (max-width: 350)': {
+            padding: 7,
+        },
+        '@media (min-width: 350)': {
+            padding: 10,
+        }
     },
 
     reportContainer: {
-        height: 60,
         borderBottomColor: '#b4b4b470',
 
+        '@media (max-width: 350)': {
+            height: 50,
+        },
+        '@media (min-width: 350)': {
+            height: 50,
+        }
+
+    },
+
+    reportTitle: {
+        '@media (max-width: 350)': {
+            fontSize: 12
+        } ,
     },
 
     more: {
@@ -51,5 +86,13 @@ export default EStyleSheet.create({
         textDecorationLine: 'underline',
         padding: 10,
         textAlign: 'center',
+
+        '@media (max-width: 350)': {
+            padding: 7,
+            fontSize: 12,
+        },
+        '@media (min-width: 350)': {
+            padding: 10,
+        },
     },
 });

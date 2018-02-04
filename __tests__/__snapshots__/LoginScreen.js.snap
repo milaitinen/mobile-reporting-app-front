@@ -56,7 +56,7 @@ exports[`renders correctly 1`] = `
       autoCapitalize="none"
       name="user"
       onChangeText={[Function]}
-      placeholder="Email"
+      placeholder="Username"
       placeholderTextColor="white"
       style={undefined}
       underlineColorAndroid="transparent"
@@ -133,7 +133,15 @@ exports[`renders correctly 1`] = `
       underlineColorAndroid="transparent"
     />
   </View>
-  <View>
+  <View
+    style={
+      Object {
+        "flex": 0.5,
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+  >
     <View
       accessibilityComponentType={undefined}
       accessibilityLabel={undefined}

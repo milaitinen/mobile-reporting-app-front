@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Checkbox } from '../components/Checkbox';
 
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, fetchFieldsByID } from './api';
+import { createNewReport, fetchFieldsByTemplateID } from './api';
 import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/newReport';
 
@@ -28,12 +28,13 @@ export class NewReportScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getFieldsByID(this.props.templateID);
+        this.getFieldsByTemplateID(this.props.templateID);
     }
 
-    getFieldsByID = (ID) => {
-        fetchFieldsByID(ID)
+    getFieldsByTemplateID = (templateID) => {
+        fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
             .then(responseJson => {
+                console.log('responseJson', responseJson);
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .catch(error => console.error(error) )
@@ -58,7 +59,7 @@ export class NewReportScreen extends React.Component {
             ]
         };
 
-        createNewReport(this.props.userID, report).then(response => {
+        createNewReport(this.props.username, report, this.props.token).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
@@ -340,17 +341,19 @@ export class NewReportScreen extends React.Component {
 
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
-    const userID = state.user.userID;
+    const username = state.user.username;
     const isEditable = state.newReport.isEditable;
     const templateID = state.newReport.templateID;
     const title = state.newReport.title;
     const number = state.newReport.number;
+    const token = state.user.token;
     return {
-        userID,
+        username,
         isEditable,
         templateID,
         title,
-        number
+        number,
+        token
     };
 };
 

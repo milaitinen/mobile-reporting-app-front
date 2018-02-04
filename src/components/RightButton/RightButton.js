@@ -3,6 +3,7 @@ import { View, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styles from './styles';
 
+// TODO: rename to be more accurate
 const RightButton = ({ onPressPrev, onPressNew }) => {
 
     return (

@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
 import { EditButton } from '../components/EditButton';
-import { createNewReport, fetchFieldsByID } from './api';
+import { createNewReport, fetchFieldsByTemplateID } from './api';
 import { strings } from '../locales/i18n';
 import { insertTitle, preview } from '../redux/actions/preview';
 import { createReport } from '../redux/actions/newReport';
@@ -30,11 +30,11 @@ export class NewReportScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getFieldsByID(this.props.templateID);
+        this.getFieldsByID();
     }
 
-    getFieldsByID = (ID) => {
-        fetchFieldsByID(ID)
+    getFieldsByID = () => {
+        fetchFieldsByTemplateID(this.props.username, this.props.templateID, this.props.token)
             .then(responseJson => {
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
@@ -44,7 +44,7 @@ export class NewReportScreen extends React.Component {
 
     // Inserts data to server with a post method.
     send = () => {
-        const report = {
+        /* const report = {
             templateID: this.props.templateID,
             title: this.props.title,
             dateCreated: moment().format('YYYY-MM-DD'),
@@ -73,7 +73,7 @@ export class NewReportScreen extends React.Component {
             Alert.alert(message);
         }).catch((error) => {
             console.error(error);
-        });
+        });*/
     };
 
     handleOnPress = () => {
@@ -350,12 +350,16 @@ const mapStateToProps = (state) => {
     const templateID = state.preview.templateID;
     const title = state.preview.title;
     const number = state.preview.number;
+    const token = state.user.token;
+    const username = state.user.username;
     return {
         userID,
         isEditable,
         templateID,
         title,
         number,
+        token,
+        username
     };
 };
 

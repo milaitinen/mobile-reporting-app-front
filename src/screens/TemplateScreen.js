@@ -12,12 +12,12 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUserID, fetchReportsByUserID } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, /*fetchReportsByUsername*/ } from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
-import { storeReports } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
+// import { storeReports } from '../redux/actions/reports';
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
@@ -39,10 +39,6 @@ export class TemplateScreen extends Component {
         // TEMPORARY: not sure if this is the best solution
         if (this.isEmpty(this.props.templates)) {
             this.getTemplatesAndReports();
-            fetchReportsByUserID(this.props.userID)
-                .then(responseJson => this.props.dispatch(storeReports(responseJson)))
-                .catch(error => console.error(error))
-                .done();
         } else {
             this.setState({ refreshing: false, isLoading: false });
         }
@@ -64,10 +60,10 @@ export class TemplateScreen extends Component {
         of reportsByTemplates, and sets isLoading and refreshing to false.
     */
     getTemplatesAndReports = () => {
-        fetchTemplatesByUserID(this.props.userID)
+        fetchTemplatesByUsername(this.props.username, this.props.token)
             .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
             .then(() => {
-                const reportsByTemplateID = Object.keys(this.props.templates).map((id) => fetchReportsByTemplateID(id));
+                const reportsByTemplateID = Object.keys(this.props.templates).map((templateID) => fetchReportsByTemplateID(this.props.username, templateID, this.props.token));
                 Promise.all(reportsByTemplateID)
                     .then(data => {
                         this.props.dispatch(storeReportsByTemplateID(data));
@@ -77,6 +73,13 @@ export class TemplateScreen extends Component {
             })
             .catch(error => console.error(error))
             .done();
+
+        /*
+        fetchReportsByUsername(this.props.username, this.props.token)
+            .then(responseJson => this.props.dispatch(storeReports(responseJson)))
+            .catch(error => console.error(error))
+            .done();
+        */
     };
 
     // Handler function for refreshing the data and refetching.
@@ -151,13 +154,15 @@ export class TemplateScreen extends Component {
 
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
-    const userID = state.user.userID;
+    const username = state.user.username;
     const templates = state.templates;
     const reportsByTempID = state.reportsByTempID;
+    const token = state.user.token;
     return {
-        userID,
+        username,
         templates,
-        reportsByTempID
+        reportsByTempID,
+        token
     };
 };
 

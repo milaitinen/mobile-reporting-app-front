@@ -2,7 +2,7 @@
   "login": {
     "title": "MR-Application",
     "slogan": "Keep calm and keep reporting",
-    "email": "Email",
+    "username": "Username",
     "password": "Password",
     "serverUrl": "Server url",
     "signIn": "Sign in"
