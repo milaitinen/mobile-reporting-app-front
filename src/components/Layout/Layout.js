@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Animated, FlatList, Text, Dimensions } from 'react-native';
+import { View, Animated, FlatList, Text, Dimensions, Platform, ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import styles from './styles';
@@ -12,8 +12,8 @@ class Layout extends Component{
         super(props);
 
         this.state = {
-            maxHeight  : 0,
-            minHeight  : 0,
+            maxHeight  : 475,
+            minHeight  : Dimensions.get('window').width < 350 ? 50 : 60,
             itemsCount : 5,
             updated    : false,
             expanded   : false,                     // Checks whether the reports of the template are shown or not.
@@ -23,13 +23,13 @@ class Layout extends Component{
         };
     }
 
-    updateHeight = (more = false) => {
-        const finalValue = this.state.expanded && !more ? this.state.minHeight : this.state.maxHeight;
-
-        Animated.spring(
-            this.state.animation, { toValue: finalValue, bounciness: 1 }
+    // Animates the dropdown to the given position.
+    animateDropdownTo = (finalValue) => {
+        Animated.timing(
+            this.state.animation, { toValue: finalValue, duration: 500 }
         ).start();
     };
+
 
     toggleExpanded = () => {
         this.setState({ expanded : !this.state.expanded });
@@ -37,30 +37,76 @@ class Layout extends Component{
 
     // Toggle function for closing and expanding the layout component.
     toggle = () => {
-        this.toggleExpanded();
-        this.updateHeight();
+        if (this.state.expanded) {
+            this.toggleExpanded();
+            this.setTemplateScreenRenderFooter(false);
+            this.setTemplateScreenScrollEnabled(true);
+
+            setTimeout(() => {
+                this.animateDropdownTo(this.state.minHeight);
+            },
+            0
+            );
+        } else {
+            this.toggleExpanded();
+            this.setTemplateScreenRenderFooter(true);
+            this.setTemplateScreenScrollEnabled(false);
+
+            setTimeout(() => {
+                this.moveToTop();
+            },
+            0
+            );
+
+            setTimeout(() => {
+                this.animateDropdownTo(this.state.maxHeight);
+            },
+            100
+            );
+        }
     };
+
+    // Autoscroll the template screen so that this template is in the top.
+    moveToTop = () => {
+        this.props.moveToTop();
+    };
+
+    // Determine wheter the template screen is scrollable or not.
+    setTemplateScreenScrollEnabled = (bool) => {
+        this.props.setTemplateScreenScrollEnabled(bool);
+    };
+
+    /*
+     Determine whether empty space is rendered after the last template of template screen.
+     Without this function it wouldn't be possible to autoscroll to the last templates of the template screen.
+     */
+    setTemplateScreenRenderFooter = (bool) => {
+        this.props.setTemplateScreenRenderFooter(bool);
+    };
+
 
     // Sets maximum height when opened.
     _setMaxHeight = (event) => {
-        const h = Dimensions.get('window').width < 350 ? 50 : 60;
-        this.setState({ maxHeight : event.nativeEvent.layout.height + h });
+        const height = Dimensions.get('window').height;
+
+        this.setState({
+            maxHeight   : Platform.OS === 'ios' ? height - 142 : height - 165
+        });
     };
 
+    /*
     // Sets minimum height when closed.
     _setMinHeight = (event) => {
         this.setState({ minHeight : event.nativeEvent.layout.height });
     };
+    */
 
     showMore = () => {
-        const h = Dimensions.get('window').width < 350 ? 50 : 60;
         this.setState(
             {
                 itemsCount: (this.state.itemsCount + 5),
                 updated: true,
-                maxHeight: this.state.maxHeight + 5 * h,
-            },
-            () => { this.updateHeight(true); }
+            }
         );
     };
 
@@ -72,7 +118,7 @@ class Layout extends Component{
         return (
             <Animated.View
                 style={[styles.animatedContainer,{ height: this.state.animation }]}>
-                <View onLayout={this._setMinHeight}>
+                <View /*onLayout={this._setMinHeight}*/>
                     <ListItem
                         containerStyle={ styles.templateContainer }
                         onPress={this.toggle} // Opens or closes the layout component.
@@ -90,32 +136,34 @@ class Layout extends Component{
                 </View>
 
                 <View style={styles.reportListContainer} onLayout={this._setMaxHeight}>
-                    <FlatList
-                        data={ (data === undefined) ? data : data.slice(0, this.state.itemsCount) }
-                        extraData={ this.state.itemsCount }
-                        /* Renders the reports from the state array
-                          with the help of an index from the earlier
-                          renderItem function. */
-                        renderItem={({ item }) =>
-                            <ListItem
-                                key={item.title}
-                                containerStyle={ styles.reportContainer }
-                                titleStyle = { styles.reportTitle }
-                                title={`${item.orderNo}\t${item.title}`}
-                                subtitle={item.dateCreated}
-                                hideChevron = {true}
-                                badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
-                            />
-                        }
-                        keyExtractor={item => item.orderNo}
-                        ListFooterComponent={
-                            (data !== undefined && data.length > this.state.itemsCount)
-                                ? <Text style={styles.more} onPress={() => this.showMore()}>
-                                    { strings('templates.showMore') }
-                                </Text>
-                                : null
-                        }
-                    />
+                    <ScrollView style={{height: this.state.maxHeight - this.state.minHeight}}>
+                        <FlatList
+                            data={ (data === undefined) ? data : data.slice(0, this.state.itemsCount) }
+                            extraData={ this.state.itemsCount }
+                            /* Renders the reports from the state array
+                              with the help of an index from the earlier
+                              renderItem function. */
+                            renderItem={({ item }) =>
+                                <ListItem
+                                    key={item.title}
+                                    containerStyle={ styles.reportContainer }
+                                    titleStyle = { styles.reportTitle }
+                                    title={`${item.orderNo}\t${item.title}`}
+                                    subtitle={item.dateCreated}
+                                    hideChevron = {true}
+                                    badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
+                                />
+                            }
+                            keyExtractor={item => item.id}
+                            ListFooterComponent={
+                                (data !== undefined && data.length > this.state.itemsCount)
+                                    ? <Text style={styles.more} onPress={() => this.showMore()}>
+                                        { strings('templates.showMore') }
+                                    </Text>
+                                    : null
+                            }
+                        />
+                    </ScrollView>
                 </View>
             </Animated.View>
         );
