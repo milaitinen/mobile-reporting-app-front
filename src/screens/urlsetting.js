@@ -1,1 +1,1 @@
-export const url = 'https://aaltodev.arter.fi:8443';
+export const url = 'https://aaltodev.arter.fi';
