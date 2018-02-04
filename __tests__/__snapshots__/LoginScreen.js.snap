@@ -185,7 +185,7 @@ exports[`renders correctly 1`] = `
     ellipsizeMode="tail"
     style={undefined}
   >
-    Copyright © Arter Oy 2017
+    Copyright © Arter Oy 2018
   </Text>
 </View>
 `;
