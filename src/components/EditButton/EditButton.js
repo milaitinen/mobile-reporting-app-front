@@ -3,10 +3,10 @@ import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styles from './styles';
 
-const EditButton = ({ onPress }) => {
+const EditButton = (props) => {
     return (
         <TouchableOpacity
-            //   onPress={onPress}
+            onPress={props.onPress}
             style = {styles.containerStyle}
         ><View>
                 <Icon
