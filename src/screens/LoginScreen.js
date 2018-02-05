@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StatusBar } from 'react-native';
+import { Text, StatusBar, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
@@ -45,6 +45,7 @@ export class LoginScreen extends React.Component {
                 } else {
                     const token = response;
                     this.props.dispatch(insertToken(token));
+                    Keyboard.dismiss();
                     this.props.navigation.navigate('drawerStack');
                 }
             });
