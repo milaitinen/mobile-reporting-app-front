@@ -4,44 +4,52 @@ const loginStyles = EStyleSheet.create({
 
     title: {
         fontFamily: '$primaryFont',
-        fontSize: 30,
         textAlign: 'center',
-        marginTop: 10,
-        paddingBottom: 30,
         color: 'white',
+
+        '@media (max-width: 350)': {
+            fontSize: 25,
+            marginTop: 6,
+            paddingBottom: 20,
+        },
+        '@media (min-width: 350)': {
+            fontSize: 30,
+            marginTop: 10,
+            paddingBottom: 30,
+        },
     },
 
     slogan: {
-        fontSize: 30,
-        width: 200,
         textAlign: 'center',
-        paddingBottom: 30,
         color: 'white',
         fontFamily: 'Qwigley-Regular',
         alignSelf: 'center',
-    },
-
-    forgotPassword: {
-        color: 'white',
-        paddingTop: 20,
-        fontFamily: '$primaryFont',
-        fontSize: 14,
-        textAlign: 'center',
-    },
-
-    signUp: {
-        color: '#78d3f2',
-        paddingTop: 25,
-        fontFamily: '$primaryFont',
-        fontSize: 15,
-        textAlign: 'center',
+        '@media (max-width: 350)': {
+            fontSize: 25,
+            paddingBottom: 20,
+            marginBottom: 6,
+            width: 130,
+        },
+        '@media (min-width: 350)': {
+            fontSize: 30,
+            width: 200,
+            paddingBottom: 30,
+            marginBottom: 10,
+        },
     },
 
     copyright: {
         fontFamily: '$primaryFont',
         color: 'white',
         textAlign: 'center',
-        marginTop: 50,
+        '@media (max-width: 350)': {
+            marginTop: 40,
+            fontSize: 12,
+        },
+        '@media (min-width: 350)': {
+            marginTop: 60,
+            fontSize: 16,
+        },
     }
 });
 

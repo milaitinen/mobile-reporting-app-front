@@ -1,35 +1,31 @@
 import React from 'react';
-
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import LoginScreen from '../screens/LoginScreen';
-import SignUpScreen from '../screens/SignUpScreen';
-import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
-
 import TemplateScreen from '../screens/TemplateScreen';
 import NewReportScreen from '../screens/NewReportScreen';
-
+import PreviewScreen from '../screens/PreviewScreen';
 import navigationStyles from './navigationStyles';
-
 import Sidebar from '../navigation/Sidebar';
+import { strings } from '../locales/i18n';
 
-//The stack that is contained within the drawer stack
+
+// The stack that is contained within the drawer stack
 const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
             flex: 0.3,
-            headerTitle: 'Templates',
+            headerTitle: strings('templates.templates') ,
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerLeft:
                 <Icon
                     name={'menu'}
                     type={'feather'}
-                    color={'#fff'}
-                    size={35}
-                    containerStyle={navigationStyles.menuIcon}
+                    iconStyle={navigationStyles.menuIcon}
+                    containerStyle={navigationStyles.menuIconContainer}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
                 </Icon>
         })
@@ -40,7 +36,41 @@ const TemplateStack = StackNavigator({
     },
     NewReport: {
         screen: NewReportScreen,
-        navigationOptions: { title: 'Create new report' }
+        navigationOptions: ({ navigation }) => ({
+            flex: 0.3,
+            headerTitle: strings('createNew.createNew') ,
+            headerStyle: navigationStyles.HeaderContainer,
+            headerTitleStyle: navigationStyles.ScreenHeader,
+            headerLeft:
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={35}
+                    iconStyle={navigationStyles.menuIcon}
+                    containerStyle={navigationStyles.menuIconContainer}
+                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
+                </Icon>
+        })
+    },
+    Preview: {
+        screen: PreviewScreen,
+        navigationOptions: ({ navigation }) => ({
+            flex: 0.3,
+            headerTitle: 'Preview',
+            headerStyle: navigationStyles.HeaderContainer,
+            headerTitleStyle: navigationStyles.ScreenHeader,
+            headerLeft:
+                <Icon
+                    name={'menu'}
+                    type={'feather'}
+                    color={'#fff'}
+                    size={35}
+                    iconStyle={navigationStyles.menuIcon}
+                    containerStyle={navigationStyles.menuIconContainer}
+                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
+                </Icon>
+        })
     },
 
 }, {
@@ -50,13 +80,13 @@ const TemplateStack = StackNavigator({
 const DrawerStack = DrawerNavigator({
     Menu: {
         screen: TemplateStack,
-        navigationOptions: { title: 'Templates' }
+        navigationOptions: strings('templates.templates')
     },
 }, {
-    //This loads the contents of the drawer from the custom Sidebar
+    // This loads the contents of the drawer from the custom Sidebar
     contentComponent: Sidebar,
 
-    //These fix a bug with the drawer navigator
+    // These fix a bug with the drawer navigator
     drawerOpenRoute: 'DrawerOpen',
     drawerCloseRoute: 'DrawerClose',
     drawerToggleRoute: 'DrawerToggle',
@@ -66,14 +96,7 @@ const LoginStack = StackNavigator({
     loginScreen: {
         screen: LoginScreen
     },
-    signUpScreen: {
-        screen: SignUpScreen,
-        navigationOptions: { title: 'Create an account' }
-    },
-    forgottenPasswordScreen: {
-        screen: ForgottenPasswordScreen,
-        navigationOptions: { title: 'Forgot Password' }
-    },
+
 }, {
     headerMode: 'screen',
     navigationOptions: {

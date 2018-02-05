@@ -27,7 +27,7 @@
     "no-var": "error",
     "prefer-const": "error",
     //"no-trailing-spaces": "error",
-    "indent": ["error", 4],
+    "indent": ["error", 4, { "SwitchCase": 1 }],
     "object-curly-spacing": ["error", "always"],
     "keyword-spacing": ["error", { "before": true, "after": true }],
     //"spaced-comment": ["error", "always"],

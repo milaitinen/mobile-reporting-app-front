@@ -1,0 +1,32 @@
+{
+  "login": {
+    "title": "MR-Application",
+    "slogan": "Suomenkielinen slogan",
+    "username": "Käyttäjänimi",
+    "password": "Salasana",
+    "serverUrl": "Palvelimen osoite",
+    "signIn": "Kirjaudu"
+  },
+
+  "templates": {
+    "templates": "Lomakepohjat",
+    "search": "Hae..",
+    "report": "Raportti",
+    "reports": "Raporttia",
+    "approved": "Hyväksytty",
+    "sent": "Käsittelyssä",
+    "draft:": "Luonnos",
+    "showMore": "Näytä lisää",
+    "endOfReports": "Ei enempää raportteja"
+  },
+
+  "createNew": {
+    "createNew": "Uusi raportti",
+    "enterNew": "Raportin nimi",
+    "reportAdded": "Raportti lähetetty"
+  },
+
+  "navigation": {
+    "signOut": "Kirjaudu ulos"
+  }
+}

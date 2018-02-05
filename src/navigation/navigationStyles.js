@@ -7,8 +7,13 @@ const navigationStyles = EStyleSheet.create({
         borderBottomWidth: 0,
         borderBottomColor: 'transparent',
         elevation: 0,
-        //shadowOffset: 0,
-        paddingRight: 10,
+        // shadowOffset: 0,
+        '@media (max-width: 350)': {
+            paddingRight: 7,
+        },
+        '@media (min-width: 350)': {
+            paddingRight: 10,
+        },
     },
 
     ScreenHeader: {
@@ -16,13 +21,29 @@ const navigationStyles = EStyleSheet.create({
         color: '#fff',
         fontWeight: 'normal',
         fontFamily: '$primaryFont',
-        fontSize: 30,
         paddingLeft: 0,
+        '@media (max-width: 350)': {
+            fontSize: 25,
+        },
+        '@media (min-width: 350)': {
+            fontSize: 30,
+        },
+
+    },
+
+    menuIconContainer: {
+        paddingRight: 0,
+        paddingLeft: 20,
     },
 
     menuIcon: {
-        paddingLeft: 20,
-        paddingRight: 0,
+        color: '#fff',
+        '@media (max-width: 350)': {
+            fontSize: 30,
+        },
+        '@media (min-width: 350)': {
+            fontSize: 30,
+        },
     },
 
 });

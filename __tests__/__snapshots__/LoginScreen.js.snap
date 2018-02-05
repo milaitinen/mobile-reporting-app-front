@@ -53,9 +53,10 @@ exports[`renders correctly 1`] = `
     </Text>
     <TextInput
       allowFontScaling={true}
+      autoCapitalize="none"
       name="user"
       onChangeText={[Function]}
-      placeholder="Email"
+      placeholder="Username"
       placeholderTextColor="white"
       style={undefined}
       underlineColorAndroid="transparent"
@@ -87,6 +88,7 @@ exports[`renders correctly 1`] = `
     </Text>
     <TextInput
       allowFontScaling={true}
+      autoCapitalize="none"
       name="lock"
       onChangeText={[Function]}
       placeholder="Password"
@@ -122,6 +124,7 @@ exports[`renders correctly 1`] = `
     </Text>
     <TextInput
       allowFontScaling={true}
+      autoCapitalize="none"
       name="globe"
       onChangeText={[Function]}
       placeholder="Server url"
@@ -130,7 +133,15 @@ exports[`renders correctly 1`] = `
       underlineColorAndroid="transparent"
     />
   </View>
-  <View>
+  <View
+    style={
+      Object {
+        "flex": 0.5,
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+  >
     <View
       accessibilityComponentType={undefined}
       accessibilityLabel={undefined}
@@ -164,7 +175,7 @@ exports[`renders correctly 1`] = `
         ellipsizeMode="tail"
         style={undefined}
       >
-        Sign In
+        Sign in
       </Text>
     </View>
   </View>
@@ -172,27 +183,9 @@ exports[`renders correctly 1`] = `
     accessible={true}
     allowFontScaling={true}
     ellipsizeMode="tail"
-    onPress={[Function]}
     style={undefined}
   >
-    Forgot password?
-  </Text>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    onPress={[Function]}
-    style={undefined}
-  >
-    Sign up
-  </Text>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    style={undefined}
-  >
-    Copyright © Arter Oy 2017
+    Copyright © Arter Oy 2018
   </Text>
 </View>
 `;

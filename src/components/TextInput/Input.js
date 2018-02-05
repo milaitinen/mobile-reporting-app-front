@@ -6,9 +6,11 @@ import styles from './styles';
 
 const Input = (props) => {
     return (
-        <View style={styles.InputContainer}>
+        <View
+            style={styles.InputContainer}>
             <Icon name={props.name} color={'white'} size={16} />
             <TextInput
+                autoCapitalize = 'none'
                 onChangeText={props.onChangeText}
                 underlineColorAndroid='transparent'
                 style={styles.InputStyle}

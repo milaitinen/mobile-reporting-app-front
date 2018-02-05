@@ -1,6 +1,7 @@
 import React from 'react';
 import { SearchBar } from 'react-native-elements';
 import styles from './styles';
+import { strings } from '../../locales/i18n';
 
 const ReportSearchBar = () => {
     return (
@@ -9,7 +10,7 @@ const ReportSearchBar = () => {
             containerStyle = {styles.searchBarContainer}
             inputStyle = { styles.searchBarInput }
             icon = {{ style: styles.searchIcon }}
-            placeholder='Search for reports'
+            placeholder={strings('templates.search')}
         />
     );
 };

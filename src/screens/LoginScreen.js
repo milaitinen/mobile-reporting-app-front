@@ -1,23 +1,55 @@
 import React from 'react';
-import { Text, StatusBar } from 'react-native';
+import { Text, StatusBar, Keyboard } from 'react-native';
+import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
+import { strings } from '../locales/i18n';
 import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
+import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from '../redux/actions/user';
+import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
 
-export default class LoginScreen extends React.Component {
+// "export" necessary in order to test component without Redux store
+export class LoginScreen extends React.Component {
 
     constructor(props)
     {
         super(props);
+        /*
         this.state = {
-            isLoading: true,
-            TextInputUser: '',
-            TextInputPassword: '',
-            TextInputServer: ''
+            // isLoading     : true,
+            username    : '',
+            password        : '',
+            serverUrl       : ''
         };
+        */
+
+
+        if (this.props.token) { // this.props.token != null
+            //TODO: verify token
+            /*
+            const response = verifyToken(this.props.user.token);
+            if (someCondition(response)) {
+            }
+            */
+            this.props.navigation.navigate('drawerStack');
+        }
     }
+
+    logIn = () => {
+        login(this.props.username, this.props.password)
+            .then(response => {
+                if (response === undefined) { // TODO change undefined to invalidCredentialsResponse?
+                    alert('Invalid username or password');
+                } else {
+                    const token = response;
+                    this.props.dispatch(insertToken(token));
+                    Keyboard.dismiss();
+                    this.props.navigation.navigate('drawerStack');
+                }
+            });
+    };
 
     render() {
         return (
@@ -25,46 +57,50 @@ export default class LoginScreen extends React.Component {
                 <StatusBar backgroundColor='#3d4f7c' barStyle='light-content'/>
 
                 <Text style={loginStyles.title}>
-                    MR-Application
+                    { strings('login.title') }
                 </Text>
 
                 <Text style={loginStyles.slogan}>
-                    Keep calm and keep reporting
+                    {strings('login.slogan')}
                 </Text>
 
                 <Input
                     name={'user'}
-                    placeholder='Email'
-                    onChangeText={TextInputUser => this.setState({ TextInputUser })}
+                    placeholder={ strings('login.username') }
+                    onChangeText={username => this.props.dispatch(insertUsername(username))}
                 />
                 <Input
                     name={'lock'}
                     secureTextEntry={true}
-                    placeholder='Password'
-                    onChangeText={TextInputPassword => this.setState({ TextInputPassword })}
+                    placeholder={ strings('login.password') }
+                    onChangeText={password => this.props.dispatch(insertPassword(password))}
                 />
                 <Input
                     name={'globe'}
-                    placeholder='Server url'
-                    onChangeText={TextInputServer => this.setState({ TextInputServer })}
+                    placeholder={ strings('login.serverUrl') }
+                    onChangeText={serverUrl => this.setState({ serverUrl })}
                 />
 
-                <SignInButton onPress={() => this.props.navigation.navigate('drawerStack')}>
-                    Sign In
+                <SignInButton onPress={this.logIn}>
+                    { strings('login.signIn') }
                 </SignInButton>
 
-                <Text style={loginStyles.forgotPassword} onPress={() => this.props.navigation.navigate('forgottenPasswordScreen')}>
-                    Forgot password?
-                </Text>
-
-                <Text style={loginStyles.signUp} onPress={() => this.props.navigation.navigate('signUpScreen')}>
-                    Sign up
-                </Text>
-
                 <Text style={loginStyles.copyright}>
-                    Copyright © Arter Oy 2017
+                    Copyright © Arter Oy 2018
                 </Text>
             </AppBackground>
         );
     }
 }
+
+// maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.username
+const mapStateToProps = (state) => {
+    const password = state.user.password;
+    const username = state.user.username;
+    return {
+        password,
+        username
+    };
+};
+
+export default connect(mapStateToProps)(LoginScreen);

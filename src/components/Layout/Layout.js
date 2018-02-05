@@ -1,153 +1,166 @@
 import React, { Component } from 'react';
-import { View, Animated, FlatList, Text } from 'react-native';
-import { ListItem, Badge } from 'react-native-elements';
-import layoutStyles from './layoutStyles';
+import { View, Animated, FlatList, Text, Dimensions, Platform, ScrollView } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
+import styles from './styles';
+import { strings } from '../../locales/i18n';
+import { RightButton } from '../RightButton';
+import { StatusBadge } from '../StatusBadge';
 
 class Layout extends Component{
     constructor(props){
         super(props);
+
         this.state = {
-            itemsCount : 5,
-            data       : this.props.data,
+            maxHeight  : 475,
+            minHeight  : Dimensions.get('window').width < 350 ? 50 : 60,
+            itemsCount : 20,
             updated    : false,
-            title      : props.title,           // Title which the layout component inherits from TemplateScreen.
-            nofReports   : props.nofReports,        // Number of reports which the layout component inherits from TemplateScreen.
-            templateID   : props.templateID,        // The specific templateID which the layout component inherits from TemplateScreen.
-            expanded   : false,                 // Checks whether the reports of the template are shown or not.
-            animation  : new Animated.Value(60), /* Initializes the animation state as 50 (same height as the ListItem
-                                                   component which includes the title of the Layout etc.)
-                                                   This is the minimum height when the layout component isn't expanded. */
+            expanded   : false,                     // Checks whether the reports of the template are shown or not.
+            animation  : new Animated.Value(Dimensions.get('window').width < 350 ? 50 : 60),    /* Initializes the animation state as 60 (same height as the ListItem
+                                                    component which includes the title of the Layout etc.)
+                                                    This is the minimum height when the layout component isn't expanded. */
         };
     }
 
-    updateHeight( more = false) {
-        const
-            finalValue = this.state.expanded && !more ? this.state.minHeight : this.state.maxHeight;
-
-        Animated.spring(
-            this.state.animation,
-            {
-                toValue: finalValue,
-                bounciness: 1
-            }
+    // Animates the dropdown to the given position.
+    animateDropdownTo = (finalValue) => {
+        Animated.timing(
+            this.state.animation, { toValue: finalValue, duration: 500 }
         ).start();
-    }
-
-    toggleExpanded() {
-        this.setState({
-            expanded : !this.state.expanded
-        });
-    }
-    // Toggle function for closing and expanding the layout component.
-
-
-    toggle(){
-        this.toggleExpanded();
-        this.updateHeight();
-    }
-
-    // Sets maximum height when opened.
-    _setMaxHeight(event){
-        this.setState({
-            maxHeight   : event.nativeEvent.layout.height + 60
-        });
-    }
-
-    // Sets minimum height when closed.
-    _setMinHeight(event){
-        this.setState({
-            minHeight   : event.nativeEvent.layout.height
-        });
-    }
-
-
-    // Calls the inherited createNew function which is explained in TemplateScreen class.
-    createNew(templateID) {
-        this.props.createNew(templateID);
-    }
-
-    showMore() {
-        this.setState(
-            {
-                itemsCount: (this.state.itemsCount + 5),
-                updated: true,
-                maxHeight: this.state.maxHeight + 300
-            },
-            () => {
-                this.updateHeight(true);
-            }
-        );
-    }
-
-    badge = (dateAccepted) => {
-        if (dateAccepted != null){
-            return <Badge textStyle = {layoutStyles.badgeTextStyle}
-                containerStyle = {layoutStyles.badgeContainerStyleA}
-                value={'Approved'}
-            />;
-        }
-        return <Badge textStyle = {layoutStyles.badgeTextStyle}
-            containerStyle = {layoutStyles.badgeContainerStyleP}
-            value={' Pending  '}
-        />;
     };
 
-    render(){
-        /* Renders the layout componenet and its children, which are defined in the TemplateScreen class.
-           The TemplateScreen uses FlatList component as the layout components child.
-         */
 
+    toggleExpanded = () => {
+        this.setState({ expanded : !this.state.expanded });
+    };
+
+    // Toggle function for closing and expanding the layout component.
+    toggle = () => {
+        if (this.state.expanded) {
+            this.toggleExpanded();
+            this.setTemplateScreenRenderFooter(false);
+            this.setTemplateScreenScrollEnabled(true);
+
+            setTimeout(() => {
+                this.animateDropdownTo(this.state.minHeight);
+            },
+            0
+            );
+        } else {
+            this.toggleExpanded();
+            this.setTemplateScreenRenderFooter(true);
+            this.setTemplateScreenScrollEnabled(false);
+
+            setTimeout(() => {
+                this.moveToTop();
+            },
+            0
+            );
+
+            setTimeout(() => {
+                this.animateDropdownTo(this.state.maxHeight);
+            },
+            100
+            );
+        }
+    };
+
+    // Autoscroll the template screen so that this template is in the top.
+    moveToTop = () => {
+        this.props.moveToTop();
+    };
+
+    // Determine wheter the template screen is scrollable or not.
+    setTemplateScreenScrollEnabled = (bool) => {
+        this.props.setTemplateScreenScrollEnabled(bool);
+    };
+
+    /*
+     Determine whether empty space is rendered after the last template of template screen.
+     Without this function it wouldn't be possible to autoscroll to the last templates of the template screen.
+     */
+    setTemplateScreenRenderFooter = (bool) => {
+        this.props.setTemplateScreenRenderFooter(bool);
+    };
+
+
+    // Sets maximum height when opened.
+    _setMaxHeight = (event) => {
+        const height = Dimensions.get('window').height;
+
+        this.setState({
+            maxHeight   : Platform.OS === 'ios' ? height - 142 : height - 165
+        });
+    };
+
+    // Shows more reports.
+    showMore = () => {
+        this.setState(
+            {
+                itemsCount: (this.state.itemsCount + 20),
+                updated: true,
+            }
+        );
+    };
+
+
+
+    render(){
+        // simplifies referencing (instead of this.props.title, title is enough)
+        const { title, nofReports, templateID, data } = this.props;
         return (
             <Animated.View
-                style={[layoutStyles.animatedContainer,{ height: this.state.animation }]}>
-                <View onLayout={this._setMinHeight.bind(this)}>
+                style={[styles.animatedContainer,{ height: this.state.animation }]}>
+                <View /*onLayout={this._setMinHeight}*/>
                     <ListItem
-                        containerStyle={ layoutStyles.templateContainer }
-                        onPress={this.toggle.bind(this)} // Opens or closes the layout component.
-                        title={this.state.title} // Title of the template.
-                        subtitle={this.state.nofReports + ' Reports'} // Number of reports as a subtitle.
-                        rightIcon={{ name: 'note-add', type: 'Materialicons', style: layoutStyles.addReport,  }}
-                        leftIcon = { { name: 'folder', type: 'Materialicons', style: layoutStyles.folderIcon, }}
-                        onPressRightIcon={() => this.createNew(this.state.templateID)} /* Navigates to NewReportScreen when
-                                                                                        pressed.*/
+                        containerStyle={ styles.templateContainer }
+                        onPress={this.toggle} // Opens or closes the layout component.
+                        title={title} // Title of the template.
+                        titleStyle = { styles.templateTitle }
+                        //Number of reports as a subtitle
+                        subtitle={`${nofReports} ${(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
+                        hideChevron={true}
+                        badge={{ element: <RightButton
+                            onPressNew={() => this.props.createNew(templateID, true)}
+                            onPressPrev={() => this.props.createNew(templateID, false)}/> }} /*Navigates to NewReportScreen when pressed.*/
+                        leftIcon = { { name: 'assignment', type: 'Materialicons', style: styles.folderIcon, }}
+                        //folder, assignment
                     />
-
                 </View>
 
-                <View style={layoutStyles.reportListContainer} onLayout={this._setMaxHeight.bind(this)}>
-                    <FlatList
-                        data={ this.state.data.slice(0, this.state.itemsCount) }
-                        extraData={ this.state.itemsCount }
-                        /* Renders the reports from the state array
-                          with the help of an index from the earlier
-                          renderItem function. */
-                        renderItem={({ item }) =>
-                            <ListItem
-                                key={item.title}
-                                containerStyle={ layoutStyles.reportContainer }
-                                title={item.orderNo + '\t' + item.title}
-                                subtitle={item.dateCreated}
-                                hideChevron={true}
-                                badge = {{ element: this.badge(item.dateAccepted) }}
-                            />
-                        }
-                        keyExtractor={item => item.orderNo}
-                        ListFooterComponent={
-                            (this.state.data.length > this.state.itemsCount) ?
-                                <Text
-                                    style={layoutStyles.more}
-                                    onPress={() => this.showMore() }
-                                >
-                                    Show more
-                                </Text>
-                                :
-                                null
-                        }
-                    />
-
+                <View style={styles.reportListContainer} onLayout={this._setMaxHeight}>
+                    <ScrollView style={{height: this.state.maxHeight - this.state.minHeight}}>
+                        <FlatList
+                            data={ (data === undefined) ? data : data.slice(0, this.state.itemsCount) }
+                            extraData={ this.state.itemsCount }
+                            /* Renders the reports from the state array
+                              with the help of an index from the earlier
+                              renderItem function. */
+                            renderItem={({ item }) =>
+                                <ListItem
+                                    key={item.title}
+                                    containerStyle={ styles.reportContainer }
+                                    titleStyle = { styles.reportTitle }
+                                    title={`${item.orderNo}\t${item.title}`}
+                                    subtitle={item.dateCreated}
+                                    hideChevron = {true}
+                                    badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
+                                />
+                            }
+                            keyExtractor={item => item.id}
+                            ListFooterComponent={
+                                (data !== undefined && data.length > this.state.itemsCount)
+                                    ? <Text style={styles.more} onPress={() => this.showMore()}>
+                                        { strings('templates.showMore') }
+                                    </Text>
+                                    : <Text style={styles.noMoreReports}>
+                                        { strings('templates.endOfReports') }
+                                    </Text>
+                            }
+                        />
+                    </ScrollView>
                 </View>
-
             </Animated.View>
         );
     }
