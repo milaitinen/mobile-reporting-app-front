@@ -13,6 +13,7 @@ import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID } from './api';
 import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/newReport';
+import { Button } from '../components/Button';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -310,13 +311,19 @@ export class NewReportScreen extends React.Component {
             }
         });
 
-
+        //TODO: button styling
         return (
             <AppBackground>
                 <View style={ newReportStyles.ViewContainer }>
                     <View style={ newReportStyles.ReportContainer }>
                         <ScrollView keyboardShouldPersistTaps={'handled'} style={ { backgroundColor: 'transparent' } }>
                             {renderedFields}
+                            <Button /*TODO: onPress*/>
+                                { strings('createNew.send') }
+                            </Button>
+                            <Button/*TODO: onPress*/>
+                                { strings('createNew.save') }
+                            </Button>
                         </ScrollView>
                     </View>
                 </View>
