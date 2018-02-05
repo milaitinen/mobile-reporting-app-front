@@ -66,10 +66,10 @@ export default EStyleSheet.create({
         borderBottomColor: '#b4b4b470',
 
         '@media (max-width: 350)': {
-            height: 50,
+            height: 60,
         },
         '@media (min-width: 350)': {
-            height: 50,
+            height: 60,
         }
 
     },
