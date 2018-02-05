@@ -144,6 +144,7 @@ export class TemplateScreen extends Component {
             );
         }
 
+        const { reportsByTempID, templates } = this.props;
         return (
             <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>
@@ -157,7 +158,7 @@ export class TemplateScreen extends Component {
                         <FlatList
                             ref={(c) => this._flatList = c}
                             scrollEnabled={this.state.scrollEnabled}
-                            data={ Object.values(this.props.templates) }
+                            data={ Object.values(templates) }
                             renderItem={({ item, index }) =>
                                 <Layout
                                     title={item.title}
@@ -165,9 +166,9 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenScrollEnabled={this.setScrollEnabled}
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
-                                    nofReports={this.props.reportsByTempID[item.id].length}
+                                    nofReports={(reportsByTempID[item.id]) ? (reportsByTempID[item.id]).length : 0}
                                     templateID={item.id}
-                                    data={this.props.reportsByTempID[item.id]}
+                                    data={reportsByTempID[item.id]}
                                 />
                             }
                             ListFooterComponent={

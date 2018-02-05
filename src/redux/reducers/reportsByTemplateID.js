@@ -1,4 +1,4 @@
-import { STORE_REPORTS_BY_TEMPLATE_ID } from '../actions/reportsByTemplateID';
+import { STORE_REPORTS_BY_TEMPLATE_ID, EMPTY_REPORTS } from '../actions/reportsByTemplateID';
 
 const initialState = {};
 
@@ -24,7 +24,9 @@ const reportsByTemplateIDReducer = (state = initialState, action) => {
             const newReports = matchArrayWithTemplateID(state, action);
             // Object.assign merges the given parameters together and returns an object
             return Object.assign(state.reportsByTempID || {}, newReports);
-
+        }
+        case EMPTY_REPORTS: {
+            return initialState;
         }
         default:
             return state;
