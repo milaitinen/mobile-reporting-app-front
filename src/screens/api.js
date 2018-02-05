@@ -132,7 +132,7 @@ const fetchRemoteTemplatesByUsername = (username, token) => {
     );
 };
 
-// Fetch reports by their templateID from the server if online, ASyncStorage otherwise
+/* Fetch reports by their templateID from the server if online, ASyncStorage otherwise */
 export const fetchReportsByTemplateID = (username, templateID, token) => {
     return isNetworkConnected()
         .then((isConnected) => {
@@ -140,7 +140,7 @@ export const fetchReportsByTemplateID = (username, templateID, token) => {
             return fetchRemoteReportsByTemplateID(username, templateID, token);
         })
         .then((reports) => {
-            saveData(`${url}/users/${username}/templates/${templateID}/reports`, reports);
+            saveData(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`, reports);
             return reports;
         });
 };
@@ -148,7 +148,7 @@ export const fetchReportsByTemplateID = (username, templateID, token) => {
 /* Fetch Reports by TemplateID from ASyncStorage in case there is no internet connection.
    If no data has been stored an empty value will be returned. */
 const fetchLocalReportsByTemplateID = (username, templateID) => {
-    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports`)
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -161,7 +161,7 @@ const fetchLocalReportsByTemplateID = (username, templateID) => {
 // Fetch reports by templateID from the server
 const fetchRemoteReportsByTemplateID = (username, templateID, token) => {
     return (
-        fetch(`${url}/users/${username}/templates/${templateID}/reports?sort=dateaccepted,-datecreated`, {
+        fetch(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
