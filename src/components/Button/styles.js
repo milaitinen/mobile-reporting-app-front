@@ -4,23 +4,21 @@ const styles = EStyleSheet.create({
 
     buttonContainer: {
         backgroundColor: '#9dcbe5',
-        paddingTop:10,
-        paddingBottom:10,
         borderRadius: '$buttonBorderRadius',
         borderWidth: 1,
+        alignContent: 'center',
+        justifyContent: 'center',
         flex: 0.3,
         borderColor: '#9dcbe5',
         '@media (max-width: 350)': {
             marginTop: 20,
-            paddingTop: 6,
-            paddingBottom: 6,
+            //paddingTop: 6,
+            //paddingBottom: 6,
             height: 30,
         },
         '@media (min-width: 350)': {
             marginTop: 30,
             marginBottom: 60,
-            paddingTop: 10,
-            paddingBottom: 10,
             height: 40,
         }
     },
