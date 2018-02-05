@@ -161,7 +161,7 @@ const fetchLocalReportsByTemplateID = (username, templateID) => {
 // Fetch reports by templateID from the server
 const fetchRemoteReportsByTemplateID = (username, templateID, token) => {
     return (
-        fetch(`${url}/users/${username}/templates/${templateID}/reports`, {
+        fetch(`${url}/users/${username}/templates/${templateID}/reports?sort=dateaccepted,-datecreated`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
