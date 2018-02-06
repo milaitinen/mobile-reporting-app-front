@@ -36,51 +36,34 @@ const TemplateStack = StackNavigator({
     },
     NewReport: {
         screen: NewReportScreen,
-        navigationOptions: ({ navigation }) => ({
+        navigationOptions: () => ({
             flex: 0.3,
             headerTitle: strings('createNew.createNew') ,
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
-            headerLeft:
-                <Icon
-                    name={'menu'}
-                    type={'feather'}
-                    color={'#fff'}
-                    size={35}
-                    iconStyle={navigationStyles.menuIcon}
-                    containerStyle={navigationStyles.menuIconContainer}
-                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
-                </Icon>
+            headerTintColor: '#fff',
         })
     },
     Preview: {
         screen: PreviewScreen,
-        navigationOptions: ({ navigation }) => ({
+        navigationOptions: () => ({
             flex: 0.3,
-            headerTitle: 'Preview',
+            headerTitle: 'Preview', //TODO: translate
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
-            headerLeft:
-                <Icon
-                    name={'menu'}
-                    type={'feather'}
-                    color={'#fff'}
-                    size={35}
-                    iconStyle={navigationStyles.menuIcon}
-                    containerStyle={navigationStyles.menuIconContainer}
-                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
-                </Icon>
+            headerTintColor: '#fff',
         })
     },
 
-}, {
-    // is this part necessary?
-});
+},
+);
 
 const DrawerStack = DrawerNavigator({
     Menu: {
         screen: TemplateStack,
-        navigationOptions: strings('templates.templates')
+        navigationOptions: {
+            title: strings('templates.templates'),
+        }
     },
 }, {
     // This loads the contents of the drawer from the custom Sidebar
