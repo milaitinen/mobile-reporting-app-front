@@ -24,6 +24,7 @@ const newReportStyles = EStyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         paddingTop: 20,
+        paddingBottom: 13,
         paddingLeft: 13,
         paddingRight: 13,
         borderRadius: '$containerBorderRadius',
@@ -129,6 +130,17 @@ const newReportStyles = EStyleSheet.create({
         borderColor: '#ffffff',
         backgroundColor: '#e0e8eb',
     },
+
+    buttonView: {
+        height: 60,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '$darkBlue',
+        borderRadius: '$containerBorderRadius',
+        backgroundColor: '$darkBlue',
+    }
 });
 
 export default  newReportStyles;

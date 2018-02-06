@@ -318,12 +318,14 @@ export class NewReportScreen extends React.Component {
                     <View style={ newReportStyles.ReportContainer }>
                         <ScrollView keyboardShouldPersistTaps={'handled'} style={ { backgroundColor: 'transparent' } }>
                             {renderedFields}
-                            <Button /*TODO: onPress*/>
-                                { strings('createNew.send') }
-                            </Button>
-                            <Button/*TODO: onPress*/>
-                                { strings('createNew.save') }
-                            </Button>
+                            <View style={ newReportStyles.buttonView}>
+                                <Button type={'save'}/*TODO: onPress*/>
+                                    { strings('createNew.save') }
+                                </Button>
+                                <Button type={'send'}/*TODO: onPress*/>
+                                    { strings('createNew.send') }
+                                </Button>
+                            </View>
                         </ScrollView>
                     </View>
                 </View>
