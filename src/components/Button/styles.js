@@ -17,6 +17,7 @@ const styles = EStyleSheet.create({
         paddingRight: 15,
         borderColor: '#9dcbe5',
         '@media (max-width: 350)': {
+            borderRadius: '$buttonBorderRadiusSmall',
             marginTop: 20,
             height: 30,
         },
