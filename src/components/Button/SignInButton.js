@@ -8,7 +8,7 @@ const SignInButton = ({ onPress, children }) => {
     const underlayColor = color('#9dcbe5').darken(0.1);
 
     return (
-        <View style={{ flex: 0.5, flexDirection: 'row', justifyContent: 'center' }}>
+        <View style={styles.view}>
             <TouchableHighlight
                 onPress={onPress}
                 style={styles.buttonContainer}

@@ -10,8 +10,6 @@ export default EStyleSheet.create({
         paddingRight: 15,
         paddingBottom: 0,
         flex: 1,
-      //  width: null,
-      //  height: null,
         backgroundColor: 'transparent',
         justifyContent: 'center',
     },
