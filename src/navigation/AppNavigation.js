@@ -20,21 +20,13 @@ const TemplateStack = StackNavigator({
             headerTitle: strings('templates.templates') ,
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
-            headerRight:
+            headerLeft:
                 <Icon
                     name={'menu'}
                     type={'feather'}
                     iconStyle={navigationStyles.menuIcon}
                     containerStyle={navigationStyles.menuIconContainer}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
-                </Icon>,
-            headerLeft:
-                <Icon
-                    name={'arrow-left'}
-                    type={'feather'}
-                    iconStyle={navigationStyles.menuIcon}
-                    containerStyle={navigationStyles.menuIconContainer}
-                    onPress={() => { navigation.navigate('loginStack'); }}>
                 </Icon>,
         })
     },
