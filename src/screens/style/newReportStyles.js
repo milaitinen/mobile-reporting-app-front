@@ -22,13 +22,17 @@ const newReportStyles = EStyleSheet.create({
         marginRight: 3,
         marginLeft: 3,
         marginTop: 10,
-        marginBottom: 10,
-        paddingTop: 20,
-        paddingBottom: 13,
-        paddingLeft: 13,
-        paddingRight: 13,
         borderRadius: '$containerBorderRadius',
 
+    },
+
+    ReportScrollView: {
+        paddingTop: 20,
+        paddingBottom: 20,
+        paddingLeft: 13,
+        paddingRight: 13,
+        marginBottom: 10,
+        backgroundColor: 'transparent',
     },
 
     dateStyleClass: {
@@ -132,14 +136,19 @@ const newReportStyles = EStyleSheet.create({
     },
 
     buttonView: {
-        height: 60,
+        height: 80,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '$darkBlue',
+        borderColor: '#e8faf8',
         borderRadius: '$containerBorderRadius',
-        backgroundColor: '$darkBlue',
+        backgroundColor: '#e8faf8',
+        elevation: 3,
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
     }
 });
 

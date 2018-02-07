@@ -2,8 +2,9 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
     view: {
-        backgroundColor: '$darkBlue',
+        backgroundColor: 'transparent',
         flex: 1,
+        height: 70,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -56,7 +57,7 @@ const styles = EStyleSheet.create({
     },
 
     text: {
-        //color: '#274752',
+        color: '#474c52',
         fontFamily: '$primaryFont',
         textAlign: 'center',
         '@media (max-width: 350)': {
