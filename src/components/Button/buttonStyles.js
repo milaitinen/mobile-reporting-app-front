@@ -3,6 +3,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 const styles = EStyleSheet.create({
     view: {
         backgroundColor: 'transparent',
+        borderRadius: '$buttonBorderRadius',
         flex: 1,
         height: 70,
         flexDirection: 'row',

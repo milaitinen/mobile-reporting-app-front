@@ -313,17 +313,17 @@ export class NewReportScreen extends React.Component {
 
         //TODO: button styling
         return (
-            <AppBackground>
+            <AppBackground style={'no-padding'}>
                 <View style={ newReportStyles.ViewContainer }>
                     <View style={ newReportStyles.ReportContainer }>
                         <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
                             {renderedFields}
                         </ScrollView>
-                        <View style={ newReportStyles.buttonView}>
-                            <Button title={strings('createNew.save')} type={'save'}/*TODO: onPress*//>
-                            <Button title={strings('createNew.send')} type={'send'}/*TODO: onPress*//>
-                        </View>
                     </View>
+                </View>
+                <View style={ newReportStyles.buttonView}>
+                    <Button title={strings('createNew.save')} type={'save'}/*TODO: onPress*//>
+                    <Button title={strings('createNew.send')} type={'send'}/*TODO: onPress*//>
                 </View>
             </AppBackground>
             /*
