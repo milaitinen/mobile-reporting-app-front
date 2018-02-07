@@ -2,8 +2,7 @@ import { combineReducers } from 'redux';
 
 import user from './user';
 import templates from './templates';
-import reportsByTempID from './reportsByTemplateID';
-import reports from './reports';
+import reportsByTempID from './reports';
 import newReport from './newReport';
 import navReducer from './navReducer';
 import preview from './preview';
@@ -11,8 +10,7 @@ import preview from './preview';
 export default combineReducers ({
     user,
     templates,
-    reportsByTempID,
-    reports,
+    reports: reportsByTempID,
     newReport,
     nav: navReducer,
     preview,

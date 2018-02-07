@@ -33,15 +33,15 @@ describe('Layout', () => {
 
     describe('showMore()', () => {
         it('should update the states itemsCount, updated, and maxHeight, when called', () => {
-            expect(inst.state.itemsCount).toBe(5);
+            expect(inst.state.itemsCount).toBe(20);
             expect(inst.state.updated).toBe(false);
-            expect(inst.state.maxHeight).toBe(0);
+            expect(inst.state.maxHeight).toBe(475);
 
             inst.showMore();
 
-            expect(inst.state.itemsCount).toBe(10);
+            expect(inst.state.itemsCount).toBe(40);
             expect(inst.state.updated).toBe(true);
-            expect(inst.state.maxHeight).toBe(300);
+            expect(inst.state.maxHeight).toBe(475);
         });
     });
 });
