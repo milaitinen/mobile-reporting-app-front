@@ -20,6 +20,7 @@ const TemplateStack = StackNavigator({
             headerTitle: strings('templates.templates') ,
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
+            headerBackTitle: null,
             headerLeft:
                 <Icon
                     name={'menu'}
