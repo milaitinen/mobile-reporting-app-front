@@ -20,6 +20,7 @@ const TemplateStack = StackNavigator({
             headerTitle: strings('templates.templates') ,
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
+            headerBackTitle: null,
             headerLeft:
                 <Icon
                     name={'menu'}
@@ -42,7 +43,6 @@ const TemplateStack = StackNavigator({
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',
-            headerBackTitle: null,
         })
     },
     Preview: {
@@ -53,7 +53,6 @@ const TemplateStack = StackNavigator({
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',
-            headerBackTitle: null,
         })
     },
 
