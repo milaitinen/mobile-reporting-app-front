@@ -42,6 +42,7 @@ const TemplateStack = StackNavigator({
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',
+            headerBackTitle: null,
         })
     },
     Preview: {
@@ -52,6 +53,7 @@ const TemplateStack = StackNavigator({
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',
+            headerBackTitle: null,
         })
     },
 
