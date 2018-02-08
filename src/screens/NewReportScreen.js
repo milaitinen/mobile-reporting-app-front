@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
+import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm from 'react-native-simple-radio-button';
@@ -12,8 +12,8 @@ import { Checkbox } from '../components/Checkbox';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID } from './api';
 import { strings } from '../locales/i18n';
-import { insertTitle } from '../redux/actions/newReport';
-import { Button } from '../components/Button';
+import { insertTitle, insertFieldAnswer } from '../redux/actions/newReport';
+//import { Button } from '../components/Button';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -40,6 +40,11 @@ export class NewReportScreen extends React.Component {
             })
             .catch(error => console.error(error) )
             .done();
+    };
+
+    saveAnswers = (fields) => {
+        //todo
+        return null;
     };
 
     // Inserts data to server with a post method.
@@ -116,7 +121,8 @@ export class NewReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
-                                onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
+                                onSubmitEditing={(event) => {/*this.props.dispatch(insertTitle(event.nativeEvent.text));*/
+                                    this.props.dispatch(insertFieldAnswer(this.props.templateID, field.typeID, event.nativeEvent.text));}} //TODO: is typeID correct here
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
@@ -321,10 +327,12 @@ export class NewReportScreen extends React.Component {
                         </ScrollView>
                     </View>
                 </View>
+
                 <View style={ newReportStyles.buttonView}>
-                    <Button title={strings('createNew.save')} type={'save'}/*TODO: onPress*//>
-                    <Button title={strings('createNew.send')} type={'send'}/*TODO: onPress*//>
+                    <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.saveAnswers()} />
+                    <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}  />
                 </View>
+
             </AppBackground>
             /*
                 <TextInput
