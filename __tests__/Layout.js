@@ -41,7 +41,6 @@ describe('Layout', () => {
 
             expect(inst.state.itemsCount).toBe(40);
             expect(inst.state.updated).toBe(true);
-            expect(inst.state.maxHeight).toBe(475);
         });
     });
 });
