@@ -112,6 +112,8 @@ export class NewReportScreen extends React.Component {
 
         const { isEditable } = this.props;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
+            console.log('field', field);
+
             switch (field.typeID) {
 
                 case 1: // Name
@@ -122,7 +124,7 @@ export class NewReportScreen extends React.Component {
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
                                 onChangeText={(text) => {/*this.props.dispatch(insertTitle(event.nativeEvent.text));*/
-                                    this.props.dispatch(insertFieldAnswer(field.id, field.typeID, text));}} //TODO: is typeID correct here
+                                    this.props.dispatch(insertFieldAnswer(field, text));}} //TODO: is typeID correct here
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />

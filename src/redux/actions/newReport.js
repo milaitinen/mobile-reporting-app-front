@@ -15,9 +15,8 @@ export const insertTitle = (title) => ({
     title: title
 });
 
-export const insertFieldAnswer = ( fieldID, fieldType, answer ) => ({
+export const insertFieldAnswer = ( field, answer ) => ({
     type: INSERT_FIELD_ANSWER,
-    fieldID: fieldID,
-    fieldType: fieldType,
-    answer: answer,
+    field: field,
+    answer: answer
 });
