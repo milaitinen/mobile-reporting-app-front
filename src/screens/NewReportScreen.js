@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
+import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, BackHandler } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm from 'react-native-simple-radio-button';
@@ -25,6 +25,26 @@ export class NewReportScreen extends React.Component {
             isLoading      : true,
             number         : '',
         };
+    }
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            if (this.props.isUnsaved) {
+                return true; // This will prevent the regular handling of the back button
+            }
+            Alert.alert(
+                'You have unsaved changes',
+                'Are you sure you want to leave without saving?',
+                [
+                    { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                    { text: 'No', onPress: () => console.log('No Pressed') },
+                    { text: 'Yes', onPress: () => console.log('Yes Pressed') },
+                ],
+                { cancelable: false }
+
+            )
+            return true;
+        });
     }
 
     componentDidMount() {
