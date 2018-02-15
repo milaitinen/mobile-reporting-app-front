@@ -132,12 +132,17 @@ export class NewReportScreen extends React.Component {
                     );
 
                 case 2: // Checkbox
+                    this.props.dispatch(insertFieldAnswer(field, '0'));
                     return (
                         <Checkbox
                             key={index}
                             style={ newReportStyles.checkboxStyle }
                             title={'This is a nice checkbox'}
                             editable={isEditable}
+                            //The ability to dispatch the checkbox status is passed on to the component
+                            //as a prop, and the component itself can call this function in its
+                            //onIconPress, i.e. when the checkbox is pressed
+                            onIconPressFunction={ (answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
                         />
                     );
 
