@@ -37,7 +37,7 @@ export class NewReportScreen extends React.Component {
         this.state.dataFieldsByID.map((field) => {
             const type = field.typeID;
             if (type === 2 || type === 5) {
-                this.props.dispatch(insertFieldAnswer(field, '0'));
+                this.props.dispatch(insertFieldAnswer(field, field.defaultValue));
             }
         });
     };
@@ -124,6 +124,8 @@ export class NewReportScreen extends React.Component {
 
         const { isEditable, answers } = this.props;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
+
+            console.log('field', field);
 
             switch (field.typeID) {
 
