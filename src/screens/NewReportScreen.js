@@ -202,7 +202,7 @@ export class NewReportScreen extends React.Component {
                                 { label: 'Yes', value: 1 }
                             ] }
                             initial={JSON.parse(field.defaultValue)}
-                            onPress={(value) => { this.setState({ value: value }); }}
+                            onPress={() => this.props.dispatch(insertFieldAnswer(field, '1'))}
                             buttonColor={'#9dcbe5'}
                             labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
                             formHorizontal={true}
