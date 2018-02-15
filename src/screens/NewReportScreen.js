@@ -32,11 +32,23 @@ export class NewReportScreen extends React.Component {
         this.getFieldsByTemplateID(this.props.templateID);
     }
 
+    // set the value of yes/no field(s) to '0' (No)
+    setDefaultValue = () => {
+        this.state.dataFieldsByID.map((field) => {
+            const type = field.typeID;
+            if (type === 2 || type === 5) {
+                this.props.dispatch(insertFieldAnswer(field, '0'));
+            }
+        });
+    };
+
     getFieldsByTemplateID = (templateID) => {
         fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
             .then(responseJson => {
-                console.log('responseJson', responseJson);
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
+            })
+            .then(() => {
+                if (this.state.dataFieldsByID) this.setDefaultValue(this.state.dataFieldsByID);
             })
             .catch(error => console.error(error) )
             .done();
@@ -110,9 +122,8 @@ export class NewReportScreen extends React.Component {
             );
         }
 
-        const { isEditable } = this.props;
+        const { isEditable, answers } = this.props;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
-            console.log('field', field);
 
             switch (field.typeID) {
 
@@ -123,8 +134,7 @@ export class NewReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
-                                onChangeText={(text) => {/*this.props.dispatch(insertTitle(event.nativeEvent.text));*/
-                                    this.props.dispatch(insertFieldAnswer(field, text));}} //TODO: is typeID correct here
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
@@ -132,7 +142,6 @@ export class NewReportScreen extends React.Component {
                     );
 
                 case 2: // Checkbox
-                    this.props.dispatch(insertFieldAnswer(field, '0'));
                     return (
                         <Checkbox
                             key={index}
@@ -142,7 +151,7 @@ export class NewReportScreen extends React.Component {
                             //The ability to dispatch the checkbox status is passed on to the component
                             //as a prop, and the component itself can call this function in its
                             //onIconPress, i.e. when the checkbox is pressed
-                            onIconPressFunction={ (answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
+                            onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
                         />
                     );
 
@@ -178,6 +187,7 @@ export class NewReportScreen extends React.Component {
                                 placeholder={field.defaultValue}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                             />
                         </View>
                     );
@@ -213,7 +223,7 @@ export class NewReportScreen extends React.Component {
                                         borderRadius: 5,
                                     },
                                 }}
-                                date={field.defaultValue}
+                                date={answers[field.id] ? answers[field.id].answer : field.defaultValue}
                                 mode="date"
                                 placeholder="select date"
                                 format="YYYY-MM-DD"
@@ -222,7 +232,7 @@ export class NewReportScreen extends React.Component {
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}
-                                onDateChange={(date) => {this.setState({ date: date });}}
+                                onDateChange={(date) => this.props.dispatch(insertFieldAnswer(field, date))}
                             />
                         </View>
                     );
@@ -230,7 +240,7 @@ export class NewReportScreen extends React.Component {
                 case 7: // Instruction
                     return (
                         <View key={index} >
-                            <Text style={ newReportStyles.textStyleClass }>Instructions</Text>
+                            <Text style = { newReportStyles.textStyleClass }>Instructions</Text>
                             <Text
                                 style = { newReportStyles.multilinedTextInputStyleClass }>
                                 {field.defaultValue}
@@ -241,12 +251,13 @@ export class NewReportScreen extends React.Component {
                 case 8: // Text (Multiple row text field)
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Description</Text>
+                            <Text style = { newReportStyles.textStyleClass }>Description</Text>
                             <TextInput
-                                editable={isEditable}
+                                editable = {isEditable}
                                 style = { newReportStyles.multilinedTextInputStyleClass }
-                                placeholder={field.defaultValue}
-                                multiline={true}
+                                onChangeText = {(text) => this.props.dispatch(insertFieldAnswer(field, text))}
+                                placeholder = {field.defaultValue}
+                                multiline = {true}
                             />
                         </View>
                     );
@@ -254,25 +265,25 @@ export class NewReportScreen extends React.Component {
                 case 9: // Time
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Time</Text>
+                            <Text style = { newReportStyles.textStyleClass }>Time</Text>
                             <DatePicker
-                                disabled={!isEditable}
-                                style={ newReportStyles.dateStyleClass }
-                                customStyles={{
+                                disabled = {!isEditable}
+                                style = { newReportStyles.dateStyleClass }
+                                customStyles = {{
                                     dateInput: {
                                         borderColor: '#e0e8eb',
                                         backgroundColor: '#e0e8eb',
                                         borderRadius: 5,
                                     }
                                 }}
-                                date={field.defaultValue}
-                                mode="time"
-                                format="HH:mm"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                minuteInterval={10}
-                                iconComponent={<Icon name={'schedule'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}
-                                onDateChange={(time) => {this.setState({ time: time });}}
+                                date = {answers[field.id] ? answers[field.id].answer : field.defaultValue}
+                                mode = "time"
+                                format = "HH:mm"
+                                confirmBtnText = "Confirm"
+                                cancelBtnText = "Cancel"
+                                minuteInterval = {10}
+                                iconComponent = {<Icon name={'schedule'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}
+                                onDateChange = {(time) => this.props.dispatch(insertFieldAnswer(field, time))}
                             />
                         </View>
                     );
@@ -286,8 +297,7 @@ export class NewReportScreen extends React.Component {
                                 style={ newReportStyles.textInputStyleClass }
                                 placeholder={field.defaultValue}
                                 keyboardType = 'numeric'
-                                onChangeText={(text)=> this.onChanged(text)}
-                                value = {this.state.number}
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                             />
                         </View>
                     );
@@ -361,19 +371,21 @@ export class NewReportScreen extends React.Component {
 
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
-    const username = state.user.username;
-    const isEditable = state.newReport.isEditable;
-    const templateID = state.newReport.templateID;
-    const title = state.newReport.title;
-    const number = state.newReport.number;
-    const token = state.user.token;
+    const token         = state.user.token;
+    const username      = state.user.username;
+    const isEditable    = state.newReport.isEditable;
+    const templateID    = state.newReport.templateID;
+    const title         = state.newReport.title;
+    const number        = state.newReport.number;
+    const answers       = state.newReport.answers;
     return {
         username,
         isEditable,
         templateID,
         title,
         number,
-        token
+        token,
+        answers
     };
 };
 
