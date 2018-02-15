@@ -6,15 +6,7 @@ const initialState = {
     isEditable: false,
     title: '',
     number: null,
-    answers: [{
-        templateID: 123,
-        fieldID: 456,
-        answer: 'initial answer',
-    }, {
-        templateID: 1234,
-        fieldID: 4567,
-        answer: 'second initial answer',
-    }],
+    answers: {},
 };
 
 const newReportReducer = (state = initialState, action) => {
@@ -33,7 +25,10 @@ const newReportReducer = (state = initialState, action) => {
         case INSERT_FIELD_ANSWER:
             return {
                 ...state,
-                answers: [{ ...action.fieldAnswer }, ...state.answers]
+                answers: {
+                    ...state.answers,
+                    [action.fieldID]: action.answer
+                }
             };
         default:
             return state;

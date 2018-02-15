@@ -121,8 +121,8 @@ export class NewReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
-                                onSubmitEditing={(event) => {/*this.props.dispatch(insertTitle(event.nativeEvent.text));*/
-                                    this.props.dispatch(insertFieldAnswer(this.props.templateID, field.typeID, event.nativeEvent.text));}} //TODO: is typeID correct here
+                                onChangeText={(text) => {/*this.props.dispatch(insertTitle(event.nativeEvent.text));*/
+                                    this.props.dispatch(insertFieldAnswer(field.id, field.typeID, text));}} //TODO: is typeID correct here
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
