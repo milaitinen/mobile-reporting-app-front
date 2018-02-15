@@ -9,6 +9,8 @@ import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from '../redux/actions/user';
 import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
+import userReducer from '../redux/reducers/user';
+import { Sidebar } from '../navigation/Sidebar';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
@@ -38,6 +40,9 @@ export class LoginScreen extends React.Component {
     }
 
     logIn = () => {
+        //TODO Sidebar function will have to passed as a prop or exported.
+        //if (userReducer.username !== null && userReducer.token !== null) Sidebar.navigation.signOut();
+
         login(this.props.username, this.props.password)
             .then(response => {
                 if (response === undefined) { // TODO change undefined to invalidCredentialsResponse?
