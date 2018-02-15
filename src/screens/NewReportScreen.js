@@ -297,7 +297,7 @@ export class NewReportScreen extends React.Component {
                                 ref={ ModalDrop => this.modalDropdown = ModalDrop }
                                 dropdownStyle={ newReportStyles.dropStyleClass }
                                 disabled={!isEditable}
-                                options={JSON.parse(field.defaultValue)}/>
+                                options={field.defaultValue.split(',')}/>
                             <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
                         </View>
                     );
