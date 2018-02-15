@@ -87,7 +87,7 @@ are stored in the store - or - that's how it should be...
         }
     },
 
-    reportsByTemplateID: {
+    reports: {
         [templateID]: [ {
             id: <Int>,
             reportID: <Int>,
@@ -98,19 +98,6 @@ are stored in the store - or - that's how it should be...
             dateAccepted: <Date>,
             answers: [Answers]
         } ]
-    },
-
-    reports: {
-        [id]: {
-            id: <Int>,
-            templateID: <Int>,
-            userID: <Int>,
-            orderNo: <Int>,
-            title: <String>,
-            dateCreated: <Date>,
-            dateAccepted: <Date>,
-            answers: [Answers]
-        }
     },
 
     newReportScreen: {

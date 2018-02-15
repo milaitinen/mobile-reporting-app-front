@@ -4,7 +4,7 @@ import { View, Button } from 'react-native';
 import { strings } from '../locales/i18n';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
 import { emptyTemplates } from '../redux/actions/templates';
-import { emptyReports } from '../redux/actions/reportsByTemplateID';
+import { emptyReports } from '../redux/actions/reports';
 import { connect } from 'react-redux';
 
 class Sidebar extends React.Component {
