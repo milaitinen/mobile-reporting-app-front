@@ -28,8 +28,9 @@ export class NewReportScreen extends React.Component {
     }
 
     componentWillMount() {
+        // BackHandler for detecting hardware button presses for back navigation (Android only)
         BackHandler.addEventListener('hardwareBackPress', () => {
-            if (this.props.isUnsaved) {
+            if (this.props.isUnsaved) { // TODO: In the future the alert should only be displayed if the report is unsaved.
                 return true; // This will prevent the regular handling of the back button
             }
             Alert.alert(
@@ -44,9 +45,8 @@ export class NewReportScreen extends React.Component {
                     },
                 ],
                 { cancelable: false }
-
             );
-            return true;
+            return true; // TODO: Currently always displays the alert, only pressing Yes allows navigating back.
         });
     }
 
