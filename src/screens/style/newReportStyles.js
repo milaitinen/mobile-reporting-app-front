@@ -42,8 +42,10 @@ const newReportStyles = EStyleSheet.create({
     },
 
     textStyleClass: {
+        marginLeft: 5,
+        color: '#747474',
         fontSize: 16,
-        marginTop: 8,
+        marginTop: 10,
         flexDirection: 'row',
     },
 
@@ -125,14 +127,37 @@ const newReportStyles = EStyleSheet.create({
     },
 
     textInputStyleClass: {
-        textAlign: 'center',
-        marginBottom: 6,
+        paddingLeft: 10,
+        marginBottom: 10,
         marginTop: 6,
         height: 40,
         borderWidth: 2,
         borderRadius: '$containerBorderRadius',
         borderColor: '#ffffff',
         backgroundColor: '#e0e8eb',
+    },
+
+    textInput: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#747474',
+        color: '#747474',
+        marginBottom: 5,
+        '@media (max-width: 350)': {
+            fontSize: 12,
+            marginHorizontal: 5,
+        },
+        '@media (min-width: 350)': {
+            fontSize: 16,
+            marginHorizontal: 5,
+        }
+    },
+
+    title: {
+        marginLeft: 5,
+        marginBottom: 5,
+        color: '#747474',
+        fontSize: 20,
+        flexDirection: 'row',
     },
 
     buttonView: {
@@ -142,10 +167,10 @@ const newReportStyles = EStyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#e8faf8',
-        elevation: 5,
+        elevation: 15,
         shadowOffset: {
             width: 0,
-            height: 5,
+            height: 15,
         },
     }
 });

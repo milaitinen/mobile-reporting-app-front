@@ -112,10 +112,11 @@ export class NewReportScreen extends React.Component {
                 case 1: // Name
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Name</Text>
+                            <Text style={newReportStyles.textStyleClass}>Name</Text>
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
+                                placeholderTextColor={'#747474'}
                                 onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
@@ -125,12 +126,15 @@ export class NewReportScreen extends React.Component {
 
                 case 2: // Checkbox
                     return (
-                        <Checkbox
-                            key={index}
-                            style={ newReportStyles.checkboxStyle }
-                            title={'This is a nice checkbox'}
-                            editable={isEditable}
-                        />
+                        <View key={index}>
+                            <Text style={newReportStyles.textStyleClass}>Checkbox section</Text>
+                            <Checkbox
+                                key={index}
+                                style={ newReportStyles.checkboxStyle }
+                                title={'This is a nice checkbox'}
+                                editable={isEditable}
+                            />
+                        </View>
                     );
 
                 case 3: // Dropdown
@@ -171,19 +175,23 @@ export class NewReportScreen extends React.Component {
 
                 case 5: // Choice (Yes/No)
                     return (
-                        <RadioForm
-                            key={index}
-                            disabled={!isEditable}
-                            radio_props={ [
-                                { label: 'No', value: 0 },
-                                { label: 'Yes', value: 1 }
-                            ] }
-                            initial={JSON.parse(field.defaultValue)}
-                            onPress={(value) => { this.setState({ value: value }); }}
-                            buttonColor={'#9dcbe5'}
-                            labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
-                            formHorizontal={true}
-                        />
+                        <View key={index}>
+                            <Text style={ newReportStyles.textStyleClass }>Radiobutton section</Text>
+                            <RadioForm
+                                key={index}
+                                disabled={!isEditable}
+                                radio_props={ [
+                                    { label: 'Yes', value: 1 },
+                                    { label: 'No', value: 0 }
+
+                                ] }
+                                initial={JSON.parse(field.defaultValue)}
+                                onPress={(value) => { this.setState({ value: value }); }}
+                                buttonColor={'#9dcbe5'}
+                                labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
+                                formHorizontal={true}
+                            />
+                        </View>
                     );
 
                 case 6: // Calendar
@@ -311,17 +319,18 @@ export class NewReportScreen extends React.Component {
             }
         });
 
-        //TODO: button styling
+        //TODO: view styling
         return (
             <AppBackground style={'no-padding'}>
                 <View style={ newReportStyles.ViewContainer }>
                     <View style={ newReportStyles.ReportContainer }>
                         <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
+                            <Text style={newReportStyles.title}>{strings('templates.report')}</Text>
                             {renderedFields}
                         </ScrollView>
                     </View>
                 </View>
-                <View style={ newReportStyles.buttonView}>
+                <View style={ newReportStyles.buttonView }>
                     <Button title={strings('createNew.save')} type={'save'}/*TODO: onPress*//>
                     <Button title={strings('createNew.send')} type={'send'}/*TODO: onPress*//>
                 </View>

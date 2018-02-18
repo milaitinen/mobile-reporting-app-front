@@ -4,11 +4,11 @@ const styles = EStyleSheet.create({
     view: {
         backgroundColor: 'transparent',
         borderRadius: '$buttonBorderRadius',
-        flex: 1,
-        height: 70,
-        flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignContent: 'center',
+        height: 70,
+        marginHorizontal: 10,
+        marginBottom: 2,
     },
 
     sendButtonContainer: {
@@ -57,7 +57,14 @@ const styles = EStyleSheet.create({
         },
     },
 
+    buttonContent: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+    },
+
     text: {
+        paddingLeft: 10,
         color: '#474c52',
         fontFamily: '$primaryFont',
         textAlign: 'center',
