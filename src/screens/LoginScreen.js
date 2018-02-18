@@ -10,7 +10,10 @@ import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from '../redux/actions/user';
 import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
 import userReducer from '../redux/reducers/user';
-import { Sidebar } from '../navigation/Sidebar';
+import { emptyTemplates } from '../redux/actions/templates';
+import { emptyReports } from '../redux/actions/reportsByTemplateID';
+import { NavigationActions } from 'react-navigation';
+
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
@@ -39,9 +42,31 @@ export class LoginScreen extends React.Component {
         }
     }
 
+    //A modified version of the function signOut (used in navigation/Sidebar.js)
+    navigationReset = () => {
+        // perform logging out related tasks here
+        const signOutDestinationRouteName = 'loginStack';
+
+        this.props.dispatch(insertToken(null));
+        this.props.dispatch(emptyTemplates());
+        this.props.dispatch(emptyReports());
+
+        /*
+        This sets the navigation back to the beginning, i.e. to the login screen.
+        (This means that the back button in Android will not return to the signed in part of the app,
+        but will instead exit the app.)
+         */
+        const actionToDispatch = NavigationActions.reset({
+            index: 0,
+            key: null,
+            actions: [NavigationActions.navigate({ routeName: signOutDestinationRouteName })]
+        });
+        this.props.navigation.dispatch(actionToDispatch);
+    };
+
     logIn = () => {
-        //TODO Sidebar function will have to passed as a prop or exported.
-        //if (userReducer.username !== null && userReducer.token !== null) Sidebar.navigation.signOut();
+        //Erases user input from the login screen and the navigation actions of a previous user.
+        this.navigationReset();
 
         login(this.props.username, this.props.password)
             .then(response => {

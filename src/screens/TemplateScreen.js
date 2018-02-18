@@ -56,7 +56,7 @@ export class TemplateScreen extends Component {
      and instantiates the network request.
     */
     componentDidMount() {
-        // TEMPORARY: not sure if this is the best solution. Current version meant for debugging purposes
+        // TEMPORARY: not sure if this is the best solution. Current version fixes a bug (related to logging in)
         if (this.props.username !== userReducer.username) {
             this.getTemplatesAndReports();
         } else {
@@ -64,18 +64,6 @@ export class TemplateScreen extends Component {
         }
     }
 
-    /*
-    A function that can check if the templates are empty. Was used in the if statement of componentDidMount()
-
-        isEmpty = (obj) => {
-        this.isEmpty(this.props.templates)
-            for (const key in obj) {
-                if (obj.hasOwnProperty(key))
-                    return false;
-            }
-            return true;
-        };
-    */
     /*
      Fetches the data from the server in two parts.
      1) Fetches the templates from the server
