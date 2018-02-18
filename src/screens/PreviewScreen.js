@@ -20,7 +20,7 @@ import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 
 // "export" necessary in order to test component without Redux store
-export class NewReportScreen extends React.Component {
+export class PreviewScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -363,4 +363,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(NewReportScreen);
+export default connect(mapStateToProps)(PreviewScreen);
