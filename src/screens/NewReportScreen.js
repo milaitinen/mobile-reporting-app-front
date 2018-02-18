@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
+import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, BackHandler } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm from 'react-native-simple-radio-button';
@@ -25,6 +25,29 @@ export class NewReportScreen extends React.Component {
             isLoading      : true,
             number         : '',
         };
+    }
+
+    componentWillMount() {
+        // BackHandler for detecting hardware button presses for back navigation (Android only)
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            if (this.props.isUnsaved) { // TODO: In the future the alert should only be displayed if the report is unsaved.
+                return true; // This will prevent the regular handling of the back button
+            }
+            Alert.alert(
+                'You have unsaved changes',
+                'Are you sure you want to leave without saving?',
+                [
+                    { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                    { text: 'No', onPress: () => console.log('No Pressed') },
+                    { text: 'Yes', onPress: () => {
+                        console.log('Yes Pressed');
+                        this.props.navigation.dispatch(NavigationActions.back()); }
+                    },
+                ],
+                { cancelable: false }
+            );
+            return true; // TODO: Currently always displays the alert, only pressing Yes allows navigating back.
+        });
     }
 
     componentDidMount() {
