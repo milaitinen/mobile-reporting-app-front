@@ -38,11 +38,14 @@ export class NewReportScreen extends React.Component {
                 [
                     { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
                     { text: 'No', onPress: () => console.log('No Pressed') },
-                    { text: 'Yes', onPress: () => console.log('Yes Pressed') },
+                    { text: 'Yes', onPress: () => {
+                        console.log('Yes Pressed');
+                        this.props.navigation.dispatch(NavigationActions.back()); }
+                    },
                 ],
                 { cancelable: false }
 
-            )
+            );
             return true;
         });
     }
