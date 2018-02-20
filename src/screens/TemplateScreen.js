@@ -13,9 +13,9 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchStoredReportsByTemplateID } from './api';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID } from '../redux/actions/reports';
+import { storeReportsByTemplateID, storeSavedReportsByTemplateID } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 
@@ -38,21 +38,8 @@ export class TemplateScreen extends Component {
      and instantiates the network request.
     */
     componentDidMount() {
-        // TEMPORARY: not sure if this is the best solution
-        if (this.isEmpty(this.props.templates)) {
-            this.getTemplatesAndReports();
-        } else {
-            this.setState({ refreshing: false, isLoading: false });
-        }
+        this.getTemplatesAndReports();
     }
-
-    isEmpty = (obj) => {
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key))
-                return false;
-        }
-        return true;
-    };
 
     /*
      Fetches the data from the server in two parts.
@@ -62,19 +49,38 @@ export class TemplateScreen extends Component {
         of reportsByTemplates, and sets isLoading and refreshing to false.
     */
     getTemplatesAndReports = () => {
-        fetchTemplatesByUsername(this.props.username, this.props.token)
+        const { username, token } = this.props;
+
+        fetchTemplatesByUsername(username, token)
             .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
             .then(() => {
-                const reportsByTemplateID = Object.keys(this.props.templates).map((templateID) => fetchReportsByTemplateID(this.props.username, templateID, this.props.token));
+                const reportsByTemplateID = Object.keys(this.props.templates) // just 'templates' won't work...
+                    .map((templateID) => fetchReportsByTemplateID(username, templateID, token));
                 Promise.all(reportsByTemplateID)
                     .then(data => {
                         this.props.dispatch(storeReportsByTemplateID(data));
-                        this.setState({ refreshing: false, isLoading: false });
+                    })
+                    .then(() => {
+                        this.getStoredReports();
                     })
                     .catch(err => console.error(err));
             })
             .catch(error => console.error(error))
             .done();
+    };
+
+    getStoredReports = () => {
+        const { templates, username, token } = this.props;
+
+        Object.keys(templates).forEach((templateID) => {
+            fetchStoredReportsByTemplateID(username, templateID, token)
+                .then((data) => {
+                    //TODO come up with a better solution: currently the data is { (some object) } or [ (empty array) ]
+                    if (Object.keys(data).length !== 0) this.props.dispatch(storeSavedReportsByTemplateID(templateID, data));
+                })
+                .then(() => this.setState({ refreshing: false, isLoading: false }))
+                .catch(err => console.error(err));
+        });
     };
 
     // Handler function for refreshing the data and refetching.
@@ -138,6 +144,7 @@ export class TemplateScreen extends Component {
         }
 
         const { reports, templates } = this.props;
+
         return (
             <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>

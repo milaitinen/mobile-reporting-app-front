@@ -70,9 +70,25 @@ export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
     );
 };
 
-export const saveReports = ((username, templateID, data) => {
-    saveData(`${url}/users/${username}/templates/${templateID}`, data);
+// used to store drafts
+export const saveReport = ((username, templateID, data) => {
+    saveData(`users/${username}/templates/${templateID}`, data);
 });
+
+export const removeReport =  ((username, templateID) => {
+    removeData(`users/${username}/templates/${templateID}`);
+});
+
+export const fetchStoredReportsByTemplateID = (username, templateID) => {
+    return AsyncStorage.getItem(`users/${username}/templates/${templateID}`) // NOTE: this url is just a key
+        .then(data => {
+            if (data !== null) {
+                return JSON.parse(data);
+            } else {
+                return {};
+            }
+        });
+};
 
 // fetch reports that are only locally saved
 export const fetchLocalReports = (username, templateID) => {
@@ -136,7 +152,6 @@ export const fetchTemplatesByUsername = (username, token) => {
             return fetchRemoteTemplatesByUsername(username, token);
         })
         .then((templates) => {
-            console.log('templates', templates);
             saveData(`${url}/users/${username}/templates`, templates);
             return templates;
         });
@@ -179,7 +194,6 @@ export const fetchReportsByTemplateID = (username, templateID, token) => {
             return fetchRemoteReportsByTemplateID(username, templateID, token);
         })
         .then((reports) => {
-            console.log('reports', reports);
             saveData(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`, reports);
             return reports;
         });
@@ -253,6 +267,14 @@ const fetchRemoteReportsByUsername = (username, token) => {
    Keys and values are stored as a string. */
 const saveData = (dataUrl, data) => {
     AsyncStorage.setItem(dataUrl, JSON.stringify(data));
+};
+
+const removeData = (dataUrl) => {
+    try {
+        AsyncStorage.removeItem(dataUrl);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 // Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178

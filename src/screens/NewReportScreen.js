@@ -10,10 +10,10 @@ import { connect } from 'react-redux';
 import { Checkbox } from '../components/Checkbox';
 
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, fetchFieldsByTemplateID } from './api';
+import { createNewReport, fetchFieldsByTemplateID, saveReport, removeReport } from './api';
 import { strings } from '../locales/i18n';
 import { insertTitle, insertFieldAnswer } from '../redux/actions/newReport';
-//import { Button } from '../components/Button';
+import { storeSavedReportsByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -23,6 +23,7 @@ export class NewReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            title       : null,
             isLoading   : true,
             number      : '',
             isEditable  : false,
@@ -56,9 +57,28 @@ export class NewReportScreen extends React.Component {
             .done();
     };
 
+    // delete draft
+    deleteReport = () => {
+
+    };
+
     saveAnswers = () => {
-        //todo
-        return null;
+        const { templateID, username } = this.props;
+
+        const report = {
+            templateID: templateID,
+            userID: 1,
+            orderNo: 5006,
+            title: this.state.title || 'Draft',
+            dateCreated: moment().format('YYYY-MM-DD'),
+            dateAccepted: null,
+            id: 5001,
+        };
+        
+        //TODO problems when you create several drafts from the same template
+
+        saveReport(username, templateID, report);
+        this.props.dispatch(storeSavedReportsByTemplateID(templateID, report));
     };
 
     // Inserts data to server with a post method.
@@ -343,6 +363,13 @@ export class NewReportScreen extends React.Component {
                 <View style={ newReportStyles.ViewContainer }>
                     <View style={ newReportStyles.ReportContainer }>
                         <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
+                            <TextInput
+                                editable={isEditable}
+                                placeholder={'INSERT TITLE'}
+                                onChangeText={(text) => this.setState({ title: text })}
+                                underlineColorAndroid='transparent'
+                                style={newReportStyles.textInputStyleClass}
+                            />
                             {renderedFields}
                         </ScrollView>
                     </View>
@@ -351,6 +378,7 @@ export class NewReportScreen extends React.Component {
                 <View style={ newReportStyles.buttonView}>
                     <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.saveAnswers()} />
                     <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}  />
+                    <Button title={'Delete'} disabled={false} onPress={() => removeReport(this.props.username, this.props.templateID)}  />
                 </View>
 
             </AppBackground>
