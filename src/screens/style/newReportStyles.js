@@ -18,7 +18,7 @@ const newReportStyles = EStyleSheet.create({
     ReportContainer: {
         flex: 1,
         height: 40,
-        backgroundColor: '#fff',
+        backgroundColor: '$reportBg',
         marginRight: 3,
         marginLeft: 3,
         marginTop: 10,
@@ -115,15 +115,14 @@ const newReportStyles = EStyleSheet.create({
     },
 
     multilinedTextInputStyleClass: {
-        textAlign: 'center',
-        paddingTop: 6,
+        paddingLeft: 10,
         marginBottom: 6,
         marginTop: 6,
         height: 80,
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: '$containerBorderRadius',
-        borderColor: '#ffffff',
-        backgroundColor: '#e0e8eb',
+        borderColor: '$reportBg',
+        backgroundColor: '$primaryWhite',
     },
 
     textInputStyleClass: {
@@ -131,10 +130,10 @@ const newReportStyles = EStyleSheet.create({
         marginBottom: 10,
         marginTop: 6,
         height: 40,
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: '$containerBorderRadius',
-        borderColor: '#ffffff',
-        backgroundColor: '#e0e8eb',
+        borderColor: '$reportBg',
+        backgroundColor: '$primaryWhite',
     },
 
     textInput: {
@@ -154,8 +153,8 @@ const newReportStyles = EStyleSheet.create({
 
     title: {
         marginLeft: 5,
-        marginBottom: 5,
-        color: '#747474',
+        marginBottom: 10,
+        color: '#656a76',
         fontSize: 20,
         flexDirection: 'row',
     },

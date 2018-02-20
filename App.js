@@ -16,6 +16,7 @@ EStyleSheet.build({
     $darkestBlue: '#1b3055',
     $primaryWhite: '#fff',
     $primaryFont: 'Roboto-Light',
+    $reportBg: '#e8eef1',
 
 
     $containerBorderRadius: 5,
