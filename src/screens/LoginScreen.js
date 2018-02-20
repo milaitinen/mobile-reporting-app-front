@@ -66,7 +66,7 @@ export class LoginScreen extends React.Component {
 
     logIn = () => {
         //Erases user input from the login screen and the navigation actions of a previous user.
-        this.navigationReset();
+        if (this.props.token !== null) this.navigationReset();
 
         login(this.props.username, this.props.password)
             .then(response => {
@@ -77,6 +77,8 @@ export class LoginScreen extends React.Component {
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
                     this.props.navigation.navigate('drawerStack');
+
+                    this.props.dispatch(insertPassword(null));
                 }
             });
     };
