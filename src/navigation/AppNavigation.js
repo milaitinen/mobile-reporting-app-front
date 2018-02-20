@@ -20,6 +20,7 @@ const TemplateStack = StackNavigator({
             headerTitle: strings('templates.templates') ,
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
+            headerBackTitle: null,
             headerLeft:
                 <Icon
                     name={'menu'}
@@ -27,7 +28,7 @@ const TemplateStack = StackNavigator({
                     iconStyle={navigationStyles.menuIcon}
                     containerStyle={navigationStyles.menuIconContainer}
                     onPress={() => { navigation.navigate('DrawerOpen'); }}>
-                </Icon>
+                </Icon>,
         })
     },
     Reports: {

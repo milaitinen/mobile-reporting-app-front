@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
 import { strings } from '../locales/i18n';
-import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
+import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
-import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from '../redux/actions/user';
+import { insertUsername, insertToken } from '../redux/actions/user';
 import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
 
 // "export" necessary in order to test component without Redux store
@@ -16,14 +16,11 @@ export class LoginScreen extends React.Component {
     constructor(props)
     {
         super(props);
-        /*
         this.state = {
-            // isLoading     : true,
-            username    : '',
-            password        : '',
-            serverUrl       : ''
+            // isLoading : true,
+            password  : '',
+            serverUrl : ''
         };
-        */
 
 
         if (this.props.token) { // this.props.token != null
@@ -38,12 +35,12 @@ export class LoginScreen extends React.Component {
     }
 
     logIn = () => {
-        login(this.props.username, this.props.password)
-            .then(response => {
-                if (response === undefined) { // TODO change undefined to invalidCredentialsResponse?
+        login(this.props.username, this.state.password)
+            .then(token => {
+                if (token === undefined) { // TODO change undefined to invalidCredentialsResponse?
                     alert('Invalid username or password');
                 } else {
-                    const token = response;
+                    this.setState({ password: '' });
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
                     this.props.navigation.navigate('drawerStack');
@@ -73,7 +70,7 @@ export class LoginScreen extends React.Component {
                     name={'lock'}
                     secureTextEntry={true}
                     placeholder={ strings('login.password') }
-                    onChangeText={password => this.props.dispatch(insertPassword(password))}
+                    onChangeText={password => this.setState({ password })}
                 />
                 <Input
                     name={'globe'}
@@ -95,10 +92,8 @@ export class LoginScreen extends React.Component {
 
 // maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.username
 const mapStateToProps = (state) => {
-    const password = state.user.password;
     const username = state.user.username;
     return {
-        password,
         username
     };
 };

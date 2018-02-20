@@ -12,12 +12,11 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, /*fetchReportsByUsername*/ } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername } from './api';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
+import { storeReportsByTemplateID } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
-// import { storeReports } from '../redux/actions/reports';
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
@@ -75,13 +74,6 @@ export class TemplateScreen extends Component {
             })
             .catch(error => console.error(error))
             .done();
-
-        /*
-        fetchReportsByUsername(this.props.username, this.props.token)
-            .then(responseJson => this.props.dispatch(storeReports(responseJson)))
-            .catch(error => console.error(error))
-            .done();
-        */
     };
 
     // Handler function for refreshing the data and refetching.
@@ -144,7 +136,7 @@ export class TemplateScreen extends Component {
             );
         }
 
-        const { reportsByTempID, templates } = this.props;
+        const { reports, templates } = this.props;
         return (
             <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>
@@ -166,9 +158,9 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenScrollEnabled={this.setScrollEnabled}
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
-                                    nofReports={(reportsByTempID[item.id]) ? (reportsByTempID[item.id]).length : 0}
+                                    nofReports={(reports[item.id]) ? (reports[item.id]).length : 0}
                                     templateID={item.id}
-                                    data={reportsByTempID[item.id]}
+                                    data={reports[item.id]}
                                 />
                             }
                             ListFooterComponent={
@@ -188,12 +180,12 @@ export class TemplateScreen extends Component {
 const mapStateToProps = (state) => {
     const username = state.user.username;
     const templates = state.templates;
-    const reportsByTempID = state.reportsByTempID;
+    const reports = state.reports;
     const token = state.user.token;
     return {
         username,
         templates,
-        reportsByTempID,
+        reports,
         token
     };
 };
