@@ -25,7 +25,8 @@ export class NewReportScreen extends React.Component {
         this.state = {
             isLoading   : true,
             number      : '',
-            isEditable  : false
+            isEditable  : false,
+            dataFieldsByID: null,
         };
     }
 
@@ -44,6 +45,8 @@ export class NewReportScreen extends React.Component {
     getFieldsByTemplateID = (templateID) => {
         fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
             .then(responseJson => {
+                console.log('responseJson', responseJson);
+                //an array where each object: {templateID: 1, title: "Checkboksia", defaultValue: "0", typeID: 2, orderNumber: 2, …}
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .then(() => {
@@ -53,7 +56,7 @@ export class NewReportScreen extends React.Component {
             .done();
     };
 
-    saveAnswers = (fields) => {
+    saveAnswers = () => {
         //todo
         return null;
     };

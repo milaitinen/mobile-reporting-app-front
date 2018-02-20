@@ -8,7 +8,7 @@ import { Input } from '../components/TextInput';
 import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertToken } from '../redux/actions/user';
-import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
+import { login } from './api';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {

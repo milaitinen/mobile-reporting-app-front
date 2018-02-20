@@ -4,9 +4,10 @@ export const INSERT_TITLE   = 'INSERT_TITLE';
 export const INSERT_FIELD_ANSWER = 'INSERT_FIELD_ANSWER';
 
 // return an object
-export const createReport = ( templateID ) => ({
+export const createReport = ( templateID, date ) => ({
     type: CREATE_REPORT,
     templateID: templateID,
+    dateCreated: date
 });
 
 export const insertTitle = (title) => ({

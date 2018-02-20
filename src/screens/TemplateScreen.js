@@ -7,6 +7,7 @@ import {
     StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
@@ -113,7 +114,7 @@ export class TemplateScreen extends Component {
     */
     createNew = (templateID, isEditable) => {
         if (isEditable) {
-            this.props.dispatch(createReport(templateID));
+            this.props.dispatch(createReport(templateID, moment().format('YYYY-MM-DD')));
             this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, isEditable: isEditable });
         }
         else {

@@ -3,7 +3,7 @@ import { INSERT_TITLE, CREATE_REPORT, INSERT_FIELD_ANSWER } from '../actions/new
 
 const initialState = {
     templateID: null ,
-    title: '',
+    title: 'Draft',
     answers: {},
     dateCreated: null,
     dateAccepted: null,
@@ -17,7 +17,8 @@ const newReportReducer = (state = initialState, action) => {
         case CREATE_REPORT:
             return {
                 ...state,
-                templateID: action.templateID
+                templateID: action.templateID,
+                dateCreated: action.dateCreated
             };
         case INSERT_TITLE:
             return {

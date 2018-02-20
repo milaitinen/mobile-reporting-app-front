@@ -21,23 +21,6 @@ export const login = (username, password) => {
     }).catch(err => alert(err));
 };
 
-export const mockLogin = (email, password) => {
-
-    const debugResponse = `sent email ${email} and password ${password} to the server`;
-    console.log(debugResponse);
-    //todo: check invalid response here
-    const mockResponse = {
-        token: 'djdsfkdsk.dfkdfkldfkhd.gdgkjdkj'
-    };
-    return mockResponse;
-    //return invalidCredentialsResponse;
-};
-
-export const verifyToken = (token) => {
-    //TODO
-    return null;
-};
-
 // Send a new report to the server, along with the username and token.
 export const createNewReport = (username, report, token) => {
     return fetch(`${url}/users/${username}/reports`, {
@@ -74,8 +57,7 @@ const fetchLocalFieldsByTemplateID = (username, templateID) => {
         });
 };
 
-
-const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
+export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
     return (
         fetch(`${url}/users/${username}/templates/${templateID}/fields`, {
             headers: {
@@ -88,6 +70,62 @@ const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
     );
 };
 
+export const saveReports = ((username, templateID, data) => {
+    saveData(`${url}/users/${username}/templates/${templateID}`, data);
+});
+
+// fetch reports that are only locally saved
+export const fetchLocalReports = (username, templateID) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}`) // NOTE: this url is just a key
+        .then(data => {
+            if (data !== null) {
+                return JSON.parse(data);
+            } else {
+                return [];
+            }
+        });
+};
+
+// for future use?
+export const fetchFieldsByReportID = (username, templateID, reportID, token) => {
+    return isNetworkConnected()
+        .then((isConnected) => {
+            if (!isConnected) { return fetchLocalFieldsByReportID(username, templateID, reportID); }
+            return fetchRemoteFieldsByReportID(username, templateID, reportID, token);
+        })
+        .then((fieldsByReportID) => {
+            saveData(`${url}/users/${username}/templates/${templateID}/reports/${reportID}/fields`, fieldsByReportID);
+            return fieldsByReportID;
+        });
+};
+
+// not yet in use
+export const fetchLocalFieldsByReportID = (username, templateID, reportID) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports/${reportID}/fields`)
+        .then(data => {
+            if (data !== null) {
+                return JSON.parse(data);
+            } else {
+                return [];
+            }
+        });
+};
+
+// not yet in use
+const fetchRemoteFieldsByReportID = (username, templateID, reportID, token) => {
+    return (
+        fetch(`${url}/users/${username}/templates/${templateID}/reports/${reportID}/fields`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        })
+            .then(response => {
+                return response.json();
+            })
+    );
+};
+
+
 /*
  Fetch templates from the server or ASyncStorage, depending on the availability of internet connection.
  Fetch templates that the user has rights to. */
@@ -98,6 +136,7 @@ export const fetchTemplatesByUsername = (username, token) => {
             return fetchRemoteTemplatesByUsername(username, token);
         })
         .then((templates) => {
+            console.log('templates', templates);
             saveData(`${url}/users/${username}/templates`, templates);
             return templates;
         });
@@ -140,6 +179,7 @@ export const fetchReportsByTemplateID = (username, templateID, token) => {
             return fetchRemoteReportsByTemplateID(username, templateID, token);
         })
         .then((reports) => {
+            console.log('reports', reports);
             saveData(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`, reports);
             return reports;
         });

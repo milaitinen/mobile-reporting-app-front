@@ -79,7 +79,7 @@ export class NewReportScreen extends React.Component {
     };
 
     handleOnPress = () => {
-        this.props.dispatch(createReport(this.props.templateID));
+        this.props.dispatch(createReport(this.props.templateID, moment().format('YYYY-MM-DD')));
         this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, editable: true });
     };
 
