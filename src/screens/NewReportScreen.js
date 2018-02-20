@@ -23,13 +23,15 @@ export class NewReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading      : true,
-            number         : '',
+            isLoading   : true,
+            number      : '',
+            isEditable  : false
         };
     }
 
     componentDidMount() {
         this.getFieldsByTemplateID(this.props.templateID);
+        this.setState({ isEditable: this.props.navigation.state.params.isEditable });
     }
 
     // set the value of yes/no field(s) to '0' (No)
@@ -119,7 +121,8 @@ export class NewReportScreen extends React.Component {
             );
         }
 
-        const { isEditable, answers } = this.props;
+        const { isEditable } = this.state;
+        const { answers } = this.props;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
 
             switch (field.typeID) {
@@ -370,14 +373,12 @@ export class NewReportScreen extends React.Component {
 const mapStateToProps = (state) => {
     const token         = state.user.token;
     const username      = state.user.username;
-    const isEditable    = state.newReport.isEditable;
     const templateID    = state.newReport.templateID;
     const title         = state.newReport.title;
     const number        = state.newReport.number;
     const answers       = state.newReport.answers;
     return {
         username,
-        isEditable,
         templateID,
         title,
         number,

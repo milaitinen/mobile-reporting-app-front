@@ -3,10 +3,13 @@ import { INSERT_TITLE, CREATE_REPORT, INSERT_FIELD_ANSWER } from '../actions/new
 
 const initialState = {
     templateID: null ,
-    isEditable: false,
     title: '',
-    number: null,
     answers: {},
+    dateCreated: null,
+    dateAccepted: null,
+    id: null,
+    orderNo: null,
+    userID: null
 };
 
 const newReportReducer = (state = initialState, action) => {
@@ -14,8 +17,7 @@ const newReportReducer = (state = initialState, action) => {
         case CREATE_REPORT:
             return {
                 ...state,
-                templateID: action.templateID,
-                isEditable: action.isEditable
+                templateID: action.templateID
             };
         case INSERT_TITLE:
             return {
@@ -27,7 +29,7 @@ const newReportReducer = (state = initialState, action) => {
                 ...state,
                 answers: {
                     ...state.answers,
-                    [action.field.id]: { 
+                    [action.field.id]: {
                         answer: action.answer,
                         orderNumber: action.field.orderNumber,
                         typeID: action.field.typeID

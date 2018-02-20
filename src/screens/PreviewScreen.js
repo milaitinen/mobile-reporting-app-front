@@ -24,13 +24,15 @@ export class NewReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading      : true,
-            number         : '',
+            isLoading   : true,
+            isEditable  : false,
+            number      : '',
         };
     }
 
     componentDidMount() {
         this.getFieldsByID();
+        this.setState({ isEditable: this.props.navigation.state.params.isEditable });
     }
 
     getFieldsByID = () => {
@@ -77,8 +79,8 @@ export class NewReportScreen extends React.Component {
     };
 
     handleOnPress = () => {
-        this.props.dispatch(createReport(this.props.templateID, true));
-        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh });
+        this.props.dispatch(createReport(this.props.templateID));
+        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, editable: true });
     };
 
     onChanged = (text) => {
@@ -110,7 +112,7 @@ export class NewReportScreen extends React.Component {
             );
         }
 
-        const { isEditable } = this.props;
+        const { isEditable } = this.state;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
             switch (field.typeID) {
 
@@ -346,7 +348,6 @@ export class NewReportScreen extends React.Component {
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
     const userID = state.user.userID;
-    const isEditable = state.preview.isEditable;
     const templateID = state.preview.templateID;
     const title = state.preview.title;
     const number = state.preview.number;
@@ -354,7 +355,6 @@ const mapStateToProps = (state) => {
     const username = state.user.username;
     return {
         userID,
-        isEditable,
         templateID,
         title,
         number,

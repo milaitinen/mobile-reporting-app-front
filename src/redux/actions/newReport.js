@@ -4,10 +4,9 @@ export const INSERT_TITLE   = 'INSERT_TITLE';
 export const INSERT_FIELD_ANSWER = 'INSERT_FIELD_ANSWER';
 
 // return an object
-export const createReport = ( templateID, isEditable) => ({
+export const createReport = ( templateID ) => ({
     type: CREATE_REPORT,
     templateID: templateID,
-    isEditable: isEditable,
 });
 
 export const insertTitle = (title) => ({

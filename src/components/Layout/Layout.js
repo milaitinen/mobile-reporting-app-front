@@ -130,7 +130,7 @@ class Layout extends Component{
                 </View>
 
                 <View style={styles.reportListContainer} onLayout={this._setMaxHeight}>
-                    <ScrollView style={{height: this.state.maxHeight - this.state.minHeight}}>
+                    <ScrollView style={{ height: this.state.maxHeight - this.state.minHeight }}>
                         <FlatList
                             data={ (data === undefined) ? data : data.slice(0, this.state.itemsCount) }
                             extraData={ this.state.itemsCount }

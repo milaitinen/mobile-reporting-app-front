@@ -3,7 +3,7 @@ import { INSERT_USERNAME, INSERT_TOKEN } from '../actions/user';
 
 const initialState = {
     username: 'Maisa',      //null, Maisa inserted for development
-    token: null
+    token: ''
 };
 
 const userReducer = (state = initialState, action) => {
