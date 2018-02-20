@@ -137,6 +137,10 @@ export class NewReportScreen extends React.Component {
                             style={ newReportStyles.checkboxStyle }
                             title={'This is a nice checkbox'}
                             editable={isEditable}
+                            // TODO
+                            // 1. either remove PreviewScreen or modify function
+                            // 2. checkbox can be checked in Preview mode so that will have to be fixed
+                            onIconPressFunction={() => console.log('isEditable', isEditable)}
                         />
                     );
 
