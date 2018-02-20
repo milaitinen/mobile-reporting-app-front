@@ -35,10 +35,7 @@ export class NewReportScreen extends React.Component {
     // set the value of yes/no field(s) to '0' (No)
     setDefaultValue = () => {
         this.state.dataFieldsByID.map((field) => {
-            const type = field.typeID;
-            if (type === 2 || type === 5) {
-                this.props.dispatch(insertFieldAnswer(field, field.defaultValue));
-            }
+            this.props.dispatch(insertFieldAnswer(field, field.defaultValue));
         });
     };
 
@@ -124,8 +121,6 @@ export class NewReportScreen extends React.Component {
 
         const { isEditable, answers } = this.props;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
-
-            console.log('field', field);
 
             switch (field.typeID) {
 
