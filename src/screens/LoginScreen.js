@@ -42,41 +42,38 @@ export class LoginScreen extends React.Component {
         }
     }
 
-    //A modified version of the function signOut (used in navigation/Sidebar.js)
-    navigationReset = () => {
-        // perform logging out related tasks here
-        const signOutDestinationRouteName = 'loginStack';
-
+    removeOldUserData = () => {
         this.props.dispatch(insertToken(null));
         this.props.dispatch(emptyTemplates());
         this.props.dispatch(emptyReports());
+    }
 
-        /*
-        This sets the navigation back to the beginning, i.e. to the login screen.
-        (This means that the back button in Android will not return to the signed in part of the app,
-        but will instead exit the app.)
-         */
+    /**
+     * Navigates to the given route and resets navigation
+     * @param routeName
+     */
+    resetNavigationTo = (routeName) => {
         const actionToDispatch = NavigationActions.reset({
             index: 0,
             key: null,
-            actions: [NavigationActions.navigate({ routeName: signOutDestinationRouteName })]
+            actions: [NavigationActions.navigate({ routeName: routeName })]
         });
         this.props.navigation.dispatch(actionToDispatch);
     };
 
     logIn = () => {
         //Erases user input from the login screen and the navigation actions of a previous user.
-        if (this.props.token !== null) this.navigationReset();
+        if (this.props.token !== null) this.removeOldUserData();
 
         login(this.props.username, this.props.password)
             .then(response => {
-                if (response === undefined) { // TODO change undefined to invalidCredentialsResponse?
+                if (response === undefined) {
                     alert('Invalid username or password');
                 } else {
                     const token = response;
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
-                    this.props.navigation.navigate('drawerStack');
+                    this.resetNavigationTo('drawerStack');
 
                     this.props.dispatch(insertPassword(null));
                 }
