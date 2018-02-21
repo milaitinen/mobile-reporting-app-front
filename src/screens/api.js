@@ -2,9 +2,6 @@ import { Platform, AsyncStorage, NetInfo } from 'react-native';
 
 import { url } from './urlsetting';
 
-
-export const invalidCredentialsResponse = 'invalid credentials'; // TODO: update to match backend
-
 export const login = (username, password) => {
     return fetch(`${url}/login`, {
         method: 'POST',
@@ -70,17 +67,26 @@ export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
     );
 };
 
-// used to store drafts
-export const saveReport = ((username, templateID, data) => {
-    saveData(`users/${username}/templates/${templateID}`, data);
-});
+// fetch answers of locally stored draft NOTICE! the url doesn't match the *real* url, it's just a key
+export const saveAnswers = (username, templateID, id, fields) => {
+    saveData(`${url}/users/${username}/templates/${templateID}/reports/${id}/fields`, fields);
+};
 
-export const removeReport =  ((username, templateID) => {
-    removeData(`users/${username}/templates/${templateID}`);
-});
+export const removeAnswers = (username, templateID, id) => {
+    removeData(`${url}/users/${username}/templates/${templateID}/reports/${id}/fields`);
+};
+
+// used to store drafts
+export const saveReport = (username, templateID, data) => {
+    saveData(`${url}/users/${username}/templates/${templateID}`, data);
+};
+
+export const removeReport =  (username, templateID) => {
+    removeData(`${url}/users/${username}/templates/${templateID}`);
+};
 
 export const fetchStoredReportsByTemplateID = (username, templateID) => {
-    return AsyncStorage.getItem(`users/${username}/templates/${templateID}`) // NOTE: this url is just a key
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}`) // NOTE: this url is just a key
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -106,7 +112,7 @@ export const fetchLocalReports = (username, templateID) => {
 export const fetchFieldsByReportID = (username, templateID, reportID, token) => {
     return isNetworkConnected()
         .then((isConnected) => {
-            if (!isConnected) { return fetchLocalFieldsByReportID(username, templateID, reportID); }
+            if (!isConnected || reportID === 0) { return fetchLocalFieldsByReportID(username, templateID, reportID); }
             return fetchRemoteFieldsByReportID(username, templateID, reportID, token);
         })
         .then((fieldsByReportID) => {

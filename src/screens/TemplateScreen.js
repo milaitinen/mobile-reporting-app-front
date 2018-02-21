@@ -129,6 +129,11 @@ export class TemplateScreen extends Component {
         }
     };
 
+    openReport = (templateID, reportID, title) => {
+        console.log('title',title)
+        this.props.navigation.navigate('Report', { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
+    };
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -166,6 +171,7 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenScrollEnabled={this.setScrollEnabled}
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
+                                    openReport={this.openReport}
                                     nofReports={(reports[item.id]) ? (reports[item.id]).length : 0}
                                     templateID={item.id}
                                     data={reports[item.id]}

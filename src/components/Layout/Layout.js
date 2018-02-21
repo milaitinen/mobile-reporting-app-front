@@ -138,12 +138,15 @@ class Layout extends Component{
                             renderItem={({ item }) =>
                                 <ListItem
                                     key={item.title}
+                                    onPress={() => this.props.openReport(templateID, item.id, item.title)}
                                     containerStyle={ styles.reportContainer }
                                     titleStyle = { styles.reportTitle }
-                                    title={`${ item.orderNo ? item.orderNo : '()' }\t${item.title}`}
+                                    title={(item.orderNo) ? `${item.orderNo}\t${item.title}` : `${item.title}`}
                                     subtitle={item.dateCreated}
                                     hideChevron = {true}
-                                    badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted} id={item.id}/> }}
+                                    badge ={{ element:
+                                        <StatusBadge dateCreated={item.dateCreated} dateAccepted={item.dateAccepted} />
+                                    }}
                                 />
                             }
                             keyExtractor={item => item.id}
@@ -165,3 +168,4 @@ class Layout extends Component{
 }
 
 export default Layout;
+

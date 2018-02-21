@@ -10,95 +10,86 @@ import { connect } from 'react-redux';
 import { Checkbox } from '../components/Checkbox';
 
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, fetchFieldsByTemplateID, saveReport, saveAnswers } from './api';
+import { createNewReport, fetchFieldsByReportID, saveReport, saveAnswers, removeReport, removeAnswers } from './api';
 import { strings } from '../locales/i18n';
-import { insertFieldAnswer, emptyFields, insertTitle } from '../redux/actions/newReport';
+import { insertFieldAnswer, emptyFields } from '../redux/actions/newReport';
 import { storeSavedReportsByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 
-// "export" necessary in order to test component without Redux store
-export class NewReportScreen extends React.Component {
+
+export class ReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            title           : null,
             isUnsaved       : true,
             isLoading       : true,
             number          : '',
-            isEditable      : false,
+            isEditable      : true,
             dataFieldsByID  : null,
         };
     }
 
-    componentWillMount() {
-        // BackHandler for detecting hardware button presses for back navigation (Android only)
-        BackHandler.addEventListener('hardwareBackPress', this.handleBack);
-    }
-
-    componentWillUnmount() {
-        // Removes the BackHandler EventListener when unmounting
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
-    }
-
-    //TODO currently this method does not get called (only the code in AppNavigation)
-    handleBack = () => {
-        if (this.state.isUnsaved) { // TODO: In the future the alert should only be displayed if the report is unsaved.
-            return true; // This will prevent the regular handling of the back button
-        }
-        Alert.alert(
-            'You have unsaved changes',
-            'Are you sure you want to leave without saving?',
-            [
-                { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                { text: 'No', onPress: () => console.log('No Pressed') },
-                { text: 'Yes', onPress: () => {
-                    console.log('Yes Pressed');
-                    this.props.dispatch(emptyFields());
-                    this.props.navigation.dispatch(NavigationActions.back()); }
-                },
-            ],
-            { cancelable: false }
-        );
-        return true; // TODO: Currently always displays the alert, only pressing Yes allows navigating back.
-    };
-
     componentDidMount() {
-        this.getFieldsByTemplateID(this.props.templateID);
-        this.setState({ isEditable: this.props.navigation.state.params.isEditable });
+        this.getFieldsByReportID();
+        //this.setState({ isEditable: this.props.navigation.state.params.isEditable });
     }
 
     // set the value of yes/no field(s) to '0' (No)
-    setDefaultValue = () => {
-        this.state.dataFieldsByID.map((field) => {
-            this.props.dispatch(insertFieldAnswer(field, field.defaultValue));
-        });
+    insertValues = () => {
+        this.state.dataFieldsByID.map((field) => this.props.dispatch(insertFieldAnswer(field, field.answer)));
     };
 
-    getFieldsByTemplateID = (templateID) => {
-        fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
+    getFieldsByReportID = () => {
+        const { templateID, reportID } = this.props.navigation.state.params;
+        const { username, token } = this.props;
+
+        fetchFieldsByReportID(username, templateID, reportID, token)
             .then(responseJson => {
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .then(() => {
-                if (this.state.dataFieldsByID) this.setDefaultValue(this.state.dataFieldsByID);
+                console.log('hey ho', this.state.dataFieldsByID)
+                if (this.state.dataFieldsByID) {
+                    console.log('hey ho')
+                    this.insertValues(this.state.dataFieldsByID);
+                }
             })
             .catch(error => console.error(error) )
             .done();
     };
 
+    // delete draft from asyncstorage
+    // Probably not necessary here
+    deleteDraft = () => {
+        const { templateID } = this.props.navigation.state.params;
+        const { username } = this.props;
+
+        removeReport(username, templateID);
+        removeAnswers(username, templateID, 0); //TODO find a better solution for the third parameter (id)
+        this.props.dispatch(emptyFields());
+
+        Alert.alert('Report deleted.');
+
+        this.props.navigation.state.params.refresh();
+        this.props.navigation.dispatch(NavigationActions.back());
+    };
+
     // save report locally in asyncstorage
     save = () => {
-        const { templateID, username, reports, answers } = this.props;
+        const { username, reports, answers } = this.props;
+        const { templateID, reportID } = this.props.navigation.state.params;
 
         const report = {
             templateID: templateID,
             userID: 1,      //TODO what to do with userID, orderNo, and id in the future...?
             orderNo: null,
-            title: this.props.title || 'Draft',
+            title: this.state.title || 'Draft',
             dateCreated: null,
             dateAccepted: null,
-            id: 0
+            id: reportID
         };
 
         //TODO problems when you create several drafts from the same template
@@ -108,8 +99,8 @@ export class NewReportScreen extends React.Component {
             return;
         }
 
-        saveAnswers(username, templateID, report.id, Object.values(answers));  // save answers (objects) in an array
-        saveReport(username, templateID, report);
+        saveAnswers(username, templateID, reportID, answers);  // save report in the above format
+        saveReport(username, templateID, report);               // save answers to asyncstorage
         this.props.dispatch(storeSavedReportsByTemplateID(templateID, report)); // store drafts together with other reports in reports state
         //this.setState=({ isUnsaved: false });
 
@@ -123,8 +114,8 @@ export class NewReportScreen extends React.Component {
     // Inserts data to server with a post method.
     send = () => {
         const report = {
-            templateID: this.props.templateID,
-            title: this.props.title,
+            templateID: this.props.navigation.state.params.templateID,
+            title: this.props.navigation.state.params.title,
             dateCreated: moment().format('YYYY-MM-DD'),
             answers: [
                 {
@@ -154,20 +145,6 @@ export class NewReportScreen extends React.Component {
         });
     };
 
-    onChanged = (text) => {
-        let newText = '';
-        const numbers = '0123456789';
-
-        for (let i=0; i < text.length; i++) {
-            if (numbers.indexOf(text[i]) > -1 ) {
-                newText = newText + text[i];
-            } else {
-                alert('Please enter numbers only');
-            }
-        }
-        this.setState({ number: newText });
-    };
-
     render() {
 
         if (this.state.isLoading) {
@@ -185,7 +162,7 @@ export class NewReportScreen extends React.Component {
 
         const { isEditable } = this.state;
         const { answers } = this.props;
-        const renderedFields = this.state.dataFieldsByID.map((field, index) => {
+        const renderedFields = (!this.state.dataFieldsByID) ? null : this.state.dataFieldsByID.map((field, index) => {
 
             switch (field.typeID) {
 
@@ -195,7 +172,7 @@ export class NewReportScreen extends React.Component {
                             <Text style={ newReportStyles.textStyleClass }>Name</Text>
                             <TextInput
                                 editable={isEditable}
-                                placeholder={field.defaultValue}
+                                placeholder={field.answer}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
@@ -246,7 +223,7 @@ export class NewReportScreen extends React.Component {
                             <Text style={ newReportStyles.textStyleClass }>Text Field</Text>
                             <TextInput
                                 editable={isEditable}
-                                placeholder={field.defaultValue}
+                                placeholder={field.answer}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
@@ -263,7 +240,7 @@ export class NewReportScreen extends React.Component {
                                 { label: 'No', value: 0 },
                                 { label: 'Yes', value: 1 }
                             ] }
-                            initial={JSON.parse(field.defaultValue)}
+                            initial={JSON.parse(field.answer)}
                             onPress={() => this.props.dispatch(insertFieldAnswer(field, '1'))}
                             buttonColor={'#9dcbe5'}
                             labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
@@ -285,7 +262,7 @@ export class NewReportScreen extends React.Component {
                                         borderRadius: 5,
                                     },
                                 }}
-                                date={answers[field.id] ? answers[field.id].answer : field.defaultValue}
+                                date={answers[field.id] ? answers[field.id].answer : field.answer}
                                 mode="date"
                                 placeholder="select date"
                                 format="YYYY-MM-DD"
@@ -305,7 +282,7 @@ export class NewReportScreen extends React.Component {
                             <Text style = { newReportStyles.textStyleClass }>Instructions</Text>
                             <Text
                                 style = { newReportStyles.multilinedTextInputStyleClass }>
-                                {field.defaultValue}
+                                {field.answer}
                             </Text>
                         </View>
                     );
@@ -318,7 +295,7 @@ export class NewReportScreen extends React.Component {
                                 editable = {isEditable}
                                 style = { newReportStyles.multilinedTextInputStyleClass }
                                 onChangeText = {(text) => this.props.dispatch(insertFieldAnswer(field, text))}
-                                placeholder = {field.defaultValue}
+                                placeholder = {field.answer}
                                 multiline = {true}
                             />
                         </View>
@@ -338,7 +315,7 @@ export class NewReportScreen extends React.Component {
                                         borderRadius: 5,
                                     }
                                 }}
-                                date = {answers[field.id] ? answers[field.id].answer : field.defaultValue}
+                                date = {answers[field.id] ? answers[field.id].answer : field.answer}
                                 mode = "time"
                                 format = "HH:mm"
                                 confirmBtnText = "Confirm"
@@ -357,7 +334,7 @@ export class NewReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 style={ newReportStyles.textInputStyleClass }
-                                placeholder={field.defaultValue}
+                                placeholder={field.answer}
                                 keyboardType = 'numeric'
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                             />
@@ -370,7 +347,7 @@ export class NewReportScreen extends React.Component {
                             <Icon name={'link'} type={'feather'} iconStyle={ newReportStyles.linkIconStyle }/>
                             <Text
                                 style={ newReportStyles.linkStyleClass }
-                                onPress={() => Linking.openURL(field.defaultValue)}>
+                                onPress={() => Linking.openURL(field.answer)}>
                                 Link to somewhere
                             </Text>
                         </View>
@@ -383,7 +360,7 @@ export class NewReportScreen extends React.Component {
                                 ref={ ModalDrop => this.modalDropdown = ModalDrop }
                                 dropdownStyle={ newReportStyles.dropStyleClass }
                                 disabled={!isEditable}
-                                options={field.defaultValue.split(',')}/>
+                                options={field.answer.split(',')}/>
                             <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
                         </View>
                     );
@@ -404,8 +381,8 @@ export class NewReportScreen extends React.Component {
                         <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
                             <TextInput
                                 editable={isEditable}
-                                placeholder={'INSERT TITLE'}
-                                onChangeText={(text) => this.props.dispatch(insertTitle(text))}
+                                placeholder={this.props.navigation.state.params.title}
+                                onChangeText={(text) => this.setState({ title: text })}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
@@ -417,6 +394,7 @@ export class NewReportScreen extends React.Component {
                 <View style={ newReportStyles.buttonView}>
                     <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
                     <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}  />
+                    <Button title={'Delete'} disabled={false} onPress={() => this.deleteDraft()}  />
                 </View>
 
             </AppBackground>
@@ -442,15 +420,11 @@ export class NewReportScreen extends React.Component {
 const mapStateToProps = (state) => {
     const token         = state.user.token;
     const username      = state.user.username;
-    const templateID    = state.newReport.templateID;
-    const title         = state.newReport.title;
     const number        = state.newReport.number;
     const answers       = state.newReport.answers;
     const reports       = state.reports;
     return {
         username,
-        templateID,
-        title,
         number,
         token,
         reports,
@@ -458,4 +432,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(NewReportScreen);
+export default connect(mapStateToProps)(ReportScreen);

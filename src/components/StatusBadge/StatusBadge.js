@@ -4,10 +4,10 @@ import { Badge, Icon } from 'react-native-elements';
 import styles from './styles';
 import { strings } from '../../locales/i18n';
 
-const StatusBadge = ({ dateAccepted, id }) =>{
+const StatusBadge = ({ dateCreated, dateAccepted }) =>{
 
-    //TODO This is a temporary solution! Find a better way to match drafts.
-    if (id === 0) {
+    //TODO maybe there's a better way to match drafts...?
+    if (!dateCreated) {
         return (
             <View style={styles.BadgeViewContainer}>
                 <Badge textStyle = {styles.badgeTextStyle}
@@ -17,22 +17,7 @@ const StatusBadge = ({ dateAccepted, id }) =>{
                 </Badge>
             </View>
         );
-    } else if (dateAccepted !== null){
-        return (
-            <View style={styles.BadgeViewContainer}>
-                <Badge textStyle = {styles.badgeTextStyle}
-                    containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
-                    <Text style={styles.badgeTextStyle}>{strings('templates.approved')}</Text>
-                    <Icon name={'check'} type={'feather'} iconStyle={styles.badgeIconStyle} />
-                </Badge>
-
-                <Text style={styles.dateAccepted}>
-                    {dateAccepted}
-                </Text>
-            </View>
-
-        );
-    } else {
+    } else if (!dateAccepted){
         return (
             <View style={styles.BadgeViewContainer}>
                 <Badge textStyle = {styles.badgeTextStyle}
@@ -41,6 +26,20 @@ const StatusBadge = ({ dateAccepted, id }) =>{
                     <Icon name={'clock'} type={'feather'} iconStyle={styles.badgeIconStyle} />
                 </Badge>
             </View>
+        );
+    } else {
+        return (
+            <View style={styles.BadgeViewContainer}>
+                <Badge textStyle = {styles.badgeTextStyle}
+                    containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#99d9ad' }]}>
+                    <Text style={styles.badgeTextStyle}>{strings('templates.approved')}</Text>
+                    <Icon name={'check'} type={'feather'} iconStyle={styles.badgeIconStyle} />
+                </Badge>
+                <Text style={styles.dateAccepted}>
+                    {dateAccepted}
+                </Text>
+            </View>
+
         );
     }
 };

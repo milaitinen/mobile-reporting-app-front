@@ -4,7 +4,7 @@ import { INSERT_TITLE, CREATE_REPORT, INSERT_FIELD_ANSWER, EMPTY_FIELDS } from '
 const initialState = {
     templateID: null ,
     title: 'Draft',
-    answers: {},
+    answers: [],
     dateCreated: null,
     dateAccepted: null,
     id: null,
