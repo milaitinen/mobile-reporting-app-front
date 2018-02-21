@@ -64,6 +64,8 @@ export class LoginScreen extends React.Component {
                     this.resetNavigationTo('drawerStack');
                 }
             });
+        
+        this.props.dispatch(insertPassword(null));
     };
 
     render() {
