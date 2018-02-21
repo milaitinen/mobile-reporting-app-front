@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
+import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, BackHandler } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm from 'react-native-simple-radio-button';
@@ -12,7 +12,7 @@ import { Checkbox } from '../components/Checkbox';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID, saveReport, removeReport } from './api';
 import { strings } from '../locales/i18n';
-import { insertTitle, insertFieldAnswer } from '../redux/actions/newReport';
+import { insertFieldAnswer } from '../redux/actions/newReport';
 import { storeSavedReportsByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
@@ -30,6 +30,36 @@ export class NewReportScreen extends React.Component {
             dataFieldsByID: null,
         };
     }
+
+    componentWillMount() {
+        // BackHandler for detecting hardware button presses for back navigation (Android only)
+        BackHandler.addEventListener('hardwareBackPress', this.handleBack);
+    }
+
+    componentWillUnmount() {
+        // Removes the BackHandler EventListener when unmounting
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
+    }
+
+    handleBack = () => {
+        if (this.props.isUnsaved) { // TODO: In the future the alert should only be displayed if the report is unsaved.
+            return true; // This will prevent the regular handling of the back button
+        }
+        Alert.alert(
+            'You have unsaved changes',
+            'Are you sure you want to leave without saving?',
+            [
+                { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                { text: 'No', onPress: () => console.log('No Pressed') },
+                { text: 'Yes', onPress: () => {
+                    console.log('Yes Pressed');
+                    this.props.navigation.dispatch(NavigationActions.back()); }
+                },
+            ],
+            { cancelable: false }
+        );
+        return true; // TODO: Currently always displays the alert, only pressing Yes allows navigating back.
+    };
 
     componentDidMount() {
         this.getFieldsByTemplateID(this.props.templateID);
@@ -74,7 +104,7 @@ export class NewReportScreen extends React.Component {
             dateAccepted: null,
             id: 5001,
         };
-        
+
         //TODO problems when you create several drafts from the same template
 
         saveReport(username, templateID, report);
@@ -344,7 +374,7 @@ export class NewReportScreen extends React.Component {
                                 ref={ ModalDrop => this.modalDropdown = ModalDrop }
                                 dropdownStyle={ newReportStyles.dropStyleClass }
                                 disabled={!isEditable}
-                                options={JSON.parse(field.defaultValue)}/>
+                                options={field.defaultValue.split(',')}/>
                             <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
                         </View>
                     );
