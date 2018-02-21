@@ -9,9 +9,6 @@ import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from '../redux/actions/user';
 import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
-import userReducer from '../redux/reducers/user';
-import { emptyTemplates } from '../redux/actions/templates';
-import { emptyReports } from '../redux/actions/reportsByTemplateID';
 import { NavigationActions } from 'react-navigation';
 
 
@@ -42,12 +39,6 @@ export class LoginScreen extends React.Component {
         }
     }
 
-    removeOldUserData = () => {
-        this.props.dispatch(insertToken(null));
-        this.props.dispatch(emptyTemplates());
-        this.props.dispatch(emptyReports());
-    }
-
     /**
      * Navigates to the given route and resets navigation
      * @param routeName
@@ -62,9 +53,6 @@ export class LoginScreen extends React.Component {
     };
 
     logIn = () => {
-        //Erases user input from the login screen and the navigation actions of a previous user.
-        if (this.props.token !== null) this.removeOldUserData();
-
         login(this.props.username, this.props.password)
             .then(response => {
                 if (response === undefined) {
@@ -74,8 +62,6 @@ export class LoginScreen extends React.Component {
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
                     this.resetNavigationTo('drawerStack');
-
-                    this.props.dispatch(insertPassword(null));
                 }
             });
     };
