@@ -4,10 +4,11 @@ import { Badge, Icon } from 'react-native-elements';
 import styles from './styles';
 import { strings } from '../../locales/i18n';
 
-const StatusBadge = ({ dateAccepted }) =>{
-    /*
-    if(JOKU DRAFTEHTO) {
-    return (
+const StatusBadge = ({ dateAccepted, id }) =>{
+
+    //TODO This is a temporary solution! Find a better way to match drafts.
+    if (id === 0) {
+        return (
             <View style={styles.BadgeViewContainer}>
                 <Badge textStyle = {styles.badgeTextStyle}
                     containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
@@ -16,10 +17,7 @@ const StatusBadge = ({ dateAccepted }) =>{
                 </Badge>
             </View>
         );
-    }
-     */
-
-    if (dateAccepted != null){
+    } else if (dateAccepted !== null){
         return (
             <View style={styles.BadgeViewContainer}>
                 <Badge textStyle = {styles.badgeTextStyle}
@@ -34,17 +32,17 @@ const StatusBadge = ({ dateAccepted }) =>{
             </View>
 
         );
+    } else {
+        return (
+            <View style={styles.BadgeViewContainer}>
+                <Badge textStyle = {styles.badgeTextStyle}
+                    containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
+                    <Text style={ styles.badgeTextStyle }>{strings('templates.sent')}</Text>
+                    <Icon name={'clock'} type={'feather'} iconStyle={styles.badgeIconStyle} />
+                </Badge>
+            </View>
+        );
     }
-    return (
-        <View style={styles.BadgeViewContainer}>
-            <Badge textStyle = {styles.badgeTextStyle}
-                containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
-                <Text style={ styles.badgeTextStyle }>{strings('templates.sent')}</Text>
-                <Icon name={'clock'} type={'feather'} iconStyle={styles.badgeIconStyle} />
-            </Badge>
-        </View>
-    );
-
 };
 
 export default StatusBadge;

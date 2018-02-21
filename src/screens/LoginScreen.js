@@ -18,7 +18,7 @@ export class LoginScreen extends React.Component {
         super(props);
         this.state = {
             // isLoading : true,
-            password  : '',
+            password  : 'password',
             serverUrl : ''
         };
 

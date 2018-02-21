@@ -12,7 +12,7 @@ import { Checkbox } from '../components/Checkbox';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID, saveReport, removeReport } from './api';
 import { strings } from '../locales/i18n';
-import { insertFieldAnswer } from '../redux/actions/newReport';
+import { insertFieldAnswer, emptyFields } from '../redux/actions/newReport';
 import { storeSavedReportsByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
@@ -23,11 +23,12 @@ export class NewReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title       : null,
-            isLoading   : true,
-            number      : '',
-            isEditable  : false,
-            dataFieldsByID: null,
+            title           : null,
+            isUnsaved       : true,
+            isLoading       : true,
+            number          : '',
+            isEditable      : false,
+            dataFieldsByID  : null,
         };
     }
 
@@ -41,8 +42,9 @@ export class NewReportScreen extends React.Component {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
     }
 
+    //TODO currently this method does not get called (only the code in AppNavigation)
     handleBack = () => {
-        if (this.props.isUnsaved) { // TODO: In the future the alert should only be displayed if the report is unsaved.
+        if (this.state.isUnsaved) { // TODO: In the future the alert should only be displayed if the report is unsaved.
             return true; // This will prevent the regular handling of the back button
         }
         Alert.alert(
@@ -53,6 +55,7 @@ export class NewReportScreen extends React.Component {
                 { text: 'No', onPress: () => console.log('No Pressed') },
                 { text: 'Yes', onPress: () => {
                     console.log('Yes Pressed');
+                    this.props.dispatch(emptyFields());
                     this.props.navigation.dispatch(NavigationActions.back()); }
                 },
             ],
@@ -76,8 +79,6 @@ export class NewReportScreen extends React.Component {
     getFieldsByTemplateID = (templateID) => {
         fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
             .then(responseJson => {
-                console.log('responseJson', responseJson);
-                //an array where each object: {templateID: 1, title: "Checkboksia", defaultValue: "0", typeID: 2, orderNumber: 2, …}
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .then(() => {
@@ -87,28 +88,47 @@ export class NewReportScreen extends React.Component {
             .done();
     };
 
-    // delete draft
-    deleteReport = () => {
+    // delete draft from asyncstorage
+    deleteDraft = () => {
+        const { templateID, username } = this.props;
 
+        removeReport(username, templateID);
+        Alert.alert('Report deleted.');
+
+        this.props.dispatch(emptyFields()); //Probably not necessary here
+        this.props.navigation.state.params.refresh();
+        this.props.navigation.dispatch(NavigationActions.back());
     };
 
-    saveAnswers = () => {
-        const { templateID, username } = this.props;
+    // save report locally in asyncstorage
+    saveReport = () => {
+        const { templateID, username, reports } = this.props;
 
         const report = {
             templateID: templateID,
-            userID: 1,
-            orderNo: 5006,
+            userID: 1,                  //TODO how to find out userID, orderNo, id in the future...?
+            orderNo: null,
             title: this.state.title || 'Draft',
             dateCreated: moment().format('YYYY-MM-DD'),
             dateAccepted: null,
-            id: 5001,
+            id: 0
         };
 
         //TODO problems when you create several drafts from the same template
+        //Check if there already is a report of the same templateID
+        if (reports[templateID][0].id === 0) {
+            Alert.alert('You may not create more than one draft per template!');
+            return;
+        }
 
         saveReport(username, templateID, report);
         this.props.dispatch(storeSavedReportsByTemplateID(templateID, report));
+        //this.setState=({ isUnsaved: false });
+        Alert.alert('Report saved!');
+
+        this.props.dispatch(emptyFields());
+        this.props.navigation.state.params.refresh();
+        this.props.navigation.dispatch(NavigationActions.back());
     };
 
     // Inserts data to server with a post method.
@@ -406,9 +426,9 @@ export class NewReportScreen extends React.Component {
                 </View>
 
                 <View style={ newReportStyles.buttonView}>
-                    <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.saveAnswers()} />
+                    <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.saveReport()} />
                     <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}  />
-                    <Button title={'Delete'} disabled={false} onPress={() => removeReport(this.props.username, this.props.templateID)}  />
+                    <Button title={'Delete'} disabled={false} onPress={() => this.deleteDraft()}  />
                 </View>
 
             </AppBackground>
@@ -438,12 +458,14 @@ const mapStateToProps = (state) => {
     const title         = state.newReport.title;
     const number        = state.newReport.number;
     const answers       = state.newReport.answers;
+    const reports       = state.reports;
     return {
         username,
         templateID,
         title,
         number,
         token,
+        reports,
         answers
     };
 };

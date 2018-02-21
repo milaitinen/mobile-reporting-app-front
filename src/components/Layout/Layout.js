@@ -104,13 +104,6 @@ class Layout extends Component{
         );
     };
 
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject"
-    }
-
     render(){
         // simplifies referencing (instead of this.props.title, title is enough)
         const { title, nofReports, templateID, data } = this.props;
@@ -147,10 +140,10 @@ class Layout extends Component{
                                     key={item.title}
                                     containerStyle={ styles.reportContainer }
                                     titleStyle = { styles.reportTitle }
-                                    title={`${item.orderNo}\t${item.title}`}
+                                    title={`${ item.orderNo ? item.orderNo : '()' }\t${item.title}`}
                                     subtitle={item.dateCreated}
                                     hideChevron = {true}
-                                    badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
+                                    badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted} id={item.id}/> }}
                                 />
                             }
                             keyExtractor={item => item.id}
