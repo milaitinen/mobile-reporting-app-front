@@ -116,7 +116,7 @@ export class NewReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
-                                placeholderTextColor={'#747474'}
+                                placeholderTextColor={'#C4C4C4'}
                                 onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
@@ -167,6 +167,7 @@ export class NewReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
+                                placeholderTextColor={'#C4C4C4'}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
@@ -241,6 +242,7 @@ export class NewReportScreen extends React.Component {
                                 editable={isEditable}
                                 style = { newReportStyles.multilinedTextInputStyleClass }
                                 placeholder={field.defaultValue}
+                                placeholderTextColor={'#C4C4C4'}
                                 multiline={true}
                             />
                         </View>

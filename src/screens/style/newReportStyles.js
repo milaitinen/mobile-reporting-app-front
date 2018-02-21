@@ -18,12 +18,11 @@ const newReportStyles = EStyleSheet.create({
     ReportContainer: {
         flex: 1,
         height: 40,
-        backgroundColor: '$reportBg',
-        marginRight: 3,
-        marginLeft: 3,
+        backgroundColor: '$primaryWhite',
+        marginHorizontal: 3,
         marginTop: 10,
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingVertical: 20,
+        paddingHorizontal: 10,
         borderTopLeftRadius: '$containerBorderRadius',
         borderTopRightRadius: '$containerBorderRadius',
 
@@ -31,8 +30,8 @@ const newReportStyles = EStyleSheet.create({
 
     ReportScrollView: {
         backgroundColor: 'transparent',
-        paddingLeft: 13,
-        paddingRight: 13,
+        paddingLeft: 10,
+        paddingRight: 10,
     },
 
     dateStyleClass: {
@@ -43,9 +42,9 @@ const newReportStyles = EStyleSheet.create({
 
     textStyleClass: {
         marginLeft: 5,
-        color: '#747474',
+        color: '#adadad',
         fontSize: 16,
-        marginTop: 10,
+        marginTop: 20,
         flexDirection: 'row',
     },
 
@@ -126,13 +125,14 @@ const newReportStyles = EStyleSheet.create({
     },
 
     textInputStyleClass: {
-        paddingLeft: 10,
-        marginBottom: 10,
-        marginTop: 6,
+        paddingHorizontal: 12,
+        marginBottom: 20,
+        marginTop: 8,
+        marginHorizontal: 5,
         height: 40,
         borderWidth: 1,
         borderRadius: '$containerBorderRadius',
-        borderColor: '$reportBg',
+        borderColor: '#C4C4C4',
         backgroundColor: '$primaryWhite',
     },
 
