@@ -73,19 +73,9 @@ export class LoginScreen extends React.Component {
 
     render() {
     
-        let statusBar = null;
-        //for some reason i couldn't get this to work the right way : D
-        if (this.props.isConnected) {
-            statusBar = <StatusBar backgroundColor="#b52424" barStyle="light-content" />;
-        } else {
-            statusBar = <StatusBar backgroundColor="#3d4f7c" barStyle="light-content" />;
-        }
-
-        console.log('stata: ', this.props.isConnected);
-
+        const connected = this.props.isConnected;
         return <AppBackground>
-            { statusBar }
-
+            <StatusBar backgroundColor={ connected ? '#b52424' : '#3d4f7c' } barStyle="light-content" />
             <Text style={loginStyles.title}>
                 {strings('login.title')}
             </Text>

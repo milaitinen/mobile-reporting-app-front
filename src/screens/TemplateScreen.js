@@ -4,7 +4,6 @@ import {
     FlatList,
     ActivityIndicator,
     ScrollView,
-    StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -144,25 +143,13 @@ export class TemplateScreen extends Component {
             );
         }
 
-        let statusBar = null;
-        if (!this.state.isConnected) {
-            statusBar = <StatusBar
-                backgroundColor= '#b52424'
-                barStyle='light-content'
-            />;
-        } else {
-            statusBar = <StatusBar
-                backgroundColor='#3d4f7c'
-                barStyle='light-content'
-            />;
-        }
 
         const { reportsByTempID, templates } = this.props;
+
         return (
             <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>
-                    {statusBar}
-                    {/* At the moment this doesn't do anything.*/}
+                    At the moment this doesn't do anything. */}
                     <ReportSearchBar/>
                     <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
                         <FlatList
@@ -200,11 +187,12 @@ const mapStateToProps = (state) => {
     const templates = state.templates;
     const reportsByTempID = state.reportsByTempID;
     const token = state.user.token;
+
     return {
         username,
         templates,
         reportsByTempID,
-        token
+        token,
     };
 };
 
