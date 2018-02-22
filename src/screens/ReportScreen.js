@@ -138,6 +138,8 @@ export class ReportScreen extends React.Component {
 
         const { isEditable } = this.state;
         const { answers } = this.props;
+        const deleteReportButton = (this.props.navigation.state.params.reportID !== 0) ?
+            null : <Button title={'Delete'} disabled={false} onPress={() => this.deleteDraft()} />;
         const renderedFields = (!this.state.dataFieldsByID) ? null : this.state.dataFieldsByID.map((field, index) => {
 
             switch (field.fieldID) {
@@ -371,7 +373,7 @@ export class ReportScreen extends React.Component {
                 <View style={ newReportStyles.buttonView}>
                     <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
                     <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}  />
-                    <Button title={'Delete'} disabled={false} onPress={() => this.deleteDraft()}  />
+                    {deleteReportButton}
                 </View>
 
             </AppBackground>

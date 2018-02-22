@@ -9,6 +9,7 @@ import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
 import { login } from './api';
+import { NavigationActions } from 'react-navigation';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
@@ -29,18 +30,36 @@ export class LoginScreen extends React.Component {
         }
     }
 
+    /**
+     * Navigates to the given route and resets navigation
+     * @param routeName
+     */
+    resetNavigationTo = (routeName) => {
+        const actionToDispatch = NavigationActions.reset({
+            index: 0,
+            key: null,
+            actions: [NavigationActions.navigate({ routeName: routeName })]
+        });
+        this.props.navigation.dispatch(actionToDispatch);
+    };
+
     logIn = () => {
-        login(this.props.username, this.state.password)
-            .then(token => {
-                if (token === undefined) { // TODO change undefined to invalidCredentialsResponse?
+        login(this.props.username, this.props.password)
+            .then(response => {
+                console.log('this.props.password', this.props.password)
+                console.log('this.props.username', this.props.username)
+                console.log('response', response)
+                if (response === undefined) {
                     alert('Invalid username or password');
                 } else {
-                    this.setState({ password: '' });
+                    const token = response;
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
-                    this.props.navigation.navigate('drawerStack');
+                    this.resetNavigationTo('drawerStack');
                 }
             });
+
+        this.props.dispatch(insertPassword(null));
     };
 
     render() {
@@ -65,7 +84,7 @@ export class LoginScreen extends React.Component {
                     name={'lock'}
                     secureTextEntry={true}
                     placeholder={ strings('login.password') }
-                    onChangeText={password => this.setState({ password })}
+                    onChangeText={password => this.props.dispatch(insertPassword(password))}
                 />
                 <Input
                     name={'globe'}
@@ -88,8 +107,10 @@ export class LoginScreen extends React.Component {
 // maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.username
 const mapStateToProps = (state) => {
     const username = state.user.username;
+    const password = state.user.password;
     return {
-        username
+        username,
+        password
     };
 };
 
