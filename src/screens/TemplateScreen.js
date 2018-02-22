@@ -4,7 +4,6 @@ import {
     FlatList,
     ActivityIndicator,
     ScrollView,
-    StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -30,7 +29,7 @@ export class TemplateScreen extends Component {
             isLoading       : true,     // Checks whether the app is loading or not.
             refreshing      : false,    // Checks whether the app and its data is refreshing or not.
             scrollEnabled   : true,     // Checks whether the template screen is scrollable or not.
-            renderFooter    : false     // If true, empty space is rendered after the last template. This is set to true while a template is opened.
+            renderFooter    : false,     // If true, empty space is rendered after the last template. This is set to true while a template is opened.
         };
     }
 
@@ -154,15 +153,13 @@ export class TemplateScreen extends Component {
             );
         }
 
+
         const { reportsByTempID, templates } = this.props;
+
         return (
             <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>
-                    <StatusBar
-                        backgroundColor={templateScreenStyles.statusBar}
-                        barStyle='light-content'
-                    />
-                    {/* At the moment this doesn't do anything.*/}
+                    At the moment this doesn't do anything. */}
                     <ReportSearchBar/>
                     <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
                         <FlatList
@@ -200,11 +197,12 @@ const mapStateToProps = (state) => {
     const templates = state.templates;
     const reportsByTempID = state.reportsByTempID;
     const token = state.user.token;
+
     return {
         username,
         templates,
         reportsByTempID,
-        token
+        token,
     };
 };
 
