@@ -81,22 +81,6 @@ const newReportStyles = EStyleSheet.create({
         paddingLeft: 8,
     },
 
-    dropdownButton: {
-        width: 150,
-        borderWidth: 0,
-        borderRadius: '$dropdownRadius',
-        backgroundColor: 'cornflowerblue',
-    },
-
-    dropdownText: {
-        marginVertical: 10,
-        marginHorizontal: 6,
-        fontSize: 18,
-        color: 'white',
-        textAlign: 'center',
-        textAlignVertical: 'center',
-    },
-
     dropStyleClass: {
         width: 150,
         height: 300,
@@ -136,7 +120,6 @@ const newReportStyles = EStyleSheet.create({
     },
 
     multilinedTextInputStyleClass: {
-        verticalAlign: 'top',
         paddingLeft: 10,
         marginBottom: 6,
         height: 80,

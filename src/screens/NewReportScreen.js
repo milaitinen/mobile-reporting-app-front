@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, TouchableHighlight } from 'react-native';
+import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
-import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { Checkbox } from '../components/Checkbox';
+import { Dropdown } from '../components/Dropdown';
+import { NestedDropdown } from '../components/Dropdown';
 
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID } from './api';
@@ -41,23 +42,6 @@ export class NewReportScreen extends React.Component {
             .catch(error => console.error(error) )
             .done();
     };
-
-    dropdownRenderRow(rowData, rowID, highlighted) {
-        const evenRow = rowID % 2;
-        return (
-            <TouchableHighlight underlayColor='cornflowerblue'>
-                <View style={[styles.dropdown_2_row, {backgroundColor: evenRow ? 'lemonchiffon' : 'white'}]}>
-                    <Image style={styles.dropdown_2_image}
-                           mode='stretch'
-                           source={icon}
-                    />
-                    <Text style={[styles.dropdown_2_row_text, highlighted && {color: 'mediumaquamarine'}]}>
-                        {`${rowData.name} (${rowData.age})`}
-                    </Text>
-                </View>
-            </TouchableHighlight>
-        );
-    }
 
     // Inserts data to server with a post method.
     send = () => {
@@ -156,7 +140,16 @@ export class NewReportScreen extends React.Component {
 
                 case 3: // Dropdown
                     return (
-                        <View key={index} style={newReportStyles.mainDropdownStyleClass}>
+                        <View key={index}>
+                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <NestedDropdown
+                                disabled={!isEditable}
+                                defaultValue={'Select user'}
+                                options={JSON.parse(field.defaultValue)}
+                            />
+                        </View>
+
+                        /*<View key={index} style={newReportStyles.mainDropdownStyleClass}>
                             <ModalDropdown
                                 disabled={!isEditable}
                                 options={['option 1', 'option 2']}
@@ -174,7 +167,7 @@ export class NewReportScreen extends React.Component {
                                 }
                             />
                             <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
-                        </View>
+                        </View>*/
 
                     );
 
@@ -347,19 +340,13 @@ export class NewReportScreen extends React.Component {
 
                 case 12: // User dropdown
                     return (
-                        <View key={index} style={ newReportStyles.dropdownContainer } onPress={() => this.modalDropdown.show() }>
+                        <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
-                            <ModalDropdown
-                                ref={ ModalDrop => this.modalDropdown = ModalDrop }
-                                style={ newReportStyles.dropdownButton }
-                                textStyle={ newReportStyles.dropdownText }
-                                dropdownStyle={ newReportStyles.dropStyleClass }
-                                defaultValue={'Select user'}
+                            <Dropdown
                                 disabled={!isEditable}
+                                defaultValue={'Select user'}
                                 options={JSON.parse(field.defaultValue)}
-                                renderRow={this.dropdownRenderRow.bind(this)}
                             />
-                            <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>
                         </View>
                     );
 
