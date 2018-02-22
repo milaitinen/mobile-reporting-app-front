@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Checkbox } from '../components/Checkbox';
 
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, fetchFieldsByTemplateID, saveReport } from './api';
+import { createNewReport, fetchFieldsByTemplateID, saveDraft } from './api';
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields, insertTitle } from '../redux/actions/newReport';
 import { storeSavedReportsByTemplateID } from '../redux/actions/reports';
@@ -110,7 +110,7 @@ export class NewReportScreen extends React.Component {
         }
 
         report.answers = Object.values(answers);
-        saveReport(username, templateID, report);
+        saveDraft(username, templateID, report);
         this.props.dispatch(storeSavedReportsByTemplateID(templateID, report)); // store drafts together with other reports in reports state
         //this.setState=({ isUnsaved: false });
 

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Checkbox } from '../components/Checkbox';
 
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, removeReport, removeAnswers, saveReport } from './api';
+import { createNewReport, removeDraft, saveDraft } from './api';
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields } from '../redux/actions/newReport';
 
@@ -54,8 +54,7 @@ export class ReportScreen extends React.Component {
         const { templateID } = this.props.navigation.state.params;
         const { username } = this.props;
 
-        removeReport(username, templateID);
-        removeAnswers(username, templateID, 0); //TODO find a better solution for the third parameter (id)
+        removeDraft(username, templateID);
         this.props.dispatch(emptyFields());
 
         Alert.alert('Report deleted.');
@@ -71,7 +70,7 @@ export class ReportScreen extends React.Component {
 
         const report = this.state.report;
         report.answers = Object.values(answers);
-        saveReport(username, templateID, report);
+        saveDraft(username, templateID, report);
 
         Alert.alert('Saved');
 

@@ -67,21 +67,12 @@ export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
     );
 };
 
-// fetch answers of locally stored draft NOTICE! the url doesn't match the *real* url, it's just a key
-export const saveAnswers = (username, templateID, id, fields) => {
-    saveData(`${url}/users/${username}/templates/${templateID}/reports/${id}/fields`, fields);
-};
-
-export const removeAnswers = (username, templateID, id) => {
-    removeData(`${url}/users/${username}/templates/${templateID}/reports/${id}/fields`);
-};
-
 // used to store drafts
-export const saveReport = (username, templateID, data) => {
+export const saveDraft = (username, templateID, data) => {
     saveData(`${url}/users/${username}/templates/${templateID}`, data);
 };
 
-export const removeReport =  (username, templateID) => {
+export const removeDraft =  (username, templateID) => {
     removeData(`${url}/users/${username}/templates/${templateID}`);
 };
 
