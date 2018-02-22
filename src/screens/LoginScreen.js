@@ -46,9 +46,7 @@ export class LoginScreen extends React.Component {
     }
 
     handleConnectionChange = isConnected => {
-        this.props.dispatch(toggleConnection({ isConnected: isConnected }));
-        console.log('called toggle with connection status ', isConnected);
-
+        this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
     };
 
     /**
@@ -81,10 +79,8 @@ export class LoginScreen extends React.Component {
     };
 
     render() {
-
-        const connected = this.props.isConnected;
         return <AppBackground>
-            <OfflineNotice color={connected ? '#b52424' : '#3d4f7c' } />
+            <OfflineNotice isConnected={this.props.isConnected} />
             <Text style={loginStyles.title}>
                 {strings('login.title')}
             </Text>

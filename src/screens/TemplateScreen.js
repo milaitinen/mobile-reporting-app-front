@@ -169,41 +169,23 @@ export class TemplateScreen extends Component {
 
 
         const { reportsByTempID, templates } = this.props;
-        const connected = this.props.isConnected;
 
-        return (
-            <AppBackground>
-                <View style={templateScreenStyles.viewContainer}>
-                    <OfflineNotice color={connected ? '#b52424' : '#3d4f7c' } isConnected={ connected } />
-                    {/* At the moment this doesn't do anything. */}
-                    <ReportSearchBar/>
-                    <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
-                        <FlatList
-                            ref={(c) => this._flatList = c}
-                            scrollEnabled={this.state.scrollEnabled}
-                            data={ Object.values(templates) }
-                            renderItem={({ item, index }) =>
-                                <Layout
-                                    title={item.title}
-                                    moveToTop={(viewPosition = 0) => this._flatList.scrollToIndex({ animated: true, index: index, viewPosition: viewPosition })}
-                                    setTemplateScreenScrollEnabled={this.setScrollEnabled}
-                                    setTemplateScreenRenderFooter={this.setRenderFooter}
-                                    createNew={this.createNew}
-                                    nofReports={(reportsByTempID[item.id]) ? (reportsByTempID[item.id]).length : 0}
-                                    templateID={item.id}
-                                    data={reportsByTempID[item.id]}
-                                />
-                            }
-                            ListFooterComponent={
-                                (this.state.renderFooter) && <View style={{ height: 500 }}/>
-                            }
-                            keyExtractor={item => item.id}
-                            refreshing={this.state.refreshing}
-                        />
-                    </ScrollView>
-                </View>
-            </AppBackground>
-        );
+        return <AppBackground>
+            <View style={templateScreenStyles.viewContainer}>
+                <OfflineNotice isConnected={this.props.isConnected} />
+                {/* At the moment this doesn't do anything. */}
+                <ReportSearchBar />
+                <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
+                    <FlatList ref={c => (this._flatList = c)} scrollEnabled={this.state.scrollEnabled} data={Object.values(templates)} renderItem={({ item, index }) => <Layout title={item.title} moveToTop={(viewPosition = 0) => this._flatList.scrollToIndex(
+                        {
+                            animated: true,
+                            index: index,
+                            viewPosition: viewPosition
+                        }
+                    )} setTemplateScreenScrollEnabled={this.setScrollEnabled} setTemplateScreenRenderFooter={this.setRenderFooter} createNew={this.createNew} nofReports={reportsByTempID[item.id] ? reportsByTempID[item.id].length : 0} templateID={item.id} data={reportsByTempID[item.id]} />} ListFooterComponent={this.state.renderFooter && <View style={{ height: 500 }} />} keyExtractor={item => item.id} refreshing={this.state.refreshing} />
+                </ScrollView>
+            </View>
+        </AppBackground>;
     }
 }
 

@@ -77,8 +77,8 @@ class Layout extends Component{
     };
 
     /*
-     Determine whether empty space is rendered after the last template of template screen.
-     Without this function it wouldn't be possible to autoscroll to the last templates of the template screen.
+    Determine whether empty space is rendered after the last template of template screen.
+    Without this function it wouldn't be possible to autoscroll to the last templates of the template screen.
      */
     setTemplateScreenRenderFooter = (bool) => {
         this.props.setTemplateScreenRenderFooter(bool);
