@@ -150,7 +150,7 @@ export class ReportScreen extends React.Component {
                             <Text style={ newReportStyles.textStyleClass }>Name</Text>
                             <TextInput
                                 editable={isEditable}
-                                placeholder={field.answer}
+                                defaultValue={field.answer}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
@@ -158,7 +158,7 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
 
-                case 2: // Checkbox
+                case 2: // Checkbox TODO defaultValue doesn't work here
                     return (
                         <Checkbox
                             key={index}
@@ -201,7 +201,7 @@ export class ReportScreen extends React.Component {
                             <Text style={ newReportStyles.textStyleClass }>Text Field</Text>
                             <TextInput
                                 editable={isEditable}
-                                placeholder={field.answer}
+                                defaultValue={field.answer}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
@@ -240,12 +240,12 @@ export class ReportScreen extends React.Component {
                                         borderRadius: 5,
                                     },
                                 }}
-                                date={answers[field.id] ? answers[field.id].answer : field.answer}
+                                date={field.answer}
                                 mode="date"
                                 placeholder="select date"
                                 format="YYYY-MM-DD"
-                                minDate="2018-05-01"
-                                maxDate="2018-06-01"
+                                minDate="2018-01-01"
+                                maxDate="2018-12-31"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}
@@ -274,6 +274,7 @@ export class ReportScreen extends React.Component {
                                 style = { newReportStyles.multilinedTextInputStyleClass }
                                 onChangeText = {(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                                 placeholder = {field.answer}
+                                defaultValue={field.answer}
                                 multiline = {true}
                             />
                         </View>
@@ -312,7 +313,7 @@ export class ReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 style={ newReportStyles.textInputStyleClass }
-                                placeholder={field.answer}
+                                defaultValue={field.answer}
                                 keyboardType = 'numeric'
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                             />
@@ -359,7 +360,7 @@ export class ReportScreen extends React.Component {
                         <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
                             <TextInput
                                 editable={isEditable}
-                                placeholder={this.props.navigation.state.params.title}
+                                defaultValue={this.props.navigation.state.params.title}
                                 onChangeText={(text) => this.setState({ title: text })}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}

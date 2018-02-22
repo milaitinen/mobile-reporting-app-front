@@ -186,6 +186,8 @@ export class NewReportScreen extends React.Component {
         const { isEditable } = this.state;
         const { answers } = this.props;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
+            console.log('field', field)
+            console.log('answers', answers)
 
             switch (field.typeID) {
 
@@ -285,7 +287,7 @@ export class NewReportScreen extends React.Component {
                                         borderRadius: 5,
                                     },
                                 }}
-                                date={answers[field.id] ? answers[field.id].answer : field.defaultValue}
+                                date={answers[field.orderNumber] ? answers[field.orderNumber].answer : field.defaultValue}
                                 mode="date"
                                 placeholder="select date"
                                 format="YYYY-MM-DD"
