@@ -6,8 +6,8 @@ import color from 'color';
 
 // TODO: rename to be more accurate
 const RightButton = ({ onPressPrev, onPressNew }) => {
-    const previewUnderlay = color('#A4CBE7').darken(0.1);
-    const newReportUnderlay = color('##99d9ad').darken(0.1);
+    const previewUnderlay = color('#A4CBE7').darken(0.2);
+    const newReportUnderlay = color('#99d9ad').darken(0.3);
 
 
     return (

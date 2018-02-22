@@ -37,7 +37,6 @@ const newReportStyles = EStyleSheet.create({
     dateStyleClass: {
         width: 160,
         marginBottom: 6,
-        marginTop: 6,
     },
 
     textStyleClass: {
@@ -45,6 +44,7 @@ const newReportStyles = EStyleSheet.create({
         color: '#adadad',
         fontSize: 16,
         marginTop: 20,
+        marginBottom: 8,
         flexDirection: 'row',
     },
 
@@ -116,18 +116,16 @@ const newReportStyles = EStyleSheet.create({
     multilinedTextInputStyleClass: {
         paddingLeft: 10,
         marginBottom: 6,
-        marginTop: 6,
         height: 80,
         borderWidth: 1,
         borderRadius: '$containerBorderRadius',
-        borderColor: '$reportBg',
+        borderColor: '#C4C4C4',
         backgroundColor: '$primaryWhite',
     },
 
     textInputStyleClass: {
         paddingHorizontal: 12,
         marginBottom: 20,
-        marginTop: 8,
         marginHorizontal: 5,
         height: 40,
         borderWidth: 1,
@@ -149,6 +147,14 @@ const newReportStyles = EStyleSheet.create({
             fontSize: 16,
             marginHorizontal: 5,
         }
+    },
+
+    radioButtonContainer: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        padding: 5,
+        paddingHorizontal: 10,
     },
 
     title: {

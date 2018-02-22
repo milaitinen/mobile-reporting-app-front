@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import RadioForm from 'react-native-simple-radio-button';
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
@@ -112,7 +112,7 @@ export class NewReportScreen extends React.Component {
                 case 1: // Name
                     return (
                         <View key={index}>
-                            <Text style={newReportStyles.textStyleClass}>Name</Text>
+                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
@@ -127,7 +127,7 @@ export class NewReportScreen extends React.Component {
                 case 2: // Checkbox
                     return (
                         <View key={index}>
-                            <Text style={newReportStyles.textStyleClass}>Checkbox section</Text>
+                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <Checkbox
                                 key={index}
                                 style={ newReportStyles.checkboxStyle }
@@ -163,7 +163,7 @@ export class NewReportScreen extends React.Component {
                 case 4: // TextRow (One row text field)
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Text Field</Text>
+                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
@@ -175,38 +175,58 @@ export class NewReportScreen extends React.Component {
                     );
 
                 case 5: // Choice (Yes/No)
+                    const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Radiobutton section</Text>
-                            <RadioForm
-                                key={index}
-                                disabled={!isEditable}
-                                radio_props={ [
-                                    { label: 'Yes', value: 1 },
-                                    { label: 'No', value: 0 }
-
-                                ] }
-                                initial={JSON.parse(field.defaultValue)}
-                                onPress={(value) => { this.setState({ value: value }); }}
-                                buttonColor={'#9dcbe5'}
-                                labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
-                                formHorizontal={true}
-                            />
+                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <View style={ newReportStyles.radioButtonContainer }>
+                                <RadioForm
+                                    animation={true}
+                                    formHorizontal={true}
+                                >
+                                    {props.map((obj, i) =>
+                                        <RadioButton
+                                            key={i}
+                                        >
+                                            <RadioButtonInput
+                                                obj={obj}
+                                                index={i}
+                                                isSelected={this.state.value === obj.value}
+                                                onPress={(value) => { this.setState({ value: value }); }}
+                                                borderWidth={1}
+                                                buttonColor={'#87cce5'}
+                                                buttonSize={16}
+                                                buttonOuterSize={24}
+                                                buttonStyle={{}}
+                                                buttonWrapStyle={{}}
+                                            />
+                                            <RadioButtonLabel
+                                                obj={obj}
+                                                index={i}
+                                                labelHorizontal={true}
+                                                onPress={(value) => { this.setState({ value: value }); }}
+                                                labelStyle={{ marginRight: 20 }}
+                                                labelWrapStyle={{}}
+                                            />
+                                        </RadioButton>
+                                    )}
+                                </RadioForm>
+                            </View>
                         </View>
                     );
 
                 case 6: // Calendar
                     return (
                         <View key={index} >
-                            <Text style={ newReportStyles.textStyleClass }>Date</Text>
+                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <DatePicker
                                 disabled={!isEditable}
                                 style={ newReportStyles.dateStyleClass }
                                 customStyles={{
                                     dateInput: {
-                                        borderColor: '#e0e8eb',
-                                        backgroundColor: '#e0e8eb',
+                                        borderColor: '#C4C4C4',
                                         borderRadius: 5,
+                                        color: '#C4C4C4'
                                     },
                                 }}
                                 date={field.defaultValue}
@@ -226,7 +246,7 @@ export class NewReportScreen extends React.Component {
                 case 7: // Instruction
                     return (
                         <View key={index} >
-                            <Text style={ newReportStyles.textStyleClass }>Instructions</Text>
+                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <Text
                                 style = { newReportStyles.multilinedTextInputStyleClass }>
                                 {field.defaultValue}
@@ -237,7 +257,7 @@ export class NewReportScreen extends React.Component {
                 case 8: // Text (Multiple row text field)
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Description</Text>
+                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 style = { newReportStyles.multilinedTextInputStyleClass }
@@ -251,7 +271,7 @@ export class NewReportScreen extends React.Component {
                 case 9: // Time
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Time</Text>
+                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <DatePicker
                                 disabled={!isEditable}
                                 style={ newReportStyles.dateStyleClass }
@@ -277,7 +297,7 @@ export class NewReportScreen extends React.Component {
                 case 10: // Digits (Text input that only accepts numeric characters)
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Numerical Field</Text>
+                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 style={ newReportStyles.textInputStyleClass }
