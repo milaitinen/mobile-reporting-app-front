@@ -7,7 +7,7 @@ import { strings } from '../locales/i18n';
 import { Input } from '../components/TextInput';
 import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
-import { insertUsername, insertToken } from '../redux/actions/user';
+import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
 import { login } from './api';
 
 // "export" necessary in order to test component without Redux store
@@ -16,11 +16,6 @@ export class LoginScreen extends React.Component {
     constructor(props)
     {
         super(props);
-        this.state = {
-            // isLoading : true,
-            password  : 'password',
-            serverUrl : ''
-        };
 
 
         if (this.props.token) { // this.props.token != null
