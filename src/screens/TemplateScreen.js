@@ -54,7 +54,7 @@ export class TemplateScreen extends Component {
         fetchTemplatesByUsername(username, token)
             .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
             .then(() => {
-                const reportsByTemplateID = Object.keys(this.props.templates) // just 'templates' won't work...
+                const reportsByTemplateID = Object.keys(this.props.templates)
                     .map((templateID) => fetchReportsByTemplateID(username, templateID, token));
 
                 Promise.all(reportsByTemplateID)

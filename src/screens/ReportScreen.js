@@ -22,6 +22,7 @@ export class ReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isDraft         : false, // for future use?
             report          : null,
             title           : null,
             isUnsaved       : true,
@@ -74,9 +75,16 @@ export class ReportScreen extends React.Component {
 
         Alert.alert('Saved');
 
-        this.props.navigation.state.params.refresh();   // update templateScreen
         this.props.dispatch(emptyFields());             // return newReport state to its initial state
+        this.props.navigation.state.params.refresh();   // update templateScreen
         this.props.navigation.dispatch(NavigationActions.back());
+
+        //report.answers = Object.values(answers);
+        //saveDraft(username, templateID, report);
+        //this.props.dispatch(storeSavedReportsByTemplateID(templateID, report)); // store drafts together with other reports in reports state
+        //this.setState=({ isUnsaved: false });
+
+
     };
 
     // Inserts data to server with a post method.
@@ -132,7 +140,7 @@ export class ReportScreen extends React.Component {
         const { answers } = this.props;
         const renderedFields = (!this.state.dataFieldsByID) ? null : this.state.dataFieldsByID.map((field, index) => {
 
-            switch (field.typeID) {
+            switch (field.fieldID) {
 
                 case 1: // Name
                     return (
@@ -209,7 +217,7 @@ export class ReportScreen extends React.Component {
                                 { label: 'Yes', value: 1 }
                             ] }
                             initial={JSON.parse(field.answer)}
-                            onPress={() => this.props.dispatch(insertFieldAnswer(field, '1'))}
+                            onPress={() => this.props.dispatch(insertFieldAnswer(field, '1'))} //TODO this only allows '1' to be saved...
                             buttonColor={'#9dcbe5'}
                             labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
                             formHorizontal={true}

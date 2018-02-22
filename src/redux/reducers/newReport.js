@@ -33,7 +33,8 @@ const newReportReducer = (state = initialState, action) => {
                     [action.field.orderNumber]: {
                         answer: action.answer,
                         orderNumber: action.field.orderNumber,
-                        typeID: action.field.typeID
+                        // fetchFieldsAsTemplateID() returns typeID, whereas fetchFieldsByReportID() returns fieldID
+                        fieldID: action.field.fieldID || action.field.typeID
                     }
                 }
             };

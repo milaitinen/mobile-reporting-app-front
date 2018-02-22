@@ -78,6 +78,7 @@ export class NewReportScreen extends React.Component {
     getFieldsByTemplateID = (templateID) => {
         fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
             .then(responseJson => {
+                console.log('responseJson', responseJson);
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .then(() => {
@@ -94,7 +95,7 @@ export class NewReportScreen extends React.Component {
         const report = {
             answers: [],
             templateID: templateID,
-            userID: 1,      //TODO what to do with userID, orderNo, and id in the future...?
+            userID: 1,      // TODO what to do with userID, orderNo, and id in the future...?
             orderNo: null,
             title: this.props.title || 'Draft',
             dateCreated: null,
@@ -187,10 +188,8 @@ export class NewReportScreen extends React.Component {
         const { isEditable } = this.state;
         const { answers } = this.props;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
-            console.log('field', field)
-            console.log('answers', answers)
 
-            switch (field.typeID) {
+            switch (field.typeID) { // typeID because fetchFieldsByTemplateID returns typeID (in ReportScreen typeID->fieldID)
 
                 case 1: // Name
                     return (
