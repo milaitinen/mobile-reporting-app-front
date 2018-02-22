@@ -56,13 +56,10 @@ export class TemplateScreen extends Component {
             .then(() => {
                 const reportsByTemplateID = Object.keys(this.props.templates) // just 'templates' won't work...
                     .map((templateID) => fetchReportsByTemplateID(username, templateID, token));
+
                 Promise.all(reportsByTemplateID)
-                    .then(data => {
-                        this.props.dispatch(storeReportsByTemplateID(data));
-                    })
-                    .then(() => {
-                        this.getStoredReports();
-                    })
+                    .then(data => this.props.dispatch(storeReportsByTemplateID(data)))
+                    .then(() => this.getStoredReports())
                     .catch(err => console.error(err));
             })
             .catch(error => console.error(error))
@@ -127,10 +124,11 @@ export class TemplateScreen extends Component {
             this.props.dispatch(preview(templateID));
             this.props.navigation.navigate('Preview', { refresh: this.handleRefresh,  isEditable: isEditable });
         }
+        //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReporstScreen and uncomment this
     };
 
     openReport = (templateID, reportID, title) => {
-        console.log('title',title)
+        //this.setState({ isLoading: true }); TODO same problem as above
         this.props.navigation.navigate('Report', { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
     };
 

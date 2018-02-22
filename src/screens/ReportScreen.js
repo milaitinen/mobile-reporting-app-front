@@ -84,8 +84,8 @@ export class ReportScreen extends React.Component {
 
         Alert.alert('Saved');
 
-        this.props.dispatch(emptyFields());             // return newReport state to its initial state
         this.props.navigation.state.params.refresh();   // update templateScreen
+        this.props.dispatch(emptyFields());             // return newReport state to its initial state
         this.props.navigation.dispatch(NavigationActions.back());
     };
 
