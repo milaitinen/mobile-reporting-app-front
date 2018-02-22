@@ -175,7 +175,7 @@ export class NewReportScreen extends React.Component {
                         </View>
                     );
 
-                case 5: // Choice (Yes/No)
+                case 5: // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
                     const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
                     return (
                         <View key={index}>
