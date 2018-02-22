@@ -144,6 +144,7 @@ export class NewReportScreen extends React.Component {
                                 disabled={!isEditable}
                                 options={['option 1', 'option 2']}
                                 dropdownStyle={ newReportStyles.dropStyleClass }
+                                defaultValue={'Select option'}
 
                                 renderRow={ () =>
                                     <View>
@@ -226,29 +227,32 @@ export class NewReportScreen extends React.Component {
                                     dateInput: {
                                         borderColor: '#C4C4C4',
                                         borderRadius: 5,
-                                        color: '#C4C4C4'
                                     },
+                                    dateText: {
+                                        color: '#C4C4C4',
+                                    }
                                 }}
                                 date={field.defaultValue}
                                 mode="date"
                                 placeholder="select date"
+                                placeholderTextColor={'#C4C4C4'}
                                 format="YYYY-MM-DD"
                                 minDate="2018-05-01"
                                 maxDate="2018-06-01"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
-                                iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}
+                                /*iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}*/
                                 onDateChange={(date) => {this.setState({ date: date });}}
                             />
                         </View>
                     );
 
-                case 7: // Instruction
+                case 7: // Instructions
                     return (
-                        <View key={index} >
+                        <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <Text
-                                style = { newReportStyles.multilinedTextInputStyleClass }>
+                                style = { newReportStyles.instructions }>
                                 {field.defaultValue}
                             </Text>
                         </View>
@@ -277,9 +281,11 @@ export class NewReportScreen extends React.Component {
                                 style={ newReportStyles.dateStyleClass }
                                 customStyles={{
                                     dateInput: {
-                                        borderColor: '#e0e8eb',
-                                        backgroundColor: '#e0e8eb',
+                                        borderColor: '#C4C4C4',
                                         borderRadius: 5,
+                                    },
+                                    dateText: {
+                                        color: '#C4C4C4',
                                     }
                                 }}
                                 date={field.defaultValue}
@@ -288,7 +294,7 @@ export class NewReportScreen extends React.Component {
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 minuteInterval={10}
-                                iconComponent={<Icon name={'schedule'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}
+                                iconComponent={<Icon name={'clock'} type={'entypo'} iconStyle={ newReportStyles.dateIconStyle }/>}
                                 onDateChange={(time) => {this.setState({ time: time });}}
                             />
                         </View>
@@ -302,6 +308,7 @@ export class NewReportScreen extends React.Component {
                                 editable={isEditable}
                                 style={ newReportStyles.textInputStyleClass }
                                 placeholder={field.defaultValue}
+                                placeholderTextColor={'#C4C4C4'}
                                 keyboardType = 'numeric'
                                 onChangeText={(text)=> this.onChanged(text)}
                                 value = {this.state.number}
@@ -323,10 +330,14 @@ export class NewReportScreen extends React.Component {
 
                 case 12: // User dropdown
                     return (
-                        <View key={index} style={ newReportStyles.mainDropdownStyleClass } onPress={() => this.modalDropdown.show() }>
+                        <View key={index} style={ newReportStyles.dropdownContainer } onPress={() => this.modalDropdown.show() }>
+                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <ModalDropdown
                                 ref={ ModalDrop => this.modalDropdown = ModalDrop }
+                                style={ newReportStyles.dropdownButton }
+                                textStyle={ newReportStyles.dropdownText }
                                 dropdownStyle={ newReportStyles.dropStyleClass }
+                                defaultValue={'Select user'}
                                 disabled={!isEditable}
                                 options={JSON.parse(field.defaultValue)}/>
                             <Icon name={'arrow-drop-down'} type={'MaterialIcons'} iconStyle={ newReportStyles.dropIconStyle }/>

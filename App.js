@@ -22,7 +22,7 @@ EStyleSheet.build({
     $containerBorderRadius: 5,
     $buttonBorderRadius: 10,
     $buttonBorderRadiusSmall: 7,
-    $dropdownRadius: 3,
+    $dropdownRadius: 5,
 });
 
 class App extends React.Component {

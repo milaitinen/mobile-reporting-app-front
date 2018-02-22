@@ -57,16 +57,20 @@ const newReportStyles = EStyleSheet.create({
     mainDropdownStyleClass: {
         //flex: 1,
         flexDirection: 'row',
-        backgroundColor: '#e0e8eb',
+        backgroundColor: '$primaryWhite',
         paddingLeft: 5,
         paddingTop: 5,
         paddingBottom: 5,
         borderRadius: '$dropdownRadius',
-        borderWidth: 8,
-        borderColor: '#e0e8eb',
+        borderWidth: 1,
+        borderColor: '#C4C4C4',
         marginTop: 6,
         marginBottom: 6,
         width: 160,
+    },
+
+    dropdownContainer: {
+        margin: 5,
     },
 
     lowerDropdownStyleClass: {
@@ -77,10 +81,28 @@ const newReportStyles = EStyleSheet.create({
         paddingLeft: 8,
     },
 
+    dropdownButton: {
+        width: 150,
+        borderWidth: 0,
+        borderRadius: '$dropdownRadius',
+        backgroundColor: 'cornflowerblue',
+    },
+
+    dropdownText: {
+        marginVertical: 10,
+        marginHorizontal: 6,
+        fontSize: 18,
+        color: 'white',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+    },
+
     dropStyleClass: {
-        flex: 1,
-        width: 160,
-        height: 160,
+        width: 150,
+        height: 300,
+        borderColor: 'cornflowerblue',
+        borderWidth: 2,
+        borderRadius: 3,
     },
 
     dropIconStyle: {
@@ -98,7 +120,7 @@ const newReportStyles = EStyleSheet.create({
     },
 
     linkIconStyle: {
-        color: '#000000',
+        color: '#C4C4C4',
         justifyContent: 'flex-end',
         fontSize: 18,
         paddingRight: 10,
@@ -106,7 +128,7 @@ const newReportStyles = EStyleSheet.create({
     },
 
     dateIconStyle: {
-        color: '#000000',
+        color: '#87cce5',
         paddingLeft: 5,
         paddingRight: 10,
         justifyContent: 'flex-end',
@@ -114,6 +136,7 @@ const newReportStyles = EStyleSheet.create({
     },
 
     multilinedTextInputStyleClass: {
+        verticalAlign: 'top',
         paddingLeft: 10,
         marginBottom: 6,
         height: 80,
@@ -121,6 +144,16 @@ const newReportStyles = EStyleSheet.create({
         borderRadius: '$containerBorderRadius',
         borderColor: '#C4C4C4',
         backgroundColor: '$primaryWhite',
+    },
+
+    instructions: {
+        paddingLeft: 10,
+        marginBottom: 6,
+        borderWidth: 1,
+        borderRadius: '$containerBorderRadius',
+        borderColor: '#C4C4C4',
+        backgroundColor: '$primaryWhite',
+        color: '#C4C4C4',
     },
 
     textInputStyleClass: {
