@@ -4,7 +4,7 @@ import {
     FlatList,
     ActivityIndicator,
     ScrollView,
-    StatusBar
+    StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -17,10 +17,12 @@ import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
+import userReducer from '../redux/reducers/user';
 // import { storeReports } from '../redux/actions/reports';
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
+
     constructor(props)
     {
         super(props);
@@ -33,26 +35,34 @@ export class TemplateScreen extends Component {
     }
 
     /*
+    handleBackPress = () => {
+        if (this.backPressed && this.backPressed > 0) {
+            this.props.navigator.popToRoot({ animated: false });
+            return false;
+        }
+
+        this.backPressed = 1;
+        this.props.navigator.showSnackbar({
+            text: 'Press one more time to exit',
+            duration: 'long',
+        });
+        return true;
+    }
+    */
+
+    /*
      componentDidMount() is invoked immediately after the component is mounted. Initialization that requires
      DOM nodes happens here. The function calls getTemplates which loads data from a remote url,
      and instantiates the network request.
     */
     componentDidMount() {
-        // TEMPORARY: not sure if this is the best solution
-        if (this.isEmpty(this.props.templates)) {
+        // TEMPORARY: not sure if this is the best solution. Current version fixes a bug (related to logging in)
+        if (this.props.username !== userReducer.username) {
             this.getTemplatesAndReports();
         } else {
             this.setState({ refreshing: false, isLoading: false });
         }
     }
-
-    isEmpty = (obj) => {
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key))
-                return false;
-        }
-        return true;
-    };
 
     /*
      Fetches the data from the server in two parts.
