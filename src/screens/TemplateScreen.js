@@ -13,7 +13,7 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchStoredReportsByTemplateID } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchStoredReportsByTemplateID, removeReport, removeAnswers } from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID, storeSavedReportsByTemplateID } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';

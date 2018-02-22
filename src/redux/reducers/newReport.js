@@ -30,7 +30,7 @@ const newReportReducer = (state = initialState, action) => {
                 ...state,
                 answers: {
                     ...state.answers,
-                    [action.field.id]: {
+                    [action.field.orderNumber]: {
                         answer: action.answer,
                         orderNumber: action.field.orderNumber,
                         typeID: action.field.typeID

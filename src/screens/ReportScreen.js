@@ -51,9 +51,7 @@ export class ReportScreen extends React.Component {
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .then(() => {
-                console.log('hey ho', this.state.dataFieldsByID)
                 if (this.state.dataFieldsByID) {
-                    console.log('hey ho')
                     this.insertValues(this.state.dataFieldsByID);
                 }
             })
@@ -79,32 +77,12 @@ export class ReportScreen extends React.Component {
 
     // save report locally in asyncstorage
     save = () => {
-        const { username, reports, answers } = this.props;
+        const { username, answers } = this.props;
         const { templateID, reportID } = this.props.navigation.state.params;
 
-        const report = {
-            templateID: templateID,
-            userID: 1,      //TODO what to do with userID, orderNo, and id in the future...?
-            orderNo: null,
-            title: this.state.title || 'Draft',
-            dateCreated: null,
-            dateAccepted: null,
-            id: reportID
-        };
+        saveAnswers(username, templateID, reportID, Object.values(answers));  // save answers to asyncstorage // save report in the above format
 
-        //TODO problems when you create several drafts from the same template
-        //Check if there already is a report of the same templateID
-        if (reports[templateID][0].id === 0) {
-            Alert.alert('You can not create more than one draft per template!');
-            return;
-        }
-
-        saveAnswers(username, templateID, reportID, answers);  // save report in the above format
-        saveReport(username, templateID, report);               // save answers to asyncstorage
-        this.props.dispatch(storeSavedReportsByTemplateID(templateID, report)); // store drafts together with other reports in reports state
-        //this.setState=({ isUnsaved: false });
-
-        Alert.alert('Report saved!');
+        Alert.alert('Saved');
 
         this.props.dispatch(emptyFields());             // return newReport state to its initial state
         this.props.navigation.state.params.refresh();   // update templateScreen
