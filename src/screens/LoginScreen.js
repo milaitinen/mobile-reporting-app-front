@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StatusBar, Keyboard, NetInfo } from 'react-native';
+import { Text, Keyboard, NetInfo } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
@@ -11,6 +11,7 @@ import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from
 import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
 import { NavigationActions } from 'react-navigation';
 import { toggleConnection } from '../redux/actions/connection';
+import { OfflineNotice } from '../components/OfflineNotice';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
@@ -38,13 +39,13 @@ export class LoginScreen extends React.Component {
     }
 
     componentDidMount() {
-        NetInfo.isConnected.addEventListener('connectionChange', this._handleConnectionChange);
+        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
     }
     componentWillUnmount() {
-        NetInfo.isConnected.removeEventListener('connectionChange', this._handleConnectionChange);
+        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
     }
 
-    _handleConnectionChange = isConnected => {
+    handleConnectionChange = isConnected => {
         this.props.dispatch(toggleConnection({ isConnected: isConnected }));
         console.log('called toggle with connection status ', isConnected);
 
@@ -83,7 +84,7 @@ export class LoginScreen extends React.Component {
 
         const connected = this.props.isConnected;
         return <AppBackground>
-            <StatusBar backgroundColor={ connected ? '#b52424' : '#3d4f7c' } barStyle="light-content" />
+            <OfflineNotice color={connected ? '#b52424' : '#3d4f7c' } isConnected={ connected } />
             <Text style={loginStyles.title}>
                 {strings('login.title')}
             </Text>
@@ -103,7 +104,7 @@ export class LoginScreen extends React.Component {
             </SignInButton>
 
             <Text style={loginStyles.copyright}>
-                 Copyright © Arter Oy 2018
+                Copyright © Arter Oy 2018
             </Text>
         </AppBackground>;
     }

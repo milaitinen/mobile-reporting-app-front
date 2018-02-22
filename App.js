@@ -31,24 +31,24 @@ class App extends React.Component {
         BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     }
 
-  onBackPress = () => {
-      const { dispatch, nav } = this.props;
-      if (nav.index === 0) {
-          return false;
-      }
-      dispatch(NavigationActions.back());
-      return true;
-  };
+onBackPress = () => {
+    const { dispatch, nav } = this.props;
+    if (nav.index === 0) {
+        return false;
+    }
+    dispatch(NavigationActions.back());
+    return true;
+};
 
-  render() {
-      const { dispatch, nav } = this.props;
-      const navigation = addNavigationHelpers({
-          dispatch,
-          state: nav
-      });
+render() {
+    const { dispatch, nav } = this.props;
+    const navigation = addNavigationHelpers({
+        dispatch,
+        state: nav
+    });
 
-      return <AppNavigator navigation={navigation} />;
-  }
+    return <AppNavigator navigation={navigation} />;
+}
 }
 
 const mapStateToProps = state => ({

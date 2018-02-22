@@ -4,6 +4,7 @@ import {
     FlatList,
     ActivityIndicator,
     ScrollView,
+    NetInfo,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -11,12 +12,14 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
+import { OfflineNotice } from '../components/OfflineNotice';
 import { fetchReportsByTemplateID, fetchTemplatesByUsername, /*fetchReportsByUsername*/ } from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
+import { toggleConnection } from '../redux/actions/connection';
 // import { storeReports } from '../redux/actions/reports';
 
 // "export" necessary in order to test component without Redux store
@@ -55,6 +58,7 @@ export class TemplateScreen extends Component {
      and instantiates the network request.
     */
     componentDidMount() {
+        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
         // TEMPORARY: not sure if this is the best solution. Current version fixes a bug (related to logging in)
         if (this.props.username !== userReducer.username) {
             this.getTemplatesAndReports();
@@ -62,6 +66,16 @@ export class TemplateScreen extends Component {
             this.setState({ refreshing: false, isLoading: false });
         }
     }
+
+    componentWillUnmount() {
+        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
+    }
+
+    handleConnectionChange = isConnected => {
+        this.props.dispatch(toggleConnection({ isConnected: isConnected }));
+        console.log('called toggle with connection status ', isConnected);
+
+    };
 
     /*
      Fetches the data from the server in two parts.
@@ -155,11 +169,13 @@ export class TemplateScreen extends Component {
 
 
         const { reportsByTempID, templates } = this.props;
+        const connected = this.props.isConnected;
 
         return (
             <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>
-                    At the moment this doesn't do anything. */}
+                    <OfflineNotice color={connected ? '#b52424' : '#3d4f7c' } isConnected={ connected } />
+                    {/* At the moment this doesn't do anything. */}
                     <ReportSearchBar/>
                     <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
                         <FlatList
@@ -197,12 +213,14 @@ const mapStateToProps = (state) => {
     const templates = state.templates;
     const reportsByTempID = state.reportsByTempID;
     const token = state.user.token;
+    const isConnected = state.connection.isConnected;
 
     return {
         username,
         templates,
         reportsByTempID,
         token,
+        isConnected,
     };
 };
 
