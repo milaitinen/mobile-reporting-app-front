@@ -84,7 +84,7 @@ export class LoginScreen extends React.Component {
 
         const connected = this.props.isConnected;
         return <AppBackground>
-            <OfflineNotice color={connected ? '#b52424' : '#3d4f7c' } isConnected={ connected } />
+            <OfflineNotice color={connected ? '#b52424' : '#3d4f7c' } />
             <Text style={loginStyles.title}>
                 {strings('login.title')}
             </Text>

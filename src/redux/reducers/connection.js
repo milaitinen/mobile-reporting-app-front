@@ -1,7 +1,7 @@
 import { TOGGLE_CONNECTION } from '../actions/connection';
 
 const initialState = {
-    isConnected: true,
+    isConnected: false,
 };
 
 const connectionReducer = (state = initialState, action) => {
