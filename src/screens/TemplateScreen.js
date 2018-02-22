@@ -4,7 +4,7 @@ import {
     FlatList,
     ActivityIndicator,
     ScrollView,
-    StatusBar,
+    NetInfo,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -12,12 +12,14 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
+import { OfflineNotice } from '../components/OfflineNotice';
 import { fetchReportsByTemplateID, fetchTemplatesByUsername, /*fetchReportsByUsername*/ } from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
+import { toggleConnection } from '../redux/actions/connection';
 // import { storeReports } from '../redux/actions/reports';
 
 // "export" necessary in order to test component without Redux store
@@ -30,7 +32,7 @@ export class TemplateScreen extends Component {
             isLoading       : true,     // Checks whether the app is loading or not.
             refreshing      : false,    // Checks whether the app and its data is refreshing or not.
             scrollEnabled   : true,     // Checks whether the template screen is scrollable or not.
-            renderFooter    : false     // If true, empty space is rendered after the last template. This is set to true while a template is opened.
+            renderFooter    : false,     // If true, empty space is rendered after the last template. This is set to true while a template is opened.
         };
     }
 
@@ -56,6 +58,7 @@ export class TemplateScreen extends Component {
      and instantiates the network request.
     */
     componentDidMount() {
+        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
         // TEMPORARY: not sure if this is the best solution. Current version fixes a bug (related to logging in)
         if (this.props.username !== userReducer.username) {
             this.getTemplatesAndReports();
@@ -63,6 +66,16 @@ export class TemplateScreen extends Component {
             this.setState({ refreshing: false, isLoading: false });
         }
     }
+
+    componentWillUnmount() {
+        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
+    }
+
+    handleConnectionChange = isConnected => {
+        this.props.dispatch(toggleConnection({ isConnected: isConnected }));
+        console.log('called toggle with connection status ', isConnected);
+
+    };
 
     /*
      Fetches the data from the server in two parts.
@@ -154,43 +167,25 @@ export class TemplateScreen extends Component {
             );
         }
 
+
         const { reportsByTempID, templates } = this.props;
-        return (
-            <AppBackground>
-                <View style={templateScreenStyles.viewContainer}>
-                    <StatusBar
-                        backgroundColor={templateScreenStyles.statusBar}
-                        barStyle='light-content'
-                    />
-                    {/* At the moment this doesn't do anything.*/}
-                    <ReportSearchBar/>
-                    <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
-                        <FlatList
-                            ref={(c) => this._flatList = c}
-                            scrollEnabled={this.state.scrollEnabled}
-                            data={ Object.values(templates) }
-                            renderItem={({ item, index }) =>
-                                <Layout
-                                    title={item.title}
-                                    moveToTop={(viewPosition = 0) => this._flatList.scrollToIndex({ animated: true, index: index, viewPosition: viewPosition })}
-                                    setTemplateScreenScrollEnabled={this.setScrollEnabled}
-                                    setTemplateScreenRenderFooter={this.setRenderFooter}
-                                    createNew={this.createNew}
-                                    nofReports={(reportsByTempID[item.id]) ? (reportsByTempID[item.id]).length : 0}
-                                    templateID={item.id}
-                                    data={reportsByTempID[item.id]}
-                                />
-                            }
-                            ListFooterComponent={
-                                (this.state.renderFooter) && <View style={{ height: 500 }}/>
-                            }
-                            keyExtractor={item => item.id}
-                            refreshing={this.state.refreshing}
-                        />
-                    </ScrollView>
-                </View>
-            </AppBackground>
-        );
+
+        return <AppBackground>
+            <View style={templateScreenStyles.viewContainer}>
+                <OfflineNotice isConnected={this.props.isConnected} />
+                {/* At the moment this doesn't do anything. */}
+                <ReportSearchBar />
+                <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
+                    <FlatList ref={c => (this._flatList = c)} scrollEnabled={this.state.scrollEnabled} data={Object.values(templates)} renderItem={({ item, index }) => <Layout title={item.title} moveToTop={(viewPosition = 0) => this._flatList.scrollToIndex(
+                        {
+                            animated: true,
+                            index: index,
+                            viewPosition: viewPosition
+                        }
+                    )} setTemplateScreenScrollEnabled={this.setScrollEnabled} setTemplateScreenRenderFooter={this.setRenderFooter} createNew={this.createNew} nofReports={reportsByTempID[item.id] ? reportsByTempID[item.id].length : 0} templateID={item.id} data={reportsByTempID[item.id]} />} ListFooterComponent={this.state.renderFooter && <View style={{ height: 500 }} />} keyExtractor={item => item.id} refreshing={this.state.refreshing} />
+                </ScrollView>
+            </View>
+        </AppBackground>;
     }
 }
 
@@ -200,11 +195,14 @@ const mapStateToProps = (state) => {
     const templates = state.templates;
     const reportsByTempID = state.reportsByTempID;
     const token = state.user.token;
+    const isConnected = state.connection.isConnected;
+
     return {
         username,
         templates,
         reportsByTempID,
-        token
+        token,
+        isConnected,
     };
 };
 
