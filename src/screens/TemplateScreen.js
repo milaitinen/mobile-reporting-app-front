@@ -5,7 +5,6 @@ import {
     ActivityIndicator,
     ScrollView,
     StatusBar,
-    NetInfo,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -18,7 +17,6 @@ import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
-import { OfflineNotice } from '../components/OfflineNotice';
 // import { storeReports } from '../redux/actions/reports';
 
 // "export" necessary in order to test component without Redux store
@@ -31,7 +29,6 @@ export class TemplateScreen extends Component {
             refreshing      : false,    // Checks whether the app and its data is refreshing or not.
             scrollEnabled   : true,     // Checks whether the template screen is scrollable or not.
             renderFooter    : false,     // If true, empty space is rendered after the last template. This is set to true while a template is opened.
-            isConnected     : true,
         };
     }
 
@@ -41,7 +38,6 @@ export class TemplateScreen extends Component {
      and instantiates the network request.
     */
     componentDidMount() {
-        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
         // TEMPORARY: not sure if this is the best solution
         if (this.isEmpty(this.props.templates)) {
             this.getTemplatesAndReports();
@@ -49,14 +45,6 @@ export class TemplateScreen extends Component {
             this.setState({ refreshing: false, isLoading: false });
         }
     }
-
-    handleConnectivityChange = isConnected => {
-        if (isConnected) {
-            this.setState({ isConnected });
-        } else {
-            this.setState({ isConnected });
-        }
-    };
 
     isEmpty = (obj) => {
         for (const key in obj) {
@@ -159,7 +147,7 @@ export class TemplateScreen extends Component {
         let statusBar = null;
         if (!this.state.isConnected) {
             statusBar = <StatusBar
-                backgroundColor='#b52424'
+                backgroundColor= '#b52424'
                 barStyle='light-content'
             />;
         } else {
