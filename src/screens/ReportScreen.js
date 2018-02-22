@@ -10,10 +10,9 @@ import { connect } from 'react-redux';
 import { Checkbox } from '../components/Checkbox';
 
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, fetchFieldsByReportID, saveReport, saveAnswers, removeReport, removeAnswers } from './api';
+import { createNewReport, removeReport, removeAnswers, saveReport } from './api';
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields } from '../redux/actions/newReport';
-import { storeSavedReportsByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -23,6 +22,7 @@ export class ReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            report          : null,
             title           : null,
             isUnsaved       : true,
             isLoading       : true,
@@ -34,29 +34,18 @@ export class ReportScreen extends React.Component {
 
     componentDidMount() {
         this.getFieldsByReportID();
-        //this.setState({ isEditable: this.props.navigation.state.params.isEditable });
     }
-
-    // set the value of yes/no field(s) to '0' (No)
-    insertValues = () => {
-        this.state.dataFieldsByID.map((field) => this.props.dispatch(insertFieldAnswer(field, field.answer)));
-    };
 
     getFieldsByReportID = () => {
         const { templateID, reportID } = this.props.navigation.state.params;
-        const { username, token } = this.props;
+        const { reports } = this.props;
 
-        fetchFieldsByReportID(username, templateID, reportID, token)
-            .then(responseJson => {
-                this.setState({ dataFieldsByID: responseJson, isLoading: false });
-            })
-            .then(() => {
-                if (this.state.dataFieldsByID) {
-                    this.insertValues(this.state.dataFieldsByID);
-                }
-            })
-            .catch(error => console.error(error) )
-            .done();
+        const report = reports[templateID].find((obj) => obj.id === reportID);
+        const fieldAnswers = report.answers;
+        fieldAnswers.map((field) => this.props.dispatch(insertFieldAnswer(field, field.answer)));
+
+        this.setState({ report: report });
+        this.setState({ dataFieldsByID: fieldAnswers, isLoading: false });
     };
 
     // delete draft from asyncstorage
@@ -78,9 +67,11 @@ export class ReportScreen extends React.Component {
     // save report locally in asyncstorage
     save = () => {
         const { username, answers } = this.props;
-        const { templateID, reportID } = this.props.navigation.state.params;
+        const { templateID } = this.props.navigation.state.params;
 
-        saveAnswers(username, templateID, reportID, Object.values(answers));  // save answers to asyncstorage // save report in the above format
+        const report = this.state.report;
+        report.answers = Object.values(answers);
+        saveReport(username, templateID, report);
 
         Alert.alert('Saved');
 
