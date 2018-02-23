@@ -16,14 +16,17 @@ EStyleSheet.build({
     $darkestBlue: '#1b3055',
     $primaryWhite: '#fff',
     $primaryFont: 'Roboto-Light',
-    $reportBg: '#e8eef1',
-    $draftBlue: '#87cce5',
+    $gray1: '#adadad',
+    $gray2: '#a0a0a0',
+    $draftBlue: '#8cc9e5',
+    $fieldBg: '#f7fcff',
 
 
     $containerBorderRadius: 5,
     $buttonBorderRadius: 10,
     $buttonBorderRadiusSmall: 7,
     $dropdownRadius: 5,
+    $containerBorderWidth: 1.5,
 });
 
 class App extends React.Component {

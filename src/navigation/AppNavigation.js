@@ -38,7 +38,7 @@ const TemplateStack = StackNavigator({
         screen: NewReportScreen,
         navigationOptions: () => ({
             flex: 0.3,
-            headerTitle: strings('createNew.createNew') ,
+            headerTitle: strings('createNew.createNew'),
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',
@@ -48,7 +48,7 @@ const TemplateStack = StackNavigator({
         screen: PreviewScreen,
         navigationOptions: () => ({
             flex: 0.3,
-            headerTitle: 'Preview', //TODO: translate
+            headerTitle: strings('templates.preview'),
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',

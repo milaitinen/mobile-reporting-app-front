@@ -25,7 +25,7 @@ const CustomButton = ({ title, type, onPress }) => {
     return (
         <View style={styles.view}>
             <TouchableHighlight
-                underlayColor={color('#87cce5').darken(0.1)}
+                underlayColor={color('#8cc9e5').darken(0.1)}
                 style={styles.saveButtonContainer}
                 onPress={onPress}>
                 <View style={styles.buttonContent}>

@@ -35,14 +35,14 @@ const styles = EStyleSheet.create({
     },
 
     saveButtonContainer: {
-        backgroundColor: '#87cce5',
+        backgroundColor: '$draftBlue',
         borderRadius: '$buttonBorderRadius',
         borderWidth: 1,
         alignContent: 'center',
         justifyContent: 'center',
         paddingLeft: 15,
         paddingRight: 15,
-        borderColor: '#87cce5',
+        borderColor: '$draftBlue',
         '@media (max-width: 350)': {
             borderRadius: '$buttonBorderRadiusSmall',
             height: 30,

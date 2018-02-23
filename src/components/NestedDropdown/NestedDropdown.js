@@ -5,7 +5,9 @@ import { Icon } from 'react-native-elements';
 import styles from './styles';
 import color from 'color';
 
+
 class NestedDropdown extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +19,34 @@ class NestedDropdown extends Component {
         return rowData;
     };
 
+    innerOptions = (rowData) => {
+        if (rowData === 'option 1') {
+            return this.props.innerOptions[0];
+        } else {
+            return this.props.innerOptions[1];
+        }
+    };
+
     renderRow = (rowData, rowID, highlighted) => {
+        const evenRow = rowID % 2;
+        return (
+            <ModalDropdown
+                options={(rowData) => this.innerOptions(rowData)}
+                style={[styles.dropdownRow, { backgroundColor: evenRow ? '#DFF1F6' : 'white' }]}
+                dropdownStyle={ styles.dropStyleClass }
+                defaultValue={rowData}
+                textStyle={[styles.dropdownRowText, highlighted && { color: '#474c52' }]}
+                renderButtonText={(rowData) => this.renderButtonText(rowData)}
+                renderRow={this.renderInnerRow.bind(this)}
+                renderSeparator={(sectionID, rowID) => this.renderSeparator(sectionID, rowID)}
+                onSelect={(idx, value) => this.onSelect(idx, value)}
+
+            />
+        );
+    };
+
+    //TODO: Fix this method to render inner options.
+    renderInnerRow = (rowData, rowID, highlighted) => {
         const evenRow = rowID % 2;
         return (
             <TouchableHighlight underlayColor={evenRow ? color('#DFF1F6').darken(0.2) : color('#87d8f6').darken(0.1)}>
@@ -58,7 +87,6 @@ class NestedDropdown extends Component {
                 defaultValue={this.state.value}
                 disabled={this.props.disabled}
                 options={this.props.options}
-                onSelect={(idx, value) => this.onSelect(idx, value)}
                 renderButtonText={(rowData) => this.renderButtonText(rowData)}
                 renderRow={this.renderRow.bind(this)}
                 renderSeparator={(sectionID, rowID) => this.renderSeparator(sectionID, rowID)}
@@ -73,4 +101,5 @@ class NestedDropdown extends Component {
         );
     }
 }
+
 export default NestedDropdown;

@@ -24,11 +24,11 @@ class Dropdown extends Component {
         return (
             <TouchableHighlight underlayColor={evenRow ? color('#DFF1F6').darken(0.2) : color('#87d8f6').darken(0.1)}>
                 <View style={[styles.dropdownRow, { backgroundColor: evenRow ? '#DFF1F6' : 'white' }]}>
-                    <Text style={[styles.dropdownRowText, highlighted && { color: '#474c52' }]}>
+                    <Text style={[styles.dropdownRowText, highlighted && { color: '#8cc9e5' }]}>
                         {rowData}
                     </Text>
                     {this.state.value === rowData ? (
-                        <Icon name={'check'} type={'feather'} color={'#474c52'}/>
+                        <Icon name={'check'} type={'feather'} color={'#8cc9e5'}/>
                     ) : (
                         null
                     )}
@@ -54,8 +54,8 @@ class Dropdown extends Component {
             <ModalDropdown
                 ref={ ModalDrop => this.modalDropdown = ModalDrop }
                 onPress={() => this.modalDropdown.show()}
-                style={ styles.dropdownButton }
-                textStyle={ styles.dropdownText }
+                style={styles.dropdownButton}
+                textStyle={styles.dropdownText}
                 dropdownStyle={ styles.dropStyleClass }
                 defaultValue={this.state.value}
                 disabled={this.props.disabled}
@@ -69,7 +69,7 @@ class Dropdown extends Component {
                     <Text style={styles.dropdownText}>
                         {this.state.value}
                     </Text>
-                    <Icon name={'expand-more'} color={'#C4C4C4'} style={styles.icon}/>
+                    <Icon name={'expand-more'} color={'#adadad'} style={styles.icon}/>
                 </View>
             </ModalDropdown>
         );

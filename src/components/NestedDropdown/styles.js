@@ -17,13 +17,12 @@ const styles = EStyleSheet.create({
 
     dropdownButton: {
         width: 180,
-        borderWidth: '$containerBorderWidth',
+        borderWidth: 2,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: '$dropdownRadius',
         borderColor: '$draftBlue',
-        backgroundColor: '$primaryWhite',
     },
 
     buttonContent: {
@@ -38,7 +37,7 @@ const styles = EStyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 6,
         fontSize: 16,
-        color: '$gray1',
+        color: '#C4C4C4',
         textAlign: 'center',
         textAlignVertical: 'center',
     },
@@ -59,7 +58,7 @@ const styles = EStyleSheet.create({
     dropdownRowText: {
         marginHorizontal: 4,
         fontSize: 16,
-        color: '$gray1',
+        color: '#C4C4C4',
         textAlignVertical: 'center',
     },
 
@@ -67,17 +66,13 @@ const styles = EStyleSheet.create({
         width: 180,
         height: 300,
         borderColor: '$draftBlue',
-        borderWidth: '$containerBorderWidth',
+        borderWidth: 2,
         borderRadius: 3,
     },
 
     icon: {
         alignSelf: 'flex-end',
     },
-
-    disabled: {
-        backgroundColor: '#eee'
-    }
 });
 
 export default styles;
