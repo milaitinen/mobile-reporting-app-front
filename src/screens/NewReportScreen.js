@@ -382,7 +382,7 @@ export class NewReportScreen extends React.Component {
                             <Dropdown
                                 disabled={!isEditable}
                                 defaultValue={'Select user'}
-                                options={field.defaultValue.split(',')}
+                                options={JSON.parse(field.defaultValue)}
                             />
                         </View>
                     );

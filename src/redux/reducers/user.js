@@ -2,8 +2,8 @@
 import { INSERT_USERNAME, INSERT_PASSWORD, INSERT_SERVERURL, INSERT_TOKEN } from '../actions/user';
 
 const initialState = {
-    username: 'Maisa',      //null, Maisa inserted for development
-    password: 'password',   //null, password inserted for development
+    username: null,
+    password: null,
     serverUrl: null,
     token: null
 };
