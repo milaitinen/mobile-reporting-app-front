@@ -25,8 +25,9 @@ export class NewReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading      : true,
-            number         : '',
+            isLoading   : true,
+            number      : '',
+            isSaved     : false
         };
     }
 
@@ -35,13 +36,17 @@ export class NewReportScreen extends React.Component {
         BackHandler.addEventListener('hardwareBackPress', this.handleBack);
     }
 
+    componentDidMount() {
+        this.getFieldsByTemplateID(this.props.templateID);
+    }
+
     componentWillUnmount() {
         // Removes the BackHandler EventListener when unmounting
         BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
     }
 
     handleBack = () => {
-        if (this.props.isUnsaved) { // TODO: In the future the alert should only be displayed if the report is unsaved.
+        if (this.state.isSaved) { // TODO: In the future the alert should only be displayed if the report is not saved.
             return true; // This will prevent the regular handling of the back button
         }
         Alert.alert(
@@ -60,14 +65,9 @@ export class NewReportScreen extends React.Component {
         return true; // TODO: Currently always displays the alert, only pressing Yes allows navigating back.
     };
 
-    componentDidMount() {
-        this.getFieldsByTemplateID(this.props.templateID);
-    }
-
     getFieldsByTemplateID = (templateID) => {
         fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
             .then(responseJson => {
-                console.log('responseJson', responseJson);
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .catch(error => console.error(error) )

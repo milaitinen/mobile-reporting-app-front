@@ -16,10 +16,11 @@ class Layout extends Component{
             minHeight  : Dimensions.get('window').width < 350 ? 50 : 60,
             itemsCount : 20,
             updated    : false,
-            expanded   : false,                     // Checks whether the reports of the template are shown or not.
-            animation  : new Animated.Value(Dimensions.get('window').width < 350 ? 50 : 60),    /* Initializes the animation state as 60 (same height as the ListItem
-                                                    component which includes the title of the Layout etc.)
-                                                    This is the minimum height when the layout component isn't expanded. */
+            expanded   : false,  // Checks whether the reports of the template are shown or not.
+            animation  : new Animated.Value(Dimensions.get('window').width < 350 ? 50 : 60),
+            /* Initializes the animation state as 60 (same height as the ListItem
+            component which includes the title of the Layout etc.)
+            This is the minimum height when the layout component isn't expanded. */
         };
     }
 
@@ -32,7 +33,7 @@ class Layout extends Component{
 
 
     toggleExpanded = () => {
-        this.setState({ expanded : !this.state.expanded });
+        this.setState({ expanded: !this.state.expanded });
     };
 
     // Toggle function for closing and expanding the layout component.
@@ -71,7 +72,7 @@ class Layout extends Component{
         this.props.moveToTop();
     };
 
-    // Determine wheter the template screen is scrollable or not.
+    // Determine whether the template screen is scrollable or not.
     setTemplateScreenScrollEnabled = (bool) => {
         this.props.setTemplateScreenScrollEnabled(bool);
     };
@@ -89,9 +90,7 @@ class Layout extends Component{
     _setMaxHeight = (event) => {
         const height = Dimensions.get('window').height;
 
-        this.setState({
-            maxHeight   : Platform.OS === 'ios' ? height - 142 : height - 165
-        });
+        this.setState({ maxHeight: (Platform.OS === 'ios') ? height - 142 : height - 165 });
     };
 
     // Shows more reports.
@@ -103,7 +102,6 @@ class Layout extends Component{
             }
         );
     };
-
 
 
     render(){

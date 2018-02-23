@@ -11,18 +11,24 @@ configure({ adapter: new Adapter() });
 
 it('renders correctly', () => {
     const tree = renderer.create(
-        <TemplateScreen />
+        <TemplateScreen templates={{}}/>
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
-
 describe('<TemplateScreen />', () => {
     describe('isLoading', () => {
-        it('should render a <ActivityIndicator /> if true', () => {
-            const templateScreen = shallow(<TemplateScreen />);
+
+        const templateScreen = shallow(<TemplateScreen templates={{}}/>);
+
+        it('should render an <ActivityIndicator /> if true', () => {
             templateScreen.setState({ isLoading: true });
             expect(templateScreen.find(ActivityIndicator).length).toBe(1);
+        });
+
+        it('should not render an <ActivityIndicator /> if false', () => {
+            templateScreen.setState({ isLoading: false });
+            expect(templateScreen.find(ActivityIndicator).length).toBe(0);
         });
     });
 });

@@ -96,19 +96,12 @@ export class TemplateScreen extends Component {
 
     // Handler function for refreshing the data and refetching.
     handleRefresh = () => {
-        this.setState(
-            { refreshing: true, },
-            () => { this.getTemplatesAndReports(); }
-        );
+        this.setState({ refreshing: true, }, () => { this.getTemplatesAndReports(); });
     };
 
     // Determines whether this screen is scrollable or not.
     setScrollEnabled = (bool) => {
-        this.setState(
-            {
-                scrollEnabled : bool
-            }
-        );
+        this.setState({ scrollEnabled : bool })
     };
 
     /*
@@ -116,11 +109,7 @@ export class TemplateScreen extends Component {
      Without this function it wouldn't be possible to autoscroll to the last templates.
      */
     setRenderFooter = (bool) => {
-        this.setState(
-            {
-                renderFooter : bool
-            }
-        );
+        this.setState({ renderFooter: bool });
     };
 
     /*

@@ -7,14 +7,14 @@ import 'isomorphic-fetch';
 import { shallow } from 'enzyme';
 import { ActivityIndicator } from 'react-native';
 
-import { NewReportScreen } from '../src/screens/NewReportScreen';
+import { PreviewScreen } from '../src/screens/PreviewScreen';
 import { url } from '../src/screens/urlsetting';
 
 configure({ adapter: new Adapter() });
 
 it('renders correctly', () => {
     const tree = renderer.create(
-        <NewReportScreen />
+        <PreviewScreen />
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });
@@ -27,30 +27,19 @@ it('fetch finds data from the server', () => {
     expect(data).not.toBe(null);
 });
 
-describe('<NewReportScreen />', () => {
-
-    const wrapper = renderer.create(<NewReportScreen/>);   // render React components to pure JavaScript objects
-    const inst = wrapper.getInstance();
-
-    describe('handleBack()', () => {
-        it('should return true if this.state.isSaved = true', () => {
-            inst.setState=({ isSaved: true });
-            expect(inst.handleBack()).toBe(true);
-        });
-    });
-
+describe('<PreviewScreen />', () => {
     describe('isLoading', () => {
 
-        const newReportScreen = shallow(<NewReportScreen />);
+        const previewScreen = shallow(<PreviewScreen />);
 
         it('should render an <ActivityIndicator /> if true', () => {
-            newReportScreen.setState({ isLoading: true });
-            expect(newReportScreen.find(ActivityIndicator).length).toBe(1);
+            previewScreen.setState({ isLoading: true });
+            expect(previewScreen.find(ActivityIndicator).length).toBe(1);
         });
 
         it('should not render an <ActivityIndicator /> if false', () => {
-            newReportScreen.setState({ isLoading: false, dataFieldsByID: [] });
-            expect(newReportScreen.find(ActivityIndicator).length).toBe(0);
+            previewScreen.setState({ isLoading: false, dataFieldsByID: [] });
+            expect(previewScreen.find(ActivityIndicator).length).toBe(0);
         });
     });
 });
