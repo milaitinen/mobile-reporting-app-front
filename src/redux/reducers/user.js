@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { INSERT_USERNAME, INSERT_PASSWORD, INSERT_SERVERURL, INSERT_TOKEN } from '../actions/user';
+import { INSERT_USERNAME, INSERT_PASSWORD,INSERT_TOKEN } from '../actions/user';
 
 const initialState = {
     username: null,
@@ -13,17 +13,12 @@ const userReducer = (state = initialState, action) => {
         case INSERT_USERNAME:
             return {
                 ...state,
-                username: action.username || null
+                username: action.username
             };
         case INSERT_PASSWORD:
             return {
                 ...state,
-                password: action.password || null
-            };
-        case INSERT_SERVERURL:
-            return {
-                ...state,
-                serverUrl: action.serverUrl || null
+                password: action.password
             };
         case INSERT_TOKEN:
             return {

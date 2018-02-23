@@ -19,7 +19,7 @@ const StatusBadge = ({ dateAccepted }) =>{
     }
      */
 
-    if (dateAccepted != null){
+    if (dateAccepted !== null){
         return (
             <View style={styles.BadgeViewContainer}>
                 <Badge textStyle = {styles.badgeTextStyle}

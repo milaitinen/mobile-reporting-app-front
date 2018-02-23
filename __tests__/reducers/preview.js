@@ -1,7 +1,25 @@
 import * as types from '../../src/redux/actions/preview';
 import previewReducer from '../../src/redux/reducers/preview';
 
+const initialState = {
+    templateID: null ,
+    isEditable: false,
+    title: 'Some title',
+    number: null,
+};
+
 describe('preview reducer', () => {
+    it('should return the initial state', () => {
+        expect(previewReducer(undefined, {})).toEqual(
+            {
+                templateID: null ,
+                isEditable: false,
+                title: '',
+                number: null,
+            }
+        );
+    });
+
     it('should handle PREVIEW', () => {
         expect(
             previewReducer(undefined, {
@@ -21,7 +39,7 @@ describe('preview reducer', () => {
 
     it('should handle INSERT_TITLE', () => {
         expect(
-            previewReducer(undefined, {
+            previewReducer(initialState, {
                 type: types.INSERT_TITLE,
                 title: 'Walmart Supplier Audit'
             })

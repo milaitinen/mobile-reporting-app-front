@@ -10,6 +10,15 @@ const exampleState = {
         dateCreated: '2018-04-01',
         dateAccepted: null,
         answers: []
+    }],
+    3 : [{
+        templateID: 3,
+        userID: 1,
+        orderNo: 12,
+        title: 'Example2',
+        dateCreated: '2018-05-16',
+        dateAccepted: null,
+        answers: []
     }]
 };
 
@@ -32,6 +41,15 @@ describe('reports reducer', () => {
                             dateCreated: '2018-04-01',
                             dateAccepted: null,
                             answers: []
+                        }],
+                        [{
+                            templateID: 3,
+                            userID: 1,
+                            orderNo: 12,
+                            title: 'Example2',
+                            dateCreated: '2018-05-16',
+                            dateAccepted: null,
+                            answers: []
                         }]
                     ]
                 }
@@ -39,12 +57,16 @@ describe('reports reducer', () => {
         ).toEqual(exampleState);
     });
 
+    it('should handle STORE_REPORTS_BY_TEMPLATE_ID', () => {
+        expect(reportsReducer(undefined, { type: types.STORE_REPORTS_BY_TEMPLATE_ID, reportsByTempID: [] })).toEqual({});
+    });
+
     it('should handle EMPTY_REPORTS', () => {
-        expect(reportsReducer(exampleState,
-            {
-                type: types.EMPTY_REPORTS
-            }
-        )).toEqual({});
+        expect(reportsReducer(exampleState, { type: types.EMPTY_REPORTS })).toEqual({});
+    });
+
+    it('should return current state when non-relevant action is called', () => {
+        expect(reportsReducer(exampleState, { type: 'TEST_ACTION' })).toEqual(exampleState);
     });
 
 });
