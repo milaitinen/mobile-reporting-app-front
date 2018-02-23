@@ -21,6 +21,8 @@
   },
 
   "createNew": {
+    "send": "Lähetä",
+    "save": "Tallenna",
     "createNew": "Uusi raportti",
     "enterNew": "Raportin nimi",
     "reportAdded": "Raportti lähetetty"

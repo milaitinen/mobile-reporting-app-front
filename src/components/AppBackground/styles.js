@@ -10,8 +10,15 @@ export default EStyleSheet.create({
         paddingRight: 15,
         paddingBottom: 0,
         flex: 1,
-      //  width: null,
-      //  height: null,
+        backgroundColor: 'transparent',
+        justifyContent: 'center',
+    },
+
+    gradientNoPadding: {
+        paddingLeft: 0,
+        paddingRight: 0,
+        paddingBottom: 0,
+        flex: 1,
         backgroundColor: 'transparent',
         justifyContent: 'center',
     },

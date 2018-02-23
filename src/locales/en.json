@@ -21,6 +21,8 @@
   },
 
   "createNew": {
+    "send": "Send",
+    "save": "Save",
     "createNew": "Create report",
     "enterNew": "Enter report name",
     "reportAdded": "Report sent"

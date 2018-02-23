@@ -21,6 +21,8 @@
   },
 
   "createNew": {
+    "send": "Enviar",
+    "save": "Guardar",
     "createNew": "Crear un nuevo reportaje",
     "enterNew": "Entrar el nombre del reportaje",
     "reportAdded": "Reportaje despachado"
