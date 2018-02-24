@@ -134,13 +134,7 @@ exports[`renders correctly 1`] = `
     />
   </View>
   <View
-    style={
-      Object {
-        "flex": 0.5,
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
-    }
+    style={undefined}
   >
     <View
       accessibilityComponentType={undefined}

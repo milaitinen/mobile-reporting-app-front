@@ -1,4 +1,5 @@
 import SignInButton from './SignInButton';
-import styles from './styles';
+import Button from './Button';
+import styles from './signInstyles';
 
-export { SignInButton, styles };
+export { Button, SignInButton, styles };

@@ -7,19 +7,19 @@ import { strings } from '../../locales/i18n';
 const StatusBadge = ({ dateAccepted }) =>{
     /*
     if(JOKU DRAFTEHTO) {
-       return (
-        <View style={styles.BadgeViewContainer}>
-             <Badge textStyle = {layoutStyles.badgeTextStyle}
-                containerStyle = {[layoutStyles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
-                <Text style={layoutStyles.badgeTextStyle}>{strings('templates.draft')}</Text>
-                <Icon name={'edit-2'} type={'feather'} iconStyle={layoutStyles.badgeIconStyle} />
-            </Badge>
-        </View>
-    );
+    return (
+            <View style={styles.BadgeViewContainer}>
+                <Badge textStyle = {styles.badgeTextStyle}
+                    containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
+                    <Text style={styles.badgeTextStyle}>{strings('templates.draft')}</Text>
+                    <Icon name={'edit-2'} type={'feather'} iconStyle={styles.badgeIconStyle} />
+                </Badge>
+            </View>
+        );
     }
      */
 
-    if (dateAccepted != null){
+    if (dateAccepted !== null){
         return (
             <View style={styles.BadgeViewContainer}>
                 <Badge textStyle = {styles.badgeTextStyle}

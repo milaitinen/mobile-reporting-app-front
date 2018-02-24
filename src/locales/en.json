@@ -15,12 +15,15 @@
     "reports": "Reports",
     "approved": "Approved",
     "sent": "Sent",
-    "draft:": "Draft",
+    "draft": "Draft",
     "showMore": "Show more",
-    "endOfReports": "No more reports"
+    "endOfReports": "No more reports",
+    "preview": "Preview"
   },
 
   "createNew": {
+    "send": "Send",
+    "save": "Save",
     "createNew": "Create report",
     "enterNew": "Enter report name",
     "reportAdded": "Report sent"

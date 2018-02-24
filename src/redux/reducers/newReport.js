@@ -19,7 +19,7 @@ const newReportReducer = (state = initialState, action) => {
         case INSERT_TITLE:
             return {
                 ...state,
-                title: action.title || ''
+                title: action.title
             };
         default:
             return state;

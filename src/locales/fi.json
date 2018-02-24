@@ -15,12 +15,15 @@
     "reports": "Raporttia",
     "approved": "Hyväksytty",
     "sent": "Käsittelyssä",
-    "draft:": "Luonnos",
+    "draft": "Luonnos",
     "showMore": "Näytä lisää",
-    "endOfReports": "Ei enempää raportteja"
+    "endOfReports": "Ei enempää raportteja",
+    "preview": "Esikatselu"
   },
 
   "createNew": {
+    "send": "Lähetä",
+    "save": "Tallenna",
     "createNew": "Uusi raportti",
     "enterNew": "Raportin nimi",
     "reportAdded": "Raportti lähetetty"
