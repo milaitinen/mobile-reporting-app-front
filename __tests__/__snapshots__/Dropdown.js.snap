@@ -1,16 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`Dropdown renders correctly 1`] = `
 <View
   animated={true}
   defaultIndex={-1}
-  defaultValue="some nice value"
+  defaultValue="some value"
   disabled={false}
   dropdownStyle={undefined}
   keyboardShouldPersistTaps="never"
   onPress={[Function]}
   onSelect={[Function]}
-  options={Array []}
+  options={
+    Array [
+      "test1",
+      "test2",
+    ]
+  }
   renderButtonText={[Function]}
   renderRow={[Function]}
   renderSeparator={[Function]}
@@ -52,7 +57,7 @@ exports[`renders correctly 1`] = `
         ellipsizeMode="tail"
         style={undefined}
       >
-        some nice value
+        some value
       </Text>
       <View
         onPress={undefined}

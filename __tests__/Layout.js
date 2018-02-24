@@ -10,15 +10,30 @@ configure({ adapter: new Adapter() });
 
 it('renders correctly', () => {
     const tree = renderer.create(
-        <Layout data={[]} />
+        <Layout />
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });
+
 
 describe('Layout', () => {
 
     const wrapper = renderer.create(<Layout data={[]} />);   // render React components to pure JavaScript objects
     const inst = wrapper.getInstance();                      // Return the instance corresponding to the root element, if available.
+    /*inst.setTemplateScreenRenderFooter = jest.fn();
+    inst.setTemplateScreenScrollEnabled = jest.fn();
+    inst.moveToTop = jest.fn();
+
+    describe('toggle()', () => {
+        it('should set state "expanded" to true when called once', () => {
+            inst.toggle();
+            expect(inst.state.expanded).toBe(true);
+        });
+        it('should set state "expanded" to false when called twice', () => {
+            inst.toggle();
+            expect(inst.state.expanded).toBe(false);
+        });
+    });*/
 
     describe('toggleExpanded()', () => {
         it('should set state "expanded" to true when called once', () => {
@@ -43,6 +58,7 @@ describe('Layout', () => {
             expect(inst.state.updated).toBe(true);
         });
     });
+
 });
 
 

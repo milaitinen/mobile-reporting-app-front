@@ -15,9 +15,11 @@ class Dropdown extends Component {
         };
     }
 
+    /* commented it out at least temporarily to easy testing
     renderButtonText = (rowData) => {
         return rowData;
     };
+    */
 
     renderRow = (rowData, rowID, highlighted) => {
         const evenRow = rowID % 2;
@@ -61,7 +63,7 @@ class Dropdown extends Component {
                 disabled={this.props.disabled}
                 options={this.props.options}
                 onSelect={(idx, value) => this.onSelect(idx, value)}
-                renderButtonText={(rowData) => this.renderButtonText(rowData)}
+                renderButtonText={(rowData) => rowData}
                 renderRow={this.renderRow.bind(this)}
                 renderSeparator={(sectionID, rowID) => this.renderSeparator(sectionID, rowID)}
             >
