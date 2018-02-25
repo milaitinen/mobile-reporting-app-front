@@ -139,7 +139,7 @@ class Layout extends Component{
                                     key={item.title}
                                     containerStyle={ styles.reportContainer }
                                     titleStyle = { styles.reportTitle }
-                                    title={`${item.orderNo}\t${item.title}`}
+                                    title={`${item.orderNo} ${item.title}`}
                                     subtitle={item.dateCreated}
                                     hideChevron = {true}
                                     badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
