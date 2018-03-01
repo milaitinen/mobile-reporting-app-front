@@ -18,7 +18,6 @@ export class LoginScreen extends React.Component {
     {
         super(props);
 
-
         if (this.props.token) { // this.props.token != null
             //TODO: verify token
             /*
@@ -52,10 +51,9 @@ export class LoginScreen extends React.Component {
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
                     this.resetNavigationTo('drawerStack');
+                    this.props.dispatch(insertPassword(null));
                 }
             });
-
-        this.props.dispatch(insertPassword(null));
     };
 
     render() {

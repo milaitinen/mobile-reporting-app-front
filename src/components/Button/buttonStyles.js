@@ -4,11 +4,11 @@ const styles = EStyleSheet.create({
     view: {
         backgroundColor: 'transparent',
         borderRadius: '$buttonBorderRadius',
-        flex: 1,
-        height: 70,
-        flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignContent: 'center',
+        height: 70,
+        marginHorizontal: 10,
+        marginBottom: 2,
     },
 
     sendButtonContainer: {
@@ -35,14 +35,14 @@ const styles = EStyleSheet.create({
     },
 
     saveButtonContainer: {
-        backgroundColor: '#87cce5',
+        backgroundColor: '$draftBlue',
         borderRadius: '$buttonBorderRadius',
         borderWidth: 1,
         alignContent: 'center',
         justifyContent: 'center',
         paddingLeft: 15,
         paddingRight: 15,
-        borderColor: '#87cce5',
+        borderColor: '$draftBlue',
         '@media (max-width: 350)': {
             borderRadius: '$buttonBorderRadiusSmall',
             height: 30,
@@ -57,7 +57,14 @@ const styles = EStyleSheet.create({
         },
     },
 
+    buttonContent: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+    },
+
     text: {
+        paddingLeft: 10,
         color: '#474c52',
         fontFamily: '$primaryFont',
         textAlign: 'center',

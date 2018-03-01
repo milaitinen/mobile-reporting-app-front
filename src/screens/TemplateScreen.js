@@ -66,6 +66,14 @@ export class TemplateScreen extends Component {
         }
     }
 
+    isEmpty = (obj) => {
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    };
+
     /*
      Fetches the data from the server in two parts.
      1) Fetches the templates from the server
@@ -107,19 +115,12 @@ export class TemplateScreen extends Component {
 
     // Handler function for refreshing the data and refetching.
     handleRefresh = () => {
-        this.setState(
-            { refreshing: true, },
-            () => { this.getTemplatesAndReports(); }
-        );
+        this.setState({ refreshing: true, }, () => { this.getTemplatesAndReports(); });
     };
 
     // Determines whether this screen is scrollable or not.
     setScrollEnabled = (bool) => {
-        this.setState(
-            {
-                scrollEnabled : bool
-            }
-        );
+        this.setState({ scrollEnabled : bool })
     };
 
     /*
@@ -127,11 +128,7 @@ export class TemplateScreen extends Component {
      Without this function it wouldn't be possible to autoscroll to the last templates.
      */
     setRenderFooter = (bool) => {
-        this.setState(
-            {
-                renderFooter : bool
-            }
-        );
+        this.setState({ renderFooter: bool });
     };
 
     /*

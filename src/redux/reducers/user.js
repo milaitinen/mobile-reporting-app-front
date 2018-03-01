@@ -12,12 +12,12 @@ const userReducer = (state = initialState, action) => {
         case INSERT_USERNAME:
             return {
                 ...state,
-                username: action.username || null
+                username: action.username
             };
         case INSERT_PASSWORD:
             return {
                 ...state,
-                password: action.password || null
+                password: action.password
             };
         case INSERT_TOKEN:
             return {

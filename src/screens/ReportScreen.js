@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, BackHandler } from 'react-native';
+import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm from 'react-native-simple-radio-button';
@@ -50,7 +50,6 @@ export class ReportScreen extends React.Component {
     };
 
     // delete draft from asyncstorage
-    // Probably not necessary here
     deleteDraft = () => {
         const { templateID } = this.props.navigation.state.params;
         const { username } = this.props;
@@ -138,8 +137,9 @@ export class ReportScreen extends React.Component {
 
         const { isEditable } = this.state;
         const { answers } = this.props;
-        const deleteReportButton = (this.props.navigation.state.params.reportID !== 0) ?
+        const deleteReportButton = (this.props.navigation.state.params.reportID > 0) ?
             null : <Button title={'Delete'} disabled={false} onPress={() => this.deleteDraft()} />;
+
         const renderedFields = (!this.state.dataFieldsByID) ? null : this.state.dataFieldsByID.map((field, index) => {
 
             switch (field.fieldID) {

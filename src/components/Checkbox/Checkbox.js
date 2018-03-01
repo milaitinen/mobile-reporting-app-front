@@ -1,5 +1,6 @@
 import { CheckBox } from 'react-native-elements';
 import React, { Component } from 'react';
+import styles from './checkboxStyles';
 
 class Checkbox extends Component {
     constructor(props) {

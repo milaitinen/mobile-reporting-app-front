@@ -15,7 +15,12 @@ set DIRNAME=%~dp0
 if "%DIRNAME%" == "" set DIRNAME=.
 set APP_BASE_NAME=%~n0
 set APP_HOME=%DIRNAME%
+<<<<<<< HEAD
 
+=======
+set JAVA_HOME=C:\Program Files\Java\jdk1.8.0_151
+set ANDROID_HOME=C:\Users\liisi\AppData\Local\Android\Sdk
+>>>>>>> dev
 
 @rem Find java.exe
 if defined JAVA_HOME goto findJavaFromJavaHome

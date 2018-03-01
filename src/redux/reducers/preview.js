@@ -13,12 +13,12 @@ const previewReducer = (state = initialState, action) => {
         case PREVIEW:
             return {
                 ...state,
-                templateID: action.templateID || null
+                templateID: action.templateID
             };
         case INSERT_TITLE:
             return {
                 ...state,
-                title: action.title || ''
+                title: action.title
             };
         default:
             return state;

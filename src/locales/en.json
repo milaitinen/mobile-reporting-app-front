@@ -17,7 +17,8 @@
     "sent": "Sent",
     "draft": "Draft",
     "showMore": "Show more",
-    "endOfReports": "No more reports"
+    "endOfReports": "No more reports",
+    "preview": "Preview"
   },
 
   "createNew": {
