@@ -48,26 +48,30 @@ export class NewReportScreen extends React.Component {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
     }
 
-    //TODO currently this method does not get called (only the code in AppNavigation)
+    // This only handles android hardware back button presses. Handler for the on-screen back button
+    // is in AppNavigation.js
     handleBack = () => {
-        if (this.state.isUnsaved) { // TODO: In the future the alert should only be displayed if the report is unsaved.
+        if (this.state.isUnsaved) {
+            // TODO: apply same behaviour as with on-screen back button press
+            alert(
+                'You have unsaved changes',
+                'Are you sure you want to leave without saving?',
+                [
+                    { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                    { text: 'No', onPress: () => console.log('No Pressed') },
+                    { text: 'Yes', onPress: () => {
+                        console.log('Yes Pressed');
+                        this.props.dispatch(emptyFields());
+                        this.props.navigation.dispatch(NavigationActions.back()); }
+                    },
+                ],
+                { cancelable: false }
+            );
             return true; // This will prevent the regular handling of the back button
         }
-        Alert.alert(
-            'You have unsaved changes',
-            'Are you sure you want to leave without saving?',
-            [
-                { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                { text: 'No', onPress: () => console.log('No Pressed') },
-                { text: 'Yes', onPress: () => {
-                    console.log('Yes Pressed');
-                    this.props.dispatch(emptyFields());
-                    this.props.navigation.dispatch(NavigationActions.back()); }
-                },
-            ],
-            { cancelable: false }
-        );
-        return true; // TODO: Currently always displays the alert, only pressing Yes allows navigating back.
+        // A false return value allows the previous back handler(s) to be called after this
+        // (in this case the normal behaviour)
+        return false;
     };
 
     // set the value of yes/no field(s) to '0' (No)
