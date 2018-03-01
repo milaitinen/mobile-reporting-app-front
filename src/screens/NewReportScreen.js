@@ -100,7 +100,7 @@ export class NewReportScreen extends React.Component {
             title: this.props.title || 'Draft',
             dateCreated: null,
             dateAccepted: null,
-            id: 0
+            id: -1
         };
 
         //TODO problems when you create several drafts from the same template

@@ -45,14 +45,10 @@ export class LoginScreen extends React.Component {
 
     logIn = () => {
         login(this.props.username, this.props.password)
-            .then(response => {
-                console.log('this.props.password', this.props.password)
-                console.log('this.props.username', this.props.username)
-                console.log('response', response)
-                if (response === undefined) {
+            .then(token => {
+                if (token === undefined) {
                     alert('Invalid username or password');
                 } else {
-                    const token = response;
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
                     this.resetNavigationTo('drawerStack');
