@@ -12,6 +12,8 @@ import Sidebar from '../navigation/Sidebar';
 import { strings } from '../locales/i18n';
 import { Alert } from 'react-native';
 
+export const LOGGED_OUT_ROUTE_NAME = 'loginScreen';
+export const LOGGED_IN_ROUTE_NAME = 'drawerStack';
 
 // The stack that is contained within the drawer stack
 const TemplateStack = StackNavigator({
@@ -107,6 +109,7 @@ const DrawerStack = DrawerNavigator({
     drawerToggleRoute: 'DrawerToggle',
 });
 
+// TODO: remove?
 const LoginStack = StackNavigator({
     loginScreen: {
         screen: LoginScreen
@@ -122,13 +125,13 @@ const LoginStack = StackNavigator({
 
 // Manifest of possible screens
 const MainScreenNavigator = StackNavigator({
-    loginStack: { screen: LoginStack },
+    loginScreen: { screen: LoginScreen },
     drawerStack: { screen: DrawerStack },
 }, {
     // Default config for all screens
     headerMode: 'none',
     title: 'Main',
-    initialRouteName: 'loginStack',
+    initialRouteName: 'loginScreen',
 });
 
 export default MainScreenNavigator;

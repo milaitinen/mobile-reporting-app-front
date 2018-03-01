@@ -10,6 +10,7 @@ import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
 import { login } from './api';
 import { NavigationActions } from 'react-navigation';
+import { LOGGED_IN_ROUTE_NAME } from '../navigation/AppNavigation';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
@@ -25,7 +26,7 @@ export class LoginScreen extends React.Component {
             if (someCondition(response)) {
             }
             */
-            this.props.navigation.navigate('drawerStack');
+            this.props.navigation.navigate(LOGGED_IN_ROUTE_NAME);
         }
     }
 
@@ -50,7 +51,7 @@ export class LoginScreen extends React.Component {
                 } else {
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
-                    this.resetNavigationTo('drawerStack');
+                    this.resetNavigationTo(LOGGED_IN_ROUTE_NAME);
                     this.props.dispatch(insertPassword(null));
                 }
             });
