@@ -71,7 +71,7 @@ const TemplateStack = StackNavigator({
         screen: ReportScreen,
         navigationOptions: () => ({
             flex: 0.3,
-            headerTitle: 'Report', //TODO: translate
+            //headerTitle: strings('templates.report'), // this is overridden with the actual report title
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',
@@ -118,7 +118,7 @@ const MainScreenNavigator = StackNavigator({
     // Default config for all screens
     headerMode: 'none',
     title: 'Main',
-    initialRouteName: 'loginScreen',
+    initialRouteName: LOGGED_IN_ROUTE_NAME,
 });
 
 export default MainScreenNavigator;
