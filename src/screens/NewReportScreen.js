@@ -89,6 +89,19 @@ export class NewReportScreen extends React.Component {
             ]
         };
 
+        if (!this.props.isConnected){
+            Alert.alert(
+                strings('createNew.noConnection'),
+                [
+                    { text: strings('createNew.cancel'), onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                    { text: strings('createNew.no'), onPress: () => console.log('No Pressed') },
+                    { text: strings('createNew.yes'), onPress: () => console.log('Yes Pressed') },
+                    //TODO: actually save changes when no connection :D
+                ],
+                { cancellable: false }
+            );
+        }
+
         createNewReport(this.props.username, report, this.props.token).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
@@ -377,6 +390,8 @@ const mapStateToProps = (state) => {
     const title = state.newReport.title;
     const number = state.newReport.number;
     const token = state.user.token;
+    const isConnected = state.connection.isConnected;
+    
     return {
         username,
         isEditable,

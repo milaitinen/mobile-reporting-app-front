@@ -23,8 +23,12 @@
   "createNew": {
     "createNew": "Crear un nuevo reportaje",
     "enterNew": "Entrar el nombre del reportaje",
-    "reportAdded": "Reportaje despachado"
-  },
+    "reportAdded": "Reportaje despachado",
+    "noConnection": "Spanish spanish, no hablo español",
+    "yes": "Sí",
+    "no": "Bien",
+    "cancel": "Cancelar"
+},
 
   "navigation": {
     "signOut": "Cerrar sesión"
