@@ -109,19 +109,6 @@ const DrawerStack = DrawerNavigator({
     drawerToggleRoute: 'DrawerToggle',
 });
 
-// TODO: remove?
-const LoginStack = StackNavigator({
-    loginScreen: {
-        screen: LoginScreen
-    },
-
-}, {
-    headerMode: 'screen',
-    navigationOptions: {
-        headerStyle: { backgroundColor: '#f0f8ff' },
-        header: null
-    }
-});
 
 // Manifest of possible screens
 const MainScreenNavigator = StackNavigator({
