@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Keyboard, NetInfo } from 'react-native';
+import { Text, Keyboard, NetInfo, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
@@ -88,7 +88,13 @@ export class LoginScreen extends React.Component {
 
     render() {
         return <AppBackground>
-            <OfflineNotice isConnected={this.props.isConnected} />
+            {/* Leaving this here in case it's of some use with iOS.
+            <OfflineNotice isConnected={this.props.isConnected} /> */}
+
+            <StatusBar
+                backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424'}
+                barStyle="light-content" />
+
             <Text style={loginStyles.title}>
                 {strings('login.title')}
             </Text>

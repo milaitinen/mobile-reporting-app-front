@@ -5,6 +5,7 @@ import {
     ActivityIndicator,
     ScrollView,
     NetInfo,
+    StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -72,15 +73,13 @@ export class TemplateScreen extends Component {
     }
 
     handleConnectionChange = isConnected => {
-        this.props.dispatch(toggleConnection({ isConnected: isConnected }));
-        console.log('called toggle with connection status ', isConnected);
-
+        this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
     };
 
     /*
-     Fetches the data from the server in two parts.
-     1) Fetches the templates from the server
-     2) Fetches the reports under their specific template by making a separate fetch request using
+    Fetches the data from the server in two parts.
+    1) Fetches the templates from the server
+    2) Fetches the reports under their specific template by making a separate fetch request using
         Promise.all. After all the promises have been fetched, the function updates the state
         of reportsByTemplates, and sets isLoading and refreshing to false.
     */
@@ -157,6 +156,13 @@ export class TemplateScreen extends Component {
         if (this.state.isLoading) {
             return (
                 <AppBackground>
+                    {/* Leaving this here in case it's of some use with iOS.
+                    <OfflineNotice isConnected={this.props.isConnected} /> */}
+
+                    <StatusBar
+                        backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424'}
+                        barStyle="light-content" />
+
                     <ActivityIndicator
                         animating={this.state.animating}
                         style={[templateScreenStyles.activityIndicator, { height: 80 }]}
@@ -171,6 +177,13 @@ export class TemplateScreen extends Component {
         const { reportsByTempID, templates } = this.props;
 
         return <AppBackground>
+            {/* Leaving this here in case it's of some use with iOS.
+            <OfflineNotice isConnected={this.props.isConnected} /> */}
+
+            <StatusBar
+                backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424'}
+                barStyle="light-content" />
+
             <View style={templateScreenStyles.viewContainer}>
                 <OfflineNotice isConnected={this.props.isConnected} />
 
