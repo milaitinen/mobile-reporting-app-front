@@ -61,6 +61,7 @@ const TemplateStack = StackNavigator({
                         { cancelable: false }
                     );
                 }} />,
+            drawerLockMode: 'locked-closed',
         })
     },
     Preview: {
@@ -71,6 +72,7 @@ const TemplateStack = StackNavigator({
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',
+            drawerLockMode: 'locked-closed',
         })
     },
 
