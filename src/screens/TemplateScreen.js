@@ -173,6 +173,7 @@ export class TemplateScreen extends Component {
         return <AppBackground>
             <View style={templateScreenStyles.viewContainer}>
                 <OfflineNotice isConnected={this.props.isConnected} />
+
                 {/* At the moment this doesn't do anything. */}
                 <ReportSearchBar />
                 <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>

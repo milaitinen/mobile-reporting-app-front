@@ -11,6 +11,7 @@ import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from
 import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
 import { NavigationActions } from 'react-navigation';
 import { toggleConnection } from '../redux/actions/connection';
+import { setInitialConnection } from '../redux/actions/connection';
 import { OfflineNotice } from '../components/OfflineNotice';
 
 // "export" necessary in order to test component without Redux store
@@ -39,10 +40,15 @@ export class LoginScreen extends React.Component {
     }
 
     componentDidMount() {
-        NetInfo.isConnected.fetch().then(isConnected => {
-        console.log('First, is ' + isConnected);});
-        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
+        /* First sets the initial connection state, and then adds eventlistener to listen to connection changes.
+            Unused 'isConnected' was added to ensure that setInitialConnection runs before toggling anything*/
+        NetInfo.isConnected.fetch()
+            .then(isConnected => {
+                this.props.dispatch(setInitialConnection({ connectionStatus: isConnected }));
+                console.log('First, is ' + isConnected);})
+            .then(isConnected => NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange));
     }
+
     componentWillUnmount() {
         NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
     }
