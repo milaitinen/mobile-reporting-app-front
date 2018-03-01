@@ -13,9 +13,9 @@ import { strings } from '../locales/i18n';
 import { Alert } from 'react-native';
 
 export const LOGGED_OUT_ROUTE_NAME = 'loginScreen';
-export const LOGGED_IN_ROUTE_NAME = 'drawerStack';
+export const LOGGED_IN_ROUTE_NAME = 'loggedInDrawer';
 
-// The stack that is contained within the drawer stack
+// The stack that is contained within the logged in drawer
 const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
@@ -35,7 +35,7 @@ const TemplateStack = StackNavigator({
                 </Icon>,
         })
     },
-    Reports: {
+    Reports: {// TODO: unused?
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({ title: navigation.state.routeName })
     },
@@ -49,7 +49,7 @@ const TemplateStack = StackNavigator({
             headerTintColor: '#fff',
             headerLeft: <HeaderBackButton
                 tintColor='#fff'
-                onPress={() => {
+                onPress={() => { //TODO: move somewhere else and unify with android hardware button version
                     Alert.alert(
                         'You have unsaved changes',
                         'Are you sure you want to leave without saving?',
@@ -92,7 +92,7 @@ const TemplateStack = StackNavigator({
 },
 );
 
-const DrawerStack = DrawerNavigator({
+const LoggedInDrawer = DrawerNavigator({
     Menu: {
         screen: TemplateStack,
         navigationOptions: {
@@ -113,7 +113,7 @@ const DrawerStack = DrawerNavigator({
 // Manifest of possible screens
 const MainScreenNavigator = StackNavigator({
     loginScreen: { screen: LoginScreen },
-    drawerStack: { screen: DrawerStack },
+    loggedInDrawer: { screen: LoggedInDrawer },
 }, {
     // Default config for all screens
     headerMode: 'none',
