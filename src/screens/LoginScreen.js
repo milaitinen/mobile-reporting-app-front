@@ -39,6 +39,8 @@ export class LoginScreen extends React.Component {
     }
 
     componentDidMount() {
+        NetInfo.isConnected.fetch().then(isConnected => {
+        console.log('First, is ' + isConnected);});
         NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
     }
     componentWillUnmount() {

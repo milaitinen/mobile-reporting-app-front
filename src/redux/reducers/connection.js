@@ -9,7 +9,7 @@ const connectionReducer = (state = initialState, action) => {
         case TOGGLE_CONNECTION:
             return {
                 ...state,
-                isConnected: action.isConnected,
+                isConnected: !action.isConnected,
             };
         default:
             return state;
