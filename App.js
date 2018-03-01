@@ -39,11 +39,10 @@ class App extends React.Component {
 
     onBackPress = () => {
         const { dispatch, nav } = this.props;
-        if (nav.index === 0) {
-            return false;
-        }
         dispatch(NavigationActions.back());
-        return true;
+        //If navigation state doesn't change (can't go back),
+        //this returns false and exits the app
+        return nav !== this.props.nav;
     };
 
     render() {
