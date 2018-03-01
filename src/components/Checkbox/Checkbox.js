@@ -10,16 +10,22 @@ class Checkbox extends Component {
         };
     }
 
+    toggle = () => {
+        this.setState({ checked: !this.state.checked });
+    };
+
     render(){
         return (
             <CheckBox
                 title={this.props.title}
                 checked={this.state.checked}
                 disabled={!this.props.editable}
-                checkedColor={'#88c9e5'}
-                containerStyle={styles.container}
-                textStyle={styles.text}
-                onPress={() => this.setState({ checked: !this.state.checked })}
+                checkedColor={'#A4CBE7'}
+                onPress={() => this.toggle()}
+                onIconPress={() => {
+                    this.props.onIconPressFunction((!this.state.checked) ? '1' : '0');
+                    this.toggle();
+                }}
             />
         );
     }

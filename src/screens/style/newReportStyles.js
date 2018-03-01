@@ -225,7 +225,6 @@ const newReportStyles = EStyleSheet.create({
 
     },
 
-
     buttonView: {
         paddingHorizontal: 10,
         height: 80,

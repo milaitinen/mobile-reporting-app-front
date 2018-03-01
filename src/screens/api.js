@@ -2,9 +2,6 @@ import { Platform, AsyncStorage, NetInfo } from 'react-native';
 
 import { url } from './urlsetting';
 
-
-export const invalidCredentialsResponse = 'invalid credentials'; // TODO: update to match backend
-
 export const login = (username, password) => {
     return fetch(`${url}/login`, {
         method: 'POST',
@@ -19,23 +16,6 @@ export const login = (username, password) => {
     }).then(response => {
         return JSON.parse(response._bodyInit).token;
     }).catch(err => alert(err));
-};
-
-export const mockLogin = (email, password) => {
-
-    const debugResponse = `sent email ${email} and password ${password} to the server`;
-    console.log(debugResponse);
-    //todo: check invalid response here
-    const mockResponse = {
-        token: 'djdsfkdsk.dfkdfkldfkhd.gdgkjdkj'
-    };
-    return mockResponse;
-    //return invalidCredentialsResponse;
-};
-
-export const verifyToken = (token) => {
-    //TODO
-    return null;
 };
 
 // Send a new report to the server, along with the username and token.
@@ -74,8 +54,7 @@ const fetchLocalFieldsByTemplateID = (username, templateID) => {
         });
 };
 
-
-const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
+export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
     return (
         fetch(`${url}/users/${username}/templates/${templateID}/fields`, {
             headers: {
@@ -87,6 +66,78 @@ const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
             })
     );
 };
+
+// used to store drafts
+export const saveDraft = (username, templateID, data) => {
+    saveData(`${url}/users/${username}/templates/${templateID}`, data);
+};
+
+export const removeDraft =  (username, templateID) => {
+    removeData(`${url}/users/${username}/templates/${templateID}`);
+};
+
+export const fetchStoredReportsByTemplateID = (username, templateID) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}`) // NOTE: this url is just a key
+        .then(data => {
+            if (data !== null) {
+                return JSON.parse(data);
+            } else {
+                return {};
+            }
+        });
+};
+
+// fetch reports that are only locally saved
+export const fetchLocalReports = (username, templateID) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}`) // NOTE: this url is just a key
+        .then(data => {
+            if (data !== null) {
+                return JSON.parse(data);
+            } else {
+                return [];
+            }
+        });
+};
+
+// for future use?
+export const fetchFieldsByReportID = (username, templateID, reportID, token) => {
+    return isNetworkConnected()
+        .then((isConnected) => {
+            if (!isConnected || reportID === 0) { return fetchLocalFieldsByReportID(username, templateID, reportID); }
+            return fetchRemoteFieldsByReportID(username, templateID, reportID, token);
+        })
+        .then((fieldsByReportID) => {
+            saveData(`${url}/users/${username}/templates/${templateID}/reports/${reportID}/fields`, fieldsByReportID);
+            return fieldsByReportID;
+        });
+};
+
+// not yet in use
+export const fetchLocalFieldsByReportID = (username, templateID, reportID) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports/${reportID}/fields`)
+        .then(data => {
+            if (data !== null) {
+                return JSON.parse(data);
+            } else {
+                return [];
+            }
+        });
+};
+
+// not yet in use
+const fetchRemoteFieldsByReportID = (username, templateID, reportID, token) => {
+    return (
+        fetch(`${url}/users/${username}/templates/${templateID}/reports/${reportID}/fields`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        })
+            .then(response => {
+                return response.json();
+            })
+    );
+};
+
 
 /*
  Fetch templates from the server or ASyncStorage, depending on the availability of internet connection.
@@ -213,6 +264,14 @@ const fetchRemoteReportsByUsername = (username, token) => {
    Keys and values are stored as a string. */
 const saveData = (dataUrl, data) => {
     AsyncStorage.setItem(dataUrl, JSON.stringify(data));
+};
+
+const removeData = (dataUrl) => {
+    try {
+        AsyncStorage.removeItem(dataUrl);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 // Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178

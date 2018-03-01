@@ -7,6 +7,7 @@ import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'reac
 import DatePicker from 'react-native-datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { AppBackground } from '../components/AppBackground';
 import { EditButton } from '../components/EditButton';
@@ -24,13 +25,15 @@ export class PreviewScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading      : true,
-            number         : '',
+            isLoading   : true,
+            isEditable  : false,
+            number      : '',
         };
     }
 
     componentDidMount() {
         this.getFieldsByID();
+        this.setState({ isEditable: this.props.navigation.state.params.isEditable });
     }
 
     getFieldsByID = () => {
@@ -43,8 +46,8 @@ export class PreviewScreen extends React.Component {
     };
 
     handleOnPress = () => {
-        this.props.dispatch(createReport(this.props.templateID, true));
-        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh });
+        this.props.dispatch(createReport(this.props.templateID, moment().format('YYYY-MM-DD')));
+        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, editable: true });
     };
 
     onChanged = (text) => {
@@ -76,7 +79,7 @@ export class PreviewScreen extends React.Component {
             );
         }
 
-        const { isEditable } = this.props;
+        const { isEditable } = this.state;
         const renderedFields = this.state.dataFieldsByID.map((field, index) => {
             switch (field.typeID) {
 
@@ -372,7 +375,6 @@ export class PreviewScreen extends React.Component {
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
     const userID = state.user.userID;
-    const isEditable = state.preview.isEditable;
     const templateID = state.preview.templateID;
     const title = state.preview.title;
     const number = state.preview.number;
@@ -380,7 +382,6 @@ const mapStateToProps = (state) => {
     const username = state.user.username;
     return {
         userID,
-        isEditable,
         templateID,
         title,
         number,

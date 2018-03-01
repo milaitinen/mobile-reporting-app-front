@@ -67,20 +67,15 @@ DATA FLOW-----------------------------------------------------------------------
 
 DATA DESIGN FOR OUR APPLICATION (how application information is stored in the store)
 
-NOTE: This is not EXACTLY how the data is currently stored, but similar.
 As not all states need Redux to be kept track of (e.g. isLoading when a page loads), only the most important core data
 are stored in the store - or - that's how it should be...
 (https://dev.bleacherreport.com/3-things-i-learned-about-working-with-data-in-redux-5fa0d5f89c8b)
 
----> user, templates, reportsByTemplateID, and reports are all
 
 {
 	user: {
-        email: <String>,
-        password: <String>,
-        serverURL: <String>,
-        userID: <String>,
-        authenticated: <Boolean>,
+        username: <String>,
+        token: <String>
     },
 
     templates: {
@@ -92,7 +87,7 @@ are stored in the store - or - that's how it should be...
         }
     },
 
-    reportsByTemplateID: {
+    reports: {
         [templateID]: [ {
             id: <Int>,
             reportID: <Int>,
@@ -103,19 +98,6 @@ are stored in the store - or - that's how it should be...
             dateAccepted: <Date>,
             answers: [Answers]
         } ]
-    },
-
-    reports: {
-        [id]: {
-            id: <Int>,
-            templateID: <Int>,
-            userID: <Int>,
-            orderNo: <Int>,
-            title: <String>,
-            dateCreated: <Date>,
-            dateAccepted: <Date>,
-            answers: [Answers]
-        }
     },
 
     newReportScreen: {
@@ -135,45 +117,15 @@ USER----------------------------------------------------------------------------
 
 {
     user: {
-        email: bob@gmail.com,
-        password: greatDayComingAhead,
-        userID: 81,
-        serverURL: something.com
-        authenticated: true
+        username: Bob,
+        token: 315jkhlgfd8342.43qhukl231
     },
 }
 
-REPORTS (BY USER_ID)----------------------------------------------------------------------------------------------------
+REPORTS (BY TEMPLATE ID)------------------------------------------------------------------------------------------------
 
 {
     reports: {
-        1: {
-            id: 1,
-            templateID: 2,
-            userID: 4,
-            orderNo: 18,
-            title: 'Bob's greatest report',
-            dateCreated: "2018-01-10",
-            dateAccepted: null,
-            answers: [Answers]
-        },
-        2: {
-            id: 2,
-            templateID: 6,
-            userID: 4,
-            orderNo: 22,
-            title: 'Bob's worst report',
-            dateCreated: "2017-08-11",
-            dateAccepted: "2017-09-09",
-            answers: [Answers]
-        }
-    },
-}
-
-REPORTS_BY_TEMPLATE_ID--------------------------------------------------------------------------------------------------
-
-{
-    reportsByTemplateID: {
         1: [ { (reportA object) }, { (reportK object) }, { (reportM object) } ],
         2: [ { (reportB object) }, { (reportL object) }, { (reportN object) } ],
         3: [ { (reportZ object) }, { (reportP object) }, { (reportU object) } ],

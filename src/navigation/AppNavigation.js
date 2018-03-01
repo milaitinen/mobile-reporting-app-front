@@ -6,6 +6,7 @@ import LoginScreen from '../screens/LoginScreen';
 import TemplateScreen from '../screens/TemplateScreen';
 import NewReportScreen from '../screens/NewReportScreen';
 import PreviewScreen from '../screens/PreviewScreen';
+import ReportScreen from '../screens/ReportScreen';
 import navigationStyles from './navigationStyles';
 import Sidebar from '../navigation/Sidebar';
 import { strings } from '../locales/i18n';
@@ -62,6 +63,16 @@ const TemplateStack = StackNavigator({
                     );
                 }} />,
             drawerLockMode: 'locked-closed',
+        })
+    },
+    Report: {
+        screen: ReportScreen,
+        navigationOptions: () => ({
+            flex: 0.3,
+            headerTitle: 'Report', //TODO: translate
+            headerStyle: navigationStyles.HeaderContainer,
+            headerTitleStyle: navigationStyles.ScreenHeader,
+            headerTintColor: '#fff',
         })
     },
     Preview: {

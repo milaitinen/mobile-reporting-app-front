@@ -87,7 +87,7 @@ class Layout extends Component{
 
 
     // Sets maximum height when opened.
-    _setMaxHeight = (event) => {
+    _setMaxHeight = () => {
         const height = Dimensions.get('window').height;
 
         this.setState({ maxHeight: (Platform.OS === 'ios') ? height - 142 : height - 165 });
@@ -127,7 +127,7 @@ class Layout extends Component{
                 </View>
 
                 <View style={styles.reportListContainer} onLayout={this._setMaxHeight}>
-                    <ScrollView style={{height: this.state.maxHeight - this.state.minHeight}}>
+                    <ScrollView style={{ height: this.state.maxHeight - this.state.minHeight }}>
                         <FlatList
                             data={ (data === undefined) ? data : data.slice(0, this.state.itemsCount) }
                             extraData={ this.state.itemsCount }
@@ -137,12 +137,15 @@ class Layout extends Component{
                             renderItem={({ item }) =>
                                 <ListItem
                                     key={item.title}
+                                    onPress={() => this.props.openReport(templateID, item.id, item.title)}
                                     containerStyle={ styles.reportContainer }
                                     titleStyle = { styles.reportTitle }
-                                    title={`${item.orderNo} ${item.title}`}
+                                    title={(item.orderNo) ? `${item.orderNo}\t${item.title}` : `${item.title}`}
                                     subtitle={item.dateCreated}
                                     hideChevron = {true}
-                                    badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
+                                    badge ={{ element:
+                                        <StatusBadge dateCreated={item.dateCreated} dateAccepted={item.dateAccepted} />
+                                    }}
                                 />
                             }
                             keyExtractor={item => item.id}
@@ -164,3 +167,4 @@ class Layout extends Component{
 }
 
 export default Layout;
+

@@ -1,11 +1,10 @@
 /* eslint-disable no-undef */
-import { INSERT_USERNAME, INSERT_PASSWORD,INSERT_TOKEN } from '../actions/user';
+import { INSERT_USERNAME, INSERT_PASSWORD, INSERT_TOKEN } from '../actions/user';
 
 const initialState = {
-    username: null,
+    username: '',
     password: null,
-    serverUrl: null,
-    token: null
+    token: ''
 };
 
 const userReducer = (state = initialState, action) => {

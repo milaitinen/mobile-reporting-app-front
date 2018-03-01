@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
 import { strings } from '../locales/i18n';
-import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
+import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
 import { login } from './api';
@@ -44,11 +44,10 @@ export class LoginScreen extends React.Component {
 
     logIn = () => {
         login(this.props.username, this.props.password)
-            .then(response => {
-                if (response === undefined) {
+            .then(token => {
+                if (token === undefined) {
                     alert('Invalid username or password');
                 } else {
-                    const token = response;
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
                     this.resetNavigationTo('drawerStack');
@@ -101,11 +100,11 @@ export class LoginScreen extends React.Component {
 
 // maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.username
 const mapStateToProps = (state) => {
-    const password = state.user.password;
     const username = state.user.username;
+    const password = state.user.password;
     return {
-        password,
-        username
+        username,
+        password
     };
 };
 

@@ -7,18 +7,20 @@ import {
     StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, /*fetchReportsByUsername*/ } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchStoredReportsByTemplateID } from './api';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
+import { storeReportsByTemplateID, storeSavedReportsByTemplateID } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
 // import { storeReports } from '../redux/actions/reports';
+
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
@@ -80,26 +82,35 @@ export class TemplateScreen extends Component {
         of reportsByTemplates, and sets isLoading and refreshing to false.
     */
     getTemplatesAndReports = () => {
-        fetchTemplatesByUsername(this.props.username, this.props.token)
+        const { username, token } = this.props;
+
+        fetchTemplatesByUsername(username, token)
             .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
             .then(() => {
-                const reportsByTemplateID = Object.keys(this.props.templates).map((templateID) => fetchReportsByTemplateID(this.props.username, templateID, this.props.token));
+                const reportsByTemplateID = Object.keys(this.props.templates)
+                    .map((templateID) => fetchReportsByTemplateID(username, templateID, token));
+
                 Promise.all(reportsByTemplateID)
-                    .then(data => {
-                        this.props.dispatch(storeReportsByTemplateID(data));
-                        this.setState({ refreshing: false, isLoading: false });
-                    })
+                    .then(data => this.props.dispatch(storeReportsByTemplateID(data)))
+                    .then(() => this.getStoredReports())
                     .catch(err => console.error(err));
             })
             .catch(error => console.error(error))
             .done();
+    };
 
-        /*
-        fetchReportsByUsername(this.props.username, this.props.token)
-            .then(responseJson => this.props.dispatch(storeReports(responseJson)))
-            .catch(error => console.error(error))
-            .done();
-        */
+    getStoredReports = () => {
+        const { templates, username, token } = this.props;
+
+        Object.keys(templates).forEach((templateID) => {
+            fetchStoredReportsByTemplateID(username, templateID, token)
+                .then((data) => {
+                    //TODO come up with a better solution: currently the data is { (some object) } or [ (empty array) ]
+                    if (Object.keys(data).length !== 0) this.props.dispatch(storeSavedReportsByTemplateID(templateID, data));
+                })
+                .then(() => this.setState({ refreshing: false, isLoading: false }))
+                .catch(err => console.error(err));
+        });
     };
 
     // Handler function for refreshing the data and refetching.
@@ -128,13 +139,19 @@ export class TemplateScreen extends Component {
     */
     createNew = (templateID, isEditable) => {
         if (isEditable) {
-            this.props.dispatch(createReport(templateID, isEditable));
-            this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh });
+            this.props.dispatch(createReport(templateID, moment().format('YYYY-MM-DD')));
+            this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, isEditable: isEditable });
         }
         else {
-            this.props.dispatch(preview(templateID, isEditable));
-            this.props.navigation.navigate('Preview', { refresh: this.handleRefresh });
+            this.props.dispatch(preview(templateID));
+            this.props.navigation.navigate('Preview', { refresh: this.handleRefresh,  isEditable: isEditable });
         }
+        //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReporstScreen and uncomment this
+    };
+
+    openReport = (templateID, reportID, title) => {
+        //this.setState({ isLoading: true }); TODO same problem as above
+        this.props.navigation.navigate('Report', { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
     };
 
     render() {
@@ -151,7 +168,8 @@ export class TemplateScreen extends Component {
             );
         }
 
-        const { reportsByTempID, templates } = this.props;
+        const { reports, templates } = this.props;
+
         return (
             <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>
@@ -173,9 +191,10 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenScrollEnabled={this.setScrollEnabled}
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
-                                    nofReports={(reportsByTempID[item.id]) ? (reportsByTempID[item.id]).length : 0}
+                                    openReport={this.openReport}
+                                    nofReports={(reports[item.id]) ? (reports[item.id]).length : 0}
                                     templateID={item.id}
-                                    data={reportsByTempID[item.id]}
+                                    data={reports[item.id]}
                                 />
                             }
                             ListFooterComponent={
@@ -195,12 +214,12 @@ export class TemplateScreen extends Component {
 const mapStateToProps = (state) => {
     const username = state.user.username;
     const templates = state.templates;
-    const reportsByTempID = state.reportsByTempID;
+    const reports = state.reports;
     const token = state.user.token;
     return {
         username,
         templates,
-        reportsByTempID,
+        reports,
         token
     };
 };
