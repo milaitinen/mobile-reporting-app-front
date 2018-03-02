@@ -35,10 +35,6 @@ const TemplateStack = StackNavigator({
                 </Icon>,
         })
     },
-    Reports: {// TODO: unused?
-        screen: TemplateScreen,
-        navigationOptions: ({ navigation }) => ({ title: navigation.state.routeName })
-    },
     NewReport: {
         screen: NewReportScreen,
         navigationOptions: ({ navigation }) => ({
@@ -118,7 +114,7 @@ const MainScreenNavigator = StackNavigator({
     // Default config for all screens
     headerMode: 'none',
     title: 'Main',
-    initialRouteName: LOGGED_IN_ROUTE_NAME,
+    initialRouteName: LOGGED_OUT_ROUTE_NAME,
 });
 
 export default MainScreenNavigator;
