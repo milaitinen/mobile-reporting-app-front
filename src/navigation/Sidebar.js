@@ -1,8 +1,8 @@
 import { NavigationActions } from 'react-navigation';
 import React from 'react';
-import { View, Button } from 'react-native';
+import { Button, View } from 'react-native';
 import { strings } from '../locales/i18n';
-import { insertUsername, insertToken } from '../redux/actions/user';
+import { insertToken, insertUsername } from '../redux/actions/user';
 import { emptyTemplates } from '../redux/actions/templates';
 import { emptyReports } from '../redux/actions/reports';
 import { connect } from 'react-redux';

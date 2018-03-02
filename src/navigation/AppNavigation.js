@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackNavigator, DrawerNavigator, HeaderBackButton, NavigationActions } from 'react-navigation';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import LoginScreen from '../screens/LoginScreen';
@@ -10,7 +10,6 @@ import ReportScreen from '../screens/ReportScreen';
 import navigationStyles from './navigationStyles';
 import Sidebar from '../navigation/Sidebar';
 import { strings } from '../locales/i18n';
-import { Alert } from 'react-native';
 
 export const LOGGED_OUT_ROUTE_NAME = 'loginScreen';
 export const LOGGED_IN_ROUTE_NAME = 'loggedInDrawer';

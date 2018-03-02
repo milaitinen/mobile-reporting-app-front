@@ -1,6 +1,16 @@
 import React from 'react';
-import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, BackHandler } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import {
+    ActivityIndicator,
+    Alert,
+    BackHandler,
+    Button,
+    Linking,
+    ScrollView,
+    Text,
+    TextInput,
+    View
+} from 'react-native';
+import { HeaderBackButton, NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
@@ -13,14 +23,12 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID, saveDraft } from './api';
 import { strings } from '../locales/i18n';
-import { insertFieldAnswer, emptyFields, insertTitle, setUnsaved } from '../redux/actions/newReport';
+import { emptyFields, insertFieldAnswer, insertTitle, setUnsaved } from '../redux/actions/newReport';
 import { storeSavedReportsByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
-
-import { HeaderBackButton } from 'react-navigation';
 
 
 /**
