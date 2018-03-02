@@ -42,7 +42,6 @@ const TemplateStack = StackNavigator({
             headerTitle: strings('createNew.createNew'),
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
-            headerTintColor: '#fff', // TODO: this might be redundant
             drawerLockMode: 'locked-closed',
         })
     },
@@ -50,7 +49,7 @@ const TemplateStack = StackNavigator({
         screen: ReportScreen,
         navigationOptions: () => ({
             flex: 0.3,
-            //headerTitle: strings('templates.report'), // this is overridden with the actual report title
+            headerTitle: strings('templates.report'),
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',
