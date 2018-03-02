@@ -43,6 +43,7 @@ const TemplateStack = StackNavigator({
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',
+            /*
             headerLeft: <HeaderBackButton
                 tintColor='#fff'
                 onPress={() => { //TODO: move somewhere else and unify with android hardware button version
@@ -60,6 +61,7 @@ const TemplateStack = StackNavigator({
                         { cancelable: false }
                     );
                 }} />,
+                */
             drawerLockMode: 'locked-closed',
         })
     },

@@ -9,7 +9,8 @@ const initialState = {
     dateAccepted: null,
     id: null,
     orderNo: null,
-    userID: null
+    userID: null,
+    isUnsaved: true,
 };
 
 const newReportReducer = (state = initialState, action) => {

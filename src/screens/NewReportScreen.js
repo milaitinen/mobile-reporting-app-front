@@ -20,12 +20,78 @@ import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
 
+import { HeaderBackButton } from 'react-navigation';
+
+
+const handleBack = (isUnsaved, dispatch) => {
+    if (isUnsaved) {
+        Alert.alert(
+            'You have unsaved changes',
+            'Are you sure you want to leave without saving?',
+            [
+                { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                { text: 'No', onPress: () => console.log('No Pressed') },
+                { text: 'Yes', onPress: () => {
+                    console.log('Yes Pressed');
+                    dispatch(emptyFields());
+                    dispatch(NavigationActions.back());
+                }
+                },
+            ],
+            { cancelable: false }
+        );
+        return true; // This will prevent the regular handling of the back button
+    }
+    // A false return value allows the previous back handler(s) to be called after this
+    // (in this case the normal behaviour)
+    return false;
+};
+
+class CustomBackButton extends React.Component {
+
+    render() {
+        return (
+            <HeaderBackButton tintColor='#fff' onPress={() => handleBack(this.props.isUnsaved, this.props.dispatch)} />
+        );
+    }
+}
+
+// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+const mapStateToProps = (state) => {
+    const token         = state.user.token;
+    const username      = state.user.username;
+    const templateID    = state.newReport.templateID;
+    const title         = state.newReport.title;
+    const number        = state.newReport.number;
+    const answers       = state.newReport.answers;
+    const reports       = state.reports;
+    const isUnsaved     = state.newReport.isUnsaved;
+    return {
+        username,
+        templateID,
+        title,
+        number,
+        token,
+        reports,
+        answers,
+        isUnsaved, // TODO: create redux action and reducer to change this
+    };
+};
+
+
 // "export" necessary in order to test component without Redux store
 export class NewReportScreen extends React.Component {
+    static navigationOptions = () => {
+        return {
+            // the Redux-connected on-screen back button is set here
+            headerLeft: connect(mapStateToProps)(CustomBackButton),
+        };
+    };
+
     constructor(props) {
         super(props);
         this.state = {
-            isUnsaved       : true,
+            isUnsaved       : true, // TODO: replace with redux state
             isLoading       : true,
             number          : '',
             isEditable      : false,
@@ -50,7 +116,7 @@ export class NewReportScreen extends React.Component {
 
     // This only handles android hardware back button presses. Handler for the on-screen back button
     // is in AppNavigation.js
-    handleBack = () => {
+    handleBack = () => {// TODO: replace this
         if (this.state.isUnsaved) {
             // TODO: apply same behaviour as with on-screen back button press
             alert(
@@ -493,24 +559,6 @@ export class NewReportScreen extends React.Component {
 }
 
 
-// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
-const mapStateToProps = (state) => {
-    const token         = state.user.token;
-    const username      = state.user.username;
-    const templateID    = state.newReport.templateID;
-    const title         = state.newReport.title;
-    const number        = state.newReport.number;
-    const answers       = state.newReport.answers;
-    const reports       = state.reports;
-    return {
-        username,
-        templateID,
-        title,
-        number,
-        token,
-        reports,
-        answers
-    };
-};
+
 
 export default connect(mapStateToProps)(NewReportScreen);
