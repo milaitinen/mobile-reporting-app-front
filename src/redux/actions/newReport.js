@@ -3,6 +3,7 @@ export const CREATE_REPORT  = 'CREATE_REPORT';
 export const INSERT_TITLE   = 'INSERT_TITLE';
 export const INSERT_FIELD_ANSWER = 'INSERT_FIELD_ANSWER';
 export const EMPTY_FIELDS = 'EMPTY_FIELDS';
+export const SET_UNSAVED = 'SET_UNSAVED';
 
 // return an object
 export const createReport = ( templateID, date ) => ({
@@ -24,4 +25,9 @@ export const insertFieldAnswer = ( field, answer ) => ({
 
 export const emptyFields = () => ({
     type: EMPTY_FIELDS
+});
+
+export const setUnsaved = ( isUnsaved ) => ({
+    type: SET_UNSAVED,
+    isUnsaved: isUnsaved,
 });
