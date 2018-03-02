@@ -101,7 +101,7 @@ export class NewReportScreen extends React.Component {
 
     componentWillMount() {
         // BackHandler for detecting hardware button presses for back navigation (Android only)
-        BackHandler.addEventListener('hardwareBackPress', this.handleBack);
+        BackHandler.addEventListener('hardwareBackPress', () => handleBack(this.props.isUnsaved, this.props.dispatch));
     }
 
     componentDidMount() {
@@ -111,34 +111,9 @@ export class NewReportScreen extends React.Component {
 
     componentWillUnmount() {
         // Removes the BackHandler EventListener when unmounting
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
+        BackHandler.removeEventListener('hardwareBackPress', () => handleBack(this.props.isUnsaved, this.props.dispatch));
     }
 
-    // This only handles android hardware back button presses. Handler for the on-screen back button
-    // is in AppNavigation.js
-    handleBack = () => {// TODO: replace this
-        if (this.state.isUnsaved) {
-            // TODO: apply same behaviour as with on-screen back button press
-            alert(
-                'You have unsaved changes',
-                'Are you sure you want to leave without saving?',
-                [
-                    { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                    { text: 'No', onPress: () => console.log('No Pressed') },
-                    { text: 'Yes', onPress: () => {
-                        console.log('Yes Pressed');
-                        this.props.dispatch(emptyFields());
-                        this.props.navigation.dispatch(NavigationActions.back()); }
-                    },
-                ],
-                { cancelable: false }
-            );
-            return true; // This will prevent the regular handling of the back button
-        }
-        // A false return value allows the previous back handler(s) to be called after this
-        // (in this case the normal behaviour)
-        return false;
-    };
 
     // set the value of yes/no field(s) to '0' (No)
     setDefaultValue = () => {

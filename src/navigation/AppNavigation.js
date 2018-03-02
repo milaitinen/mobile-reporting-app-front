@@ -42,26 +42,7 @@ const TemplateStack = StackNavigator({
             headerTitle: strings('createNew.createNew'),
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
-            headerTintColor: '#fff',
-            /*
-            headerLeft: <HeaderBackButton
-                tintColor='#fff'
-                onPress={() => { //TODO: move somewhere else and unify with android hardware button version
-                    Alert.alert(
-                        'You have unsaved changes',
-                        'Are you sure you want to leave without saving?',
-                        [
-                            { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                            { text: 'No', onPress: () => console.log('No Pressed') },
-                            { text: 'Yes', onPress: () => {
-                                console.log('Yes Pressed');
-                                navigation.goBack(null); }
-                            },
-                        ],
-                        { cancelable: false }
-                    );
-                }} />,
-                */
+            headerTintColor: '#fff', // TODO: this might be redundant
             drawerLockMode: 'locked-closed',
         })
     },
