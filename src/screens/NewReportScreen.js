@@ -36,6 +36,7 @@ import styles from '../components/Dropdown/styles';
  *
  * This should be used inside a Redux-connected component, so that the
  * component can get the parameters from Redux and pass them on to this function.
+ * Then this function can i.e. dispatch Redux actions.
  *
  * Note that the return values are only needed for the Android hardware back button,
  * and are not necessary with the on-screen back button.
@@ -61,16 +62,16 @@ const handleBack = (isUnsaved, dispatch) => {
             ],
             { cancelable: false }
         );
-        return true; // This will prevent the regular handling of the Android back button
+        return true;
     }
-    // A false return value allows the previous Android back handler(s) to be called after this
-    // (in this case the normal behaviour)
     dispatch(NavigationActions.back());
+    // A true return value will prevent the regular handling of the Android back button,
+    // whereas false would allow the previous backhandlers to take action after this.
     return true;
 };
 
-//A container for the back button, that can be connected to Redux
-class CustomBackButton extends React.Component {
+//A wrapper for the back button, that can be connected to Redux
+class HeaderBackButtonWrapper extends React.Component {
     render() {
         return (
             <HeaderBackButton tintColor='#fff' onPress={() => handleBack(this.props.isUnsaved, this.props.dispatch)} />
@@ -101,15 +102,15 @@ const mapStateToProps = (state) => {
     };
 };
 
+const HeaderBackButtonWrapperWithRedux = connect(mapStateToProps)(HeaderBackButtonWrapper);
 
-const CustomBackButtonWithRedux = connect(mapStateToProps)(CustomBackButton);
 
 // "export" necessary in order to test component without Redux store
 export class NewReportScreen extends React.Component {
     static navigationOptions = () => {
         return {
             // the Redux-connected on-screen back button is set here
-            headerLeft: CustomBackButtonWithRedux,
+            headerLeft: HeaderBackButtonWrapperWithRedux,
         };
     };
 
