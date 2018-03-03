@@ -65,7 +65,8 @@ const handleBack = (isUnsaved, dispatch) => {
     }
     // A false return value allows the previous Android back handler(s) to be called after this
     // (in this case the normal behaviour)
-    return false;
+    dispatch(NavigationActions.back());
+    return true;
 };
 
 //A container for the back button, that can be connected to Redux
@@ -76,6 +77,7 @@ class CustomBackButton extends React.Component {
         );
     }
 }
+
 
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
@@ -100,13 +102,14 @@ const mapStateToProps = (state) => {
 };
 
 
+const CustomBackButtonWithRedux = connect(mapStateToProps)(CustomBackButton);
 
 // "export" necessary in order to test component without Redux store
 export class NewReportScreen extends React.Component {
     static navigationOptions = () => {
         return {
             // the Redux-connected on-screen back button is set here
-            headerLeft: connect(mapStateToProps)(CustomBackButton),
+            headerLeft: CustomBackButtonWithRedux,
         };
     };
 
