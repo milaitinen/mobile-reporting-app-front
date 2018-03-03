@@ -54,7 +54,7 @@ const handleBack = (isUnsaved, dispatch) => {
                 { text: 'Yes', onPress: () => {
                     console.log('Yes Pressed');
                     dispatch(emptyFields());
-                    dispatch(setUnsaved(false));
+                    //dispatch(setUnsaved(false));
                     dispatch(NavigationActions.back());
                 }
                 },
@@ -120,9 +120,11 @@ export class NewReportScreen extends React.Component {
         };
     }
 
+    _handleBack = () => handleBack(this.props.isUnsaved, this.props.dispatch);
+
     componentWillMount() {
         // BackHandler for detecting hardware button presses for back navigation (Android only)
-        BackHandler.addEventListener('hardwareBackPress', () => handleBack(this.props.isUnsaved, this.props.dispatch));
+        BackHandler.addEventListener('hardwareBackPress', this._handleBack);
     }
 
     componentDidMount() {
@@ -132,7 +134,7 @@ export class NewReportScreen extends React.Component {
 
     componentWillUnmount() {
         // Removes the BackHandler EventListener when unmounting
-        BackHandler.removeEventListener('hardwareBackPress', () => handleBack(this.props.isUnsaved, this.props.dispatch));
+        BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
     }
 
 
