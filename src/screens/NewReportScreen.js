@@ -461,6 +461,17 @@ export class NewReportScreen extends React.Component {
                                 <Text style={newReportStyles.title}>{strings('templates.report')}</Text>
                             </View>
                             <View style={newReportStyles.fieldContainer}>
+                                <View>
+                                    <Text style={ newReportStyles.textStyleClass }>Otsikko</Text>
+                                    <TextInput
+                                        editable={isEditable}
+                                        placeholder={'Otsikko'}
+                                        placeholderTextColor={'#adadad'}
+                                        underlineColorAndroid='transparent'
+                                        style={newReportStyles.textInputStyleClass}
+                                        onChangeText={(text) => this.props.dispatch(insertTitle(text))}
+                                    />
+                                </View>
                                 {renderedFields}
                             </View>
                         </ScrollView>

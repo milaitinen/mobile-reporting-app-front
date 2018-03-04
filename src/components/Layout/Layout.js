@@ -151,10 +151,12 @@ class Layout extends Component{
                             keyExtractor={item => item.id}
                             ListFooterComponent={
                                 (data !== undefined && data.length > this.state.itemsCount)
-                                    ? <Text style={styles.more} onPress={() => this.showMore()}>
+                                    ?
+                                    <Text style={styles.more} onPress={() => this.showMore()}>
                                         { strings('templates.showMore') }
                                     </Text>
-                                    : <Text style={styles.noMoreReports}>
+                                    :
+                                    <Text style={styles.noMoreReports}>
                                         { strings('templates.endOfReports') }
                                     </Text>
                             }

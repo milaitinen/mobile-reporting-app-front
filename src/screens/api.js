@@ -71,7 +71,6 @@ export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
 export const saveDraft = (username, templateID, data) => {
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {
-
             drafts.push(data);
             drafts.map((draft, i) => draft.id = -Math.abs(i + 1));
             saveData(`${url}/users/${username}/templates/${templateID}`, drafts);
@@ -79,8 +78,12 @@ export const saveDraft = (username, templateID, data) => {
         });
 };
 
-export const removeDraft =  (username, templateID) => {
-    removeData(`${url}/users/${username}/templates/${templateID}`);
+export const removeDraft =  (username, templateID, draftID) => {
+    fetchDraftsByTemplateID(username, templateID)
+        .then((drafts) => {
+            const draftRemoved = drafts.filter(draft => draft.id !== draftID);
+            saveData(`${url}/users/${username}/templates/${templateID}`, draftRemoved);
+        });
 };
 
 export const fetchDraftsByTemplateID = (username, templateID) => {

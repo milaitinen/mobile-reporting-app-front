@@ -51,10 +51,10 @@ export class ReportScreen extends React.Component {
 
     // delete draft from asyncstorage
     deleteDraft = () => {
-        const { templateID } = this.props.navigation.state.params;
+        const { templateID, reportID } = this.props.navigation.state.params;
         const { username } = this.props;
 
-        removeDraft(username, templateID);
+        removeDraft(username, templateID, reportID);
         this.props.dispatch(emptyFields());
 
         Alert.alert('Draft deleted.');
