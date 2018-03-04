@@ -285,6 +285,7 @@ const saveData = (dataUrl, data) => {
     AsyncStorage.setItem(dataUrl, JSON.stringify(data));
 };
 
+/*
 const removeData = (dataUrl) => {
     try {
         AsyncStorage.removeItem(dataUrl);
@@ -292,6 +293,7 @@ const removeData = (dataUrl) => {
         console.error(error);
     }
 };
+*/
 
 // Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178
 const isNetworkConnected = () => {

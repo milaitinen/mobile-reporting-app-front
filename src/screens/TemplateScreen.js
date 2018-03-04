@@ -147,7 +147,8 @@ export class TemplateScreen extends Component {
 
     viewReport = (templateID, reportID, title) => {
         //this.setState({ isLoading: true }); TODO same problem as above
-        this.props.navigation.navigate('Report', { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
+        this.props.navigation.navigate('Report',
+            { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
     };
 
     render() {
@@ -187,7 +188,7 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenScrollEnabled={this.setScrollEnabled}
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
-                                    openReport={this.viewReport}
+                                    viewReport={this.viewReport}
                                     nofReports={(reports[item.id]) ? (reports[item.id]).length : 0}
                                     templateID={item.id}
                                     data={reports[item.id]}
