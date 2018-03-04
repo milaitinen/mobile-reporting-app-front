@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, BackHandler, AsyncStorage } from 'react-native';
+import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, BackHandler } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
@@ -15,7 +15,7 @@ import { createNewReport, fetchFieldsByTemplateID, saveDraft } from './api';
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields, insertTitle } from '../redux/actions/newReport';
 import { storeDraftsByTemplateID } from '../redux/actions/reports';
-import { url } from './urlsetting';
+
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -116,7 +116,11 @@ export class NewReportScreen extends React.Component {
         this.props.dispatch(emptyFields());
 
         Alert.alert('Report saved!');
-        // this.props.navigation.state.params.refresh();   // update templateScreen
+
+        //this.setState({ isUnsaved: false });
+
+        //return to template screen and have it refreshed
+        this.props.navigation.state.params.refresh();
         this.props.navigation.dispatch(NavigationActions.back());
     };
 
