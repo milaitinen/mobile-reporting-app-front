@@ -57,7 +57,7 @@ export class ReportScreen extends React.Component {
         removeDraft(username, templateID);
         this.props.dispatch(emptyFields());
 
-        Alert.alert('Report deleted.');
+        Alert.alert('Draft deleted.');
 
         this.props.navigation.state.params.refresh();
         this.props.navigation.dispatch(NavigationActions.back());
@@ -80,7 +80,7 @@ export class ReportScreen extends React.Component {
 
         //report.answers = Object.values(answers);
         //saveDraft(username, templateID, report);
-        //this.props.dispatch(storeSavedReportsByTemplateID(templateID, report)); // store drafts together with other reports in reports state
+        //this.props.dispatch(storeDraftsByTemplateID(templateID, report)); // store drafts together with other reports in reports state
         //this.setState=({ isUnsaved: false });
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, BackHandler } from 'react-native';
+import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, BackHandler, AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
@@ -14,7 +14,8 @@ import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID, saveDraft } from './api';
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields, insertTitle } from '../redux/actions/newReport';
-import { storeSavedReportsByTemplateID } from '../redux/actions/reports';
+import { storeDraftsByTemplateID } from '../redux/actions/reports';
+import { url } from './urlsetting';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -95,7 +96,7 @@ export class NewReportScreen extends React.Component {
 
     // save report locally in asyncstorage
     save = () => {
-        const { templateID, username, reports, answers } = this.props;
+        const { templateID, username, answers } = this.props;
 
         const report = {
             answers: [],
@@ -105,25 +106,17 @@ export class NewReportScreen extends React.Component {
             title: this.props.title || 'Draft',
             dateCreated: null,
             dateAccepted: null,
-            id: -1
+            id: null
         };
 
-        //TODO problems when you create several drafts from the same template
-        //Check if there already is a report of the same templateID
-        if (reports[templateID][0].id === 0) {
-            Alert.alert('You can not create more than one draft per template!');
-            return;
-        }
-
         report.answers = Object.values(answers);
-        saveDraft(username, templateID, report);
-        this.props.dispatch(storeSavedReportsByTemplateID(templateID, report)); // store drafts together with other reports in reports state
-        //this.setState=({ isUnsaved: false });
+        report.id = saveDraft(username, templateID, report);
+
+        this.props.dispatch(storeDraftsByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
+        this.props.dispatch(emptyFields());
 
         Alert.alert('Report saved!');
-
-        this.props.dispatch(emptyFields());             // return newReport state to its initial state
-        this.props.navigation.state.params.refresh();   // update templateScreen
+        // this.props.navigation.state.params.refresh();   // update templateScreen
         this.props.navigation.dispatch(NavigationActions.back());
     };
 

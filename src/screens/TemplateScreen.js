@@ -13,9 +13,9 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchStoredReportsByTemplateID } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID, removeData } from './api';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID, storeSavedReportsByTemplateID } from '../redux/actions/reports';
+import { storeReportsByTemplateID, storeDraftsByTemplateID } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
@@ -92,21 +92,23 @@ export class TemplateScreen extends Component {
 
                 Promise.all(reportsByTemplateID)
                     .then(data => this.props.dispatch(storeReportsByTemplateID(data)))
-                    .then(() => this.getStoredReports())
+                    .then(() => this.getDrafts())
                     .catch(err => console.error(err));
             })
             .catch(error => console.error(error))
             .done();
     };
 
-    getStoredReports = () => {
-        const { templates, username, token } = this.props;
+    getDrafts = () => {
+        const { templates, username } = this.props;
 
         Object.keys(templates).forEach((templateID) => {
-            fetchStoredReportsByTemplateID(username, templateID, token)
-                .then((data) => {
-                    //TODO come up with a better solution: currently the data is { (some object) } or [ (empty array) ]
-                    if (Object.keys(data).length !== 0) this.props.dispatch(storeSavedReportsByTemplateID(templateID, data));
+            fetchDraftsByTemplateID(username, templateID)
+                .then((drafts) => {
+
+                    if (drafts.length !== 0) {
+                        drafts.forEach(draft => this.props.dispatch(storeDraftsByTemplateID(templateID, draft)));
+                    }
                 })
                 .then(() => this.setState({ refreshing: false, isLoading: false }))
                 .catch(err => console.error(err));

@@ -69,20 +69,27 @@ export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
 
 // used to store drafts
 export const saveDraft = (username, templateID, data) => {
-    saveData(`${url}/users/${username}/templates/${templateID}`, data);
+    fetchDraftsByTemplateID(username, templateID)
+        .then((drafts) => {
+
+            drafts.push(data);
+            drafts.map((draft, i) => draft.id = -Math.abs(i + 1));
+            saveData(`${url}/users/${username}/templates/${templateID}`, drafts);
+            return (drafts[drafts.length - 1].id);
+        });
 };
 
 export const removeDraft =  (username, templateID) => {
     removeData(`${url}/users/${username}/templates/${templateID}`);
 };
 
-export const fetchStoredReportsByTemplateID = (username, templateID) => {
+export const fetchDraftsByTemplateID = (username, templateID) => {
     return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}`) // NOTE: this url is just a key
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
             } else {
-                return {};
+                return [];
             }
         });
 };
@@ -266,7 +273,7 @@ const saveData = (dataUrl, data) => {
     AsyncStorage.setItem(dataUrl, JSON.stringify(data));
 };
 
-const removeData = (dataUrl) => {
+export const removeData = (dataUrl) => {
     try {
         AsyncStorage.removeItem(dataUrl);
     } catch (error) {

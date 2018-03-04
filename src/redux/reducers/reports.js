@@ -1,4 +1,4 @@
-import { STORE_REPORTS_BY_TEMPLATE_ID, EMPTY_REPORTS, STORE_SAVED_REPORTS_BY_TEMPLATE_ID } from '../actions/reports';
+import { STORE_REPORTS_BY_TEMPLATE_ID, EMPTY_REPORTS, STORE_DRAFTS_BY_TEMPLATE_ID } from '../actions/reports';
 
 const initialState = {};
 
@@ -28,7 +28,7 @@ const reportsByTemplateIDReducer = (state = initialState, action) => {
         case EMPTY_REPORTS: {
             return initialState;
         }
-        case STORE_SAVED_REPORTS_BY_TEMPLATE_ID: {
+        case STORE_DRAFTS_BY_TEMPLATE_ID: {
             state[action.templateID].unshift(action.report); // add the report to the start of the array ( >< push)
             return state;
         }
