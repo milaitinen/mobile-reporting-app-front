@@ -68,12 +68,21 @@ export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
 };
 
 // used to store drafts
-export const saveDraft = (username, templateID, data) => {
+export const saveDraft = (username, templateID, draft) => {
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {
-            drafts.push(data);
+            // see if there is already a draft with the same id
+            const draftIndex = drafts.findIndex(x => x.id === draft.id);
+
+            if (draftIndex < 0) {
+                drafts.push(draft);
+            } else {
+                drafts[draftIndex] = draft;
+            }
+            // give each draft a unique, negative id
             drafts.map((draft, i) => draft.id = -Math.abs(i + 1));
             saveData(`${url}/users/${username}/templates/${templateID}`, drafts);
+
             return (drafts[drafts.length - 1].id);
         });
 };
@@ -276,7 +285,7 @@ const saveData = (dataUrl, data) => {
     AsyncStorage.setItem(dataUrl, JSON.stringify(data));
 };
 
-export const removeData = (dataUrl) => {
+const removeData = (dataUrl) => {
     try {
         AsyncStorage.removeItem(dataUrl);
     } catch (error) {

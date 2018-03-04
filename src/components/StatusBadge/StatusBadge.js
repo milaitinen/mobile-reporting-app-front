@@ -4,10 +4,10 @@ import { Badge, Icon } from 'react-native-elements';
 import styles from './styles';
 import { strings } from '../../locales/i18n';
 
-const StatusBadge = ({ dateCreated, dateAccepted }) =>{
+const StatusBadge = ({ dateAccepted, isDraft }) =>{
 
     //TODO maybe there's a better way to match drafts...?
-    if (!dateCreated) {
+    if (isDraft) {
         return (
             <View style={styles.BadgeViewContainer}>
                 <Badge textStyle = {styles.badgeTextStyle}

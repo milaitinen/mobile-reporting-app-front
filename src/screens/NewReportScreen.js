@@ -16,7 +16,6 @@ import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields, insertTitle } from '../redux/actions/newReport';
 import { storeDraftsByTemplateID } from '../redux/actions/reports';
 
-
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
@@ -75,7 +74,7 @@ export class NewReportScreen extends React.Component {
         return false;
     };
 
-    // set the value of yes/no field(s) to '0' (No)
+    // insert default values to the report's answer fields
     setDefaultValue = () => {
         this.state.dataFieldsByID.map((field) => {
             this.props.dispatch(insertFieldAnswer(field, field.defaultValue));
@@ -104,7 +103,7 @@ export class NewReportScreen extends React.Component {
             userID: 1,      // TODO what to do with userID, orderNo, and id in the future...?
             orderNo: null,
             title: this.props.title || 'Draft',
-            dateCreated: null,
+            dateCreated: moment().format('YYYY-MM-DD'),
             dateAccepted: null,
             id: null
         };

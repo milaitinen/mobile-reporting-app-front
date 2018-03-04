@@ -13,13 +13,12 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID, removeData } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID } from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID, storeDraftsByTemplateID } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
-// import { storeReports } from '../redux/actions/reports';
 
 
 // "export" necessary in order to test component without Redux store
@@ -65,14 +64,6 @@ export class TemplateScreen extends Component {
             this.setState({ refreshing: false, isLoading: false });
         }
     }
-
-    isEmpty = (obj) => {
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key))
-                return false;
-        }
-        return true;
-    };
 
     /*
      Fetches the data from the server in two parts.
@@ -154,7 +145,7 @@ export class TemplateScreen extends Component {
         //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReporstScreen and uncomment this
     };
 
-    openReport = (templateID, reportID, title) => {
+    viewReport = (templateID, reportID, title) => {
         //this.setState({ isLoading: true }); TODO same problem as above
         this.props.navigation.navigate('Report', { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
     };
@@ -196,7 +187,7 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenScrollEnabled={this.setScrollEnabled}
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
-                                    openReport={this.openReport}
+                                    openReport={this.viewReport}
                                     nofReports={(reports[item.id]) ? (reports[item.id]).length : 0}
                                     templateID={item.id}
                                     data={reports[item.id]}
