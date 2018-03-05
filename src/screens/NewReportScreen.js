@@ -270,7 +270,8 @@ export class NewReportScreen extends React.Component {
                                 placeholder={field.defaultValue}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                                 placeholderTextColor={'#adadad'}
-                                onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
+                                //Title is now set separately from this field
+                                //onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
