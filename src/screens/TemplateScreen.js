@@ -134,12 +134,12 @@ export class TemplateScreen extends Component {
     createNew = (templateID, isEditable) => {
         if (isEditable) {
             this.props.dispatch(createReport(templateID, moment().format('YYYY-MM-DD')));
-            this.setState({ isLoading: true });
+            // this.setState({ isLoading: true });
             this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, isEditable: isEditable });
         }
         else {
             this.props.dispatch(preview(templateID));
-            this.setState({ isLoading: true });
+            // this.setState({ isLoading: true });
             this.props.navigation.navigate('Preview', { refresh: this.handleRefresh,  isEditable: isEditable });
         }
         //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReporstScreen and uncomment this
