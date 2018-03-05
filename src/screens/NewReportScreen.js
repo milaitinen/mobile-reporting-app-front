@@ -1,6 +1,16 @@
 import React from 'react';
-import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, BackHandler } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import {
+    ActivityIndicator,
+    Alert,
+    BackHandler,
+    Button,
+    Linking,
+    ScrollView,
+    Text,
+    TextInput,
+    View
+} from 'react-native';
+import { HeaderBackButton, NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
@@ -13,19 +23,101 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID, saveDraft } from './api';
 import { strings } from '../locales/i18n';
-import { insertFieldAnswer, emptyFields, insertTitle } from '../redux/actions/newReport';
+import { emptyFields, insertFieldAnswer, insertTitle, setUnsaved } from '../redux/actions/newReport';
 import { storeDraftsByTemplateID } from '../redux/actions/reports';
+
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
 
+
+/**
+ * Handles the back-navigation logic in newReportScreen.
+ *
+ * This should be used inside a Redux-connected component, so that the
+ * component can get the parameters from Redux and pass them on to this function.
+ * Then this function can i.e. dispatch Redux actions.
+ *
+ * Note that the return values are only needed for the Android hardware back button,
+ * and are not necessary with the on-screen back button.
+ * @param isUnsaved
+ * @param dispatch
+ * @returns {boolean}
+ */
+const handleBack = (isUnsaved, dispatch) => {
+    if (isUnsaved) {
+        Alert.alert(
+            'You have unsaved changes',
+            'Are you sure you want to leave without saving?',
+            [
+                { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                { text: 'No', onPress: () => console.log('No Pressed') },
+                { text: 'Yes', onPress: () => {
+                    console.log('Yes Pressed');
+                    dispatch(emptyFields());
+                    //dispatch(setUnsaved(false));
+                    dispatch(NavigationActions.back());
+                }
+                },
+            ],
+            { cancelable: false }
+        );
+        return true;
+    }
+    dispatch(NavigationActions.back());
+    // A true return value will prevent the regular handling of the Android back button,
+    // whereas false would allow the previous backhandlers to take action after this.
+    return true;
+};
+
+//A wrapper for the back button, that can be connected to Redux
+class HeaderBackButtonWrapper extends React.Component {
+    render() {
+        return (
+            <HeaderBackButton tintColor='#fff' onPress={() => handleBack(this.props.isUnsaved, this.props.dispatch)} />
+        );
+    }
+}
+
+
+// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+const mapStateToProps = (state) => {
+    const token         = state.user.token;
+    const username      = state.user.username;
+    const templateID    = state.newReport.templateID;
+    const title         = state.newReport.title;
+    const number        = state.newReport.number;
+    const answers       = state.newReport.answers;
+    const reports       = state.reports;
+    const isUnsaved     = state.newReport.isUnsaved;
+    return {
+        username,
+        templateID,
+        title,
+        number,
+        token,
+        reports,
+        answers,
+        isUnsaved,
+    };
+};
+
+const HeaderBackButtonWrapperWithRedux = connect(mapStateToProps)(HeaderBackButtonWrapper);
+
+
 // "export" necessary in order to test component without Redux store
 export class NewReportScreen extends React.Component {
+    static navigationOptions = () => {
+        return {
+            // the Redux-connected on-screen back button is set here
+            headerLeft: HeaderBackButtonWrapperWithRedux,
+        };
+    };
+
     constructor(props) {
         super(props);
         this.state = {
-            isUnsaved       : true,
             isLoading       : true,
             number          : '',
             isEditable      : false,
@@ -33,9 +125,11 @@ export class NewReportScreen extends React.Component {
         };
     }
 
+    _handleBack = () => handleBack(this.props.isUnsaved, this.props.dispatch);
+
     componentWillMount() {
         // BackHandler for detecting hardware button presses for back navigation (Android only)
-        BackHandler.addEventListener('hardwareBackPress', this.handleBack);
+        BackHandler.addEventListener('hardwareBackPress', this._handleBack);
     }
 
     componentDidMount() {
@@ -45,34 +139,9 @@ export class NewReportScreen extends React.Component {
 
     componentWillUnmount() {
         // Removes the BackHandler EventListener when unmounting
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
+        BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
     }
 
-    // This only handles android hardware back button presses. Handler for the on-screen back button
-    // is in AppNavigation.js
-    handleBack = () => {
-        if (this.state.isUnsaved) {
-            // TODO: apply same behaviour as with on-screen back button press
-            alert(
-                'You have unsaved changes',
-                'Are you sure you want to leave without saving?',
-                [
-                    { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                    { text: 'No', onPress: () => console.log('No Pressed') },
-                    { text: 'Yes', onPress: () => {
-                        console.log('Yes Pressed');
-                        this.props.dispatch(emptyFields());
-                        this.props.navigation.dispatch(NavigationActions.back()); }
-                    },
-                ],
-                { cancelable: false }
-            );
-            return true; // This will prevent the regular handling of the back button
-        }
-        // A false return value allows the previous back handler(s) to be called after this
-        // (in this case the normal behaviour)
-        return false;
-    };
 
     // insert default values to the report's answer fields
     setDefaultValue = () => {
@@ -500,24 +569,6 @@ export class NewReportScreen extends React.Component {
 }
 
 
-// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
-const mapStateToProps = (state) => {
-    const token         = state.user.token;
-    const username      = state.user.username;
-    const templateID    = state.newReport.templateID;
-    const title         = state.newReport.title;
-    const number        = state.newReport.number;
-    const answers       = state.newReport.answers;
-    const reports       = state.reports;
-    return {
-        username,
-        templateID,
-        title,
-        number,
-        token,
-        reports,
-        answers
-    };
-};
+
 
 export default connect(mapStateToProps)(NewReportScreen);

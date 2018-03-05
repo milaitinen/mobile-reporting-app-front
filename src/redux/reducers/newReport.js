@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { INSERT_TITLE, CREATE_REPORT, INSERT_FIELD_ANSWER, EMPTY_FIELDS } from '../actions/newReport';
+import { INSERT_TITLE, CREATE_REPORT, INSERT_FIELD_ANSWER, EMPTY_FIELDS, SET_UNSAVED } from '../actions/newReport';
 
 const initialState = {
     templateID: null ,
@@ -9,7 +9,8 @@ const initialState = {
     dateAccepted: null,
     id: null,
     orderNo: null,
-    userID: null
+    userID: null,
+    isUnsaved: true,
 };
 
 const newReportReducer = (state = initialState, action) => {
@@ -40,6 +41,11 @@ const newReportReducer = (state = initialState, action) => {
             };
         case EMPTY_FIELDS:
             return initialState;
+        case SET_UNSAVED:
+            return {
+                ...state,
+                isUnsaved: action.isUnsaved,
+            };
         default:
             return state;
     }

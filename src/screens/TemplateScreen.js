@@ -142,7 +142,7 @@ export class TemplateScreen extends Component {
             // this.setState({ isLoading: true });
             this.props.navigation.navigate('Preview', { refresh: this.handleRefresh,  isEditable: isEditable });
         }
-        //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReporstScreen and uncomment this
+        //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReportScreen and uncomment this
     };
 
     viewReport = (templateID, reportID, title) => {
