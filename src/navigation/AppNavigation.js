@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackNavigator, DrawerNavigator, HeaderBackButton, NavigationActions } from 'react-navigation';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import LoginScreen from '../screens/LoginScreen';
@@ -10,10 +10,11 @@ import ReportScreen from '../screens/ReportScreen';
 import navigationStyles from './navigationStyles';
 import Sidebar from '../navigation/Sidebar';
 import { strings } from '../locales/i18n';
-import { Alert } from 'react-native';
 
+export const LOGGED_OUT_ROUTE_NAME = 'loginScreen';
+export const LOGGED_IN_ROUTE_NAME = 'loggedInDrawer';
 
-// The stack that is contained within the drawer stack
+// The stack that is contained within the logged in drawer
 const TemplateStack = StackNavigator({
     Templates: {
         screen: TemplateScreen,
@@ -33,10 +34,6 @@ const TemplateStack = StackNavigator({
                 </Icon>,
         })
     },
-    Reports: {
-        screen: TemplateScreen,
-        navigationOptions: ({ navigation }) => ({ title: navigation.state.routeName })
-    },
     NewReport: {
         screen: NewReportScreen,
         navigationOptions: ({ navigation }) => ({
@@ -44,24 +41,6 @@ const TemplateStack = StackNavigator({
             headerTitle: strings('createNew.createNew'),
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
-            headerTintColor: '#fff',
-            headerLeft: <HeaderBackButton
-                tintColor='#fff'
-                onPress={() => {
-                    Alert.alert(
-                        'You have unsaved changes',
-                        'Are you sure you want to leave without saving?',
-                        [
-                            { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                            { text: 'No', onPress: () => console.log('No Pressed') },
-                            { text: 'Yes', onPress: () => {
-                                console.log('Yes Pressed');
-                                navigation.goBack(null); }
-                            },
-                        ],
-                        { cancelable: false }
-                    );
-                }} />,
             drawerLockMode: 'locked-closed',
         })
     },
@@ -69,7 +48,7 @@ const TemplateStack = StackNavigator({
         screen: ReportScreen,
         navigationOptions: () => ({
             flex: 0.3,
-            headerTitle: 'Report', //TODO: translate
+            headerTitle: strings('templates.report'),
             headerStyle: navigationStyles.HeaderContainer,
             headerTitleStyle: navigationStyles.ScreenHeader,
             headerTintColor: '#fff',
@@ -90,7 +69,7 @@ const TemplateStack = StackNavigator({
 },
 );
 
-const DrawerStack = DrawerNavigator({
+const LoggedInDrawer = DrawerNavigator({
     Menu: {
         screen: TemplateStack,
         navigationOptions: {
@@ -107,28 +86,16 @@ const DrawerStack = DrawerNavigator({
     drawerToggleRoute: 'DrawerToggle',
 });
 
-const LoginStack = StackNavigator({
-    loginScreen: {
-        screen: LoginScreen
-    },
-
-}, {
-    headerMode: 'screen',
-    navigationOptions: {
-        headerStyle: { backgroundColor: '#f0f8ff' },
-        header: null
-    }
-});
 
 // Manifest of possible screens
 const MainScreenNavigator = StackNavigator({
-    loginStack: { screen: LoginStack },
-    drawerStack: { screen: DrawerStack },
+    loginScreen: { screen: LoginScreen },
+    loggedInDrawer: { screen: LoggedInDrawer },
 }, {
     // Default config for all screens
     headerMode: 'none',
     title: 'Main',
-    initialRouteName: 'loginStack',
+    initialRouteName: LOGGED_OUT_ROUTE_NAME,
 });
 
 export default MainScreenNavigator;
