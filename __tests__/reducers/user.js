@@ -5,22 +5,14 @@ describe('user reducer', () => {
     it('should return the initial state', () => {
         expect(userReducer(undefined, {})).toEqual(
             {
-                username: null,
-<<<<<<< HEAD
-=======
+                username: '',
                 password: null,
-                serverUrl: null,
->>>>>>> dev
-                token: null
+                token: ''
             }
         );
     });
 
-<<<<<<< HEAD
-    it('should handle INSERT_PASSWORD', () => {
-=======
     it('should handle INSERT_USERNAME', () => {
->>>>>>> dev
         expect(
             userReducer(undefined, {
                 username: 'Maisa',
@@ -29,11 +21,8 @@ describe('user reducer', () => {
         ).toEqual(
             {
                 username: 'Maisa',
-<<<<<<< HEAD
-=======
                 password: null,
-                serverUrl: null,
-                token: null,
+                token: '',
             }
         );
     });
@@ -47,11 +36,9 @@ describe('user reducer', () => {
             })
         ).toEqual(
             {
-                username: null,
+                username: '',
                 password: 'fdhjaklfhaj',
-                serverUrl: null,
->>>>>>> dev
-                token: null,
+                token: '',
             }
         );
     });
@@ -64,12 +51,8 @@ describe('user reducer', () => {
             })
         ).toEqual(
             {
-                username: null,
-<<<<<<< HEAD
-=======
+                username: '',
                 password: null,
-                serverUrl: null,
->>>>>>> dev
                 token: '02fafa.hjkfldhjfa.fdaeu',
             }
         );

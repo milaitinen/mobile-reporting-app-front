@@ -26,7 +26,6 @@ import { strings } from '../locales/i18n';
 import { emptyFields, insertFieldAnswer, insertTitle, setUnsaved } from '../redux/actions/newReport';
 import { storeDraftsByTemplateID } from '../redux/actions/reports';
 
-
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';

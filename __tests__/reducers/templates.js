@@ -8,11 +8,7 @@ describe('templatesReducer reducer', () => {
 
     it('should handle STORE_TEMPLATES', () => {
         expect(
-<<<<<<< HEAD
             templatesReducer({},
-=======
-            templatesReducer(undefined,
->>>>>>> dev
                 {
                     type: types.STORE_TEMPLATES,
                     templates: [
@@ -29,14 +25,10 @@ describe('templatesReducer reducer', () => {
         );
     });
 
-<<<<<<< HEAD
-=======
     it('should handle STORE_TEMPLATES when templates:(empty)', () => {
         expect(templatesReducer(undefined, { type: types.STORE_TEMPLATES, templates: [] })).toEqual({});
     });
 
-
->>>>>>> dev
     it('should handle EMPTY_TEMPLATES', () => {
         expect(templatesReducer({ 0: { title: 'Eka', reportCount: 1, amountOfReports: 1, id: 5 } },
             {

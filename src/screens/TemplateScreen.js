@@ -87,6 +87,7 @@ export class TemplateScreen extends Component {
                     .catch(err => console.error(err));
             })
             .catch(error => console.error(error))
+            .then(() => this.setState({ refreshing: false, isLoading: false })) // TODO is there a better place to put this?
             .done();
     };
 
@@ -96,12 +97,10 @@ export class TemplateScreen extends Component {
         Object.keys(templates).forEach((templateID) => {
             fetchDraftsByTemplateID(username, templateID)
                 .then((drafts) => {
-
                     if (drafts.length !== 0) {
                         drafts.forEach(draft => this.props.dispatch(storeDraftsByTemplateID(templateID, draft)));
                     }
                 })
-                .then(() => this.setState({ refreshing: false, isLoading: false }))
                 .catch(err => console.error(err));
         });
     };

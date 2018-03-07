@@ -6,9 +6,14 @@ describe('newReportReducer reducer', () => {
         expect(newReportReducer(undefined, {})).toEqual(
             {
                 templateID: null ,
-                isEditable: false,
-                title: '',
-                number: null,
+                title: 'Draft',
+                answers: [],
+                dateCreated: null,
+                dateAccepted: null,
+                id: null,
+                orderNo: null,
+                userID: null,
+                isUnsaved: true,
             }
         );
     });
@@ -18,14 +23,19 @@ describe('newReportReducer reducer', () => {
             newReportReducer(undefined, {
                 type: types.CREATE_REPORT,
                 templateID: 4,
-                isEditable: true,
+                dateCreated: '2018-02-24',
             })
         ).toEqual(
             {
-                templateID: 4,
-                isEditable: true,
-                title: '',
-                number: null,
+                templateID: 4 ,
+                title: 'Draft',
+                answers: [],
+                dateCreated: '2018-02-24',
+                dateAccepted: null,
+                id: null,
+                orderNo: null,
+                userID: null,
+                isUnsaved: true,
             }
         );
     });
@@ -38,10 +48,15 @@ describe('newReportReducer reducer', () => {
             })
         ).toEqual(
             {
-                templateID: null,
-                isEditable: false,
+                templateID: null ,
                 title: 'Walmart Supplier Audit',
-                number: null,
+                answers: [],
+                dateCreated: null,
+                dateAccepted: null,
+                id: null,
+                orderNo: null,
+                userID: null,
+                isUnsaved: true,
             }
         );
     });

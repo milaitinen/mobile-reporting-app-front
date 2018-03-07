@@ -29,7 +29,7 @@ const reportsByTemplateIDReducer = (state = initialState, action) => {
             return initialState;
         }
         case STORE_DRAFTS_BY_TEMPLATE_ID: {
-            state[action.templateID].unshift(action.report); // add the report to the start of the array ( >< push)
+            state[action.templateID].unshift(action.report); // add draft to the start of the array of reports( >< push)
             return state;
         }
         default:
