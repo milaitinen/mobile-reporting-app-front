@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Keyboard, NetInfo, StatusBar } from 'react-native';
+import { Text, Keyboard, NetInfo, StatusBar, Platform, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
@@ -8,7 +8,7 @@ import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from '../redux/actions/user';
-import { login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
+import { isNetworkConnected, login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
 import { NavigationActions } from 'react-navigation';
 import { toggleConnection } from '../redux/actions/connection';
 import { setInitialConnection } from '../redux/actions/connection';
@@ -42,19 +42,19 @@ export class LoginScreen extends React.Component {
     componentDidMount() {
         /* First sets the initial connection state, and then adds eventlistener to listen to connection changes.
             Unused 'isConnected' was added to ensure that setInitialConnection runs before toggling anything*/
-        NetInfo.isConnected.fetch()
+        isNetworkConnected()
             .then(isConnected => {
                 this.props.dispatch(setInitialConnection({ connectionStatus: isConnected }));
-                console.log('First, is ' + isConnected);})
-            .then(isConnected => NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange));
+                console.log('First, is ' + isConnected);});
+        //.then(isConnected => NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange));
     }
 
     componentWillUnmount() {
-        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
+        if (Platform.OS === 'android') { NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange); }
     }
 
     handleConnectionChange = isConnected => {
-        this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
+        if (Platform.OS === 'android') { this.props.dispatch(toggleConnection({ connectionStatus: isConnected })); }
     };
 
     /**
@@ -76,8 +76,7 @@ export class LoginScreen extends React.Component {
                 if (response === undefined) {
                     alert('Invalid username or password');
                 } else {
-                    const token = response;
-                    this.props.dispatch(insertToken(token));
+                    this.props.dispatch(insertToken(response));
                     Keyboard.dismiss();
                     this.resetNavigationTo('drawerStack');
                 }
@@ -88,12 +87,12 @@ export class LoginScreen extends React.Component {
 
     render() {
         return <AppBackground>
-            {/* Leaving this here in case it's of some use with iOS.
-            <OfflineNotice isConnected={this.props.isConnected} /> */}
-
+            {/* Leaving this here in case it's of some use with iOS.*/}
+            <OfflineNotice isConnected={this.props.isConnected} />
             <StatusBar
                 backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424'}
-                barStyle="light-content" />
+                hidden={false}
+                barStyle="light-content"/>
 
             <Text style={loginStyles.title}>
                 {strings('login.title')}

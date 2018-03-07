@@ -6,6 +6,8 @@ import {
     ScrollView,
     NetInfo,
     StatusBar,
+    Platform,
+    Modal,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -14,14 +16,16 @@ import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
 import { OfflineNotice } from '../components/OfflineNotice';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, /*fetchReportsByUsername*/ } from './api';
+import {
+    fetchReportsByTemplateID, fetchTemplatesByUsername,
+    isNetworkConnected, /*fetchReportsByUsername*/
+} from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
-import { toggleConnection } from '../redux/actions/connection';
-// import { storeReports } from '../redux/actions/reports';
+import { setInitialConnection, toggleConnection } from '../redux/actions/connection';
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
@@ -59,7 +63,13 @@ export class TemplateScreen extends Component {
      and instantiates the network request.
     */
     componentDidMount() {
-        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
+
+        isNetworkConnected()
+            .then(isConnected => {
+                this.props.dispatch(setInitialConnection({ connectionStatus: isConnected }));
+                console.log('First, is ' + isConnected);});
+
+        if (Platform.OS === 'android') NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
         // TEMPORARY: not sure if this is the best solution. Current version fixes a bug (related to logging in)
         if (this.props.username !== userReducer.username) {
             this.getTemplatesAndReports();
@@ -69,11 +79,11 @@ export class TemplateScreen extends Component {
     }
 
     componentWillUnmount() {
-        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
+        if (Platform.OS === 'android') NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
     }
 
     handleConnectionChange = isConnected => {
-        this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
+        if (Platform.OS === 'android') this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
     };
 
     /*
@@ -177,15 +187,17 @@ export class TemplateScreen extends Component {
         const { reportsByTempID, templates } = this.props;
 
         return <AppBackground>
-            {/* Leaving this here in case it's of some use with iOS.
-            <OfflineNotice isConnected={this.props.isConnected} /> */}
+            <Modal
+                transparent={true}
+                visible={true}>
+                <OfflineNotice isConnected={this.props.isConnected} />
+            </Modal>
 
             <StatusBar
                 backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424'}
                 barStyle="light-content" />
 
             <View style={templateScreenStyles.viewContainer}>
-                <OfflineNotice isConnected={this.props.isConnected} />
 
                 {/* At the moment this doesn't do anything. */}
                 <ReportSearchBar />
