@@ -63,6 +63,7 @@ export class TemplateScreen extends Component {
         } else {
             this.setState({ refreshing: false, isLoading: false });
         }
+
     }
 
     /*
@@ -76,7 +77,13 @@ export class TemplateScreen extends Component {
         const { username, token } = this.props;
 
         fetchTemplatesByUsername(username, token)
-            .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
+            .then(responseJson => {
+                if (responseJson.length < 1) {  // handle situations where there are no templates
+                    this.setState({ refreshing: false, isLoading: false });
+                } else {
+                    this.props.dispatch(storeTemplates(responseJson));
+                }
+            })
             .then(() => {
                 const reportsByTemplateID = Object.keys(this.props.templates)
                     .map((templateID) => fetchReportsByTemplateID(username, templateID, token));
@@ -87,7 +94,6 @@ export class TemplateScreen extends Component {
                     .catch(err => console.error(err));
             })
             .catch(error => console.error(error))
-            .then(() => this.setState({ refreshing: false, isLoading: false })) // TODO is there a better place to put this?
             .done();
     };
 
@@ -101,6 +107,7 @@ export class TemplateScreen extends Component {
                         drafts.forEach(draft => this.props.dispatch(storeDraftsByTemplateID(templateID, draft)));
                     }
                 })
+                .then(() => this.setState({ refreshing: false, isLoading: false }))
                 .catch(err => console.error(err));
         });
     };
