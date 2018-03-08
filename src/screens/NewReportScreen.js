@@ -24,7 +24,7 @@ import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID, saveDraft } from './api';
 import { strings } from '../locales/i18n';
 import { emptyFields, insertFieldAnswer, insertTitle, setUnsaved } from '../redux/actions/newReport';
-import { storeDraftsByTemplateID } from '../redux/actions/reports';
+import { storeDraftByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -152,6 +152,7 @@ export class NewReportScreen extends React.Component {
     getFieldsByTemplateID = (templateID) => {
         fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
             .then(responseJson => {
+                console.log('fields', responseJson);
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .then(() => {
@@ -179,7 +180,7 @@ export class NewReportScreen extends React.Component {
         report.answers = Object.values(answers);
         report.id = saveDraft(username, templateID, report);
 
-        this.props.dispatch(storeDraftsByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
+        this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
         this.props.dispatch(emptyFields());
 
         Alert.alert('Report saved!');
@@ -404,8 +405,6 @@ export class NewReportScreen extends React.Component {
                                 placeholder="select date"
                                 placeholderTextColor={'#adadad'}
                                 format="YYYY-MM-DD"
-                                minDate="2018-05-01"
-                                maxDate="2018-06-01"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 /*iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}*/

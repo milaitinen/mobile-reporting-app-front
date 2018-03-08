@@ -6,7 +6,6 @@ import { strings } from '../../locales/i18n';
 
 const StatusBadge = ({ dateAccepted, isDraft }) =>{
 
-    //TODO maybe there's a better way to match drafts...?
     if (isDraft) {
         return (
             <View style={styles.BadgeViewContainer}>

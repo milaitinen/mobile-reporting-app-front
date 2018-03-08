@@ -15,7 +15,7 @@ import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
 import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID } from './api';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID, storeDraftsByTemplateID } from '../redux/actions/reports';
+import { storeReportsByTemplateID, storeDraftByTemplateID } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
@@ -104,7 +104,7 @@ export class TemplateScreen extends Component {
             fetchDraftsByTemplateID(username, templateID)
                 .then((drafts) => {
                     if (drafts.length !== 0) {
-                        drafts.forEach(draft => this.props.dispatch(storeDraftsByTemplateID(templateID, draft)));
+                        drafts.forEach(draft => this.props.dispatch(storeDraftByTemplateID(templateID, draft)));
                     }
                 })
                 .then(() => this.setState({ refreshing: false, isLoading: false }))

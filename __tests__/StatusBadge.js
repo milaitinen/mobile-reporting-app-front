@@ -7,12 +7,15 @@ import StatusBadge from '../src/components/StatusBadge/StatusBadge';
 
 configure({ adapter: new Adapter() });
 
+it('renders one text field when isDraft = true', () => {
+    expect(shallow(<StatusBadge dateAccepted='2018-04-01' isDraft={true}/>).find(Text).length).toEqual(1);
+});
 
 it('renders two text fields when dateAccepted is not null', () => {
-    expect(shallow(<StatusBadge dateAccepted='2018-04-01'/>).find(Text).length).toEqual(2)
+    expect(shallow(<StatusBadge dateAccepted='2018-04-01' isDraft={false}/>).find(Text).length).toEqual(2);
 });
 
 it('renders only one text field when dateAccepted = null', () => {
-    expect(shallow(<StatusBadge dateAccepted={null}/>).find(Text).length).toEqual(1)
+    expect(shallow(<StatusBadge dateAccepted={null} isDraft={false}/>).find(Text).length).toEqual(1);
 });
 
