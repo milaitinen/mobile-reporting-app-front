@@ -44,9 +44,8 @@ export class LoginScreen extends React.Component {
             Unused 'isConnected' was added to ensure that setInitialConnection runs before toggling anything*/
         isNetworkConnected()
             .then(isConnected => {
-                this.props.dispatch(setInitialConnection({ connectionStatus: isConnected }));
-                console.log('First, is ' + isConnected);});
-        //.then(isConnected => NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange));
+                this.props.dispatch(setInitialConnection({ connectionStatus: isConnected }))})
+            .then(isConnected => Platform.OS === 'android' ? NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange): '');
     }
 
     componentWillUnmount() {
