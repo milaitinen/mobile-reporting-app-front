@@ -21,7 +21,7 @@ const navigationStyles = EStyleSheet.create({
         color: '#fff',
         fontWeight: 'normal',
         fontFamily: '$primaryFont',
-        marginTop: Platform.OS === 'ios' ? 20 : 0 ,
+        marginTop: Platform.OS === 'ios' ? 20 : 0,
         alignSelf: 'center',
         '@media (max-width: 350)': {
             fontSize: 25,

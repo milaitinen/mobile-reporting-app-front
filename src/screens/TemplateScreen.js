@@ -164,6 +164,7 @@ export class TemplateScreen extends Component {
         if (this.state.isLoading) {
             return (
                 <AppBackground>
+                    <StatusBar backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424' } barStyle="light-content" />
                     <ActivityIndicator
                         animating={this.state.animating}
                         style={[templateScreenStyles.activityIndicator, { height: 80 }]}
@@ -179,6 +180,7 @@ export class TemplateScreen extends Component {
 
         return <AppBackground>
             <View style={templateScreenStyles.viewContainer}>
+                <StatusBar backgroundColor={this.props.isConnected ? '#3d4f7c' : '#b52424'} barStyle="light-content" />
                 {/*At the moment this doesn't do anything. */}
                 <ReportSearchBar />
                 <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>

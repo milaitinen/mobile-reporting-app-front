@@ -6,10 +6,10 @@ const OfflineNotice = ({ isConnected }) => {
 
     const backgroundColor = isConnected ? '#3d4f7c' : '#b52424';
 
-    if(Platform.OS === 'android') {
+    if (Platform.OS === 'android') {
         return (
             <StatusBar
-                backgroundColor={ backgroundColor }
+                backgroundColor={ isConnected ? '#3d4f7c' : '#b52424' }
                 barStyle="light-content" />
         );
     } else {
