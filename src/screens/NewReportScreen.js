@@ -24,7 +24,7 @@ import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID, saveDraft } from './api';
 import { strings } from '../locales/i18n';
 import { emptyFields, insertFieldAnswer, insertTitle, setUnsaved } from '../redux/actions/newReport';
-import { storeSavedReportsByTemplateID } from '../redux/actions/reports';
+import { storeDraftByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -142,7 +142,7 @@ export class NewReportScreen extends React.Component {
     }
 
 
-    // set the value of yes/no field(s) to '0' (No)
+    // insert default values to the report's answer fields
     setDefaultValue = () => {
         this.state.dataFieldsByID.map((field) => {
             this.props.dispatch(insertFieldAnswer(field, field.defaultValue));
@@ -152,6 +152,7 @@ export class NewReportScreen extends React.Component {
     getFieldsByTemplateID = (templateID) => {
         fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
             .then(responseJson => {
+                console.log('fields', responseJson);
                 this.setState({ dataFieldsByID: responseJson, isLoading: false });
             })
             .then(() => {
@@ -163,7 +164,7 @@ export class NewReportScreen extends React.Component {
 
     // save report locally in asyncstorage
     save = () => {
-        const { templateID, username, reports, answers } = this.props;
+        const { templateID, username, answers } = this.props;
 
         const report = {
             answers: [],
@@ -171,27 +172,23 @@ export class NewReportScreen extends React.Component {
             userID: 1,      // TODO what to do with userID, orderNo, and id in the future...?
             orderNo: null,
             title: this.props.title || 'Draft',
-            dateCreated: null,
+            dateCreated: moment().format('YYYY-MM-DD'),
             dateAccepted: null,
-            id: -1
+            id: null
         };
 
-        //TODO problems when you create several drafts from the same template
-        //Check if there already is a report of the same templateID
-        if (reports[templateID][0].id === 0) {
-            Alert.alert('You can not create more than one draft per template!');
-            return;
-        }
-
         report.answers = Object.values(answers);
-        saveDraft(username, templateID, report);
-        this.props.dispatch(storeSavedReportsByTemplateID(templateID, report)); // store drafts together with other reports in reports state
-        //this.props.dispatch(setUnsaved(false));
+        report.id = saveDraft(username, templateID, report);
+
+        this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
+        this.props.dispatch(emptyFields());
 
         Alert.alert('Report saved!');
 
-        this.props.dispatch(emptyFields());             // return newReport state to its initial state
-        this.props.navigation.state.params.refresh();   // update templateScreen
+        //this.setState({ isUnsaved: false });
+
+        //return to template screen and have it refreshed
+        this.props.navigation.state.params.refresh();
         this.props.navigation.dispatch(NavigationActions.back());
     };
 
@@ -273,7 +270,8 @@ export class NewReportScreen extends React.Component {
                                 placeholder={field.defaultValue}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                                 placeholderTextColor={'#adadad'}
-                                onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
+                                //Title is now set separately from this field
+                                //onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
@@ -407,8 +405,6 @@ export class NewReportScreen extends React.Component {
                                 placeholder="select date"
                                 placeholderTextColor={'#adadad'}
                                 format="YYYY-MM-DD"
-                                minDate="2018-05-01"
-                                maxDate="2018-06-01"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 /*iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}*/
@@ -468,7 +464,7 @@ export class NewReportScreen extends React.Component {
                                 cancelBtnText="Cancel"
                                 minuteInterval={10}
                                 iconComponent={<Icon name={'clock'} type={'entypo'} iconStyle={ newReportStyles.dateIconStyle }/>}
-                                onDateChange={(time) => {this.setState({ time: time });}}
+                                onDateChange={(time) => this.props.dispatch(insertFieldAnswer(field, time))}
                             />
                         </View>
                     );
@@ -532,6 +528,17 @@ export class NewReportScreen extends React.Component {
                                 <Text style={newReportStyles.title}>{strings('templates.report')}</Text>
                             </View>
                             <View style={newReportStyles.fieldContainer}>
+                                <View>
+                                    <Text style={ newReportStyles.textStyleClass }>Otsikko</Text>
+                                    <TextInput
+                                        editable={isEditable}
+                                        placeholder={'Otsikko'}
+                                        placeholderTextColor={'#adadad'}
+                                        underlineColorAndroid='transparent'
+                                        style={newReportStyles.textInputStyleClass}
+                                        onChangeText={(text) => this.props.dispatch(insertTitle(text))}
+                                    />
+                                </View>
                                 {renderedFields}
                             </View>
                         </ScrollView>

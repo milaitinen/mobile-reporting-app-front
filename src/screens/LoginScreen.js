@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StatusBar, Keyboard } from 'react-native';
+import { Text, StatusBar, Keyboard, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
@@ -29,6 +29,12 @@ export class LoginScreen extends React.Component {
             this.props.navigation.navigate(LOGGED_IN_ROUTE_NAME);
         }
     }
+
+    /* DEV uncomment in case you need to clear AsyncStorage
+    componentWillMount() {
+        AsyncStorage.clear();
+    }
+    */
 
     /**
      * Navigates to the given route and resets navigation

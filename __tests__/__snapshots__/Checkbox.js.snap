@@ -50,7 +50,7 @@ exports[`renders correctly 1`] = `
       allowFontScaling={false}
       ellipsizeMode="tail"
       onLongPress={undefined}
-      onPress={undefined}
+      onPress={[Function]}
       style={
         Array [
           Object {

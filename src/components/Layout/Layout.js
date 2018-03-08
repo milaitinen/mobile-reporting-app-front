@@ -137,24 +137,29 @@ class Layout extends Component{
                             renderItem={({ item }) =>
                                 <ListItem
                                     key={item.title}
-                                    onPress={() => this.props.openReport(templateID, item.id, item.title)}
+                                    onPress={() => this.props.viewReport(templateID, item.id, item.title)}
                                     containerStyle={ styles.reportContainer }
                                     titleStyle = { styles.reportTitle }
                                     title={(item.orderNo) ? `${item.orderNo}\t${item.title}` : `${item.title}`}
                                     subtitle={item.dateCreated}
                                     hideChevron = {true}
                                     badge ={{ element:
-                                        <StatusBadge dateCreated={item.dateCreated} dateAccepted={item.dateAccepted} />
+                                        <StatusBadge
+                                            dateAccepted={item.dateAccepted}
+                                            isDraft={item.id < 0}
+                                        />
                                     }}
                                 />
                             }
                             keyExtractor={item => item.id}
                             ListFooterComponent={
                                 (data !== undefined && data.length > this.state.itemsCount)
-                                    ? <Text style={styles.more} onPress={() => this.showMore()}>
+                                    ?
+                                    <Text style={styles.more} onPress={() => this.showMore()}>
                                         { strings('templates.showMore') }
                                     </Text>
-                                    : <Text style={styles.noMoreReports}>
+                                    :
+                                    <Text style={styles.noMoreReports}>
                                         { strings('templates.endOfReports') }
                                     </Text>
                             }

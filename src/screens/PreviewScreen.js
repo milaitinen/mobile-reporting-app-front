@@ -47,7 +47,7 @@ export class PreviewScreen extends React.Component {
 
     handleOnPress = () => {
         this.props.dispatch(createReport(this.props.templateID, moment().format('YYYY-MM-DD')));
-        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, editable: true });
+        this.props.navigation.navigate('NewReport', { refresh: this.props.navigation.state.params.refresh, isEditable: true });
     };
 
     onChanged = (text) => {

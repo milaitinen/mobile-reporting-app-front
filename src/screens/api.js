@@ -68,21 +68,40 @@ export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
 };
 
 // used to store drafts
-export const saveDraft = (username, templateID, data) => {
-    saveData(`${url}/users/${username}/templates/${templateID}`, data);
+export const saveDraft = (username, templateID, draft) => {
+    fetchDraftsByTemplateID(username, templateID)
+        .then((drafts) => {
+            // see if there is already a draft with the same id
+            const draftIndex = drafts.findIndex(x => x.id === draft.id);
+
+            if (draftIndex < 0) {
+                drafts.push(draft);
+            } else {
+                drafts[draftIndex] = draft;
+            }
+            // give each draft a unique, negative id
+            drafts.map((draft, i) => draft.id = -Math.abs(i + 1));
+            saveData(`${url}/users/${username}/templates/${templateID}`, drafts);
+
+            return (drafts[drafts.length - 1].id);
+        });
 };
 
-export const removeDraft =  (username, templateID) => {
-    removeData(`${url}/users/${username}/templates/${templateID}`);
+export const removeDraft =  (username, templateID, draftID) => {
+    fetchDraftsByTemplateID(username, templateID)
+        .then((drafts) => {
+            const draftRemoved = drafts.filter(draft => draft.id !== draftID);
+            saveData(`${url}/users/${username}/templates/${templateID}`, draftRemoved);
+        });
 };
 
-export const fetchStoredReportsByTemplateID = (username, templateID) => {
+export const fetchDraftsByTemplateID = (username, templateID) => {
     return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}`) // NOTE: this url is just a key
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
             } else {
-                return {};
+                return [];
             }
         });
 };
@@ -266,6 +285,7 @@ const saveData = (dataUrl, data) => {
     AsyncStorage.setItem(dataUrl, JSON.stringify(data));
 };
 
+/*
 const removeData = (dataUrl) => {
     try {
         AsyncStorage.removeItem(dataUrl);
@@ -273,6 +293,7 @@ const removeData = (dataUrl) => {
         console.error(error);
     }
 };
+*/
 
 // Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178
 const isNetworkConnected = () => {

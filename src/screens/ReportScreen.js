@@ -51,13 +51,13 @@ export class ReportScreen extends React.Component {
 
     // delete draft from asyncstorage
     deleteDraft = () => {
-        const { templateID } = this.props.navigation.state.params;
+        const { templateID, reportID } = this.props.navigation.state.params;
         const { username } = this.props;
 
-        removeDraft(username, templateID);
+        removeDraft(username, templateID, reportID);
         this.props.dispatch(emptyFields());
 
-        Alert.alert('Report deleted.');
+        Alert.alert('Deleted draft.');
 
         this.props.navigation.state.params.refresh();
         this.props.navigation.dispatch(NavigationActions.back());
@@ -69,6 +69,8 @@ export class ReportScreen extends React.Component {
         const { templateID } = this.props.navigation.state.params;
 
         const report = this.state.report;
+        report.title = this.state.title || report.title;
+        report.dateCreated = moment().format('YYYY-MM-DD');
         report.answers = Object.values(answers);
         saveDraft(username, templateID, report);
 
@@ -77,13 +79,6 @@ export class ReportScreen extends React.Component {
         this.props.dispatch(emptyFields());             // return newReport state to its initial state
         this.props.navigation.state.params.refresh();   // update templateScreen
         this.props.navigation.dispatch(NavigationActions.back());
-
-        //report.answers = Object.values(answers);
-        //saveDraft(username, templateID, report);
-        //this.props.dispatch(storeSavedReportsByTemplateID(templateID, report)); // store drafts together with other reports in reports state
-        //this.setState=({ isUnsaved: false });
-
-
     };
 
     // Inserts data to server with a post method.
@@ -137,9 +132,6 @@ export class ReportScreen extends React.Component {
 
         const { isEditable } = this.state;
         const { answers } = this.props;
-        const deleteReportButton = (this.props.navigation.state.params.reportID > 0) ?
-            null : <Button title={'Delete'} disabled={false} onPress={() => this.deleteDraft()} />;
-
         const renderedFields = (!this.state.dataFieldsByID) ? null : this.state.dataFieldsByID.map((field, index) => {
 
             switch (field.fieldID) {
@@ -370,11 +362,14 @@ export class ReportScreen extends React.Component {
                     </View>
                 </View>
 
-                <View style={ newReportStyles.buttonView}>
-                    <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
-                    <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}  />
-                    {deleteReportButton}
-                </View>
+                {
+                    (this.props.navigation.state.params.reportID < 0) &&
+                        <View style={ newReportStyles.buttonView}>
+                            <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
+                            <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}  />
+                            <Button title={'Delete'} disabled={false} onPress={() => this.deleteDraft()} />
+                        </View>
+                }
 
             </AppBackground>
             /*

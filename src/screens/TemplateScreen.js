@@ -13,13 +13,12 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchStoredReportsByTemplateID } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID } from './api';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID, storeSavedReportsByTemplateID } from '../redux/actions/reports';
+import { storeReportsByTemplateID, storeDraftByTemplateID } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
-// import { storeReports } from '../redux/actions/reports';
 
 
 // "export" necessary in order to test component without Redux store
@@ -64,15 +63,8 @@ export class TemplateScreen extends Component {
         } else {
             this.setState({ refreshing: false, isLoading: false });
         }
-    }
 
-    isEmpty = (obj) => {
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key))
-                return false;
-        }
-        return true;
-    };
+    }
 
     /*
      Fetches the data from the server in two parts.
@@ -85,28 +77,35 @@ export class TemplateScreen extends Component {
         const { username, token } = this.props;
 
         fetchTemplatesByUsername(username, token)
-            .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
+            .then(responseJson => {
+                if (responseJson.length < 1) {  // handle situations where there are no templates
+                    this.setState({ refreshing: false, isLoading: false });
+                } else {
+                    this.props.dispatch(storeTemplates(responseJson));
+                }
+            })
             .then(() => {
                 const reportsByTemplateID = Object.keys(this.props.templates)
                     .map((templateID) => fetchReportsByTemplateID(username, templateID, token));
 
                 Promise.all(reportsByTemplateID)
                     .then(data => this.props.dispatch(storeReportsByTemplateID(data)))
-                    .then(() => this.getStoredReports())
+                    .then(() => this.getDrafts())
                     .catch(err => console.error(err));
             })
             .catch(error => console.error(error))
             .done();
     };
 
-    getStoredReports = () => {
-        const { templates, username, token } = this.props;
+    getDrafts = () => {
+        const { templates, username } = this.props;
 
         Object.keys(templates).forEach((templateID) => {
-            fetchStoredReportsByTemplateID(username, templateID, token)
-                .then((data) => {
-                    //TODO come up with a better solution: currently the data is { (some object) } or [ (empty array) ]
-                    if (Object.keys(data).length !== 0) this.props.dispatch(storeSavedReportsByTemplateID(templateID, data));
+            fetchDraftsByTemplateID(username, templateID)
+                .then((drafts) => {
+                    if (drafts.length !== 0) {
+                        drafts.forEach(draft => this.props.dispatch(storeDraftByTemplateID(templateID, draft)));
+                    }
                 })
                 .then(() => this.setState({ refreshing: false, isLoading: false }))
                 .catch(err => console.error(err));
@@ -116,11 +115,12 @@ export class TemplateScreen extends Component {
     // Handler function for refreshing the data and refetching.
     handleRefresh = () => {
         this.setState({ refreshing: true, }, () => { this.getTemplatesAndReports(); });
+        this.setState({ isLoading: true });
     };
 
     // Determines whether this screen is scrollable or not.
     setScrollEnabled = (bool) => {
-        this.setState({ scrollEnabled : bool })
+        this.setState({ scrollEnabled : bool });
     };
 
     /*
@@ -140,18 +140,21 @@ export class TemplateScreen extends Component {
     createNew = (templateID, isEditable) => {
         if (isEditable) {
             this.props.dispatch(createReport(templateID, moment().format('YYYY-MM-DD')));
+            // this.setState({ isLoading: true });
             this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, isEditable: isEditable });
         }
         else {
             this.props.dispatch(preview(templateID));
+            // this.setState({ isLoading: true });
             this.props.navigation.navigate('Preview', { refresh: this.handleRefresh,  isEditable: isEditable });
         }
         //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReportScreen and uncomment this
     };
 
-    openReport = (templateID, reportID, title) => {
+    viewReport = (templateID, reportID, title) => {
         //this.setState({ isLoading: true }); TODO same problem as above
-        this.props.navigation.navigate('Report', { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
+        this.props.navigation.navigate('Report',
+            { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
     };
 
     render() {
@@ -191,7 +194,7 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenScrollEnabled={this.setScrollEnabled}
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
-                                    openReport={this.openReport}
+                                    viewReport={this.viewReport}
                                     nofReports={(reports[item.id]) ? (reports[item.id]).length : 0}
                                     templateID={item.id}
                                     data={reports[item.id]}
