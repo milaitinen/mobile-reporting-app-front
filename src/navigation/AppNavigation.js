@@ -1,6 +1,7 @@
 import React from 'react';
-import { StackNavigator, DrawerNavigator, HeaderBackButton, NavigationActions } from 'react-navigation';
+import { StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
 import { Icon } from 'react-native-elements';
+import { View, Text } from 'react-native';
 
 import LoginScreen from '../screens/LoginScreen';
 import TemplateScreen from '../screens/TemplateScreen';
@@ -8,8 +9,10 @@ import NewReportScreen from '../screens/NewReportScreen';
 import PreviewScreen from '../screens/PreviewScreen';
 import navigationStyles from './navigationStyles';
 import Sidebar from '../navigation/Sidebar';
+import connectionReducer from '../redux/reducers/connection';
 import { strings } from '../locales/i18n';
 import { Alert } from 'react-native';
+import OfflineNotice from '../components/OfflineNotice/OfflineNotice';
 
 
 // The stack that is contained within the drawer stack
@@ -18,18 +21,18 @@ const TemplateStack = StackNavigator({
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
             flex: 0.3,
-            headerTitle: strings('templates.templates') ,
-            headerStyle: navigationStyles.HeaderContainer,
-            headerTitleStyle: navigationStyles.ScreenHeader,
-            headerBackTitle: null,
-            headerLeft:
-                <Icon
-                    name={'menu'}
-                    type={'feather'}
-                    iconStyle={navigationStyles.menuIcon}
-                    containerStyle={navigationStyles.menuIconContainer}
-                    onPress={() => { navigation.navigate('DrawerOpen'); }}>
-                </Icon>,
+            header:
+                <View style={ navigationStyles.HeaderContainer}>
+                    <OfflineNotice isConnected={ connectionReducer }/>
+                    <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.templates') }</Text>
+                    <Icon
+                        name={'menu'}
+                        type={'feather'}
+                        iconStyle={navigationStyles.menuIcon}
+                        containerStyle={navigationStyles.menuIconContainer}
+                        onPress={() => { navigation.navigate('DrawerOpen'); }}>
+                    </Icon>
+                </View>
         })
     },
     Reports: {
@@ -87,7 +90,6 @@ const DrawerStack = DrawerNavigator({
 }, {
     // This loads the contents of the drawer from the custom Sidebar
     contentComponent: Sidebar,
-
     // These fix a bug with the drawer navigator
     drawerOpenRoute: 'DrawerOpen',
     drawerCloseRoute: 'DrawerClose',

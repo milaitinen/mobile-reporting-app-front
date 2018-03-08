@@ -1,4 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { Platform } from 'react-native';
 
 const navigationStyles = EStyleSheet.create({
 
@@ -17,11 +18,11 @@ const navigationStyles = EStyleSheet.create({
     },
 
     ScreenHeader: {
-        alignSelf: 'flex-start',
         color: '#fff',
         fontWeight: 'normal',
         fontFamily: '$primaryFont',
-        paddingLeft: 0,
+        marginTop: Platform.OS === 'ios' ? 20 : 0 ,
+        alignSelf: 'center',
         '@media (max-width: 350)': {
             fontSize: 25,
         },
@@ -34,6 +35,9 @@ const navigationStyles = EStyleSheet.create({
     menuIconContainer: {
         paddingRight: 0,
         paddingLeft: 20,
+        marginTop: Platform.OS === 'ios' ? 20 : 0 ,
+        left:0,
+        position: 'absolute',
     },
 
     menuIcon: {

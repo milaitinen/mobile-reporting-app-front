@@ -7,7 +7,6 @@ import {
     NetInfo,
     StatusBar,
     Platform,
-    Modal,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -15,7 +14,6 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { OfflineNotice } from '../components/OfflineNotice';
 import {
     fetchReportsByTemplateID, fetchTemplatesByUsername,
     isNetworkConnected, /*fetchReportsByUsername*/
@@ -166,13 +164,6 @@ export class TemplateScreen extends Component {
         if (this.state.isLoading) {
             return (
                 <AppBackground>
-                    {/* Leaving this here in case it's of some use with iOS.
-                    <OfflineNotice isConnected={this.props.isConnected} /> */}
-
-                    <StatusBar
-                        backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424'}
-                        barStyle="light-content" />
-
                     <ActivityIndicator
                         animating={this.state.animating}
                         style={[templateScreenStyles.activityIndicator, { height: 80 }]}
@@ -187,19 +178,8 @@ export class TemplateScreen extends Component {
         const { reportsByTempID, templates } = this.props;
 
         return <AppBackground>
-            <Modal
-                transparent={true}
-                visible={true}>
-                <OfflineNotice isConnected={this.props.isConnected} />
-            </Modal>
-
-            <StatusBar
-                backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424'}
-                barStyle="light-content" />
-
             <View style={templateScreenStyles.viewContainer}>
-
-                {/* At the moment this doesn't do anything. */}
+                {/*At the moment this doesn't do anything. */}
                 <ReportSearchBar />
                 <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
                     <FlatList ref={c => (this._flatList = c)} scrollEnabled={this.state.scrollEnabled} data={Object.values(templates)} renderItem={({ item, index }) => <Layout title={item.title} moveToTop={(viewPosition = 0) => this._flatList.scrollToIndex(
