@@ -464,7 +464,7 @@ export class NewReportScreen extends React.Component {
                                 cancelBtnText="Cancel"
                                 minuteInterval={10}
                                 iconComponent={<Icon name={'clock'} type={'entypo'} iconStyle={ newReportStyles.dateIconStyle }/>}
-                                onDateChange={(time) => {this.setState({ time: time });}}
+                                onDateChange={(time) => this.props.dispatch(insertFieldAnswer(field, time))}
                             />
                         </View>
                     );
