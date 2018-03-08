@@ -69,6 +69,7 @@ export class ReportScreen extends React.Component {
         const { templateID } = this.props.navigation.state.params;
 
         const report = this.state.report;
+        report.title = this.state.title || report.title;
         report.dateCreated = moment().format('YYYY-MM-DD');
         report.answers = Object.values(answers);
         saveDraft(username, templateID, report);
