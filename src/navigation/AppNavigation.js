@@ -24,7 +24,7 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice isConnected={ connectionReducer }/>
-                    <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.templates') }</Text>
+                    <Text style={ navigationStyles.ScreenHeaderTemplates }>{ strings('templates.templates') }</Text>
                     <Icon
                         name={'menu'}
                         type={'feather'}
@@ -43,37 +43,49 @@ const TemplateStack = StackNavigator({
         screen: NewReportScreen,
         navigationOptions: ({ navigation }) => ({
             flex: 0.3,
-            headerTitle: strings('createNew.createNew') ,
-            headerStyle: navigationStyles.HeaderContainer,
-            headerTitleStyle: navigationStyles.ScreenHeader,
-            headerTintColor: '#fff',
-            headerLeft: <HeaderBackButton
-                tintColor='#fff'
-                onPress={() => {
-                    Alert.alert(
-                        'You have unsaved changes',
-                        'Are you sure you want to leave without saving?',
-                        [
-                            { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                            { text: 'No', onPress: () => console.log('No Pressed') },
-                            { text: 'Yes', onPress: () => {
-                                console.log('Yes Pressed');
-                                navigation.goBack(null); }
-                            },
-                        ],
-                        { cancelable: false }
-                    );
-                }} />,
+            header:
+               <View style={ navigationStyles.HeaderContainer}>
+                   <OfflineNotice isConnected={ connectionReducer }/>
+                   <HeaderBackButton
+                       tintColor='#fff'
+                       style={ navigationStyles.headerBackStyle }
+                       onPress={() => {
+                           Alert.alert(
+                               'You have unsaved changes',
+                               'Are you sure you want to leave without saving?',
+                               [
+                                   { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                                   { text: 'No', onPress: () => console.log('No Pressed') },
+                                   { text: 'Yes', onPress: () => {
+                                       console.log('Yes Pressed');
+                                       navigation.goBack(null); }
+                                   },
+                               ],
+                               { cancelable: false }
+                           );
+                       }}/>
+                   <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                       <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.createNew') }</Text>
+                   </View>
+               </View>,
         })
     },
     Preview: {
         screen: PreviewScreen,
-        navigationOptions: () => ({
+        navigationOptions: ({ navigation }) => ({
             flex: 0.3,
-            headerTitle: 'Preview', //TODO: translate
-            headerStyle: navigationStyles.HeaderContainer,
-            headerTitleStyle: navigationStyles.ScreenHeader,
-            headerTintColor: '#fff',
+            header:
+                <View style={ navigationStyles.HeaderContainer}>
+                    <OfflineNotice isConnected={ connectionReducer }/>
+                    <HeaderBackButton
+                        tintColor='#fff'
+                        style={ navigationStyles.headerBackStyle }
+                        onPress={() => navigation.goBack(null) }/>
+                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                        <Text style={ navigationStyles.ScreenHeader }>Preview</Text>
+                    </View>
+                </View>,
+
         })
     },
 
