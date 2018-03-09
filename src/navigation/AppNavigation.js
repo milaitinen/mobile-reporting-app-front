@@ -23,7 +23,7 @@ const TemplateStack = StackNavigator({
             flex: 0.3,
             header:
                 <View style={ navigationStyles.HeaderContainer}>
-                    <OfflineNotice isConnected={ connectionReducer }/>
+                    <OfflineNotice />
                     <Text style={ navigationStyles.ScreenHeaderTemplates }>{ strings('templates.templates') }</Text>
                     <Icon
                         name={'menu'}
@@ -45,7 +45,9 @@ const TemplateStack = StackNavigator({
             flex: 0.3,
             header:
                <View style={ navigationStyles.HeaderContainer}>
-                   <OfflineNotice isConnected={ connectionReducer }/>
+                   <OfflineNotice
+                       hidden={false}
+                       barStyle="light-content"/>
                    <HeaderBackButton
                        tintColor='#fff'
                        style={ navigationStyles.headerBackStyle }
@@ -76,7 +78,7 @@ const TemplateStack = StackNavigator({
             flex: 0.3,
             header:
                 <View style={ navigationStyles.HeaderContainer}>
-                    <OfflineNotice isConnected={ connectionReducer }/>
+                    <OfflineNotice />
                     <HeaderBackButton
                         tintColor='#fff'
                         style={ navigationStyles.headerBackStyle }
