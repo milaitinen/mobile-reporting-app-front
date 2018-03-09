@@ -204,6 +204,7 @@ export class ReportScreen extends React.Component {
                     );
 
                 case 5: // Choice (Yes/No)
+                    // TODO: this implementation is very different to that in newReportScreen. Form label is missing.
                     return (
                         <RadioForm
                             key={index}
@@ -213,7 +214,7 @@ export class ReportScreen extends React.Component {
                                 { label: 'Yes', value: 1 }
                             ] }
                             initial={JSON.parse(field.answer)}
-                            onPress={() => this.props.dispatch(insertFieldAnswer(field, '1'))} //TODO this only allows '1' to be saved...
+                            onPress={(value) => this.props.dispatch(insertFieldAnswer(field, value))}
                             buttonColor={'#9dcbe5'}
                             labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
                             formHorizontal={true}
