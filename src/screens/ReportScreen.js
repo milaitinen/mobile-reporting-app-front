@@ -150,13 +150,15 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
 
-                case 2: // Checkbox TODO defaultValue doesn't work here
+                case 2: // Checkbox
                     return (
                         <Checkbox
                             key={index}
                             style={ newReportStyles.checkboxStyle }
                             title={'This is a nice checkbox'}
                             editable={isEditable}
+                            //The answer is saved as '1' or '0' but the component expects a boolean
+                            isChecked={field.answer === '1'}
                             //The ability to dispatch the checkbox status is passed on to the component
                             //as a prop, and the component itself can call this function in its
                             //onIconPress, i.e. when the checkbox is pressed
