@@ -53,7 +53,7 @@ export class LoginScreen extends React.Component {
     }
 
     handleConnectionChange = isConnected => {
-        if (Platform.OS === 'android') { this.props.dispatch(toggleConnection({ connectionStatus: isConnected })); }
+        this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
     };
 
     /**

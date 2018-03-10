@@ -62,11 +62,6 @@ export class TemplateScreen extends Component {
     */
     componentDidMount() {
 
-        isNetworkConnected()
-            .then(isConnected => {
-                this.props.dispatch(setInitialConnection({ connectionStatus: isConnected }));
-                console.log('First, is ' + isConnected);});
-
         if (Platform.OS === 'android') NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
         // TEMPORARY: not sure if this is the best solution. Current version fixes a bug (related to logging in)
         if (this.props.username !== userReducer.username) {
@@ -81,7 +76,7 @@ export class TemplateScreen extends Component {
     }
 
     handleConnectionChange = isConnected => {
-        if (Platform.OS === 'android') this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
+        this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
     };
 
     /*
