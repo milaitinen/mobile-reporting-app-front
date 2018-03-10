@@ -7,19 +7,12 @@ import { connect } from 'react-redux';
  * A modified status bar -component that changes color depending on the network connection status
  */
 class OfflineNotice extends React.Component {
-    constructor(props) {
-        super(props);
-        this.backgroundColor = () => this.props.isConnected ? '#3d4f7c' : '#b52424';
-    }
 
-    render(backgroundColor) {
-        if (Platform.OS === 'android') {
-            return (
-                <StatusBar
-                    backgroundColor={ backgroundColor }
-                    barStyle="light-content" />
-            );
-        } else {
+    render() {
+        if (Platform.OS === 'ios') {
+            const backgroundColor = this.props.isConnected ? '#3d4f7c' : '#b52424';
+
+            console.log('connection at offlinenotice: '+this.props.isConnected);
             return (
                 <View style={[styles.offlineContainer, { backgroundColor }]}>
                     <StatusBar translucent backgroundColor={ backgroundColor }/>
@@ -31,7 +24,7 @@ class OfflineNotice extends React.Component {
 
 const mapStateToProps = ( state ) => {
     return {
-        isConnected: state.isConnected,
+        isConnected: state.connection.isConnected,
     };
 };
 
