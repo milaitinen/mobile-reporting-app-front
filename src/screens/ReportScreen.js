@@ -204,21 +204,24 @@ export class ReportScreen extends React.Component {
                     );
 
                 case 5: // Choice (Yes/No)
-                    // TODO: this implementation is very different to that in newReportScreen. Form label is missing.
+                    //TODO: get title from database
                     return (
-                        <RadioForm
-                            key={index}
-                            disabled={!isEditable}
-                            radio_props={ [
-                                { label: 'No', value: 0 },
-                                { label: 'Yes', value: 1 }
-                            ] }
-                            initial={JSON.parse(field.answer)}
-                            onPress={(value) => this.props.dispatch(insertFieldAnswer(field, value))}
-                            buttonColor={'#9dcbe5'}
-                            labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
-                            formHorizontal={true}
-                        />
+                        <View key={index}>
+                            <Text style={newReportStyles.textStyleClass}>Radio form</Text>
+                            <RadioForm
+                                key={index}
+                                disabled={!isEditable}
+                                radio_props={ [
+                                    { label: 'No', value: 0 },
+                                    { label: 'Yes', value: 1 }
+                                ] }
+                                initial={JSON.parse(field.answer)}
+                                onPress={(value) => this.props.dispatch(insertFieldAnswer(field, value))}
+                                buttonColor={'#9dcbe5'}
+                                labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
+                                formHorizontal={true}
+                            />
+                        </View>
                     );
 
                 case 6: // Calendar
