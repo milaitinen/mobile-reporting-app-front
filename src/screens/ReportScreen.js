@@ -235,7 +235,7 @@ export class ReportScreen extends React.Component {
                                         borderRadius: 5,
                                     },
                                 }}
-                                date={field.answer}
+                                date={answers[field.orderNumber] ? answers[field.orderNumber].answer : field.defaultValue}
                                 mode="date"
                                 placeholder="select date"
                                 format="YYYY-MM-DD"
@@ -289,7 +289,7 @@ export class ReportScreen extends React.Component {
                                         borderRadius: 5,
                                     }
                                 }}
-                                date = {answers[field.id] ? answers[field.id].answer : field.answer}
+                                date = {answers[field.orderNumber] ? answers[field.orderNumber].answer : field.defaultValue}
                                 mode = "time"
                                 format = "HH:mm"
                                 confirmBtnText = "Confirm"
