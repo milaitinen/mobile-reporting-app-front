@@ -161,8 +161,8 @@ export class ReportScreen extends React.Component {
                             isChecked={field.answer === '1'}
                             //The ability to dispatch the checkbox status is passed on to the component
                             //as a prop, and the component itself can call this function in its
-                            //onIconPress, i.e. when the checkbox is pressed
-                            onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
+                            //onPress, i.e. when the checkbox is pressed
+                            onPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
                         />
                     );
 

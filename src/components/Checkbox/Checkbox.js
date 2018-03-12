@@ -21,10 +21,9 @@ class Checkbox extends Component {
                 checked={this.state.checked}
                 disabled={!this.props.editable}
                 checkedColor={'#A4CBE7'}
-                onPress={() => this.toggle()}
-                onIconPress={() => {
+                onPress={() => {
                     if (this.props.editable) {
-                        this.props.onIconPressFunction((!this.state.checked) ? '1' : '0');
+                        this.props.onPressFunction((!this.state.checked) ? '1' : '0');
                         this.toggle();
                     }
                     console.log('this.props.editable', this.props.editable);
