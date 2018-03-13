@@ -10,7 +10,7 @@ const matchArrayWithTemplateID = (state, action) => {
             const reportsByID = {};
             // check if the array is empty
             if (report.length > 0) {
-                const tempID = report[0].templateID;
+                const tempID = report[0].template_id;
                 reportsByID[tempID]=report;
             }
             return reportsByID;

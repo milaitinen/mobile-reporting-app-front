@@ -137,21 +137,21 @@ class Layout extends Component{
                             renderItem={({ item }) =>
                                 <ListItem
                                     key={item.title}
-                                    onPress={() => this.props.viewReport(templateID, item.id, item.title)}
+                                    onPress={() => this.props.viewReport(templateID, item.report_id, item.title)}
                                     containerStyle={ styles.reportContainer }
                                     titleStyle = { styles.reportTitle }
                                     title={(item.orderNo) ? `${item.orderNo}\t${item.title}` : `${item.title}`}
-                                    subtitle={item.dateCreated}
+                                    subtitle={item.date_created}
                                     hideChevron = {true}
                                     badge ={{ element:
                                         <StatusBadge
-                                            dateAccepted={item.dateAccepted}
+                                            dateAccepted={item.date_accepted}
                                             isDraft={item.id < 0}
                                         />
                                     }}
                                 />
                             }
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.report_id}
                             ListFooterComponent={
                                 (data !== undefined && data.length > this.state.itemsCount)
                                     ?

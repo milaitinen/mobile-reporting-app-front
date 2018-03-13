@@ -195,15 +195,15 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
                                     viewReport={this.viewReport}
-                                    nofReports={(reports[item.id]) ? (reports[item.id]).length : 0}
-                                    templateID={item.id}
-                                    data={reports[item.id]}
+                                    nofReports={(reports[item.template_id]) ? (reports[item.template_id]).length : 0}
+                                    templateID={item.template_id}
+                                    data={reports[item.template_id]}
                                 />
                             }
                             ListFooterComponent={
                                 (this.state.renderFooter) && <View style={{ height: 500 }}/>
                             }
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.template_id}
                             refreshing={this.state.refreshing}
                         />
                     </ScrollView>

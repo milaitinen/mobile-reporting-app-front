@@ -10,6 +10,10 @@ class Checkbox extends Component {
         };
     }
 
+    componentDidMount() {
+        this.setState({ checked : this.props.defaultValue });
+    }
+
     toggle = () => {
         this.setState({ checked: !this.state.checked });
     };
