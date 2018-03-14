@@ -1,5 +1,6 @@
 import { CheckBox } from 'react-native-elements';
 import React, { Component } from 'react';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import styles from './checkboxStyles';
 
 class Checkbox extends Component {
@@ -18,9 +19,15 @@ class Checkbox extends Component {
         return (
             <CheckBox
                 title={this.props.title}
+                fontFamily={'Roboto-Light'} //does not work
                 checked={this.state.checked}
                 disabled={!this.props.editable}
-                checkedColor={'#A4CBE7'}
+                iconType={'material'}
+                uncheckedIcon={'check-box-outline-blank'}
+                checkedIcon={'check-box'}
+                checkedColor={EStyleSheet.value('$active')}
+                textStyle={styles.text}
+                containerStyle={styles.container}
                 onPress={() => this.toggle()}
                 onIconPress={() => {
                     if (this.props.editable) {

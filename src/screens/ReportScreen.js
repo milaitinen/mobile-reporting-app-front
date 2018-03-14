@@ -139,7 +139,7 @@ export class ReportScreen extends React.Component {
                 case 1: // Name
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Name</Text>
+                            <Text style={ newReportStyles.text }>Name</Text>
                             <TextInput
                                 editable={isEditable}
                                 defaultValue={field.answer}
@@ -190,7 +190,7 @@ export class ReportScreen extends React.Component {
                 case 4: // TextRow (One row text field)
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Text Field</Text>
+                            <Text style={ newReportStyles.text }>Text Field</Text>
                             <TextInput
                                 editable={isEditable}
                                 defaultValue={field.answer}
@@ -221,7 +221,7 @@ export class ReportScreen extends React.Component {
                 case 6: // Calendar
                     return (
                         <View key={index} >
-                            <Text style={ newReportStyles.textStyleClass }>Date</Text>
+                            <Text style={ newReportStyles.text }>Date</Text>
                             <DatePicker
                                 disabled={!isEditable}
                                 style={ newReportStyles.dateStyleClass }
@@ -249,7 +249,7 @@ export class ReportScreen extends React.Component {
                 case 7: // Instruction
                     return (
                         <View key={index} >
-                            <Text style = { newReportStyles.textStyleClass }>Instructions</Text>
+                            <Text style = { newReportStyles.text }>Instructions</Text>
                             <Text
                                 style = { newReportStyles.multilinedTextInputStyleClass }>
                                 {field.answer}
@@ -260,7 +260,7 @@ export class ReportScreen extends React.Component {
                 case 8: // Text (Multiple row text field)
                     return (
                         <View key={index}>
-                            <Text style = { newReportStyles.textStyleClass }>Description</Text>
+                            <Text style = { newReportStyles.text }>Description</Text>
                             <TextInput
                                 editable = {isEditable}
                                 style = { newReportStyles.multilinedTextInputStyleClass }
@@ -275,7 +275,7 @@ export class ReportScreen extends React.Component {
                 case 9: // Time
                     return (
                         <View key={index}>
-                            <Text style = { newReportStyles.textStyleClass }>Time</Text>
+                            <Text style = { newReportStyles.text }>Time</Text>
                             <DatePicker
                                 disabled = {!isEditable}
                                 style = { newReportStyles.dateStyleClass }
@@ -301,7 +301,7 @@ export class ReportScreen extends React.Component {
                 case 10: // Digits (Text input that only accepts numeric characters)
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>Numerical Field</Text>
+                            <Text style={ newReportStyles.text }>Numerical Field</Text>
                             <TextInput
                                 editable={isEditable}
                                 style={ newReportStyles.textInputStyleClass }

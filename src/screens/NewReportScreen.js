@@ -29,6 +29,7 @@ import { storeDraftByTemplateID } from '../redux/actions/reports';
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 
 /**
@@ -263,13 +264,14 @@ export class NewReportScreen extends React.Component {
 
                 case 1: // Name
                     return (
-                        <View key={index}>
-                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style={newReportStyles.text}>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
-                                placeholderTextColor={'#adadad'}
+                                placeholderTextColor={EStyleSheet.value('$placeholder')}
+                                selectionColor={EStyleSheet.value('$active')}
                                 //Title is now set separately from this field
                                 //onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                                 underlineColorAndroid='transparent'
@@ -280,22 +282,24 @@ export class NewReportScreen extends React.Component {
 
                 case 2: // Checkbox
                     return (
-                        <Checkbox
-                            key={index}
-                            style={ newReportStyles.checkboxStyle }
-                            title={'This is a nice checkbox'}
-                            editable={isEditable}
-                            //The ability to dispatch the checkbox status is passed on to the component
-                            //as a prop, and the component itself can call this function in its
-                            //onIconPress, i.e. when the checkbox is pressed
-                            onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
-                        />
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style={newReportStyles.text}>{field.title}</Text>
+                            <Checkbox
+                                key={index}
+                                title={'This is a nice checkbox'}
+                                editable={isEditable}
+                                //The ability to dispatch the checkbox status is passed on to the component
+                                //as a prop, and the component itself can call this function in its
+                                //onIconPress, i.e. when the checkbox is pressed
+                                onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
+                            />
+                        </View>
                     );
 
                 case 3: // Dropdown
                     return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <ModalDropdown
                                 disabled={!isEditable}
                                 options={['option 1', 'option 2']}
@@ -326,12 +330,12 @@ export class NewReportScreen extends React.Component {
 
                 case 4: // TextRow (One row text field)
                     return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
-                                placeholderTextColor={'#adadad'}
+                                placeholderTextColor={EStyleSheet.value('$placeholder')}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
@@ -342,8 +346,8 @@ export class NewReportScreen extends React.Component {
                 case 5: // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
                     const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
                     return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <View style={ newReportStyles.radioButtonContainer }>
                                 <RadioForm
                                     animation={true}
@@ -384,8 +388,8 @@ export class NewReportScreen extends React.Component {
 
                 case 6: // Calendar
                     return (
-                        <View key={index} >
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <DatePicker
                                 disabled={!isEditable}
                                 style={ newReportStyles.dateStyleClass }
@@ -403,7 +407,7 @@ export class NewReportScreen extends React.Component {
                                 date={answers[field.orderNumber] ? answers[field.orderNumber].answer : field.defaultValue}
                                 mode="date"
                                 placeholder="select date"
-                                placeholderTextColor={'#adadad'}
+                                placeholderTextColor={EStyleSheet.value('$placeholder')}
                                 format="YYYY-MM-DD"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
@@ -416,8 +420,8 @@ export class NewReportScreen extends React.Component {
 
                 case 7: // Instructions
                     return (
-                        <View key={index} >
-                            <Text style = { newReportStyles.textStyleClass }>{field.title}</Text>
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style = { newReportStyles.text }>{field.title}</Text>
                             <Text style = { newReportStyles.instructions }>
                                 {field.defaultValue}
                             </Text>
@@ -426,23 +430,23 @@ export class NewReportScreen extends React.Component {
 
                 case 8: // Text (Multiple row text field)
                     return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <TextInput
                                 editable = {isEditable}
                                 style = { newReportStyles.multilinedTextInputStyleClass }
                                 onChangeText = {(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                                 placeholder = {field.defaultValue}
                                 multiline = {true}
-                                placeholderTextColor={'#adadad'}
+                                placeholderTextColor={EStyleSheet.value('$placeholder')}
                             />
                         </View>
                     );
 
                 case 9: // Time
                     return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <DatePicker
                                 disabled = {!isEditable}
                                 style = { newReportStyles.dateStyleClass }
@@ -454,7 +458,7 @@ export class NewReportScreen extends React.Component {
                                         backgroundColor: 'white',
                                     },
                                     dateText: {
-                                        color: '#adadad',
+                                        color: EStyleSheet.value('$placeholder'),
                                     }
                                 }}
                                 date = {answers[field.orderNumber] ? answers[field.orderNumber].answer : field.defaultValue}
@@ -471,13 +475,13 @@ export class NewReportScreen extends React.Component {
 
                 case 10: // Digits (Text input that only accepts numeric characters)
                     return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 style={ newReportStyles.textInputStyleClass }
                                 placeholder={field.defaultValue}
-                                placeholderTextColor={'#adadad'}
+                                placeholderTextColor={EStyleSheet.value('$placeholder')}
                                 keyboardType = 'numeric'
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                             />
@@ -486,7 +490,7 @@ export class NewReportScreen extends React.Component {
 
                 case 11: // Link
                     return (
-                        <View key={index} style={{ flexDirection: 'row' }}>
+                        <View key={index} style={newReportStyles.fieldContainer}>
                             <Icon name={'link'} type={'feather'} iconStyle={ newReportStyles.linkIconStyle }/>
                             <Text
                                 disabled={!isEditable}
@@ -499,8 +503,8 @@ export class NewReportScreen extends React.Component {
 
                 case 12: // User dropdown
                     return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                        <View key={index} style={newReportStyles.fieldContainer}>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <Dropdown
                                 disabled={!isEditable}
                                 defaultValue={'Select user'}
@@ -518,52 +522,19 @@ export class NewReportScreen extends React.Component {
         });
 
         //TODO: view styling
-        return (
-            <AppBackground style={'no-padding'}>
-                <View style={ newReportStyles.ViewContainer }>
-                    <View style={ newReportStyles.ReportContainer }>
-                        <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
-                            <View style={newReportStyles.titleContainer}>
-                                <Icon name={'assignment'} color={'#a0a0a0'} size={45}/>
-                                <Text style={newReportStyles.title}>{strings('templates.report')}</Text>
-                            </View>
-                            <View style={newReportStyles.fieldContainer}>
-                                <View>
-                                    <Text style={ newReportStyles.textStyleClass }>Otsikko</Text>
-                                    <TextInput
-                                        editable={isEditable}
-                                        placeholder={'Otsikko'}
-                                        placeholderTextColor={'#adadad'}
-                                        underlineColorAndroid='transparent'
-                                        style={newReportStyles.textInputStyleClass}
-                                        onChangeText={(text) => this.props.dispatch(insertTitle(text))}
-                                    />
-                                </View>
-                                {renderedFields}
-                            </View>
-                        </ScrollView>
-                    </View>
-                </View>
-
-                <View style={ newReportStyles.buttonView}>
-                    <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
-                    <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}  />
-                </View>
-            </AppBackground>
-            /*
-                <TextInput
-                    placeholder={ strings('createNew.enterNew') }
-                    onChangeText={(TextInputName) => this.setState({ TextInputName })}
-                    underlineColorAndroid='transparent'
-                    style={newReportStyles.textInputStyleClass}
-                />
-                <Button
-                    title={ strings('createNew.createNew') }
-                    onPress={ this.send }
-                >
-                </Button>
-            */
-        );
+        return <AppBackground>
+            <View style={newReportStyles.ViewContainer}>
+                <ScrollView keyboardShouldPersistTaps={'handled'} style={newReportStyles.ReportScrollView}>
+                    {renderedFields}
+                </ScrollView>
+            </View>
+            {/*
+            <View style={newReportStyles.buttonView}>
+                <Button title={strings('createNew.save')} key={999} type={'save'} onPress={() => this.save()}/>
+                <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}/>
+            </View>
+            */}
+        </AppBackground>;
     }
 }
 

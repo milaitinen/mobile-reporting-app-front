@@ -5,7 +5,6 @@ const newReportStyles = EStyleSheet.create({
     ViewContainer: {
         flex: 1,
         height: 100,
-        marginHorizontal: 15,
         paddingTop: 5,
         paddingRight: 0,
         paddingLeft: 0,
@@ -31,8 +30,8 @@ const newReportStyles = EStyleSheet.create({
     fieldContainer: {
         backgroundColor: '$fieldBg',
         borderRadius: '$containerBorderRadius',
-        paddingHorizontal: 15,
-        paddingBottom: 15,
+        padding: 15,
+        paddingBottom: 20,
         marginVertical: 10,
     },
 
@@ -46,13 +45,11 @@ const newReportStyles = EStyleSheet.create({
         marginBottom: 6,
     },
 
-    textStyleClass: {
-        //marginLeft: 5,
-        color: '$gray2',
+    text: {
+        color: '$primaryWhite',
+        fontFamily: '$primaryFont',
         fontSize: 16,
-        marginTop: 20,
-        marginBottom: 8,
-        flexDirection: 'row',
+        marginBottom: 10,
     },
 
     linkStyleClass: {
@@ -124,10 +121,6 @@ const newReportStyles = EStyleSheet.create({
         //paddingleft: 10,
     },
 
-    checkboxStyle: {
-        borderRadius: '$containerBorderRadius',
-    },
-
     linkIconStyle: {
         color: '$gray1',
         justifyContent: 'flex-end',
@@ -169,12 +162,10 @@ const newReportStyles = EStyleSheet.create({
 
     textInputStyleClass: {
         paddingHorizontal: 12,
-        marginBottom: 20,
         height: 40,
-        borderWidth: '$containerBorderWidth',
-        borderRadius: '$containerBorderRadius',
-        borderColor: '$gray1',
+        borderRadius: '$inputBorderRadius',
         backgroundColor: '$primaryWhite',
+        fontFamily: '$primaryFont',
         color: '$gray2',
     },
 

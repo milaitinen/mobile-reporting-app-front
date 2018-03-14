@@ -2,7 +2,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
     container: {
-        backgroundColor: 'transparent',
+        backgroundColor: '$primaryWhite',
         borderWidth: 0,
         marginLeft: 0,
         marginVertical: 0,
@@ -10,7 +10,8 @@ const styles = EStyleSheet.create({
     },
 
     text: {
-        color: '$gray1',
+        color: '$placeholder',
+        fontFamily: '$primaryFont',
     }
 
 });

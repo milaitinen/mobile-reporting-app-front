@@ -86,7 +86,7 @@ export class PreviewScreen extends React.Component {
                 case 1: // Name
                     return (
                         <View key={index}>
-                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
+                            <Text style={newReportStyles.text}>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
@@ -101,7 +101,7 @@ export class PreviewScreen extends React.Component {
                 case 2: // Checkbox
                     return (
                         <View key={index}>
-                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
+                            <Text style={newReportStyles.text}>{field.title}</Text>
                             <Checkbox
                                 key={index}
                                 style={ newReportStyles.checkboxStyle }
@@ -114,7 +114,7 @@ export class PreviewScreen extends React.Component {
                 case 3: // Dropdown
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <ModalDropdown
                                 disabled={!isEditable}
                                 options={['option 1', 'option 2']}
@@ -146,7 +146,7 @@ export class PreviewScreen extends React.Component {
                 case 4: // TextRow (One row text field)
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
@@ -161,7 +161,7 @@ export class PreviewScreen extends React.Component {
                     const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <View style={ newReportStyles.radioButtonContainer }>
                                 <RadioForm
                                     animation={true}
@@ -203,7 +203,7 @@ export class PreviewScreen extends React.Component {
                 case 6: // Calendar
                     return (
                         <View key={index} >
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <DatePicker
                                 disabled={!isEditable}
                                 style={ newReportStyles.dateStyleClass }
@@ -236,7 +236,7 @@ export class PreviewScreen extends React.Component {
                 case 7: // Instructions
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <Text
                                 style = {newReportStyles.instructions}>
                                 {field.defaultValue}
@@ -247,7 +247,7 @@ export class PreviewScreen extends React.Component {
                 case 8: // Text (Multiple row text field)
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 style = {newReportStyles.multilinedTextInputStyleClass}
@@ -261,7 +261,7 @@ export class PreviewScreen extends React.Component {
                 case 9: // Time
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <DatePicker
                                 disabled={!isEditable}
                                 style={ newReportStyles.dateStyleClass }
@@ -291,7 +291,7 @@ export class PreviewScreen extends React.Component {
                 case 10: // Digits (Text input that only accepts numeric characters)
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 style={newReportStyles.textInputStyleClass}
@@ -320,7 +320,7 @@ export class PreviewScreen extends React.Component {
                 case 12: // User dropdown
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>{field.title}</Text>
                             <Dropdown
                                 disabled={!isEditable}
                                 defaultValue={'Select user'}
