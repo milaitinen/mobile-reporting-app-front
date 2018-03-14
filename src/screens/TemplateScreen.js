@@ -104,6 +104,7 @@ export class TemplateScreen extends Component {
             fetchDraftsByTemplateID(username, templateID)
                 .then((drafts) => {
                     if (drafts.length !== 0) {
+                        console.log('drafts', drafts);
                         drafts.forEach(draft => this.props.dispatch(storeDraftByTemplateID(templateID, draft)));
                     }
                 })

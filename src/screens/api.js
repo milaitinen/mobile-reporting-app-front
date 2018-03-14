@@ -37,14 +37,14 @@ export const fetchFieldsByTemplateID = (username, templateID, token) => {
             if (!isConnected) { return fetchLocalFieldsByTemplateID(username, templateID); }
             return fetchRemoteFieldsByTemplateID(username, templateID, token);
         })
-        .then((fieldsByTemplateID) => {
-            saveData(`${url}/users/${username}/templates/${templateID}/fields`, fieldsByTemplateID);
-            return fieldsByTemplateID;
+        .then((template) => {
+            saveData(`${url}/users/${username}/templates/${templateID}`, template);
+            return template;
         });
 };
 
 const fetchLocalFieldsByTemplateID = (username, templateID) => {
-    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/fields`)
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -56,7 +56,7 @@ const fetchLocalFieldsByTemplateID = (username, templateID) => {
 
 export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
     return (
-        fetch(`${url}/users/${username}/templates/${templateID}/fields`, {
+        fetch(`${url}/users/${username}/templates/${templateID}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }

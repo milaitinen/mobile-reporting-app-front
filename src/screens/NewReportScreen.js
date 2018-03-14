@@ -120,7 +120,7 @@ export class NewReportScreen extends React.Component {
             isLoading       : true,
             number          : '',
             isEditable      : false,
-            dataFieldsByID  : null,
+            fields  : null,
         };
     }
 
@@ -144,7 +144,7 @@ export class NewReportScreen extends React.Component {
 
     // insert default values to the report's answer fields
     setDefaultValue = () => {
-        this.state.dataFieldsByID.map((field) => {
+        this.state.fields.map((field) => {
             this.props.dispatch(insertFieldAnswer(field, field.defaultValue));
         });
     };
@@ -153,10 +153,10 @@ export class NewReportScreen extends React.Component {
         fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
             .then(responseJson => {
                 console.log('fields', responseJson);
-                this.setState({ dataFieldsByID: responseJson, isLoading: false });
+                this.setState({ fields: responseJson, isLoading: false });
             })
             .then(() => {
-                if (this.state.dataFieldsByID) this.setDefaultValue(this.state.dataFieldsByID);
+                if (this.state.fields) this.setDefaultValue(this.state.fields);
             })
             .catch(error => console.error(error) )
             .done();
@@ -257,7 +257,7 @@ export class NewReportScreen extends React.Component {
 
         const { isEditable } = this.state;
         const { answers } = this.props;
-        const renderedFields = this.state.dataFieldsByID.map((field, index) => {
+        const renderedFields = this.state.fields.map((field, index) => {
 
             switch (field.typeID) { // typeID because fetchFieldsByTemplateID returns typeID (in ReportScreen typeID->fieldID)
 

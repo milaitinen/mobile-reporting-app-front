@@ -38,7 +38,7 @@ describe('<PreviewScreen />', () => {
         });
 
         it('should not render an <ActivityIndicator /> if false', () => {
-            previewScreen.setState({ isLoading: false, dataFieldsByID: [] });
+            previewScreen.setState({ isLoading: false, fields: [] });
             expect(previewScreen.find(ActivityIndicator).length).toBe(0);
         });
     });

@@ -29,7 +29,7 @@ export class ReportScreen extends React.Component {
             isLoading       : true,
             number          : '',
             isEditable      : false,
-            dataFieldsByID  : null,
+            fields  : null,
         };
     }
 
@@ -56,7 +56,7 @@ export class ReportScreen extends React.Component {
         fieldAnswers.map((field) => this.props.dispatch(insertFieldAnswer(field, field.answer)));
 
         this.setState({ report: report });
-        this.setState({ dataFieldsByID: fieldAnswers, isLoading: false });
+        this.setState({ fields: fieldAnswers, isLoading: false });
     };
 
     // delete draft from asyncstorage

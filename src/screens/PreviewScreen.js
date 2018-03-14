@@ -32,14 +32,15 @@ export class PreviewScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getFieldsByID();
+        this.getFieldsByTemplateID();
         this.setState({ isEditable: this.props.navigation.state.params.isEditable });
     }
 
-    getFieldsByID = () => {
+    getFieldsByTemplateID = () => {
         fetchFieldsByTemplateID(this.props.username, this.props.templateID, this.props.token)
-            .then(responseJson => {
-                this.setState({ dataFieldsByID: responseJson, isLoading: false });
+            .then(template => {
+                console.log('template', template);
+                this.setState({ fields: template.fields, isLoading: false });
             })
             .catch(error => console.error(error) )
             .done();
@@ -80,16 +81,16 @@ export class PreviewScreen extends React.Component {
         }
 
         const { isEditable } = this.state;
-        const renderedFields = this.state.dataFieldsByID.map((field, index) => {
-            switch (field.typeID) {
+        const renderedFields = this.state.fields.map((field, index) => {
+            switch (field.type) {
 
-                case 1: // Name
+                case 'NAME': // Name
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
-                                placeholder={field.defaultValue}
+                                placeholder={field.default_value}
                                 placeholderTextColor={'#adadad'}
                                 onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                                 underlineColorAndroid='transparent'
@@ -98,7 +99,7 @@ export class PreviewScreen extends React.Component {
                         </View>
                     );
 
-                case 2: // Checkbox
+                case 'CHECKBOX': // Checkbox
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -111,7 +112,7 @@ export class PreviewScreen extends React.Component {
                         </View>
                     );
 
-                case 3: // Dropdown
+                case 'NESTED_DROPDOWN': // Dropdown
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
@@ -143,13 +144,13 @@ export class PreviewScreen extends React.Component {
 
                     );
 
-                case 4: // TextRow (One row text field)
+                case 'TEXTFIELD_SHORT': // TextRow (One row text field)
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
-                                placeholder={field.defaultValue}
+                                placeholder={field.default_value}
                                 placeholderTextColor={'#adadad'}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
@@ -157,7 +158,7 @@ export class PreviewScreen extends React.Component {
                         </View>
                     );
 
-                case 5: // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
+                case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
                     const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
                     return (
                         <View key={index}>
@@ -200,7 +201,7 @@ export class PreviewScreen extends React.Component {
                         </View>
                     );
 
-                case 6: // Calendar
+                case 'CALENDAR': // Calendar
                     return (
                         <View key={index} >
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
@@ -218,7 +219,7 @@ export class PreviewScreen extends React.Component {
                                         color: '#adadad',
                                     }
                                 }}
-                                date={field.defaultValue}
+                                date={field.default_value}
                                 mode="date"
                                 placeholder="select date"
                                 placeholderTextColor={'#adadad'}
@@ -233,32 +234,32 @@ export class PreviewScreen extends React.Component {
                         </View>
                     );
 
-                case 7: // Instructions
+                case 'INSTRUCTIONS': // Instructions
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <Text
                                 style = {newReportStyles.instructions}>
-                                {field.defaultValue}
+                                {field.default_value}
                             </Text>
                         </View>
                     );
 
-                case 8: // Text (Multiple row text field)
+                case 'TEXTFIELD_LONG': // Text (Multiple row text field)
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 style = {newReportStyles.multilinedTextInputStyleClass}
-                                placeholder={field.defaultValue}
+                                placeholder={field.default_value}
                                 placeholderTextColor={'#adadad'}
                                 multiline={true}
                             />
                         </View>
                     );
 
-                case 9: // Time
+                case 'TIME': // Time
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
@@ -276,7 +277,7 @@ export class PreviewScreen extends React.Component {
                                         color: '#adadad',
                                     }
                                 }}
-                                date={field.defaultValue}
+                                date={field.default_value}
                                 mode="time"
                                 format="HH:mm"
                                 confirmBtnText="Confirm"
@@ -288,14 +289,14 @@ export class PreviewScreen extends React.Component {
                         </View>
                     );
 
-                case 10: // Digits (Text input that only accepts numeric characters)
+                case 'NUMBERFIELD': // Digits (Text input that only accepts numeric characters)
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 style={newReportStyles.textInputStyleClass}
-                                placeholder={field.defaultValue}
+                                placeholder={field.default_value}
                                 placeholderTextColor={'#adadad'}
                                 keyboardType = 'numeric'
                                 onChangeText={(text)=> this.onChanged(text)}
@@ -304,27 +305,27 @@ export class PreviewScreen extends React.Component {
                         </View>
                     );
 
-                case 11: // Link
+                case 'LINK': // Link
                     return (
                         <View key={index} style={{ flexDirection: 'row' }}>
                             <Icon name={'link'} type={'feather'} iconStyle={ newReportStyles.linkIconStyle }/>
                             <Text
                                 disabled={!isEditable}
                                 style={ newReportStyles.linkStyleClass }
-                                onPress={() => Linking.openURL(field.defaultValue)}>
+                                onPress={() => Linking.openURL(field.default_value)}>
                                 Link to somewhere
                             </Text>
                         </View>
                     );
 
-                case 12: // User dropdown
+                case 'DROPDOWN': // User dropdown
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <Dropdown
                                 disabled={!isEditable}
                                 defaultValue={'Select user'}
-                                options={JSON.parse(field.defaultValue)}
+                                options={JSON.parse(field.default_value)}
                             />
                         </View>
                     );
@@ -376,6 +377,7 @@ export class PreviewScreen extends React.Component {
 const mapStateToProps = (state) => {
     const userID = state.user.userID;
     const templateID = state.preview.templateID;
+    const templates = state.templates;
     const title = state.preview.title;
     const number = state.preview.number;
     const token = state.user.token;
