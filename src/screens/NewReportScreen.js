@@ -250,6 +250,7 @@ export class NewReportScreen extends React.Component {
                     );
 
                 case 'CHECKBOX': // Checkbox
+                    /*
                     return (
                         <Checkbox
                             key={index}
@@ -262,6 +263,32 @@ export class NewReportScreen extends React.Component {
                             onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer, true))}
                         />
                     );
+                    */
+
+                {
+                    const checkboxes = field.field_options.map((option, index) => {
+                        //const answer = optionAnswers.find((answer) => answer.field_option_id === option.field_option_id);
+                        return (
+                            <Checkbox
+                                key={index}
+                                editable={true}
+                                style={newReportStyles.checkboxStyle}
+                                title={option.value}
+                                defaultValue={option.default_value}
+                                //The ability to dispatch the checkbox status is passed on to the component
+                                //as a prop, and the component itself can call this function in its
+                                //onIconPress, i.e. when the checkbox is pressed
+                                onPressFunction={() => this.props.dispatch(insertFieldAnswer(field, option, true))}
+                            />
+                        );
+                    });
+                    return (
+                        <View key={index}>
+                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
+                            {checkboxes}
+                        </View>
+                    );
+                }
 
                 case 'NESTED_DROPDOWN': // Dropdown
                     return (

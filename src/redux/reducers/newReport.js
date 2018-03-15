@@ -25,7 +25,7 @@ const insertAnswer = (state, action) => {
         }
 
         state.option_answers.map(i => {
-            if (i.field_option_id == action.value.field_option_id) i.selected = true;
+            if (i.field_option_id == action.value.field_option_id) i.selected = !i.selected;
         });
     } else {
         state.string_answers.map(i => {
