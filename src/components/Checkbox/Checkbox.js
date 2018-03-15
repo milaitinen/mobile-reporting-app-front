@@ -24,9 +24,10 @@ class Checkbox extends Component {
                 iconType={'material'}
                 uncheckedIcon={'check-box-outline-blank'}
                 checkedIcon={'check-box'}
+                uncheckedColor={EStyleSheet.value('$inactive')}
                 checkedColor={EStyleSheet.value('$active')}
-                textStyle={styles.text}
-                containerStyle={styles.container}
+                textStyle={this.state.checked ? styles.selectedText : styles.text}
+                containerStyle={this.state.checked ? styles.selectedContainer : styles.container}
                 onPress={() => this.toggle()}
                 onIconPress={() => {
                     if (this.props.editable) {

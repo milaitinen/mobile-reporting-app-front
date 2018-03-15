@@ -8,11 +8,26 @@ const styles = EStyleSheet.create({
         marginLeft: 0,
         marginVertical: 0,
         justifyContent: 'center',
+    },
 
+    selectedContainer: {
+        backgroundColor: '$primaryWhite',
+        height: 40,
+        borderWidth: 2,
+        borderColor: '$active',
+        marginLeft: 0,
+        marginVertical: 0,
+        justifyContent: 'center',
     },
 
     text: {
         color: '$placeholder',
+        fontFamily: '$primaryFont',
+        fontWeight: 'normal',
+    },
+
+    selectedText: {
+        color: '$active',
         fontFamily: '$primaryFont',
         fontWeight: 'normal',
     }

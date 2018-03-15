@@ -21,6 +21,7 @@ EStyleSheet.build({
     $draftBlue: '#8cc9e5',
     $fieldBg: '#1b305570',
     $placeholder: '#8f8f8f',
+    $inactive: '#9bcff9',
     $active: '#359ef3',
     $containerBorderRadius: 5,
     $inputBorderRadius: 3,

@@ -4,16 +4,28 @@ const styles = EStyleSheet.create({
 
     radioInputContainer: {
         height: 40,
-        paddingTop: 5,
-        paddingHorizontal: 10,
-        marginBottom: 2,
+        marginBottom: 10,
+        paddingHorizontal: 1,
         marginHorizontal: 0,
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
+        alignSelf: 'stretch',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
         borderRadius: '$inputBorderRadius',
         backgroundColor: '$primaryWhite',
+    },
+
+    selectedInputContainer: {
+        height: 40,
+        marginBottom: 10,
+        paddingHorizontal: 1,
+        marginHorizontal: 0,
+        alignSelf: 'stretch',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        borderRadius: '$inputBorderRadius',
+        backgroundColor: '$primaryWhite',
+        borderWidth: 2,
+        borderColor: '$active'
     },
 
     radioLabel: {
@@ -24,6 +36,26 @@ const styles = EStyleSheet.create({
         paddingBottom: 3,
         marginRight: 10
     },
+
+    buttonWrap: {
+        height: 38,
+        paddingLeft: 8,
+        justifyContent: 'center'
+    },
+
+    labelWrap: {
+        height: 38,
+        flex: 1,
+    },
+
+    selectedLabel: {
+        fontFamily: '$primaryFont',
+        color: '$active',
+        textAlignVertical: 'center',
+        textAlign: 'left',
+        paddingBottom: 3,
+        marginRight: 10,
+    }
 
 });
 

@@ -15,14 +15,14 @@ import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { Checkbox } from '../components/Checkbox';
-import { Radioform} from '../components/Radioform'
+import { Radioform } from '../components/Radioform';
 import { Dropdown } from '../components/Dropdown';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, fetchFieldsByTemplateID, saveDraft } from './api';
 import { strings } from '../locales/i18n';
-import { emptyFields, insertFieldAnswer, insertTitle, setUnsaved } from '../redux/actions/newReport';
+import { emptyFields, insertFieldAnswer } from '../redux/actions/newReport';
 import { storeDraftByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
@@ -342,9 +342,9 @@ export class NewReportScreen extends React.Component {
                         </View>
                     );
 
-                case 5:
+                case 5: //Radio form
                     return (
-                        <View key={index} style={newReportStyles.fieldContainer}>
+                        <View key={index} style={newReportStyles.altFieldContainer}>
                             <Text style={newReportStyles.text}>{field.title}</Text>
                             <Radioform
                                 options={[{ label: 'Yes', value: 0 }, { label: 'No', value: 1 }]}

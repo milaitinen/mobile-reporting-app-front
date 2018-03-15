@@ -1,5 +1,4 @@
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
-import { TouchableOpacity } from 'react-native';
 import React, { Component } from 'react';
 import styles from './styles';
 
@@ -11,42 +10,37 @@ class Radioform extends Component {
         };
     }
 
-    select = (value) => {
-        this.setState({ value: value });
-    };
-
     render() {
-        return(
-            <RadioForm animation={true}>
+
+        return (
+            <RadioForm>
                 {this.props.options.map((obj, i) =>
-                    <TouchableOpacity
+                    <RadioButton
                         key={i}
-                        onPress={this.select(this.key)}
-                        style={styles.radioInputContainer}>
-                        <RadioButton>
-                            <RadioButtonInput
-                                disabled={!this.props.editable}
-                                obj={obj}
-                                index={i}
-                                isSelected={this.state.value === this.index}
-                                onPress={this.select(this.index)}
-                                borderWidth={1}
-                                buttonColor={'#88c9e5'}
-                                buttonSize={16}
-                                buttonOuterSize={24}
-                                buttonWrapStyle={{ borderWidth: 1, }}
-                            />
-                            <RadioButtonLabel
-                                disabled={!this.props.editable}
-                                obj={obj}
-                                index={i}
-                                labelHorizontal={true}
-                                onPress={this.select(this.index)}
-                                labelStyle={styles.radioLabel}
-                                labelWrapStyle={{ borderWidth: 1, height: 24 }}
-                            />
-                        </RadioButton>
-                    </TouchableOpacity>
+                        style={this.state.value === obj.value ? styles.selectedInputContainer : styles.radioInputContainer}>
+                        <RadioButtonInput
+                            disabled={!this.props.editable}
+                            obj={obj}
+                            index={i}
+                            isSelected={this.state.value === obj.value}
+                            onPress={(value) => { this.setState({ value: value }); }}
+                            borderWidth={1}
+                            buttonInnerColor={'#359ef3'}
+                            buttonOuterColor={this.state.value === obj.value ? '#359ef3' : '#9bcff9'}
+                            buttonSize={16}
+                            buttonOuterSize={24}
+                            buttonWrapStyle={styles.buttonWrap}
+                        />
+                        <RadioButtonLabel
+                            disabled={!this.props.editable}
+                            obj={obj}
+                            index={i}
+                            labelHorizontal={true}
+                            onPress={(value) => { this.setState({ value: value }); }}
+                            labelStyle={this.state.value === obj.value ? styles.selectedLabel : styles.radioLabel}
+                            labelWrapStyle={styles.labelWrap}
+                        />
+                    </RadioButton>
                 )}
             </RadioForm>
         );

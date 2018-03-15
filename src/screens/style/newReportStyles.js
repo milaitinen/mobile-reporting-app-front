@@ -33,6 +33,14 @@ const newReportStyles = EStyleSheet.create({
         marginVertical: 10,
     },
 
+    altFieldContainer: {
+        backgroundColor: '$fieldBg',
+        borderRadius: '$containerBorderRadius',
+        padding: 15,
+        paddingBottom: 10,
+        marginVertical: 10,
+    },
+
     ReportScrollView: {
         backgroundColor: 'transparent',
         paddingHorizontal: 7,
