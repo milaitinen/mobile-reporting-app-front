@@ -498,7 +498,7 @@ export class NewReportScreen extends React.Component {
                         </View>
                     );
 
-                case 'DROPDOWN': // User dropdown
+                case 'USER_DROPDOWN': // User dropdown
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>

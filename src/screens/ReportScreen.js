@@ -146,6 +146,7 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
                 }
+
                 case 'CHECKBOX' : // Checkbox TODO defaultValue doesn't work here
                 {
                     const checkboxes = field.field_options.map((option, index) => {
@@ -171,6 +172,28 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
                 }
+
+                case 'NESTED_DROPDOWN' : // Dropdown
+                {
+
+                    const selected = field.field_options.find((option) => {
+                        return report.option_answers.map((answer) => answer.field_option_id)
+                            .includes(option.field_option_id);
+                    });
+
+                    return (
+                        <View key={index}>
+                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
+                            <View style={newReportStyles.mainDropdownStyleClass}>
+                                <ModalDropdown
+                                    dropdownStyle={ newReportStyles.dropStyleClass }
+                                    options={field.field_options.map((option) => option.value)}
+                                    defaultValue={selected.value}/>
+                            </View>
+                        </View>
+                    );
+                }
+
                 case 'RADIOBUTTON': // Choice (Yes/No)
                 {
                     const labels = field.field_options.map((option) => {
@@ -197,26 +220,7 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
                 }
-                case 'DROPDOWN' : // Dropdown
-                {
 
-                    const selected = field.field_options.find((option) => {
-                        return report.option_answers.map((answer) => answer.field_option_id)
-                            .includes(option.field_option_id);
-                    });
-
-                    return (
-                        <View key={index}>
-                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
-                            <View style={newReportStyles.mainDropdownStyleClass}>
-                                <ModalDropdown
-                                    dropdownStyle={ newReportStyles.dropStyleClass }
-                                    options={field.field_options.map((option) => option.value)}
-                                    defaultValue={selected.value}/>
-                            </View>
-                        </View>
-                    );
-                }
                 case 'CALENDAR': // Calendar
                 {
                     const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
@@ -246,6 +250,7 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
                 }
+
                 case 'INSTRUCTIONS': // Instruction
                 {
                     const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
@@ -259,6 +264,7 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
                 }
+
                 case 'TEXTFIELD_LONG': // Text (Multiple row text field)
                 {
                     const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
@@ -276,6 +282,7 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
                 }
+
                 case 'TIME': // Time
                 {
                     const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
@@ -309,6 +316,7 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
                 }
+
                 case 'NUMBERFIELD': // Digits (Text input that only accepts numeric characters)
                 {
                     const answer = report.string_answers.find((answer) => answer.field_id === field.field_id).value;
@@ -324,6 +332,7 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
                 }
+
                 case 'LINK': // Link
                 {
                     const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
@@ -338,7 +347,7 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
                 }
-                case 12: // User dropdown
+                case 'USER_DROPDOWN': // User dropdown
                     return (
                         <View key={index} style={newReportStyles.mainDropdownStyleClass} onPress={() => this.modalDropdown.show()}>
                             <ModalDropdown
