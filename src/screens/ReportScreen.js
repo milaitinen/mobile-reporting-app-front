@@ -135,10 +135,9 @@ export class ReportScreen extends React.Component {
                 {
                     const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
-                        <View key={index}>
+                        <View key={index} >
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <TextInput
-                                editable={isEditable}
                                 value={answer.value}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                                 underlineColorAndroid='transparent'
@@ -154,10 +153,10 @@ export class ReportScreen extends React.Component {
                         return (
                             <Checkbox
                                 key={index}
+                                editable={true}
                                 style={newReportStyles.checkboxStyle}
                                 title={option.value}
-                                editable={isEditable}
-                                defaultValue={(answer !== null)}
+                                defaultValue={(answer != null)}
                                 //The ability to dispatch the checkbox status is passed on to the component
                                 //as a prop, and the component itself can call this function in its
                                 //onIconPress, i.e. when the checkbox is pressed
@@ -176,7 +175,7 @@ export class ReportScreen extends React.Component {
                 {
                     const labels = field.field_options.map((option) => {
                         return (
-                            { label: option.value }
+                            { label: option.value, value : option.field_option_id }
                         );
                     });
 
@@ -188,7 +187,6 @@ export class ReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <RadioForm
-                                disabled={!isEditable}
                                 radio_props={labels}
                                 initial={initialIndex}
                                 //onPress={() => this.props.dispatch(insertFieldAnswer(field, '1'))} //TODO this only allows '1' to be saved...
@@ -213,7 +211,6 @@ export class ReportScreen extends React.Component {
                             <View style={newReportStyles.mainDropdownStyleClass}>
                                 <ModalDropdown
                                     dropdownStyle={ newReportStyles.dropStyleClass }
-                                    disabled={!isEditable}
                                     options={field.field_options.map((option) => option.value)}
                                     defaultValue={selected.value}/>
                             </View>
@@ -227,7 +224,6 @@ export class ReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <DatePicker
-                                disabled={!isEditable}
                                 style={newReportStyles.dateStyleClass}
                                 customStyles={{
                                     dateInput: {
@@ -270,7 +266,6 @@ export class ReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <TextInput
-                                editable={isEditable}
                                 style={newReportStyles.multilinedTextInputStyleClass}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                                 //placeholder={field.answer}
@@ -288,7 +283,6 @@ export class ReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <DatePicker
-                                disabled={!isEditable}
                                 style={newReportStyles.dateStyleClass}
                                 customStyles={{
                                     dateInput: {
@@ -322,7 +316,6 @@ export class ReportScreen extends React.Component {
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <TextInput
-                                editable={isEditable}
                                 style={newReportStyles.textInputStyleClass}
                                 value={answer}
                                 keyboardType='numeric'
@@ -378,7 +371,9 @@ export class ReportScreen extends React.Component {
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
-                            {renderedFields}
+                            <View pointerEvents={isEditable ? undefined : 'none'} >
+                                {renderedFields}
+                            </View>
                         </ScrollView>
                     </View>
                 </View>
