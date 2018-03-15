@@ -73,7 +73,7 @@ export const saveDraft = (username, templateID, draft) => {
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {
             // see if there is already a draft with the same id
-            const draftIndex = drafts.findIndex(x => x.id === draft.id);
+            const draftIndex = drafts.findIndex(x => x.report_id === draft.report_id);
 
             if (draftIndex < 0) {
                 drafts.push(draft);
@@ -81,10 +81,10 @@ export const saveDraft = (username, templateID, draft) => {
                 drafts[draftIndex] = draft;
             }
             // give each draft a unique, negative id
-            drafts.map((draft, i) => draft.id = -Math.abs(i + 1));
+            drafts.map((draft, i) => draft.report_id = -Math.abs(i + 1));
             saveData(`${url}/users/${username}/templates/${templateID}`, drafts);
 
-            return (drafts[drafts.length - 1].id);
+            return (drafts[drafts.length - 1].report_id);
         });
 };
 

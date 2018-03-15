@@ -7,7 +7,6 @@ import {
     StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
 import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
@@ -16,10 +15,8 @@ import { ReportSearchBar } from '../components/ReportSearchBar';
 import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID } from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID, storeDraftByTemplateID } from '../redux/actions/reports';
-import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
-
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
@@ -140,9 +137,11 @@ export class TemplateScreen extends Component {
     */
     createNew = (templateID, isEditable) => {
         if (isEditable) {
-            this.props.dispatch(createReport(templateID, moment().format('YYYY-MM-DD')));
             // this.setState({ isLoading: true });
-            this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, isEditable: isEditable });
+            this.props.navigation.navigate('NewReport', {
+                templateID: templateID,
+                refresh: this.handleRefresh,
+                isEditable: isEditable });
         }
         else {
             this.props.dispatch(preview(templateID));

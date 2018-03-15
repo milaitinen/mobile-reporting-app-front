@@ -45,7 +45,7 @@ export class ReportScreen extends React.Component {
 
     getFieldsByReportID = () => {
         const { templateID, reportID } = this.props.navigation.state.params;
-        const { reports, templates } = this.props;
+        const { reports } = this.props;
 
         const report = reports[templateID].find((obj) => obj.report_id === reportID);
         const fieldAnswers = report.answers;
@@ -141,25 +141,24 @@ export class ReportScreen extends React.Component {
         }
 
         const { isEditable } = this.state;
-        const { answers } = this.props;
 
-        const template = Object.values(this.props.templates).find((template) => template.template_id == this.state.report.template_id);
+        const template = Object.values(this.props.templates).find((template) => template.template_id === this.state.report.template_id);
         const optionAnswers = this.state.report.option_answers;
         const renderedFields = template.fields.map((field, index) => {
-            const stringAnswer = this.state.report.string_answers.find((answer) => answer.field_id == field.field_id);
+            const stringAnswer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
             const fieldOptions = field.field_options;
 
             switch (field.type) {
                 case 'TEXTFIELD_SHORT' : // Name
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id == field.field_id);
+                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 value={answer.value}
-                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
@@ -169,18 +168,18 @@ export class ReportScreen extends React.Component {
                 case 'CHECKBOX' : // Checkbox TODO defaultValue doesn't work here
                 {
                     const checkboxes = field.field_options.map((option, index) => {
-                        const answer = optionAnswers.find((answer) => answer.field_option_id == option.field_option_id);
+                        const answer = optionAnswers.find((answer) => answer.field_option_id === option.field_option_id);
                         return (
                             <Checkbox
                                 key={index}
                                 style={newReportStyles.checkboxStyle}
                                 title={option.value}
                                 editable={isEditable}
-                                defaultValue={(answer != null) ? true : false}
+                                defaultValue={(answer !== null)}
                                 //The ability to dispatch the checkbox status is passed on to the component
                                 //as a prop, and the component itself can call this function in its
                                 //onIconPress, i.e. when the checkbox is pressed
-                                onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
+                                onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer, true))}
                             />
                         );
                     });
@@ -195,7 +194,7 @@ export class ReportScreen extends React.Component {
                 {
                     const labels = field.field_options.map((option) => {
                         return (
-                            {label: option.value}
+                            { label: option.value }
                         );
                     });
 
@@ -213,7 +212,7 @@ export class ReportScreen extends React.Component {
                                 initial={initialIndex}
                                 //onPress={() => this.props.dispatch(insertFieldAnswer(field, '1'))} //TODO this only allows '1' to be saved...
                                 buttonColor={'#9dcbe5'}
-                                labelStyle={{paddingRight: 12, paddingLeft: 6}}
+                                labelStyle={{ paddingRight: 12, paddingLeft: 6 }}
                                 //formHorizontal={true}
                             />
                         </View>
@@ -245,7 +244,7 @@ export class ReportScreen extends React.Component {
                 }
                 case 'CALENDAR': // Calendar
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id == field.field_id);
+                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -268,14 +267,14 @@ export class ReportScreen extends React.Component {
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={newReportStyles.dateIconStyle}/>}
-                                onDateChange={(date) => this.props.dispatch(insertFieldAnswer(field, date))}
+                                onDateChange={(date) => this.props.dispatch(insertFieldAnswer(field, date, false))}
                             />
                         </View>
                     );
                 }
                 case 'INSTRUCTIONS': // Instruction
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id == field.field_id);
+                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -288,14 +287,14 @@ export class ReportScreen extends React.Component {
                 }
                 case 'TEXTFIELD_LONG': // Text (Multiple row text field)
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id == field.field_id);
+                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 style={newReportStyles.multilinedTextInputStyleClass}
-                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                                 //placeholder={field.answer}
                                 //defaultValue={field.default_value}
                                 value={answer.value}
@@ -306,7 +305,7 @@ export class ReportScreen extends React.Component {
                 }
                 case 'TIME': // Time
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id == field.field_id);
+                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -326,16 +325,21 @@ export class ReportScreen extends React.Component {
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 minuteInterval={10}
-                                iconComponent={<Icon name={'schedule'} type={'MaterialIcons'}
-                                iconStyle={newReportStyles.dateIconStyle}/>}
-                                onDateChange={(time) => this.props.dispatch(insertFieldAnswer(field, time))}
+                                iconComponent={
+                                    <Icon
+                                        name={'schedule'}
+                                        type={'MaterialIcons'}
+                                        iconStyle={newReportStyles.dateIconStyle}
+                                    />
+                                }
+                                onDateChange={(time) => this.props.dispatch(insertFieldAnswer(field, time, false))}
                             />
                         </View>
                     );
                 }
                 case 'NUMBERFIELD': // Digits (Text input that only accepts numeric characters)
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id == field.field_id).value;
+                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id).value;
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -344,16 +348,16 @@ export class ReportScreen extends React.Component {
                                 style={newReportStyles.textInputStyleClass}
                                 value={answer}
                                 keyboardType='numeric'
-                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                             />
                         </View>
                     );
                 }
                 case 'LINK': // Link
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id == field.field_id);
+                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
-                        <View key={index} style={{flexDirection: 'row'}}>
+                        <View key={index} style={{ flexDirection: 'row' }}>
                             <Icon name={'link'} type={'feather'} iconStyle={newReportStyles.linkIconStyle}/>
                             <Text
                                 style={newReportStyles.linkStyleClass}

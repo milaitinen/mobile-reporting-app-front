@@ -23,7 +23,7 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, saveDraft, fetchEmptyTemplate } from './api';
 import { strings } from '../locales/i18n';
-import { emptyFields, insertFieldAnswer, insertTitle, setUnsaved, createDraft } from '../redux/actions/newReport';
+import { emptyFields, insertFieldAnswer, insertTitle, insertDate, setUnsaved, createDraft } from '../redux/actions/newReport';
 import { storeDraftByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
@@ -86,16 +86,16 @@ const mapStateToProps = (state) => {
     const username      = state.user.username;
     const templates     = state.templates;
     const reports       = state.reports;
-    const templateID    = state.newReport.templateID;
+    const newReport     = state.newReport;
     const title         = state.newReport.title;
     const number        = state.newReport.number;
     const isUnsaved     = state.newReport.isUnsaved;
     return {
         username,
         templates,
-        templateID,
         title,
         number,
+        newReport,
         token,
         reports,
         isUnsaved,
@@ -142,12 +142,13 @@ export class NewReportScreen extends React.Component {
 
     // TODO come up with a better name
     instantiate = () => {
-        const { username, templates, templateID, token } = this.props;
-        const isEditable = this.props.navigation.state.params.isEditable;
+        const { username, templates, token } = this.props;
+        const { isEditable, templateID } = this.props.navigation.state.params;
 
         fetchEmptyTemplate(username, templateID, token)
             .then(template => {
                 this.props.dispatch(createDraft(template));
+                this.props.dispatch(insertDate(moment().format('YYYY-MM-DD')));
                 this.setState({ fields: templates[templateID] ? templates[templateID].fields : [] });
             })
             .then(() => this.setState({ isEditable: isEditable, isLoading: false }))
@@ -156,36 +157,29 @@ export class NewReportScreen extends React.Component {
 
     // save report locally in asyncstorage
     save = () => {
-        const { templateID, username } = this.props;
+        const { username, newReport } = this.props;
+        const { templateID } = this.props.navigation.state.params;
 
-        const report = {
-            templateID: templateID,
-            userID: 1,      // TODO what to do with userID, orderNo, and id in the future...?
-            orderNo: null,
-            title: this.props.title || 'Draft',
-            dateCreated: moment().format('YYYY-MM-DD'),
-            dateAccepted: null,
-            id: null
-        };
-
-        report.id = saveDraft(username, templateID, report);
+        const report = newReport;
+        report.report_id = saveDraft(username, templateID, report); // give a negative id
 
         this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
-        this.props.dispatch(emptyFields());
 
         Alert.alert('Report saved!');
 
         //this.setState({ isUnsaved: false });
 
         //return to template screen and have it refreshed
+        this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
         this.props.navigation.dispatch(NavigationActions.back());
     };
 
     // Inserts data to server with a post method.
     send = () => {
+        const { templateID } = this.props.navigation.state.params;
         const report = {
-            templateID: this.props.templateID,
+            templateID: templateID,
             title: this.props.title,
             dateCreated: moment().format('YYYY-MM-DD'),
             answers: [

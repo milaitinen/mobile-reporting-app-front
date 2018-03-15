@@ -7,19 +7,17 @@ import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'reac
 import DatePicker from 'react-native-datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { connect } from 'react-redux';
-import moment from 'moment';
+//import moment from 'moment';
 
 import { AppBackground } from '../components/AppBackground';
 import { EditButton } from '../components/EditButton';
 import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/preview';
-import { createReport } from '../redux/actions/newReport';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
 
-// "export" necessary in order to test component without Redux store
 export class PreviewScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -44,8 +42,11 @@ export class PreviewScreen extends React.Component {
 
 
     handleOnPress = () => {
-        this.props.dispatch(createReport(this.props.templateID, moment().format('YYYY-MM-DD')));
-        this.props.navigation.navigate('NewReport', { refresh: this.props.navigation.state.params.refresh, isEditable: true });
+        this.props.navigation.navigate('NewReport', {
+            templateID: this.props.templateID,
+            refresh: this.props.navigation.state.params.refresh,
+            isEditable: true
+        });
     };
 
     onChanged = (text) => {

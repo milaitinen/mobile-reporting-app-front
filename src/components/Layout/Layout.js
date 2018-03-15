@@ -146,7 +146,7 @@ class Layout extends Component{
                                     badge ={{ element:
                                         <StatusBadge
                                             dateAccepted={item.date_accepted}
-                                            isDraft={item.id < 0}
+                                            isDraft={item.report_id < 0}
                                         />
                                     }}
                                 />

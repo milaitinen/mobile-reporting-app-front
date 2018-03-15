@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import {
     INSERT_TITLE,
-    CREATE_REPORT,
+    INSERT_DATE,
     INSERT_FIELD_ANSWER,
     EMPTY_FIELDS, SET_UNSAVED,
     CREATE_DRAFT
@@ -30,11 +30,10 @@ const insertAnswer = (state, action) => {
 
 const newReportReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CREATE_REPORT: {
+        case INSERT_DATE: {
             return {
                 ...state,
-                templateID: action.templateID,
-                dateCreated: action.dateCreated
+                date_created: action.date
             };
         }
         case INSERT_TITLE: {
