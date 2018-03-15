@@ -5,9 +5,7 @@ const newReportStyles = EStyleSheet.create({
     ViewContainer: {
         flex: 1,
         height: 100,
-        paddingTop: 5,
-        paddingRight: 0,
-        paddingLeft: 0,
+        paddingVertical: 10,
         justifyContent: 'center',
         borderTopWidth: 1,
         borderTopColor: '$primaryWhite',
@@ -184,14 +182,6 @@ const newReportStyles = EStyleSheet.create({
         }
     },
 
-    radioButtonContainer: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        padding: 5,
-        paddingHorizontal: 10,
-    },
-
     titleContainer: {
         flex: 1,
         flexDirection: 'row',
@@ -216,8 +206,11 @@ const newReportStyles = EStyleSheet.create({
 
     },
 
+
+
     buttonView: {
         paddingHorizontal: 10,
+        marginBottom: 2,
         height: 80,
         flexDirection: 'row',
         justifyContent: 'center',

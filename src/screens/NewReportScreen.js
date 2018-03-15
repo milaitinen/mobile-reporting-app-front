@@ -3,7 +3,6 @@ import {
     ActivityIndicator,
     Alert,
     BackHandler,
-    Button,
     Linking,
     ScrollView,
     Text,
@@ -12,11 +11,11 @@ import {
 } from 'react-native';
 import { HeaderBackButton, NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { Checkbox } from '../components/Checkbox';
+import { Radioform} from '../components/Radioform'
 import { Dropdown } from '../components/Dropdown';
 import ModalDropdown from 'react-native-modal-dropdown';
 
@@ -303,7 +302,7 @@ export class NewReportScreen extends React.Component {
                             <ModalDropdown
                                 disabled={!isEditable}
                                 options={['option 1', 'option 2']}
-                                dropdownStyle={ newReportStyles.dropStyleClass }
+                                dropdownStyle={newReportStyles.dropStyleClass}
                                 defaultValue={'Select option'}
                                 style={newReportStyles.dropdownButton}
                                 textStyle={newReportStyles.dropdownText}
@@ -311,8 +310,8 @@ export class NewReportScreen extends React.Component {
                                     <View>
                                         <ModalDropdown
                                             options={['option 3', 'option 4']}
-                                            style={ newReportStyles.lowerDropdownStyleClass }
-                                            dropdownStyle={ styles.dropStyleClass }
+                                            style={newReportStyles.lowerDropdownStyleClass}
+                                            dropdownStyle={styles.dropStyleClass}
                                         />
                                     </View>
                                 }
@@ -331,7 +330,7 @@ export class NewReportScreen extends React.Component {
                 case 4: // TextRow (One row text field)
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={ newReportStyles.text }>{field.title}</Text>
+                            <Text style={newReportStyles.text}>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.defaultValue}
@@ -343,53 +342,22 @@ export class NewReportScreen extends React.Component {
                         </View>
                     );
 
-                case 5: // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
-                    const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
+                case 5:
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={ newReportStyles.text }>{field.title}</Text>
-                            <View style={ newReportStyles.radioButtonContainer }>
-                                <RadioForm
-                                    animation={true}
-                                    formHorizontal={true}
-                                >
-                                    {props.map((obj, i) =>
-                                        <RadioButton
-                                            key={i}
-                                        >
-                                            <RadioButtonInput
-                                                disabled={!isEditable}
-                                                obj={obj}
-                                                index={i}
-                                                isSelected={this.state.value === obj.value}
-                                                onPress={(value) => { this.setState({ value: value }); }}
-                                                borderWidth={1}
-                                                buttonColor={'#88c9e5'}
-                                                buttonSize={16}
-                                                buttonOuterSize={24}
-                                                buttonStyle={{}}
-                                                buttonWrapStyle={{}}
-                                            />
-                                            <RadioButtonLabel
-                                                disabled={!isEditable}
-                                                obj={obj}
-                                                index={i}
-                                                labelHorizontal={true}
-                                                onPress={(value) => { this.setState({ value: value }); }}
-                                                labelStyle={{ marginRight: 20 }}
-                                                labelWrapStyle={{}}
-                                            />
-                                        </RadioButton>
-                                    )}
-                                </RadioForm>
-                            </View>
+                            <Text style={newReportStyles.text}>{field.title}</Text>
+                            <Radioform
+                                options={[{ label: 'Yes', value: 0 }, { label: 'No', value: 1 }]}
+                                editable={isEditable}
+                            />
+
                         </View>
                     );
 
                 case 6: // Calendar
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={ newReportStyles.text }>{field.title}</Text>
+                            <Text style={newReportStyles.text}>{field.title}</Text>
                             <DatePicker
                                 disabled={!isEditable}
                                 style={ newReportStyles.dateStyleClass }

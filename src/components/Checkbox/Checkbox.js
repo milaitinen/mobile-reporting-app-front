@@ -19,7 +19,6 @@ class Checkbox extends Component {
         return (
             <CheckBox
                 title={this.props.title}
-                fontFamily={'Roboto-Light'} //does not work
                 checked={this.state.checked}
                 disabled={!this.props.editable}
                 iconType={'material'}
@@ -34,7 +33,6 @@ class Checkbox extends Component {
                         this.props.onIconPressFunction((!this.state.checked) ? '1' : '0');
                         this.toggle();
                     }
-                    console.log('this.props.editable', this.props.editable);
                 }}
             />
         );

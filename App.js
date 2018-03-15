@@ -19,7 +19,7 @@ EStyleSheet.build({
     $gray1: '#adadad',
     $gray2: '#a0a0a0',
     $draftBlue: '#8cc9e5',
-    $fieldBg: '#1b305550',
+    $fieldBg: '#1b305570',
     $placeholder: '#8f8f8f',
     $active: '#359ef3',
     $containerBorderRadius: 5,
