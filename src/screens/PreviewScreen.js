@@ -11,7 +11,6 @@ import moment from 'moment';
 
 import { AppBackground } from '../components/AppBackground';
 import { EditButton } from '../components/EditButton';
-import { fetchFieldsByTemplateID } from './api';
 import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/preview';
 import { createReport } from '../redux/actions/newReport';
@@ -32,19 +31,17 @@ export class PreviewScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getFieldsByTemplateID();
-        this.setState({ isEditable: this.props.navigation.state.params.isEditable });
+        const { templates, templateID } = this.props;
+        this.getTemplateFields(templates, templateID);
     }
 
-    getFieldsByTemplateID = () => {
-        fetchFieldsByTemplateID(this.props.username, this.props.templateID, this.props.token)
-            .then(template => {
-                console.log('template', template);
-                this.setState({ fields: template.fields, isLoading: false });
-            })
-            .catch(error => console.error(error) )
-            .done();
+    getTemplateFields = (templates, templateID) => {
+        const isEditable = this.props.navigation.state.params.isEditable;
+        const fields = templates[templateID] ? templates[templateID].fields : [];
+
+        this.setState({ fields: fields, isEditable: isEditable, isLoading: false });
     };
+
 
     handleOnPress = () => {
         this.props.dispatch(createReport(this.props.templateID, moment().format('YYYY-MM-DD')));
@@ -385,6 +382,7 @@ const mapStateToProps = (state) => {
     return {
         userID,
         templateID,
+        templates,
         title,
         number,
         token,

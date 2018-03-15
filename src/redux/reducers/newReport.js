@@ -1,17 +1,7 @@
 /* eslint-disable no-undef */
-import { INSERT_TITLE, CREATE_REPORT, INSERT_FIELD_ANSWER, EMPTY_FIELDS, SET_UNSAVED } from '../actions/newReport';
+import { INSERT_TITLE, CREATE_REPORT, INSERT_FIELD_ANSWER, EMPTY_FIELDS, SET_UNSAVED, CREATE_DRAFT } from '../actions/newReport';
 
-const initialState = {
-    templateID: null ,
-    title: 'Draft',
-    answers: [],
-    dateCreated: null,
-    dateAccepted: null,
-    id: null,
-    orderNo: null,
-    userID: null,
-    isUnsaved: true,
-};
+const initialState = {};
 
 const newReportReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -26,10 +16,12 @@ const newReportReducer = (state = initialState, action) => {
                 ...state,
                 title: action.title
             };
+        case CREATE_DRAFT:
+            return action.draft;
         case INSERT_FIELD_ANSWER:
             return {
                 ...state,
-                answers: {
+                /*answers: {
                     ...state.answers,
                     [action.field.orderNumber]: {
                         answer: action.answer,
@@ -37,7 +29,7 @@ const newReportReducer = (state = initialState, action) => {
                         // fetchFieldsAsTemplateID() returns typeID, whereas fetchFieldsByReportID() returns fieldID
                         fieldID: action.field.fieldID || action.field.typeID
                     }
-                }
+                }*/
             };
         case EMPTY_FIELDS:
             return initialState;

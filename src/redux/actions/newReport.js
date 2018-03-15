@@ -4,12 +4,18 @@ export const INSERT_TITLE   = 'INSERT_TITLE';
 export const INSERT_FIELD_ANSWER = 'INSERT_FIELD_ANSWER';
 export const EMPTY_FIELDS = 'EMPTY_FIELDS';
 export const SET_UNSAVED = 'SET_UNSAVED';
+export const CREATE_DRAFT = 'CREATE_DRAFT';
 
 // return an object
 export const createReport = ( templateID, date ) => ({
     type: CREATE_REPORT,
     templateID: templateID,
     dateCreated: date
+});
+
+export const createDraft = (draft) => ({
+    type: CREATE_DRAFT,
+    draft: draft
 });
 
 export const insertTitle = (title) => ({

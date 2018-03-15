@@ -21,9 +21,9 @@ import { Dropdown } from '../components/Dropdown';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, fetchFieldsByTemplateID, saveDraft } from './api';
+import { createNewReport, saveDraft, fetchEmptyTemplate } from './api';
 import { strings } from '../locales/i18n';
-import { emptyFields, insertFieldAnswer, insertTitle, setUnsaved } from '../redux/actions/newReport';
+import { emptyFields, insertFieldAnswer, insertTitle, setUnsaved, createDraft } from '../redux/actions/newReport';
 import { storeDraftByTemplateID } from '../redux/actions/reports';
 
 import newReportStyles from './style/newReportStyles';
@@ -84,20 +84,20 @@ class HeaderBackButtonWrapper extends React.Component {
 const mapStateToProps = (state) => {
     const token         = state.user.token;
     const username      = state.user.username;
+    const templates     = state.templates;
+    const reports       = state.reports;
     const templateID    = state.newReport.templateID;
     const title         = state.newReport.title;
     const number        = state.newReport.number;
-    const answers       = state.newReport.answers;
-    const reports       = state.reports;
     const isUnsaved     = state.newReport.isUnsaved;
     return {
         username,
+        templates,
         templateID,
         title,
         number,
         token,
         reports,
-        answers,
         isUnsaved,
     };
 };
@@ -132,8 +132,7 @@ export class NewReportScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getFieldsByTemplateID(this.props.templateID);
-        this.setState({ isEditable: this.props.navigation.state.params.isEditable });
+        this.instantiate();
     }
 
     componentWillUnmount() {
@@ -141,33 +140,27 @@ export class NewReportScreen extends React.Component {
         BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
     }
 
+    instantiate = () => {
+        const { username, templates, templateID, token } = this.props;
+        const isEditable = this.props.navigation.state.params.isEditable;
 
-    // insert default values to the report's answer fields
-    setDefaultValue = () => {
-        this.state.fields.map((field) => {
-            this.props.dispatch(insertFieldAnswer(field, field.defaultValue));
-        });
-    };
+        fetchEmptyTemplate(username, templateID, token)
+            .then(template => {
+                this.props.dispatch(createDraft(template));
 
-    getFieldsByTemplateID = (templateID) => {
-        fetchFieldsByTemplateID(this.props.username, templateID, this.props.token)
-            .then(responseJson => {
-                console.log('fields', responseJson);
-                this.setState({ fields: responseJson, isLoading: false });
+                const fields = templates[templateID] ? templates[templateID].fields : [];
+                console.log('fields', fields);
+                this.setState({ fields: fields });
             })
-            .then(() => {
-                if (this.state.fields) this.setDefaultValue(this.state.fields);
-            })
-            .catch(error => console.error(error) )
-            .done();
+            .then(() => this.setState({ isEditable: isEditable, isLoading: false }))
+            .catch(error => console.error(error));
     };
 
     // save report locally in asyncstorage
     save = () => {
-        const { templateID, username, answers } = this.props;
+        const { templateID, username } = this.props;
 
         const report = {
-            answers: [],
             templateID: templateID,
             userID: 1,      // TODO what to do with userID, orderNo, and id in the future...?
             orderNo: null,
@@ -177,7 +170,6 @@ export class NewReportScreen extends React.Component {
             id: null
         };
 
-        report.answers = Object.values(answers);
         report.id = saveDraft(username, templateID, report);
 
         this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
@@ -256,18 +248,17 @@ export class NewReportScreen extends React.Component {
         }
 
         const { isEditable } = this.state;
-        const { answers } = this.props;
         const renderedFields = this.state.fields.map((field, index) => {
 
-            switch (field.typeID) { // typeID because fetchFieldsByTemplateID returns typeID (in ReportScreen typeID->fieldID)
+            switch (field.type) { // typeID because fetchFieldsByTemplateID returns typeID (in ReportScreen typeID->fieldID)
 
-                case 1: // Name
+                case 'NAME': // Name
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
-                                placeholder={field.defaultValue}
+                                placeholder={field.default_value}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                                 placeholderTextColor={'#adadad'}
                                 //Title is now set separately from this field
@@ -278,7 +269,7 @@ export class NewReportScreen extends React.Component {
                         </View>
                     );
 
-                case 2: // Checkbox
+                case 'CHECKBOX': // Checkbox
                     return (
                         <Checkbox
                             key={index}
@@ -292,7 +283,7 @@ export class NewReportScreen extends React.Component {
                         />
                     );
 
-                case 3: // Dropdown
+                case 'NESTED_DROPDOWN': // Dropdown
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
@@ -324,13 +315,13 @@ export class NewReportScreen extends React.Component {
 
                     );
 
-                case 4: // TextRow (One row text field)
+                case 'TEXTFIELD_SHORT': // TextRow (One row text field)
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
-                                placeholder={field.defaultValue}
+                                placeholder={field.default_value}
                                 placeholderTextColor={'#adadad'}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
@@ -339,7 +330,7 @@ export class NewReportScreen extends React.Component {
                         </View>
                     );
 
-                case 5: // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
+                case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
                     const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
                     return (
                         <View key={index}>
@@ -382,7 +373,7 @@ export class NewReportScreen extends React.Component {
                         </View>
                     );
 
-                case 6: // Calendar
+                case 'CALENDAR': // Calendar
                     return (
                         <View key={index} >
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
@@ -400,7 +391,7 @@ export class NewReportScreen extends React.Component {
                                         color: '#adadad',
                                     }
                                 }}
-                                date={answers[field.orderNumber] ? answers[field.orderNumber].answer : field.defaultValue}
+                                date={field.default_value}
                                 mode="date"
                                 placeholder="select date"
                                 placeholderTextColor={'#adadad'}
@@ -414,17 +405,17 @@ export class NewReportScreen extends React.Component {
                     );
 
 
-                case 7: // Instructions
+                case 'INSTRUCTIONS': // Instructions
                     return (
                         <View key={index} >
                             <Text style = { newReportStyles.textStyleClass }>{field.title}</Text>
                             <Text style = { newReportStyles.instructions }>
-                                {field.defaultValue}
+                                {field.default_value}
                             </Text>
                         </View>
                     );
 
-                case 8: // Text (Multiple row text field)
+                case 'TEXTFIELD_LONG': // Text (Multiple row text field)
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
@@ -432,14 +423,14 @@ export class NewReportScreen extends React.Component {
                                 editable = {isEditable}
                                 style = { newReportStyles.multilinedTextInputStyleClass }
                                 onChangeText = {(text) => this.props.dispatch(insertFieldAnswer(field, text))}
-                                placeholder = {field.defaultValue}
+                                placeholder = {field.default_value}
                                 multiline = {true}
                                 placeholderTextColor={'#adadad'}
                             />
                         </View>
                     );
 
-                case 9: // Time
+                case 'TIME': // Time
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
@@ -457,7 +448,7 @@ export class NewReportScreen extends React.Component {
                                         color: '#adadad',
                                     }
                                 }}
-                                date = {answers[field.orderNumber] ? answers[field.orderNumber].answer : field.defaultValue}
+                                date = {field.default_value}
                                 mode="time"
                                 format="HH:mm"
                                 confirmBtnText="Confirm"
@@ -469,14 +460,14 @@ export class NewReportScreen extends React.Component {
                         </View>
                     );
 
-                case 10: // Digits (Text input that only accepts numeric characters)
+                case 'NUMBERFIELD': // Digits (Text input that only accepts numeric characters)
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <TextInput
                                 editable={isEditable}
                                 style={ newReportStyles.textInputStyleClass }
-                                placeholder={field.defaultValue}
+                                placeholder={field.default_value}
                                 placeholderTextColor={'#adadad'}
                                 keyboardType = 'numeric'
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
@@ -484,27 +475,27 @@ export class NewReportScreen extends React.Component {
                         </View>
                     );
 
-                case 11: // Link
+                case 'LINK': // Link
                     return (
                         <View key={index} style={{ flexDirection: 'row' }}>
                             <Icon name={'link'} type={'feather'} iconStyle={ newReportStyles.linkIconStyle }/>
                             <Text
                                 disabled={!isEditable}
                                 style={ newReportStyles.linkStyleClass }
-                                onPress={() => Linking.openURL(field.defaultValue)}>
+                                onPress={() => Linking.openURL(field.default_value)}>
                                 Link to somewhere
                             </Text>
                         </View>
                     );
 
-                case 12: // User dropdown
+                case 'DROPDOWN': // User dropdown
                     return (
                         <View key={index}>
                             <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
                             <Dropdown
                                 disabled={!isEditable}
                                 defaultValue={'Select user'}
-                                options={JSON.parse(field.defaultValue)}
+                                options={JSON.parse(field.default_value)}
                             />
                         </View>
                     );

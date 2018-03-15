@@ -31,20 +31,20 @@ export const createNewReport = (username, report, token) => {
     });
 };
 
-export const fetchFieldsByTemplateID = (username, templateID, token) => {
+export const fetchEmptyTemplate = (username, templateID, token) => {
     return isNetworkConnected()
         .then((isConnected) => {
-            if (!isConnected) { return fetchLocalFieldsByTemplateID(username, templateID); }
-            return fetchRemoteFieldsByTemplateID(username, templateID, token);
+            if (!isConnected) { return fetchLocalEmptyTemplate(username, templateID); }
+            return fetchRemoteEmptyTemplate(username, templateID, token);
         })
         .then((template) => {
-            saveData(`${url}/users/${username}/templates/${templateID}`, template);
+            saveData(`${url}/users/${username}/templates/${templateID}/empty`, template);
             return template;
         });
 };
 
-const fetchLocalFieldsByTemplateID = (username, templateID) => {
-    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}`)
+const fetchLocalEmptyTemplate = (username, templateID) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/empty`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -54,9 +54,10 @@ const fetchLocalFieldsByTemplateID = (username, templateID) => {
         });
 };
 
-export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
+
+export const fetchRemoteEmptyTemplate = (username, templateID, token) => {
     return (
-        fetch(`${url}/users/${username}/templates/${templateID}`, {
+        fetch(`${url}/users/${username}/templates/${templateID}/empty`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
