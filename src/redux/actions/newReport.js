@@ -23,10 +23,11 @@ export const insertTitle = (title) => ({
     title: title
 });
 
-export const insertFieldAnswer = ( field, answer ) => ({
+export const insertFieldAnswer = ( field, value, isOption ) => ({
     type: INSERT_FIELD_ANSWER,
     field: field,
-    answer: answer
+    value: value,
+    isOption: isOption
 });
 
 export const emptyFields = () => ({

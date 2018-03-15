@@ -30,9 +30,9 @@ export class LoginScreen extends React.Component {
         }
     }
 
-    /* DEV uncomment in case you need to clear AsyncStorage*/
+    // DEV uncomment in case you need to clear AsyncStorage
     componentWillMount() {
-        AsyncStorage.clear();
+        //AsyncStorage.clear();
     }
 
 

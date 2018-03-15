@@ -140,6 +140,7 @@ export class NewReportScreen extends React.Component {
         BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
     }
 
+    // TODO come up with a better name
     instantiate = () => {
         const { username, templates, templateID, token } = this.props;
         const isEditable = this.props.navigation.state.params.isEditable;
@@ -147,10 +148,7 @@ export class NewReportScreen extends React.Component {
         fetchEmptyTemplate(username, templateID, token)
             .then(template => {
                 this.props.dispatch(createDraft(template));
-
-                const fields = templates[templateID] ? templates[templateID].fields : [];
-                console.log('fields', fields);
-                this.setState({ fields: fields });
+                this.setState({ fields: templates[templateID] ? templates[templateID].fields : [] });
             })
             .then(() => this.setState({ isEditable: isEditable, isLoading: false }))
             .catch(error => console.error(error));
@@ -259,7 +257,7 @@ export class NewReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.default_value}
-                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                                 placeholderTextColor={'#adadad'}
                                 //Title is now set separately from this field
                                 //onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
@@ -279,7 +277,7 @@ export class NewReportScreen extends React.Component {
                             //The ability to dispatch the checkbox status is passed on to the component
                             //as a prop, and the component itself can call this function in its
                             //onIconPress, i.e. when the checkbox is pressed
-                            onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
+                            onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer, true))}
                         />
                     );
 
@@ -325,7 +323,7 @@ export class NewReportScreen extends React.Component {
                                 placeholderTextColor={'#adadad'}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
-                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                             />
                         </View>
                     );
@@ -399,7 +397,7 @@ export class NewReportScreen extends React.Component {
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 /*iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}*/
-                                onDateChange={(date) => this.props.dispatch(insertFieldAnswer(field, date))}
+                                onDateChange={(date) => this.props.dispatch(insertFieldAnswer(field, date, false))}
                             />
                         </View>
                     );
@@ -422,7 +420,7 @@ export class NewReportScreen extends React.Component {
                             <TextInput
                                 editable = {isEditable}
                                 style = { newReportStyles.multilinedTextInputStyleClass }
-                                onChangeText = {(text) => this.props.dispatch(insertFieldAnswer(field, text))}
+                                onChangeText = {(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                                 placeholder = {field.default_value}
                                 multiline = {true}
                                 placeholderTextColor={'#adadad'}
@@ -455,7 +453,7 @@ export class NewReportScreen extends React.Component {
                                 cancelBtnText="Cancel"
                                 minuteInterval={10}
                                 iconComponent={<Icon name={'clock'} type={'entypo'} iconStyle={ newReportStyles.dateIconStyle }/>}
-                                onDateChange={(time) => this.props.dispatch(insertFieldAnswer(field, time))}
+                                onDateChange={(time) => this.props.dispatch(insertFieldAnswer(field, time, false))}
                             />
                         </View>
                     );
@@ -470,7 +468,7 @@ export class NewReportScreen extends React.Component {
                                 placeholder={field.default_value}
                                 placeholderTextColor={'#adadad'}
                                 keyboardType = 'numeric'
-                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                             />
                         </View>
                     );
