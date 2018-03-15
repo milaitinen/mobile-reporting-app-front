@@ -287,8 +287,8 @@ export class NewReportScreen extends React.Component {
                             editable={isEditable}
                             //The ability to dispatch the checkbox status is passed on to the component
                             //as a prop, and the component itself can call this function in its
-                            //onIconPress, i.e. when the checkbox is pressed
-                            onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
+                            //onPress, i.e. when the checkbox is pressed
+                            onPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
                         />
                     );
 
@@ -338,50 +338,26 @@ export class NewReportScreen extends React.Component {
                             />
                         </View>
                     );
-
+                //TODO: get title from database
                 case 5: // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
-                    const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
                     return (
                         <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
-                            <View style={ newReportStyles.radioButtonContainer }>
-                                <RadioForm
-                                    animation={true}
-                                    formHorizontal={true}
-                                >
-                                    {props.map((obj, i) =>
-                                        <RadioButton
-                                            key={i}
-                                        >
-                                            <RadioButtonInput
-                                                disabled={!isEditable}
-                                                obj={obj}
-                                                index={i}
-                                                isSelected={this.state.value === obj.value}
-                                                onPress={(value) => { this.setState({ value: value }); }}
-                                                borderWidth={1}
-                                                buttonColor={'#88c9e5'}
-                                                buttonSize={16}
-                                                buttonOuterSize={24}
-                                                buttonStyle={{}}
-                                                buttonWrapStyle={{}}
-                                            />
-                                            <RadioButtonLabel
-                                                disabled={!isEditable}
-                                                obj={obj}
-                                                index={i}
-                                                labelHorizontal={true}
-                                                onPress={(value) => { this.setState({ value: value }); }}
-                                                labelStyle={{ marginRight: 20 }}
-                                                labelWrapStyle={{}}
-                                            />
-                                        </RadioButton>
-                                    )}
-                                </RadioForm>
-                            </View>
+                            <Text style={newReportStyles.textStyleClass}>Radio form</Text>
+                            <RadioForm
+                                key={index}
+                                disabled={!isEditable}
+                                radio_props={ [
+                                    { label: 'No', value: 0 },
+                                    { label: 'Yes', value: 1 }
+                                ] }
+                                initial={JSON.parse(field.defaultValue)}
+                                onPress={(value) => this.props.dispatch(insertFieldAnswer(field, value))}
+                                buttonColor={'#9dcbe5'}
+                                labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
+                                formHorizontal={true}
+                            />
                         </View>
                     );
-
                 case 6: // Calendar
                     return (
                         <View key={index} >
