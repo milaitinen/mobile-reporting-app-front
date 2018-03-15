@@ -105,7 +105,7 @@ class Layout extends Component{
 
     render(){
         // simplifies referencing (instead of this.props.title, title is enough)
-        const { title, nofReports, templateID, data } = this.props;
+        const { title, nofReports, nofDrafts=1, templateID, data } = this.props;
         return (
             <Animated.View
                 style={[styles.animatedContainer,{ height: this.state.animation }]}>
@@ -116,7 +116,8 @@ class Layout extends Component{
                         title={title} // Title of the template.
                         titleStyle = { styles.templateTitle }
                         //Number of reports as a subtitle
-                        subtitle={`${nofReports} ${(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
+                        subtitle={`${nofReports} ${(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}` +
+                                    ` ${nofDrafts} ${(nofDrafts === 1) ? strings('templates.draft') : strings('templates.drafts')}`}
                         hideChevron={true}
                         badge={{ element: <RightButton
                             onPressNew={() => this.props.createNew(templateID, true)}
