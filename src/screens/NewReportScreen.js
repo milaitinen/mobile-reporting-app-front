@@ -314,23 +314,22 @@ export class NewReportScreen extends React.Component {
 
                     const labels = field.field_options.map((option) => {
                         return (
-                            { label: option.value }
+                            { label: option.value , value : option}
                         );
                     });
 
                     const initialIndex = field.field_options.findIndex((option) => {
-                        return optionAnswers.map((answers) => answers.field_option_id).includes(option.field_option_id);
+                        return (option.default_value)
                     });
 
-                    // TODO RADIOBUTTON DOES NOT WORK YET
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
                             <RadioForm
-                                key={index}
                                 disabled={!isEditable}
                                 radio_props={labels}
                                 initial={initialIndex}
+                                itemRealKey="value"
                                 onPress={(label) => this.props.dispatch(insertFieldAnswer(field, label, true))} //TODO this only allows '1' to be saved...
                                 buttonColor={'#9dcbe5'}
                                 labelStyle={{ paddingRight: 12, paddingLeft: 6 }}

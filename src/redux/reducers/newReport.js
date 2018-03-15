@@ -15,8 +15,17 @@ const insertAnswer = (state, action) => {
     // Check whether the field is option-type (dropdown, checkbox)
     if (action.isOption) {
         // Find answer field with the right id and update value
+
+        if (action.field.type == 'RADIOBUTTON') { //clear selections if field type is radiobutton
+            state.option_answers.filter((answer) => {
+                return (action.field.field_options
+                    .map((option) => option.field_option_id)
+                    .includes(answer.field_option_id));
+            }).map((answer) => answer.selected = false);
+        }
+
         state.option_answers.map(i => {
-            if (i.option_answer_id === action.field.field_options.field_option_id) i.selected = action.value;
+            if (i.field_option_id == action.value.field_option_id) i.selected = true;
         });
     } else {
         state.string_answers.map(i => {
