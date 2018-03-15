@@ -312,6 +312,7 @@ export class ReportScreen extends React.Component {
                                     />
                                 }
                                 onDateChange={(time) => this.props.dispatch(insertFieldAnswer(field, time, false))}
+
                             />
                         </View>
                     );

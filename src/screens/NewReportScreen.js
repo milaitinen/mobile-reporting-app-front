@@ -338,51 +338,8 @@ export class NewReportScreen extends React.Component {
                             />
                         </View>
                     );
-
-
-                    /*
-                    const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
-                    return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
-                            <View style={ newReportStyles.radioButtonContainer }>
-                                <RadioForm
-                                    animation={true}
-                                    formHorizontal={true}
-                                >
-                                    {props.map((obj, i) =>
-                                        <RadioButton
-                                            key={i}
-                                        >
-                                            <RadioButtonInput
-                                                disabled={!isEditable}
-                                                obj={obj}
-                                                index={i}
-                                                isSelected={this.state.value === obj.value}
-                                                onPress={(value) => this.props.dispatch(insertFieldAnswer(field, value, true))}
-                                                borderWidth={1}
-                                                buttonColor={'#88c9e5'}
-                                                buttonSize={16}
-                                                buttonOuterSize={24}
-                                                buttonStyle={{}}
-                                                buttonWrapStyle={{}}
-                                            />
-                                            <RadioButtonLabel
-                                                disabled={!isEditable}
-                                                obj={obj}
-                                                index={i}
-                                                labelHorizontal={true}
-                                                onPress={(value) => { this.setState({ value: value }); }}
-                                                labelStyle={{ marginRight: 20 }}
-                                                labelWrapStyle={{}}
-                                            />
-                                        </RadioButton>
-                                    )}
-                                </RadioForm>
-                            </View>
-                        </View>
-                    );*/
-
+                    // saving worked with this:
+                    // onPress={(value) => this.props.dispatch(insertFieldAnswer(field, value))}
                 case 'CALENDAR': // Calendar
                     return (
                         <View key={index} >
