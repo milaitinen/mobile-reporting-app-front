@@ -225,6 +225,9 @@ export class NewReportScreen extends React.Component {
         }
 
         const { isEditable } = this.state;
+        const { newReport } = this.props;
+        const optionAnswers = newReport.option_answers;
+
         const renderedFields = this.state.fields.map((field, index) => {
 
             switch (field.type) { // typeID because fetchFieldsByTemplateID returns typeID (in ReportScreen typeID->fieldID)
@@ -308,6 +311,36 @@ export class NewReportScreen extends React.Component {
                     );
 
                 case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
+
+                    const labels = field.field_options.map((option) => {
+                        return (
+                            { label: option.value }
+                        );
+                    });
+
+                    const initialIndex = field.field_options.findIndex((option) => {
+                        return optionAnswers.map((answers) => answers.field_option_id).includes(option.field_option_id);
+                    });
+
+                    // TODO RADIOBUTTON DOES NOT WORK YET
+                    return (
+                        <View key={index}>
+                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
+                            <RadioForm
+                                key={index}
+                                disabled={!isEditable}
+                                radio_props={labels}
+                                initial={initialIndex}
+                                onPress={(label) => this.props.dispatch(insertFieldAnswer(field, label, true))} //TODO this only allows '1' to be saved...
+                                buttonColor={'#9dcbe5'}
+                                labelStyle={{ paddingRight: 12, paddingLeft: 6 }}
+                                //formHorizontal={true}
+                            />
+                        </View>
+                    );
+
+
+                    /*
                     const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
                     return (
                         <View key={index}>
@@ -326,7 +359,7 @@ export class NewReportScreen extends React.Component {
                                                 obj={obj}
                                                 index={i}
                                                 isSelected={this.state.value === obj.value}
-                                                onPress={(value) => { this.setState({ value: value }); }}
+                                                onPress={(value) => this.props.dispatch(insertFieldAnswer(field, value, true))}
                                                 borderWidth={1}
                                                 buttonColor={'#88c9e5'}
                                                 buttonSize={16}
@@ -348,7 +381,7 @@ export class NewReportScreen extends React.Component {
                                 </RadioForm>
                             </View>
                         </View>
-                    );
+                    );*/
 
                 case 'CALENDAR': // Calendar
                     return (
