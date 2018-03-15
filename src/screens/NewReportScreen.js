@@ -177,28 +177,13 @@ export class NewReportScreen extends React.Component {
 
     // Inserts data to server with a post method.
     send = () => {
-        const { templateID } = this.props.navigation.state.params;
-        const report = {
-            templateID: templateID,
-            title: this.props.title,
-            dateCreated: moment().format('YYYY-MM-DD'),
-            answers: [
-                {
-                    fieldID: 1,
-                    answer: 'Answer 1'
-                },
-                {
-                    fieldID: 2,
-                    answer: 'Answer 2'
-                }
-            ]
-        };
+        const { username, newReport, token } = this.props;
 
-        createNewReport(this.props.username, report, this.props.token).then(response => {
+        createNewReport(username, newReport, token).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
-                return strings('createNew.reportAdded');
+                return Alert.alert('Report sent!');
             } else {
                 return response.status;
             }
@@ -530,7 +515,7 @@ export class NewReportScreen extends React.Component {
 
                 <View style={ newReportStyles.buttonView}>
                     <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
-                    <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}  />
+                    <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
                 </View>
             </AppBackground>
             /*
