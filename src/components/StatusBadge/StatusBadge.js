@@ -4,10 +4,10 @@ import { Badge, Icon } from 'react-native-elements';
 import styles from './styles';
 import { strings } from '../../locales/i18n';
 
-const StatusBadge = ({ dateAccepted }) =>{
-    /*
-    if(JOKU DRAFTEHTO) {
-    return (
+const StatusBadge = ({ dateAccepted, isDraft }) =>{
+
+    if (isDraft) {
+        return (
             <View style={styles.BadgeViewContainer}>
                 <Badge textStyle = {styles.badgeTextStyle}
                     containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#87cce5' }]}>
@@ -16,10 +16,17 @@ const StatusBadge = ({ dateAccepted }) =>{
                 </Badge>
             </View>
         );
-    }
-     */
-
-    if (dateAccepted != null){
+    } else if (!dateAccepted){
+        return (
+            <View style={styles.BadgeViewContainer}>
+                <Badge textStyle = {styles.badgeTextStyle}
+                    containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
+                    <Text style={ styles.badgeTextStyle }>{strings('templates.sent')}</Text>
+                    <Icon name={'clock'} type={'feather'} iconStyle={styles.badgeIconStyle} />
+                </Badge>
+            </View>
+        );
+    } else {
         return (
             <View style={styles.BadgeViewContainer}>
                 <Badge textStyle = {styles.badgeTextStyle}
@@ -27,7 +34,6 @@ const StatusBadge = ({ dateAccepted }) =>{
                     <Text style={styles.badgeTextStyle}>{strings('templates.approved')}</Text>
                     <Icon name={'check'} type={'feather'} iconStyle={styles.badgeIconStyle} />
                 </Badge>
-
                 <Text style={styles.dateAccepted}>
                     {dateAccepted}
                 </Text>
@@ -35,16 +41,6 @@ const StatusBadge = ({ dateAccepted }) =>{
 
         );
     }
-    return (
-        <View style={styles.BadgeViewContainer}>
-            <Badge textStyle = {styles.badgeTextStyle}
-                containerStyle = {[styles.badgeContainerStyle, { backgroundColor: '#f3fe99' }]}>
-                <Text style={ styles.badgeTextStyle }>{strings('templates.sent')}</Text>
-                <Icon name={'clock'} type={'feather'} iconStyle={styles.badgeIconStyle} />
-            </Badge>
-        </View>
-    );
-
 };
 
 export default StatusBadge;

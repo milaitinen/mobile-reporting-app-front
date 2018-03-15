@@ -9,17 +9,15 @@ import {
     Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import {
-    fetchReportsByTemplateID, fetchTemplatesByUsername,
-    isNetworkConnected, /*fetchReportsByUsername*/
-} from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID,  isNetworkConnected} from './api';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID } from '../redux/actions/reportsByTemplateID';
+import { storeReportsByTemplateID, storeDraftByTemplateID } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
@@ -69,6 +67,7 @@ export class TemplateScreen extends Component {
         } else {
             this.setState({ refreshing: false, isLoading: false });
         }
+
     }
 
     componentWillUnmount() {
@@ -87,43 +86,53 @@ export class TemplateScreen extends Component {
         of reportsByTemplates, and sets isLoading and refreshing to false.
     */
     getTemplatesAndReports = () => {
-        fetchTemplatesByUsername(this.props.username, this.props.token)
-            .then(responseJson => this.props.dispatch(storeTemplates(responseJson)))
+        const { username, token } = this.props;
+
+        fetchTemplatesByUsername(username, token)
+            .then(responseJson => {
+                if (responseJson.length < 1) {  // handle situations where there are no templates
+                    this.setState({ refreshing: false, isLoading: false });
+                } else {
+                    this.props.dispatch(storeTemplates(responseJson));
+                }
+            })
             .then(() => {
-                const reportsByTemplateID = Object.keys(this.props.templates).map((templateID) => fetchReportsByTemplateID(this.props.username, templateID, this.props.token));
+                const reportsByTemplateID = Object.keys(this.props.templates)
+                    .map((templateID) => fetchReportsByTemplateID(username, templateID, token));
+
                 Promise.all(reportsByTemplateID)
-                    .then(data => {
-                        this.props.dispatch(storeReportsByTemplateID(data));
-                        this.setState({ refreshing: false, isLoading: false });
-                    })
+                    .then(data => this.props.dispatch(storeReportsByTemplateID(data)))
+                    .then(() => this.getDrafts())
                     .catch(err => console.error(err));
             })
             .catch(error => console.error(error))
             .done();
+    };
 
-        /*
-        fetchReportsByUsername(this.props.username, this.props.token)
-            .then(responseJson => this.props.dispatch(storeReports(responseJson)))
-            .catch(error => console.error(error))
-            .done();
-        */
+    getDrafts = () => {
+        const { templates, username } = this.props;
+
+        Object.keys(templates).forEach((templateID) => {
+            fetchDraftsByTemplateID(username, templateID)
+                .then((drafts) => {
+                    if (drafts.length !== 0) {
+                        drafts.forEach(draft => this.props.dispatch(storeDraftByTemplateID(templateID, draft)));
+                    }
+                })
+                .then(() => this.setState({ refreshing: false, isLoading: false }))
+                .catch(err => console.error(err));
+        });
     };
 
     // Handler function for refreshing the data and refetching.
     handleRefresh = () => {
-        this.setState(
-            { refreshing: true, },
-            () => { this.getTemplatesAndReports(); }
-        );
+        this.setState({ refreshing: true, }, () => { this.getTemplatesAndReports(); });
+        this.setState({ isLoading: true });
     };
 
     // Determines whether this screen is scrollable or not.
     setScrollEnabled = (bool) => {
-        this.setState(
-            {
-                scrollEnabled : bool
-            }
-        );
+        this.setState({ scrollEnabled : bool });
     };
 
     /*
@@ -131,11 +140,7 @@ export class TemplateScreen extends Component {
      Without this function it wouldn't be possible to autoscroll to the last templates.
      */
     setRenderFooter = (bool) => {
-        this.setState(
-            {
-                renderFooter : bool
-            }
-        );
+        this.setState({ renderFooter: bool });
     };
 
     /*
@@ -146,13 +151,22 @@ export class TemplateScreen extends Component {
     */
     createNew = (templateID, isEditable) => {
         if (isEditable) {
-            this.props.dispatch(createReport(templateID, isEditable));
-            this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh });
+            this.props.dispatch(createReport(templateID, moment().format('YYYY-MM-DD')));
+            // this.setState({ isLoading: true });
+            this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, isEditable: isEditable });
         }
         else {
-            this.props.dispatch(preview(templateID, isEditable));
-            this.props.navigation.navigate('Preview', { refresh: this.handleRefresh });
+            this.props.dispatch(preview(templateID));
+            // this.setState({ isLoading: true });
+            this.props.navigation.navigate('Preview', { refresh: this.handleRefresh,  isEditable: isEditable });
         }
+        //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReportScreen and uncomment this
+    };
+
+    viewReport = (templateID, reportID, title) => {
+        //this.setState({ isLoading: true }); TODO same problem as above
+        this.props.navigation.navigate('Report',
+            { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
     };
 
     render() {
@@ -170,25 +184,45 @@ export class TemplateScreen extends Component {
             );
         }
 
+        const { reports, templates } = this.props;
 
-        const { reportsByTempID, templates } = this.props;
-
-        return <AppBackground>
-            <View style={templateScreenStyles.viewContainer}>
-                <StatusBar backgroundColor={this.props.isConnected ? '#3d4f7c' : '#b52424'} barStyle="light-content" />
-                {/*At the moment this doesn't do anything. */}
-                <ReportSearchBar />
-                <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
-                    <FlatList ref={c => (this._flatList = c)} scrollEnabled={this.state.scrollEnabled} data={Object.values(templates)} renderItem={({ item, index }) => <Layout title={item.title} moveToTop={(viewPosition = 0) => this._flatList.scrollToIndex(
-                        {
-                            animated: true,
-                            index: index,
-                            viewPosition: viewPosition
-                        }
-                    )} setTemplateScreenScrollEnabled={this.setScrollEnabled} setTemplateScreenRenderFooter={this.setRenderFooter} createNew={this.createNew} nofReports={reportsByTempID[item.id] ? reportsByTempID[item.id].length : 0} templateID={item.id} data={reportsByTempID[item.id]} />} ListFooterComponent={this.state.renderFooter && <View style={{ height: 500 }} />} keyExtractor={item => item.id} refreshing={this.state.refreshing} />
-                </ScrollView>
-            </View>
-        </AppBackground>;
+        return (
+            <AppBackground>
+                <View style={templateScreenStyles.viewContainer}>
+                    <StatusBar
+                        backgroundColor={this.props.isConnected ? '#3d4f7c' : '#b52424'}
+                        barStyle='light-content'
+                    />
+                    {/* At the moment this doesn't do anything.*/}
+                    <ReportSearchBar/>
+                    <ScrollView contentContainerStyle={templateScreenStyles.scrollView}>
+                        <FlatList
+                            ref={(c) => this._flatList = c}
+                            scrollEnabled={this.state.scrollEnabled}
+                            data={ Object.values(templates) }
+                            renderItem={({ item, index }) =>
+                                <Layout
+                                    title={item.title}
+                                    moveToTop={(viewPosition = 0) => this._flatList.scrollToIndex({ animated: true, index: index, viewPosition: viewPosition })}
+                                    setTemplateScreenScrollEnabled={this.setScrollEnabled}
+                                    setTemplateScreenRenderFooter={this.setRenderFooter}
+                                    createNew={this.createNew}
+                                    viewReport={this.viewReport}
+                                    nofReports={(reports[item.id]) ? (reports[item.id]).length : 0}
+                                    templateID={item.id}
+                                    data={reports[item.id]}
+                                />
+                            }
+                            ListFooterComponent={
+                                (this.state.renderFooter) && <View style={{ height: 500 }}/>
+                            }
+                            keyExtractor={item => item.id}
+                            refreshing={this.state.refreshing}
+                        />
+                    </ScrollView>
+                </View>
+            </AppBackground>
+        );
     }
 }
 
@@ -196,14 +230,14 @@ export class TemplateScreen extends Component {
 const mapStateToProps = (state) => {
     const username = state.user.username;
     const templates = state.templates;
-    const reportsByTempID = state.reportsByTempID;
+    const reports = state.reports;
     const token = state.user.token;
     const isConnected = state.connection.isConnected;
 
     return {
         username,
         templates,
-        reportsByTempID,
+        reports,
         token,
         isConnected,
     };

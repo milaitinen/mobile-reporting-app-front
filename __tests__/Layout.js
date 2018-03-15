@@ -10,7 +10,7 @@ configure({ adapter: new Adapter() });
 
 it('renders correctly', () => {
     const tree = renderer.create(
-        <Layout data={[]} />
+        <Layout />
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });
@@ -19,6 +19,21 @@ describe('Layout', () => {
 
     const wrapper = renderer.create(<Layout data={[]} />);   // render React components to pure JavaScript objects
     const inst = wrapper.getInstance();                      // Return the instance corresponding to the root element, if available.
+
+    /*inst.setTemplateScreenRenderFooter = jest.fn();
+    inst.setTemplateScreenScrollEnabled = jest.fn();
+    inst.moveToTop = jest.fn();
+
+    describe('toggle()', () => {
+        it('should set state "expanded" to true when called once', () => {
+            inst.toggle();
+            expect(inst.state.expanded).toBe(true);
+        });
+        it('should set state "expanded" to false when called twice', () => {
+            inst.toggle();
+            expect(inst.state.expanded).toBe(false);
+        });
+    });*/
 
     describe('toggleExpanded()', () => {
         it('should set state "expanded" to true when called once', () => {
@@ -33,15 +48,14 @@ describe('Layout', () => {
 
     describe('showMore()', () => {
         it('should update the states itemsCount, updated, and maxHeight, when called', () => {
-            expect(inst.state.itemsCount).toBe(5);
+            expect(inst.state.itemsCount).toBe(20);
             expect(inst.state.updated).toBe(false);
-            expect(inst.state.maxHeight).toBe(0);
+            expect(inst.state.maxHeight).toBe(475);
 
             inst.showMore();
 
-            expect(inst.state.itemsCount).toBe(10);
+            expect(inst.state.itemsCount).toBe(40);
             expect(inst.state.updated).toBe(true);
-            expect(inst.state.maxHeight).toBe(300);
         });
     });
 });

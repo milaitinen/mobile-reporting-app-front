@@ -1,13 +1,18 @@
 import { CheckBox } from 'react-native-elements';
 import React, { Component } from 'react';
+import styles from './checkboxStyles';
 
 class Checkbox extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked: false,
+            checked: props.isChecked || false,
         };
     }
+
+    toggle = () => {
+        this.setState({ checked: !this.state.checked });
+    };
 
     render(){
         return (
@@ -16,7 +21,13 @@ class Checkbox extends Component {
                 checked={this.state.checked}
                 disabled={!this.props.editable}
                 checkedColor={'#A4CBE7'}
-                onPress={() => this.setState({ checked: !this.state.checked })}
+                onPress={() => {
+                    if (this.props.editable) {
+                        this.props.onPressFunction((!this.state.checked) ? '1' : '0');
+                        this.toggle();
+                    }
+                    console.log('this.props.editable', this.props.editable);
+                }}
             />
         );
     }

@@ -17,10 +17,13 @@
     "sent": "Despachado",
     "draft": "Boceto",
     "showMore": "Enseñar más",
-    "endOfReports": "No hay más reportajes"
+    "endOfReports": "No hay más reportajes",
+    "preview": "Previsualización"
   },
 
   "createNew": {
+    "send": "Enviar",
+    "save": "Guardar",
     "createNew": "Crear un nuevo reportaje",
     "enterNew": "Entrar el nombre del reportaje",
     "reportAdded": "Reportaje despachado",

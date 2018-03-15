@@ -9,20 +9,45 @@ import { TemplateScreen } from '../src/screens/TemplateScreen';
 
 configure({ adapter: new Adapter() });
 
-it('renders correctly', () => {
-    const tree = renderer.create(
-        <TemplateScreen />
-    ).toJSON();
-    expect(tree).toMatchSnapshot();
-});
+describe('TemplateScreen', () => {
+
+    const templateScreen = shallow(<TemplateScreen templates={{}}/>);
+    const wrapper = renderer.create(<TemplateScreen templates={{}}/>);
+    const inst = wrapper.getInstance();
+
+    it('renders correctly', () => {
+        const tree = wrapper.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    /*it('createNew() triggers', () => {
+        expect(inst.createNew(1, true)).toHaveBeenCalledWith(createReport(1, true))
+    });*/
 
 
-describe('<TemplateScreen />', () => {
-    describe('isLoading', () => {
-        it('should render a <ActivityIndicator /> if true', () => {
-            const templateScreen = shallow(<TemplateScreen />);
-            templateScreen.setState({ isLoading: true });
-            expect(templateScreen.find(ActivityIndicator).length).toBe(1);
-        });
+    it('should set state refreshing = true when handleRefresh is called', () => {
+        inst.getTemplatesAndReport = jest.fn();
+        inst.handleRefresh();
+        expect(inst.state.refreshing).toBe(true);
+    });
+
+    it('should set state scrollEnabled to true when called setScrollEnabled(true)', () => {
+        inst.setScrollEnabled(true);
+        expect(inst.state.scrollEnabled).toBe(true);
+    });
+
+    it('should set state renderFooter to false when called setRenderFooter(false)', () => {
+        inst.setRenderFooter(false);
+        expect(inst.state.renderFooter).toBe(false);
+    });
+
+    it('should render an ActivityIndicator if isLoading = true', () => {
+        templateScreen.setState({ isLoading: true });
+        expect(templateScreen.find(ActivityIndicator).length).toBe(1);
+    });
+
+    it('should not render an ActivityIndicator if isLoading = false', () => {
+        templateScreen.setState({ isLoading: false });
+        expect(templateScreen.find(ActivityIndicator).length).toBe(0);
     });
 });

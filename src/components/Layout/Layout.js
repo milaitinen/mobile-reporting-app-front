@@ -16,10 +16,11 @@ class Layout extends Component{
             minHeight  : Dimensions.get('window').width < 350 ? 50 : 60,
             itemsCount : 20,
             updated    : false,
-            expanded   : false,                     // Checks whether the reports of the template are shown or not.
-            animation  : new Animated.Value(Dimensions.get('window').width < 350 ? 50 : 60),    /* Initializes the animation state as 60 (same height as the ListItem
-                                                    component which includes the title of the Layout etc.)
-                                                    This is the minimum height when the layout component isn't expanded. */
+            expanded   : false,  // Checks whether the reports of the template are shown or not.
+            animation  : new Animated.Value(Dimensions.get('window').width < 350 ? 50 : 60),
+            /* Initializes the animation state as 60 (same height as the ListItem
+            component which includes the title of the Layout etc.)
+            This is the minimum height when the layout component isn't expanded. */
         };
     }
 
@@ -32,7 +33,7 @@ class Layout extends Component{
 
 
     toggleExpanded = () => {
-        this.setState({ expanded : !this.state.expanded });
+        this.setState({ expanded: !this.state.expanded });
     };
 
     // Toggle function for closing and expanding the layout component.
@@ -71,7 +72,7 @@ class Layout extends Component{
         this.props.moveToTop();
     };
 
-    // Determine wheter the template screen is scrollable or not.
+    // Determine whether the template screen is scrollable or not.
     setTemplateScreenScrollEnabled = (bool) => {
         this.props.setTemplateScreenScrollEnabled(bool);
     };
@@ -86,12 +87,10 @@ class Layout extends Component{
 
 
     // Sets maximum height when opened.
-    _setMaxHeight = (event) => {
+    _setMaxHeight = () => {
         const height = Dimensions.get('window').height;
 
-        this.setState({
-            maxHeight   : Platform.OS === 'ios' ? height - 142 : height - 165
-        });
+        this.setState({ maxHeight: (Platform.OS === 'ios') ? height - 142 : height - 165 });
     };
 
     // Shows more reports.
@@ -103,8 +102,6 @@ class Layout extends Component{
             }
         );
     };
-
-
 
     render(){
         // simplifies referencing (instead of this.props.title, title is enough)
@@ -130,7 +127,7 @@ class Layout extends Component{
                 </View>
 
                 <View style={styles.reportListContainer} onLayout={this._setMaxHeight}>
-                    <ScrollView style={{height: this.state.maxHeight - this.state.minHeight}}>
+                    <ScrollView style={{ height: this.state.maxHeight - this.state.minHeight }}>
                         <FlatList
                             data={ (data === undefined) ? data : data.slice(0, this.state.itemsCount) }
                             extraData={ this.state.itemsCount }
@@ -140,21 +137,29 @@ class Layout extends Component{
                             renderItem={({ item }) =>
                                 <ListItem
                                     key={item.title}
+                                    onPress={() => this.props.viewReport(templateID, item.id, item.title)}
                                     containerStyle={ styles.reportContainer }
                                     titleStyle = { styles.reportTitle }
-                                    title={`${item.orderNo}\t${item.title}`}
+                                    title={(item.orderNo) ? `${item.orderNo}\t${item.title}` : `${item.title}`}
                                     subtitle={item.dateCreated}
                                     hideChevron = {true}
-                                    badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
+                                    badge ={{ element:
+                                        <StatusBadge
+                                            dateAccepted={item.dateAccepted}
+                                            isDraft={item.id < 0}
+                                        />
+                                    }}
                                 />
                             }
                             keyExtractor={item => item.id}
                             ListFooterComponent={
                                 (data !== undefined && data.length > this.state.itemsCount)
-                                    ? <Text style={styles.more} onPress={() => this.showMore()}>
+                                    ?
+                                    <Text style={styles.more} onPress={() => this.showMore()}>
                                         { strings('templates.showMore') }
                                     </Text>
-                                    : <Text style={styles.noMoreReports}>
+                                    :
+                                    <Text style={styles.noMoreReports}>
                                         { strings('templates.endOfReports') }
                                     </Text>
                             }
@@ -167,3 +172,4 @@ class Layout extends Component{
 }
 
 export default Layout;
+

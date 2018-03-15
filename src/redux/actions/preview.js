@@ -3,10 +3,9 @@ export const PREVIEW = 'PREVIEW';
 export const INSERT_TITLE = 'INSERT_TITLE';
 
 // return an object
-export const preview = ( templateID, isEditable) => ({
+export const preview = ( templateID ) => ({
     type: PREVIEW,
-    templateID: templateID,
-    isEditable: isEditable,
+    templateID: templateID
 });
 
 export const insertTitle = (title) => ({

@@ -368,7 +368,7 @@ exports[`renders correctly 1`] = `
               No more reports
             </Text>
           }
-          data={Array []}
+          data={undefined}
           disableVirtualization={false}
           extraData={20}
           getItem={[Function]}

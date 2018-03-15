@@ -1,21 +1,19 @@
 import { NavigationActions } from 'react-navigation';
 import React from 'react';
-import { View, Button } from 'react-native';
+import { Button, View } from 'react-native';
 import { strings } from '../locales/i18n';
-import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
+import { insertToken, insertUsername } from '../redux/actions/user';
 import { emptyTemplates } from '../redux/actions/templates';
-import { emptyReports } from '../redux/actions/reportsByTemplateID';
+import { emptyReports } from '../redux/actions/reports';
 import { connect } from 'react-redux';
+import { LOGGED_OUT_ROUTE_NAME } from './AppNavigation';
 
 class Sidebar extends React.Component {
-
-    signOutDestinationRouteName = 'loginStack';
 
     signOut = () => {
         // perform other logging out related tasks here
 
         this.props.dispatch(insertUsername(null));
-        this.props.dispatch(insertPassword(null));
         this.props.dispatch(insertToken(null));
         this.props.dispatch(emptyTemplates());
         this.props.dispatch(emptyReports());
@@ -28,7 +26,7 @@ class Sidebar extends React.Component {
         const actionToDispatch = NavigationActions.reset({
             index: 0,
             key: null,
-            actions: [NavigationActions.navigate({ routeName: this.signOutDestinationRouteName })]
+            actions: [NavigationActions.navigate({ routeName: LOGGED_OUT_ROUTE_NAME })]
         });
         this.props.navigation.dispatch(actionToDispatch);
     };

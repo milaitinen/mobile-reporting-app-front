@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`TemplateScreen renders correctly 1`] = `
 <View
   colors={
     Array [
@@ -11,19 +11,124 @@ exports[`renders correctly 1`] = `
   }
   style={undefined}
 >
-  <ActivityIndicator
-    animating={true}
-    color="#88daf2"
-    hidesWhenStopped={true}
-    size="large"
-    style={
-      Array [
-        undefined,
-        Object {
-          "height": 80,
-        },
-      ]
-    }
-  />
+  <View
+    style={undefined}
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#393e42",
+            "borderBottomColor": "#000",
+            "borderBottomWidth": 1,
+            "borderTopColor": "#000",
+            "borderTopWidth": 1,
+          },
+          Object {
+            "backgroundColor": "#e1e8ee",
+            "borderBottomColor": "#e1e1e1",
+            "borderTopColor": "#e1e1e1",
+          },
+          undefined,
+        ]
+      }
+    >
+      <TextInput
+        allowFontScaling={true}
+        placeholder="Search.."
+        placeholderTextColor="#86939e"
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#303337",
+              "borderRadius": 3,
+              "color": "#86939e",
+              "fontSize": 17.5,
+              "height": 30,
+              "margin": 8,
+              "overflow": "hidden",
+              "paddingLeft": 26,
+              "paddingRight": 19,
+            },
+            Object {
+              "backgroundColor": "#bdc6cf",
+            },
+            false,
+            false,
+            undefined,
+            undefined,
+            false,
+          ]
+        }
+        underlineColorAndroid="transparent"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "#86939e",
+              "fontSize": 16,
+            },
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "position": "absolute",
+                "top": 15.5,
+              },
+              Object {
+                "left": 16,
+              },
+              undefined,
+            ],
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+    <RCTScrollView
+      contentContainerStyle={undefined}
+    >
+      <View>
+        <RCTScrollView
+          ListFooterComponent={false}
+          data={Array []}
+          disableVirtualization={false}
+          getItem={[Function]}
+          getItemCount={[Function]}
+          horizontal={false}
+          initialNumToRender={10}
+          keyExtractor={[Function]}
+          maxToRenderPerBatch={10}
+          numColumns={1}
+          onContentSizeChange={[Function]}
+          onEndReachedThreshold={2}
+          onLayout={[Function]}
+          onMomentumScrollEnd={[Function]}
+          onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
+          onScrollEndDrag={[Function]}
+          refreshing={false}
+          renderItem={[Function]}
+          scrollEnabled={true}
+          scrollEventThrottle={50}
+          stickyHeaderIndices={Array []}
+          updateCellsBatchingPeriod={50}
+          viewabilityConfigCallbackPairs={Array []}
+          windowSize={21}
+        >
+          <View />
+        </RCTScrollView>
+      </View>
+    </RCTScrollView>
+  </View>
 </View>
 `;

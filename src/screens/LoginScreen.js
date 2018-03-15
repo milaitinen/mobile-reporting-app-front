@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, Keyboard, NetInfo, StatusBar, Platform, View } from 'react-native';
+import { Text, Keyboard, NetInfo, StatusBar, Platform, View, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
 import { strings } from '../locales/i18n';
-import { SignInButton } from '../components/Button';
 import { Input } from '../components/TextInput';
+import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, /*insertServerUrl,*/ insertToken } from '../redux/actions/user';
 import { isNetworkConnected, login, /* mockLogin, verifyToken, invalidCredentialsResponse*/ } from './api';
@@ -13,29 +13,21 @@ import { NavigationActions } from 'react-navigation';
 import { toggleConnection } from '../redux/actions/connection';
 import { setInitialConnection } from '../redux/actions/connection';
 import { OfflineNotice } from '../components/OfflineNotice';
+import { login } from './api';
+import { LOGGED_IN_ROUTE_NAME } from '../navigation/AppNavigation';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
-        /*
-        this.state = {
-            // isLoading     : true,
-            username    : '',
-            password        : '',
-            serverUrl       : ''
-        };
-        */
-
-        if (this.props.token) {
-            // this.props.token != null
+        if (this.props.token) { // this.props.token != null
             //TODO: verify token
             /*
             const response = verifyToken(this.props.user.token);
             if (someCondition(response)) {
             }
             */
-            this.props.navigation.navigate('drawerStack');
+            this.props.navigation.navigate(LOGGED_IN_ROUTE_NAME);
         }
     }
 
@@ -55,6 +47,11 @@ export class LoginScreen extends React.Component {
     handleConnectionChange = isConnected => {
         this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
     };
+    /* DEV uncomment in case you need to clear AsyncStorage
+    componentWillMount() {
+        AsyncStorage.clear();
+    }
+    */
 
     /**
      * Navigates to the given route and resets navigation
@@ -70,18 +67,17 @@ export class LoginScreen extends React.Component {
     };
 
     logIn = () => {
-        login(this.props.username, this.props.password).then(
-            response => {
-                if (response === undefined) {
+        login(this.props.username, this.props.password)
+            .then(token => {
+                if (token === undefined) {
                     alert('Invalid username or password');
                 } else {
-                    this.props.dispatch(insertToken(response));
+                    this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
-                    this.resetNavigationTo('drawerStack');
+                    this.resetNavigationTo(LOGGED_IN_ROUTE_NAME);
+                    this.props.dispatch(insertPassword(null));
                 }
             });
-
-        this.props.dispatch(insertPassword(null));
     };
 
     render() {
