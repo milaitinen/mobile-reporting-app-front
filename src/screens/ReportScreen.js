@@ -173,7 +173,7 @@ export class ReportScreen extends React.Component {
                     );
                 }
 
-                case 'NESTED_DROPDOWN' : // Dropdown
+                case 'DROPDOWN' : // Dropdown
                 {
 
                     const selected = field.field_options.find((option) => {
