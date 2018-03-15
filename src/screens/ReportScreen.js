@@ -12,7 +12,7 @@ import { Checkbox } from '../components/Checkbox';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, removeDraft, saveDraft } from './api';
 import { strings } from '../locales/i18n';
-import { insertFieldAnswer, emptyFields } from '../redux/actions/newReport';
+import { insertFieldAnswer, emptyFields, openReport } from '../redux/actions/newReport';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -22,42 +22,24 @@ export class ReportScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isDraft         : false, // for future use?
-            report          : null,
             title           : null,
             isUnsaved       : true,
             isLoading       : true,
             number          : '',
             isEditable      : false,
-            fields  : null,
+            fields          : null,
         };
     }
 
     componentDidMount() {
-
         const { templateID, reportID } = this.props.navigation.state.params;
-        const { reports } = this.props;
+        const { reports, templates } = this.props;
         const report = reports[templateID].find((obj) => obj.report_id === reportID);
-        this.setState({ report: report });
-        this.setState({ isLoading : false });
-        //this.getFieldsByReportID();
+        const fields = templates[templateID] ? templates[templateID].fields : [];
+
+        this.props.dispatch(openReport(report));
+        this.setState({ fields: fields, isEditable: reportID < 0, isLoading : false });
     }
-
-    getFieldsByReportID = () => {
-        const { templateID, reportID } = this.props.navigation.state.params;
-        const { reports } = this.props;
-
-        const report = reports[templateID].find((obj) => obj.report_id === reportID);
-        const fieldAnswers = report.answers;
-
-        const stringAnswers = report.string_answers;
-        const optionAnswers = report.option_answers;
-
-        fieldAnswers.map((field) => this.props.dispatch(insertFieldAnswer(field, field.answer)));
-
-        this.setState({ report: report });
-        this.setState({ fields: fieldAnswers, isLoading: false });
-    };
 
     // delete draft from asyncstorage
     deleteDraft = () => {
@@ -73,22 +55,22 @@ export class ReportScreen extends React.Component {
         this.props.navigation.dispatch(NavigationActions.back());
     };
 
-    // save report locally in asyncstorage
     save = () => {
-        const { username, answers } = this.props;
+        const { username, report } = this.props;
         const { templateID } = this.props.navigation.state.params;
+        saveDraft(username, templateID, report); // give a negative id
+        report.date_created = moment().format('YYYY-MM-DD');
 
-        const report = this.state.report;
-        report.title = this.state.title || report.title;
-        report.dateCreated = moment().format('YYYY-MM-DD');
-        report.answers = Object.values(answers);
-        saveDraft(username, templateID, report);
+        //this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
 
-        Alert.alert('Saved');
+        Alert.alert('Saved!');
 
-        this.props.dispatch(emptyFields());             // return newReport state to its initial state
-        this.props.navigation.state.params.refresh();   // update templateScreen
-        this.props.navigation.dispatch(NavigationActions.back());
+        //this.setState({ isUnsaved: false });
+
+        //return to template screen and have it refreshed
+        /*this.props.dispatch(emptyFields());
+        this.props.navigation.state.params.refresh();
+        this.props.navigation.dispatch(NavigationActions.back());*/
     };
 
     // Inserts data to server with a post method.
@@ -141,17 +123,17 @@ export class ReportScreen extends React.Component {
         }
 
         const { isEditable } = this.state;
+        const { report } = this.props;
+        const optionAnswers = report.option_answers;
 
-        const template = Object.values(this.props.templates).find((template) => template.template_id === this.state.report.template_id);
-        const optionAnswers = this.state.report.option_answers;
-        const renderedFields = template.fields.map((field, index) => {
-            const stringAnswer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
+        const renderedFields = this.state.fields.map((field, index) => {
+            const stringAnswer = report.string_answers.find((answer) => answer.field_id === field.field_id);
             const fieldOptions = field.field_options;
 
             switch (field.type) {
                 case 'TEXTFIELD_SHORT' : // Name
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
+                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -199,7 +181,6 @@ export class ReportScreen extends React.Component {
                     });
 
                     const initialIndex = field.field_options.findIndex((option) => {
-                        console.log(JSON.stringify(option));
                         return optionAnswers.map((answers) => answers.field_option_id).includes(option.field_option_id);
                     });
 
@@ -222,12 +203,9 @@ export class ReportScreen extends React.Component {
                 {
 
                     const selected = field.field_options.find((option) => {
-                        return this.state.report.option_answers.map((answer) => answer.field_option_id)
+                        return report.option_answers.map((answer) => answer.field_option_id)
                             .includes(option.field_option_id);
                     });
-
-
-                    //console.log(JSON.stringify(answer));
 
                     return (
                         <View key={index}>
@@ -244,7 +222,7 @@ export class ReportScreen extends React.Component {
                 }
                 case 'CALENDAR': // Calendar
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
+                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -274,7 +252,7 @@ export class ReportScreen extends React.Component {
                 }
                 case 'INSTRUCTIONS': // Instruction
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
+                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -287,7 +265,7 @@ export class ReportScreen extends React.Component {
                 }
                 case 'TEXTFIELD_LONG': // Text (Multiple row text field)
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
+                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -305,7 +283,7 @@ export class ReportScreen extends React.Component {
                 }
                 case 'TIME': // Time
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
+                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -339,7 +317,7 @@ export class ReportScreen extends React.Component {
                 }
                 case 'NUMBERFIELD': // Digits (Text input that only accepts numeric characters)
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id).value;
+                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id).value;
                     return (
                         <View key={index}>
                             <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
@@ -355,7 +333,7 @@ export class ReportScreen extends React.Component {
                 }
                 case 'LINK': // Link
                 {
-                    const answer = this.state.report.string_answers.find((answer) => answer.field_id === field.field_id);
+                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
                     return (
                         <View key={index} style={{ flexDirection: 'row' }}>
                             <Icon name={'link'} type={'feather'} iconStyle={newReportStyles.linkIconStyle}/>
@@ -396,7 +374,7 @@ export class ReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 defaultValue={this.props.navigation.state.params.title}
-                                onChangeText={(text) => this.setState({ title: text })}
+                                onChangeText={(title) => this.setState({ title })}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
@@ -438,16 +416,16 @@ const mapStateToProps = (state) => {
     const token         = state.user.token;
     const username      = state.user.username;
     const number        = state.newReport.number;
-    const answers       = state.newReport.answers;
     const reports       = state.reports;
     const templates     = state.templates;
+    const report        = state.newReport;
     return {
         username,
+        report,
         number,
         token,
         reports,
-        templates,
-        answers
+        templates
     };
 };
 

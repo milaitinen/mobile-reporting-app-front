@@ -4,6 +4,7 @@ import {
     INSERT_DATE,
     INSERT_FIELD_ANSWER,
     EMPTY_FIELDS, SET_UNSAVED,
+    OPEN_REPORT,
     CREATE_DRAFT
 } from '../actions/newReport';
 
@@ -47,6 +48,9 @@ const newReportReducer = (state = initialState, action) => {
         }
         case INSERT_FIELD_ANSWER: {
             return insertAnswer(state, action);
+        }
+        case OPEN_REPORT: {
+            return action.report;
         }
         case EMPTY_FIELDS: {
             return initialState;

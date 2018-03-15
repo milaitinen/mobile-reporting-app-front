@@ -5,6 +5,7 @@ export const EMPTY_FIELDS = 'EMPTY_FIELDS';
 export const SET_UNSAVED = 'SET_UNSAVED';
 export const INSERT_DATE = 'INSERT_DATE';
 export const CREATE_DRAFT = 'CREATE_DRAFT';
+export const OPEN_REPORT = 'OPEN_REPORT';
 
 export const createDraft = (draft) => ({
     type: CREATE_DRAFT,
@@ -14,6 +15,11 @@ export const createDraft = (draft) => ({
 export const insertTitle = (title) => ({
     type: INSERT_TITLE,
     title: title
+});
+
+export const openReport = (report) => ({
+    type: OPEN_REPORT,
+    report: report
 });
 
 export const insertDate = (date) => ({

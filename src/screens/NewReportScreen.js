@@ -159,7 +159,6 @@ export class NewReportScreen extends React.Component {
     save = () => {
         const { username, newReport } = this.props;
         const { templateID } = this.props.navigation.state.params;
-
         const report = newReport;
         report.report_id = saveDraft(username, templateID, report); // give a negative id
 
