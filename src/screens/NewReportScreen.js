@@ -165,6 +165,7 @@ export class NewReportScreen extends React.Component {
         this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
 
         Alert.alert('Report saved!');
+        this.setState({ isLoading: true });
 
         //this.setState({ isUnsaved: false });
 

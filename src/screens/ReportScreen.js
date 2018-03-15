@@ -12,7 +12,7 @@ import { Checkbox } from '../components/Checkbox';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, removeDraft, saveDraft } from './api';
 import { strings } from '../locales/i18n';
-import { insertFieldAnswer, emptyFields, openReport } from '../redux/actions/newReport';
+import { insertFieldAnswer, emptyFields, openReport, insertTitle } from '../redux/actions/newReport';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -65,12 +65,12 @@ export class ReportScreen extends React.Component {
 
         Alert.alert('Saved!');
 
-        //this.setState({ isUnsaved: false });
+        this.setState({ isLoading: true });
 
         //return to template screen and have it refreshed
-        /*this.props.dispatch(emptyFields());
+        this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
-        this.props.navigation.dispatch(NavigationActions.back());*/
+        this.props.navigation.dispatch(NavigationActions.back());
     };
 
     // Inserts data to server with a post method.
@@ -374,7 +374,7 @@ export class ReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 defaultValue={this.props.navigation.state.params.title}
-                                onChangeText={(title) => this.setState({ title })}
+                                onChangeText={(title) => this.props.dispatch(insertTitle(title))}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInputStyleClass}
                             />
