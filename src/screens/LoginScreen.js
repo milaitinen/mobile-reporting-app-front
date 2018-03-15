@@ -45,7 +45,7 @@ export class LoginScreen extends React.Component {
         isNetworkConnected()
             .then(isConnected => {
                 this.props.dispatch(setInitialConnection({ connectionStatus: isConnected }));})
-            .then(isConnected => Platform.OS === 'android' ? NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange): '');
+            .then(isConnected => NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange));
     }
 
     componentWillUnmount() {
