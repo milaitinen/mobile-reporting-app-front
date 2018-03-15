@@ -211,7 +211,7 @@ export const fetchReportsByTemplateID = (username, templateID, token) => {
             return fetchRemoteReportsByTemplateID(username, templateID, token);
         })
         .then((reports) => {
-            saveData(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`, reports);
+            saveData(`${url}/users/${username}/templates/${templateID}/reports?sort=-date_created`, reports);
             return reports;
         });
 };
@@ -219,7 +219,7 @@ export const fetchReportsByTemplateID = (username, templateID, token) => {
 /* Fetch Reports by TemplateID from ASyncStorage in case there is no internet connection.
    If no data has been stored an empty value will be returned. */
 const fetchLocalReportsByTemplateID = (username, templateID) => {
-    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`)
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports?sort=-date_created`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -232,7 +232,7 @@ const fetchLocalReportsByTemplateID = (username, templateID) => {
 // Fetch reports by templateID from the server
 const fetchRemoteReportsByTemplateID = (username, templateID, token) => {
     return (
-        fetch(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`, {
+        fetch(`${url}/users/${username}/templates/${templateID}/reports?sort=-date_created`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
