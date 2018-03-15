@@ -13,7 +13,6 @@ import { NavigationActions } from 'react-navigation';
 import { toggleConnection } from '../redux/actions/connection';
 import { setInitialConnection } from '../redux/actions/connection';
 import { OfflineNotice } from '../components/OfflineNotice';
-import { login } from './api';
 import { LOGGED_IN_ROUTE_NAME } from '../navigation/AppNavigation';
 
 // "export" necessary in order to test component without Redux store
