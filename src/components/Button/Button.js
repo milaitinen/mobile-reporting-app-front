@@ -26,7 +26,7 @@ const CustomButton = ({ title, type, onPress }) => {
             <View style={styles.view}>
                 <TouchableHighlight
                     underlayColor={color('white').darken(0.1)}
-                    style={styles.saveButtonContainer}
+                    style={styles.deleteButtonContainer}
                     onPress={onPress}>
                     <View style={styles.buttonContent}>
                         <Icon name={'delete'} color={EStyleSheet.value('$delete')} size={18}/>

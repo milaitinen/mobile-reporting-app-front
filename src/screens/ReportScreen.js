@@ -179,6 +179,7 @@ export class ReportScreen extends React.Component {
                                 disabled={!isEditable}
                                 options={['option 1', 'option 2']}
                                 dropdownStyle={styles.dropStyleClass}
+                                style={styles.dropdownButton}
                                 renderRow={ () =>
                                     <View>
                                         <ModalDropdown
