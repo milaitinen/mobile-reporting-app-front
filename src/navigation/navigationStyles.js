@@ -22,7 +22,7 @@ const navigationStyles = EStyleSheet.create({
         color: '#fff',
         fontWeight: 'normal',
         fontFamily: '$primaryFont',
-        paddingLeft: 60,
+        paddingRight: 50,
         '@media (max-width: 350)': {
             fontSize: 25,
         },
@@ -38,9 +38,20 @@ const navigationStyles = EStyleSheet.create({
         fontFamily: '$primaryFont',
         textAlignVertical: 'center',
         textAlign: 'center',
-        paddingRight: 30,
+        paddingRight: 100,
         '@media (max-width: 350)': {
             fontSize: 25,
+        },
+        '@media (min-width: 350)': {
+            fontSize: 30,
+        },
+
+    },
+
+    headerBackStyle: {
+        color: '#fff',
+        '@media (max-width: 350)': {
+            fontSize: 30,
         },
         '@media (min-width: 350)': {
             fontSize: 30,
@@ -55,6 +66,7 @@ const navigationStyles = EStyleSheet.create({
         left:0,
         position: 'absolute',
     },
+
 
     menuIcon: {
         color: '#fff',

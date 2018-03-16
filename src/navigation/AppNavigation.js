@@ -27,7 +27,6 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
-                    <Text style={ navigationStyles.ScreenHeaderTemplates }>{ strings('templates.templates') }</Text>
                     <Icon
                         name={'menu'}
                         type={'feather'}
@@ -35,6 +34,9 @@ const TemplateStack = StackNavigator({
                         containerStyle={navigationStyles.menuIconContainer}
                         onPress={() => { navigation.navigate('DrawerOpen'); }}>
                     </Icon>
+                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                        <Text style={ navigationStyles.ScreenHeaderTemplates }>{ strings('templates.templates') }</Text>
+                    </View>
                 </View>
         })
     },
@@ -74,12 +76,19 @@ const TemplateStack = StackNavigator({
     },
     Report: {
         screen: ReportScreen,
-        navigationOptions: () => ({
+        navigationOptions: ({ navigation }) => ({
             flex: 0.3,
-            headerTitle: strings('templates.report'),
-            headerStyle: navigationStyles.HeaderContainer,
-            headerTitleStyle: navigationStyles.ScreenHeader,
-            headerTintColor: '#fff',
+            header:
+                <View style={ navigationStyles.HeaderContainer}>
+                    <OfflineNotice />
+                    <HeaderBackButton
+                        tintColor='#fff'
+                        style={ navigationStyles.headerBackStyle }
+                        onPress={() => navigation.goBack(null) }/>
+                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                        <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.report') }</Text>
+                    </View>
+                </View>,
 
         })
     },
