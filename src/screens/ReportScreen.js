@@ -139,10 +139,10 @@ export class ReportScreen extends React.Component {
 
             switch (field.fieldID) {
 
-                case 1: // Name
+                case 1: // Name TODO: all titles from db
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={newReportStyles.text}>{field.title}</Text>
+                            <Text style={newReportStyles.text}>Nimikenttä</Text>
                             <TextInput
                                 editable={isEditable}
                                 defaultValue={field.answer}
@@ -156,7 +156,7 @@ export class ReportScreen extends React.Component {
                 case 2: // Checkbox
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={newReportStyles.text}>{field.title}</Text>
+                            <Text style={newReportStyles.text}>Checkbox</Text>
                             <Checkbox
                                 key={index}
                                 title={'This is a nice checkbox'}
@@ -174,7 +174,7 @@ export class ReportScreen extends React.Component {
                 case 3: // Dropdown
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={ newReportStyles.text }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>Dropdown</Text>
                             <ModalDropdown
                                 disabled={!isEditable}
                                 options={['option 1', 'option 2']}
@@ -204,7 +204,7 @@ export class ReportScreen extends React.Component {
                 case 4: // TextRow (One row text field)
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={newReportStyles.text}>{field.title}</Text>
+                            <Text style={newReportStyles.text}>1-rivinen teksti</Text>
                             <TextInput
                                 editable={isEditable}
                                 defaultValue={field.answer}
@@ -218,7 +218,7 @@ export class ReportScreen extends React.Component {
                 case 5: // Choice (Yes/No)
                     return (
                         <View key={index} style={newReportStyles.altFieldContainer}>
-                            <Text style={newReportStyles.text}>{field.title}</Text>
+                            <Text style={newReportStyles.text}>Valintalaatikko (Kyllä/Ei)</Text>
                             <Radioform
                                 options={[{ label: 'Yes', value: 0 }, { label: 'No', value: 1 }]}
                                 editable={isEditable}
@@ -231,7 +231,7 @@ export class ReportScreen extends React.Component {
                 case 6: // Calendar
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={newReportStyles.text}>{field.title}</Text>
+                            <Text style={newReportStyles.text}>Kalenteri</Text>
                             <Datepicker
                                 editable={isEditable}
                                 mode={'date'}
@@ -244,7 +244,7 @@ export class ReportScreen extends React.Component {
                 case 7: // Instruction
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={newReportStyles.text}>{field.title}</Text>
+                            <Text style={newReportStyles.text}>Ohje</Text>
                             <Text style={newReportStyles.instructions}>
                                 {field.defaultValue}
                             </Text>
@@ -254,7 +254,7 @@ export class ReportScreen extends React.Component {
                 case 8: // Text (Multiple row text field)
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={ newReportStyles.text }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>Laaja teksti</Text>
                             <TextInput
                                 multiline
                                 editable={isEditable}
@@ -270,7 +270,7 @@ export class ReportScreen extends React.Component {
                 case 9: // Time
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={ newReportStyles.text }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>Kellonaika</Text>
                             <Datepicker
                                 editable={isEditable}
                                 mode={'time'}
@@ -283,7 +283,7 @@ export class ReportScreen extends React.Component {
                 case 10: // Digits (Text input that only accepts numeric characters)
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={ newReportStyles.text }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>Numerokenttä</Text>
                             <TextInput
                                 editable={isEditable}
                                 style={ newReportStyles.textInput }
@@ -297,7 +297,7 @@ export class ReportScreen extends React.Component {
                 case 11: // Link
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={newReportStyles.text}>{field.title}</Text>
+                            <Text style={newReportStyles.text}>Linkkikenttä</Text>
                             <View style={newReportStyles.linkContainer}>
                                 <Icon name={'link'} type={'feather'} iconStyle={ newReportStyles.linkIcon }/>
                                 <Text
@@ -313,7 +313,7 @@ export class ReportScreen extends React.Component {
                 case 12: // User dropdown
                     return (
                         <View key={index} style={newReportStyles.fieldContainer}>
-                            <Text style={ newReportStyles.text }>{field.title}</Text>
+                            <Text style={ newReportStyles.text }>Käyttäjät</Text>
                             <Dropdown
                                 ref={ ModalDrop => this.modalDropdown = ModalDrop }
                                 disabled={!isEditable}
