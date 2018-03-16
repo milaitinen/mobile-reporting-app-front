@@ -187,9 +187,6 @@ export class NewReportScreen extends React.Component {
             } else {
                 return response.status;
             }
-        }).then((message) => {
-            // Showing response message coming from server after inserting records.
-            Alert.alert(message);
         }).catch((error) => {
             console.error(error);
         });

@@ -75,33 +75,16 @@ export class ReportScreen extends React.Component {
 
     // Inserts data to server with a post method.
     send = () => {
-        const report = {
-            templateID: this.props.navigation.state.params.templateID,
-            title: this.props.navigation.state.params.title,
-            dateCreated: moment().format('YYYY-MM-DD'),
-            answers: [
-                {
-                    fieldID: 1,
-                    answer: 'Answer 1'
-                },
-                {
-                    fieldID: 2,
-                    answer: 'Answer 2'
-                }
-            ]
-        };
+        const { username, report, token } = this.props;
 
-        createNewReport(this.props.username, report, this.props.token).then(response => {
+        createNewReport(username, report, token).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
-                return strings('createNew.reportAdded');
+                return Alert.alert('Report sent!');
             } else {
                 return response.status;
             }
-        }).then((message) => {
-            // Showing response message coming from server after inserting records.
-            Alert.alert(message);
         }).catch((error) => {
             console.error(error);
         });
@@ -202,15 +185,14 @@ export class ReportScreen extends React.Component {
                         );
                     });
 
-                    const initialIndex = field.field_options.findIndex((option) => {
-                        return (option.default_value);
-                    });
+                    const answerIndex = field.field_options.findIndex((option) =>
+                        (optionAnswers.find(a => a.field_option_id === option.field_option_id && a.selected)));
 
                     return (
                         <RadioForm
                             disabled={!isEditable}
                             radio_props={labels}
-                            initial={initialIndex}
+                            initial={answerIndex || 0}
                             itemRealKey="value"
                             onPress={(label) => this.props.dispatch(insertFieldAnswer(field, label, true))} //TODO this only allows '1' to be saved...
                             buttonColor={'#9dcbe5'}
@@ -391,7 +373,7 @@ export class ReportScreen extends React.Component {
                     (this.props.navigation.state.params.reportID < 0) &&
                         <View style={ newReportStyles.buttonView}>
                             <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
-                            <Button title={strings('createNew.send')} type={'send'} onPress={() => console.log('send')}  />
+                            <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
                             <Button title={'Delete'} disabled={false} onPress={() => this.deleteDraft()} />
                         </View>
                 }
