@@ -90,6 +90,8 @@ const mapStateToProps = (state) => {
     const answers       = state.newReport.answers;
     const reports       = state.reports;
     const isUnsaved     = state.newReport.isUnsaved;
+    const isConnected = state.connection.isConnected;
+  
     return {
         username,
         templateID,
@@ -99,6 +101,7 @@ const mapStateToProps = (state) => {
         reports,
         answers,
         isUnsaved,
+        isConnected,
     };
 };
 
@@ -209,6 +212,19 @@ export class NewReportScreen extends React.Component {
                 }
             ]
         };
+
+        if (!this.props.isConnected){
+            Alert.alert(
+                strings('createNew.noConnection'),
+                [
+                    { text: strings('createNew.cancel'), onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                    { text: strings('createNew.no'), onPress: () => console.log('No Pressed') },
+                    { text: strings('createNew.yes'), onPress: () => console.log('Yes Pressed') },
+                    //TODO: actually save changes when no connection :D
+                ],
+                { cancellable: false }
+            );
+        }
 
         createNewReport(this.props.username, report, this.props.token).then(response => {
             if (response.status === 200) {
@@ -542,8 +558,6 @@ export class NewReportScreen extends React.Component {
         );
     }
 }
-
-
 
 
 export default connect(mapStateToProps)(NewReportScreen);

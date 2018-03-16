@@ -296,7 +296,7 @@ const removeData = (dataUrl) => {
 */
 
 // Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178
-const isNetworkConnected = () => {
+export function isNetworkConnected() {
     if (Platform.OS === 'ios') {
         return new Promise(resolve => {
             const handleFirstConnectivityChangeIOS = isConnected => {
@@ -306,5 +306,6 @@ const isNetworkConnected = () => {
             NetInfo.isConnected.addEventListener('connectionChange', handleFirstConnectivityChangeIOS);
         });
     }
+
     return NetInfo.isConnected.fetch();
-};
+}

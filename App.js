@@ -28,7 +28,6 @@ EStyleSheet.build({
 });
 
 class App extends React.Component {
-
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     }
@@ -45,19 +44,19 @@ class App extends React.Component {
         return nav !== this.props.nav;
     };
 
-    render() {
-        const { dispatch, nav } = this.props;
-        const navigation = addNavigationHelpers({
-            dispatch,
-            state: nav
-        });
+render() {
+    const { dispatch, nav } = this.props;
+    const navigation = addNavigationHelpers({
+        dispatch,
+        state: nav
+    });
 
-        return <AppNavigator navigation={navigation} />;
-    }
+    return <AppNavigator navigation={navigation} />;
+}
 }
 
-const mapStateToProps = (state) => ({
-    nav: state.nav
+const mapStateToProps = state => ({
+    nav: state.nav,
 });
 
 const AppWithNavigationState = connect(mapStateToProps)(App);

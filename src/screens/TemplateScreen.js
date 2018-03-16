@@ -4,7 +4,9 @@ import {
     FlatList,
     ActivityIndicator,
     ScrollView,
+    NetInfo,
     StatusBar,
+    Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -13,13 +15,13 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID,  isNetworkConnected} from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID, storeDraftByTemplateID } from '../redux/actions/reports';
 import { createReport } from '../redux/actions/newReport';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
-
+import { setInitialConnection, toggleConnection } from '../redux/actions/connection';
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
@@ -31,7 +33,7 @@ export class TemplateScreen extends Component {
             isLoading       : true,     // Checks whether the app is loading or not.
             refreshing      : false,    // Checks whether the app and its data is refreshing or not.
             scrollEnabled   : true,     // Checks whether the template screen is scrollable or not.
-            renderFooter    : false     // If true, empty space is rendered after the last template. This is set to true while a template is opened.
+            renderFooter    : false,     // If true, empty space is rendered after the last template. This is set to true while a template is opened.
         };
     }
 
@@ -57,6 +59,8 @@ export class TemplateScreen extends Component {
      and instantiates the network request.
     */
     componentDidMount() {
+
+        if (Platform.OS === 'android') NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
         // TEMPORARY: not sure if this is the best solution. Current version fixes a bug (related to logging in)
         if (this.props.username !== userReducer.username) {
             this.getTemplatesAndReports();
@@ -66,10 +70,18 @@ export class TemplateScreen extends Component {
 
     }
 
+    componentWillUnmount() {
+        if (Platform.OS === 'android') NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
+    }
+
+    handleConnectionChange = isConnected => {
+        this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
+    };
+
     /*
-     Fetches the data from the server in two parts.
-     1) Fetches the templates from the server
-     2) Fetches the reports under their specific template by making a separate fetch request using
+    Fetches the data from the server in two parts.
+    1) Fetches the templates from the server
+    2) Fetches the reports under their specific template by making a separate fetch request using
         Promise.all. After all the promises have been fetched, the function updates the state
         of reportsByTemplates, and sets isLoading and refreshing to false.
     */
@@ -161,6 +173,7 @@ export class TemplateScreen extends Component {
         if (this.state.isLoading) {
             return (
                 <AppBackground>
+                    <StatusBar backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424' } barStyle="light-content" />
                     <ActivityIndicator
                         animating={this.state.animating}
                         style={[templateScreenStyles.activityIndicator, { height: 80 }]}
@@ -177,7 +190,7 @@ export class TemplateScreen extends Component {
             <AppBackground>
                 <View style={templateScreenStyles.viewContainer}>
                     <StatusBar
-                        backgroundColor={templateScreenStyles.statusBar}
+                        backgroundColor={this.props.isConnected ? '#3d4f7c' : '#b52424'}
                         barStyle='light-content'
                     />
                     {/* At the moment this doesn't do anything.*/}
@@ -220,11 +233,14 @@ const mapStateToProps = (state) => {
     const templates = state.templates;
     const reports = state.reports;
     const token = state.user.token;
+    const isConnected = state.connection.isConnected;
+
     return {
         username,
         templates,
         reports,
-        token
+        token,
+        isConnected,
     };
 };
 

@@ -27,7 +27,11 @@
     "save": "Tallenna",
     "createNew": "Uusi raportti",
     "enterNew": "Raportin nimi",
-    "reportAdded": "Raportti lähetetty"
+    "reportAdded": "Raportti lähetetty",
+    "noConnection": "Raporttia ei voitu lähettää koska laitteessa ei ole internet-yhteyttä. Haluatko tallentaa muutokset?",
+    "yes": "Kyllä",
+    "no": "Ei",
+    "cancel": "Peruuta"
   },
 
   "navigation": {
