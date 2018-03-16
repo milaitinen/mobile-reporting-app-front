@@ -47,10 +47,11 @@ export class ReportScreen extends React.Component {
         const { username } = this.props;
 
         removeDraft(username, templateID, reportID);
-        this.props.dispatch(emptyFields());
-
         Alert.alert('Deleted draft.');
 
+        this.setState({ isLoading: true });
+
+        this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
         this.props.navigation.dispatch(NavigationActions.back());
     };

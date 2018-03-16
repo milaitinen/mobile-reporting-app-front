@@ -91,7 +91,7 @@ export const saveDraft = (username, templateID, draft) => {
 export const removeDraft =  (username, templateID, draftID) => {
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {
-            const draftRemoved = drafts.filter(draft => draft.id !== draftID);
+            const draftRemoved = drafts.filter(draft => draft.report_id !== draftID);
             saveData(`${url}/users/${username}/templates/${templateID}`, draftRemoved);
         });
 };
