@@ -350,7 +350,7 @@ export class NewReportScreen extends React.Component {
                                 itemRealKey="value"
                                 onPress={(label) => this.props.dispatch(insertFieldAnswer(field, label, true))} //TODO this only allows '1' to be saved...
                                 buttonColor={'#9dcbe5'}
-                                labelStyle={{paddingRight: 12, paddingLeft: 6}}
+                                labelStyle={{ paddingRight: 12, paddingLeft: 6 }}
                                 //formHorizontal={true}
                             />
                         );

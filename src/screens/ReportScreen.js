@@ -150,7 +150,7 @@ export class ReportScreen extends React.Component {
                 case 'CHECKBOX' : // Checkbox TODO defaultValue doesn't work here
                 {
                     const checkboxes = field.field_options.map((option, index) => {
-                        const answer = optionAnswers.find((answer) => answer.field_option_id === option.field_option_id);
+                        const answer = optionAnswers.find((answer) => (answer.field_option_id === option.field_option_id) && answer.selected);
                         return (
                             <Checkbox
                                 key={index}
@@ -161,7 +161,7 @@ export class ReportScreen extends React.Component {
                                 //The ability to dispatch the checkbox status is passed on to the component
                                 //as a prop, and the component itself can call this function in its
                                 //onIconPress, i.e. when the checkbox is pressed
-                                onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer, true))}
+                                onPressFunction={() => this.props.dispatch(insertFieldAnswer(field, option, true))}
                             />
                         );
                     });
@@ -194,30 +194,29 @@ export class ReportScreen extends React.Component {
                     );
                 }
 
-                case 'RADIOBUTTON': // Choice (Yes/No)
+                case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
                 {
                     const labels = field.field_options.map((option) => {
                         return (
-                            { label: option.value, value : option.field_option_id }
+                            { label: option.value, value: option }
                         );
                     });
 
                     const initialIndex = field.field_options.findIndex((option) => {
-                        return optionAnswers.map((answers) => answers.field_option_id).includes(option.field_option_id);
+                        return (option.default_value);
                     });
 
                     return (
-                        <View key={index}>
-                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
-                            <RadioForm
-                                radio_props={labels}
-                                initial={initialIndex}
-                                //onPress={() => this.props.dispatch(insertFieldAnswer(field, '1'))} //TODO this only allows '1' to be saved...
-                                buttonColor={'#9dcbe5'}
-                                labelStyle={{ paddingRight: 12, paddingLeft: 6 }}
-                                //formHorizontal={true}
-                            />
-                        </View>
+                        <RadioForm
+                            disabled={!isEditable}
+                            radio_props={labels}
+                            initial={initialIndex}
+                            itemRealKey="value"
+                            onPress={(label) => this.props.dispatch(insertFieldAnswer(field, label, true))} //TODO this only allows '1' to be saved...
+                            buttonColor={'#9dcbe5'}
+                            labelStyle={{ paddingRight: 12, paddingLeft: 6 }}
+                            //formHorizontal={true}
+                        />
                     );
                 }
 

@@ -14,7 +14,7 @@ import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
 import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID } from './api';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID, storeDraftByTemplateID } from '../redux/actions/reports';
+import { storeReportsByTemplateID, storeDraftByTemplateID, insertTemplateID } from '../redux/actions/reports';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
 
@@ -72,7 +72,6 @@ export class TemplateScreen extends Component {
     */
     getTemplatesAndReports = () => {
         const { username, token } = this.props;
-
         fetchTemplatesByUsername(username, token)
             .then(responseJson => {
                 if (responseJson.length < 1) {  // handle situations where there are no templates
@@ -82,8 +81,10 @@ export class TemplateScreen extends Component {
                 }
             })
             .then(() => {
-                const reportsByTemplateID = Object.keys(this.props.templates)
-                    .map((templateID) => fetchReportsByTemplateID(username, templateID, token));
+                const templates = this.props.templates;
+
+                Object.keys(templates).forEach(id => this.props.dispatch(insertTemplateID(id)));
+                const reportsByTemplateID = Object.keys(templates).map((id) => fetchReportsByTemplateID(username, id, token));
 
                 Promise.all(reportsByTemplateID)
                     .then(data => this.props.dispatch(storeReportsByTemplateID(data)))
@@ -101,7 +102,6 @@ export class TemplateScreen extends Component {
             fetchDraftsByTemplateID(username, templateID)
                 .then((drafts) => {
                     if (drafts.length !== 0) {
-                        console.log('drafts', drafts);
                         drafts.forEach(draft => this.props.dispatch(storeDraftByTemplateID(templateID, draft)));
                     }
                 })
