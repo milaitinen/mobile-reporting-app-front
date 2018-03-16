@@ -145,7 +145,7 @@ export class ReportScreen extends React.Component {
                                 defaultValue={field.answer}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                                 underlineColorAndroid='transparent'
-                                style={newReportStyles.textInputStyleClass}
+                                style={newReportStyles.textInput}
                             />
                         </View>
                     );
@@ -197,7 +197,7 @@ export class ReportScreen extends React.Component {
                                 editable={isEditable}
                                 defaultValue={field.answer}
                                 underlineColorAndroid='transparent'
-                                style={newReportStyles.textInputStyleClass}
+                                style={newReportStyles.textInput}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                             />
                         </View>
@@ -257,7 +257,7 @@ export class ReportScreen extends React.Component {
                         <View key={index} >
                             <Text style = { newReportStyles.text }>Instructions</Text>
                             <Text
-                                style = { newReportStyles.multilinedTextInputStyleClass }>
+                                style = { newReportStyles.multilineTextInput }>
                                 {field.answer}
                             </Text>
                         </View>
@@ -269,7 +269,7 @@ export class ReportScreen extends React.Component {
                             <Text style = { newReportStyles.text }>Description</Text>
                             <TextInput
                                 editable = {isEditable}
-                                style = { newReportStyles.multilinedTextInputStyleClass }
+                                style = { newReportStyles.multilineTextInput }
                                 onChangeText = {(text) => this.props.dispatch(insertFieldAnswer(field, text))}
                                 placeholder = {field.answer}
                                 defaultValue={field.answer}
@@ -310,7 +310,7 @@ export class ReportScreen extends React.Component {
                             <Text style={ newReportStyles.text }>Numerical Field</Text>
                             <TextInput
                                 editable={isEditable}
-                                style={ newReportStyles.textInputStyleClass }
+                                style={ newReportStyles.textInput }
                                 defaultValue={field.answer}
                                 keyboardType = 'numeric'
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text))}
@@ -321,9 +321,9 @@ export class ReportScreen extends React.Component {
                 case 11: // Link
                     return (
                         <View key={index} style={{ flexDirection: 'row' }}>
-                            <Icon name={'link'} type={'feather'} iconStyle={ newReportStyles.linkIconStyle }/>
+                            <Icon name={'link'} type={'feather'} iconStyle={ newReportStyles.linkIcon }/>
                             <Text
-                                style={ newReportStyles.linkStyleClass }
+                                style={ newReportStyles.link }
                                 onPress={() => Linking.openURL(field.answer)}>
                                 Link to somewhere
                             </Text>
@@ -361,7 +361,7 @@ export class ReportScreen extends React.Component {
                                 defaultValue={this.props.navigation.state.params.title}
                                 onChangeText={(text) => this.setState({ title: text })}
                                 underlineColorAndroid='transparent'
-                                style={newReportStyles.textInputStyleClass}
+                                style={newReportStyles.textInput}
                             />
                             {renderedFields}
                         </ScrollView>
@@ -383,7 +383,7 @@ export class ReportScreen extends React.Component {
                     placeholder={ strings('createNew.enterNew') }
                     onChangeText={(TextInputName) => this.setState({ TextInputName })}
                     underlineColorAndroid='transparent'
-                    style={newReportStyles.textInputStyleClass}
+                    style={newReportStyles.textInput}
                 />
                 <Button
                     title={ strings('createNew.createNew') }

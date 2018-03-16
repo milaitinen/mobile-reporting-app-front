@@ -6,22 +6,21 @@ const styles = EStyleSheet.create({
         borderRadius: '$buttonBorderRadius',
         justifyContent: 'center',
         alignContent: 'center',
-        height: 70,
-        marginHorizontal: 10,
-        marginBottom: 2,
+        marginHorizontal: 15,
+        marginVertical: 10,
     },
 
     sendButtonContainer: {
-        backgroundColor: '#99d9ad',
-        borderRadius: '$buttonBorderRadius',
-        borderWidth: 1,
+        backgroundColor: '$primaryWhite',
+        borderRadius: '$inputBorderRadius',
+        borderWidth: 2,
         alignContent: 'center',
         justifyContent: 'center',
         paddingLeft: 15,
         paddingRight: 15,
-        borderColor: '#99d9ad',
+        borderColor: '$sendGreen',
         '@media (max-width: 350)': {
-            borderRadius: '$buttonBorderRadiusSmall',
+            borderRadius: '$inputBorderRadius',
             height: 30,
         },
         '@media (min-width: 350)': {
@@ -35,16 +34,16 @@ const styles = EStyleSheet.create({
     },
 
     saveButtonContainer: {
-        backgroundColor: '$draftBlue',
-        borderRadius: '$buttonBorderRadius',
-        borderWidth: 1,
+        backgroundColor: '$primaryWhite',
+        borderRadius: '$inputBorderRadius',
+        borderWidth: 2,
         alignContent: 'center',
         justifyContent: 'center',
         paddingLeft: 15,
         paddingRight: 15,
         borderColor: '$draftBlue',
         '@media (max-width: 350)': {
-            borderRadius: '$buttonBorderRadiusSmall',
+            borderRadius: '$inputBorderRadius',
             height: 30,
         },
         '@media (min-width: 350)': {
@@ -65,7 +64,7 @@ const styles = EStyleSheet.create({
 
     text: {
         paddingLeft: 10,
-        color: '#474c52',
+        color: '$gray2',
         fontFamily: '$primaryFont',
         textAlign: 'center',
         '@media (max-width: 350)': {

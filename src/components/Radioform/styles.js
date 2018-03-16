@@ -39,7 +39,7 @@ const styles = EStyleSheet.create({
 
     buttonWrap: {
         height: 38,
-        paddingLeft: 8,
+        paddingLeft: 9,
         justifyContent: 'center'
     },
 
@@ -55,6 +55,17 @@ const styles = EStyleSheet.create({
         textAlign: 'left',
         paddingBottom: 3,
         marginRight: 10,
+    },
+
+    disabled: {
+        backgroundColor: '$disabled',
+        borderColor: '$disabledBorder',
+        borderWidth: 2,
+    },
+
+    disabledText: {
+        color: '$disabledPlaceholder',
+        fontFamily: '$primaryFont',
     }
 
 });

@@ -1,21 +1,21 @@
 import React from 'react';
 import { View, Text, TouchableHighlight } from 'react-native';
-import color from 'color';
 import { Icon } from 'react-native-elements';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import styles from './buttonStyles';
+import color from 'color';
 
-// TODO: styling
 const CustomButton = ({ title, type, onPress }) => {
 
     if (type === 'send') {
         return (
             <View style={styles.view}>
                 <TouchableHighlight
-                    underlayColor={color('#9dcbe5').darken(0.1)}
+                    underlayColor={color('white').darken(0.1)}
                     style={styles.sendButtonContainer}
                     onPress={onPress}>
                     <View style={styles.buttonContent}>
-                        <Icon name={'send'} color={'#474c52'} size={18}/>
+                        <Icon name={'send'} color={EStyleSheet.value('$sendGreen')} size={18}/>
                         <Text style={styles.text}>{title}</Text>
                     </View>
                 </TouchableHighlight>
@@ -25,11 +25,11 @@ const CustomButton = ({ title, type, onPress }) => {
     return (
         <View style={styles.view}>
             <TouchableHighlight
-                underlayColor={color('#8cc9e5').darken(0.1)}
+                underlayColor={color('white').darken(0.1)}
                 style={styles.saveButtonContainer}
                 onPress={onPress}>
                 <View style={styles.buttonContent}>
-                    <Icon name={'save'} color={'#474c52'} size={18}/>
+                    <Icon name={'save'} color={EStyleSheet.value('$draftBlue')} size={18}/>
                     <Text style={styles.text}>{title}</Text>
                 </View>
             </TouchableHighlight>

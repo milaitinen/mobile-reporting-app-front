@@ -17,6 +17,9 @@ class Checkbox extends Component {
     };
 
     render(){
+        const unchecked = this.props.editable ? EStyleSheet.value('$inactive') : EStyleSheet.value('$disabledBorder');
+        const text = this.props.editable ? styles.text : styles.disabledText;
+        const container = this.props.editable ? styles.container : styles.disabled;
         return (
             <CheckBox
                 title={this.props.title}
@@ -25,16 +28,13 @@ class Checkbox extends Component {
                 iconType={'material'}
                 uncheckedIcon={'check-box-outline-blank'}
                 checkedIcon={'check-box'}
-                uncheckedColor={EStyleSheet.value('$inactive')}
+                uncheckedColor={unchecked}
                 checkedColor={EStyleSheet.value('$active')}
-                textStyle={this.state.checked ? styles.selectedText : styles.text}
-                containerStyle={this.state.checked ? styles.selectedContainer : styles.container}
-                onPress={() => this.toggle()}
-                onIconPress={() => {
-                    if (this.props.editable) {
-                        this.props.onIconPressFunction((!this.state.checked) ? '1' : '0');
-                        this.toggle();
-                    }
+                textStyle={this.state.checked ? styles.selectedText : text}
+                containerStyle={this.state.checked ? styles.selectedContainer : container}
+                onPress={() => {
+                    this.props.onPressFunction((!this.state.checked) ? '1' : '0');
+                    this.toggle();
                 }}
             />
         );

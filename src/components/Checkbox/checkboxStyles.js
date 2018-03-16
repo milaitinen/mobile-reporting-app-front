@@ -30,6 +30,22 @@ const styles = EStyleSheet.create({
         color: '$active',
         fontFamily: '$primaryFont',
         fontWeight: 'normal',
+    },
+
+    disabled: {
+        backgroundColor: '$disabled',
+        borderColor: '$disabledBorder',
+        height: 40,
+        borderWidth: 2,
+        marginLeft: 0,
+        marginVertical: 0,
+        justifyContent: 'center',
+    },
+
+    disabledText: {
+        color: '$disabledPlaceholder',
+        fontFamily: '$primaryFont',
+        fontWeight: 'normal',
     }
 
 });

@@ -44,11 +44,7 @@ const newReportStyles = EStyleSheet.create({
     ReportScrollView: {
         backgroundColor: 'transparent',
         paddingHorizontal: 7,
-    },
-
-    dateStyleClass: {
-        width: 160,
-        marginBottom: 6,
+        marginBottom: 5,
     },
 
     text: {
@@ -56,12 +52,6 @@ const newReportStyles = EStyleSheet.create({
         fontFamily: '$primaryFont',
         fontSize: 16,
         marginBottom: 10,
-    },
-
-    linkStyleClass: {
-        color: '$draftBlue',
-        marginBottom: 6,
-        marginTop: 5,
     },
 
     mainDropdownStyleClass: {
@@ -77,30 +67,6 @@ const newReportStyles = EStyleSheet.create({
         marginTop: 6,
         marginBottom: 6,
         width: 160,
-    },
-
-    dropdownContainer: {
-        margin: 5,
-    },
-
-    dropdownButton: {
-        width: 180,
-        borderWidth: '$containerBorderWidth',
-        backgroundColor: '$primaryWhite',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: '$dropdownRadius',
-        borderColor: '$draftBlue',
-    },
-
-    dropdownText: {
-        marginVertical: 10,
-        marginHorizontal: 6,
-        fontSize: 16,
-        color: '$gray1',
-        textAlign: 'center',
-        textAlignVertical: 'center',
     },
 
     lowerDropdownStyleClass: {
@@ -127,67 +93,56 @@ const newReportStyles = EStyleSheet.create({
         //paddingleft: 10,
     },
 
-    linkIconStyle: {
-        color: '$gray1',
+    linkContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+
+    linkIcon: {
+        color: '$inactive',
         justifyContent: 'flex-end',
         fontSize: 18,
         paddingRight: 10,
         paddingLeft: 4,
     },
 
-    dateIconStyle: {
-        color: '$gray1',
-        paddingLeft: 5,
-        paddingRight: 10,
-        justifyContent: 'flex-end',
-        fontSize: 27,
+    disabledIcon: {
+        color: '$disabledPlaceholder',
     },
 
-    multilinedTextInputStyleClass: {
-        paddingLeft: 10,
-        marginBottom: 6,
+    link: {
+        fontFamily: '$primaryFont',
+        color: '$active',
+        fontSize: 14,
+    },
+
+    disabledLink: {
+        color: '$disabledPlaceholder',
+    },
+
+    multilineTextInput: {
+        textAlignVertical: 'top',
+        paddingHorizontal: 12,
         height: 80,
-        borderWidth: '$containerBorderWidth',
-        borderRadius: '$containerBorderRadius',
-        borderColor: '$gray1',
+        borderRadius: '$inputBorderRadius',
         backgroundColor: '$primaryWhite',
-        color: '$gray2',
+        fontFamily: '$primaryFont',
+        color: '$placeholder',
     },
 
     instructions: {
-        paddingHorizontal: 10,
-        paddingVertical: 10,
         textAlignVertical: 'center',
-        marginBottom: 6,
-        borderWidth: '$containerBorderWidth',
-        borderRadius: '$containerBorderRadius',
-        borderColor: '$gray1',
-        backgroundColor: '$primaryWhite',
-        color: '$gray1',
+        color: '$primaryWhite',
+        fontFamily: '$primaryFont',
     },
 
-    textInputStyleClass: {
+    textInput: {
         paddingHorizontal: 12,
         height: 40,
         borderRadius: '$inputBorderRadius',
         backgroundColor: '$primaryWhite',
         fontFamily: '$primaryFont',
-        color: '$gray2',
-    },
-
-    textInput: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#747474',
-        color: '#747474',
-        marginBottom: 5,
-        '@media (max-width: 350)': {
-            fontSize: 12,
-            marginHorizontal: 5,
-        },
-        '@media (min-width: 350)': {
-            fontSize: 16,
-            marginHorizontal: 5,
-        }
+        color: '$placeholder',
     },
 
     titleContainer: {
@@ -214,25 +169,17 @@ const newReportStyles = EStyleSheet.create({
 
     },
 
-
-
     buttonView: {
         paddingHorizontal: 10,
-        marginBottom: 2,
         height: 80,
-        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#e0f5ff',
-        elevation: 15,
-        shadowOffset: {
-            width: 0,
-            height: 15,
-        },
     },
 
     disabled: {
-        backgroundColor: '#eee'
+        backgroundColor: '$disabled',
+        borderColor: '$disabledBorder',
+        borderWidth: 2,
     }
 });
 
