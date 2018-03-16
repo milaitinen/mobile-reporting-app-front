@@ -150,17 +150,19 @@ export class ReportScreen extends React.Component {
                         </View>
                     );
 
-                case 2: // Checkbox TODO defaultValue doesn't work here
+                case 2: // Checkbox
                     return (
                         <Checkbox
                             key={index}
                             style={ newReportStyles.checkboxStyle }
                             title={'This is a nice checkbox'}
                             editable={isEditable}
+                            //The answer is saved as '1' or '0' but the component expects a boolean
+                            isChecked={field.answer === '1'}
                             //The ability to dispatch the checkbox status is passed on to the component
                             //as a prop, and the component itself can call this function in its
-                            //onIconPress, i.e. when the checkbox is pressed
-                            onIconPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
+                            //onPress, i.e. when the checkbox is pressed
+                            onPressFunction={(answer) => this.props.dispatch(insertFieldAnswer(field, answer))}
                         />
                     );
 
@@ -202,20 +204,24 @@ export class ReportScreen extends React.Component {
                     );
 
                 case 5: // Choice (Yes/No)
+                    //TODO: get title from database
                     return (
-                        <RadioForm
-                            key={index}
-                            disabled={!isEditable}
-                            radio_props={ [
-                                { label: 'No', value: 0 },
-                                { label: 'Yes', value: 1 }
-                            ] }
-                            initial={JSON.parse(field.answer)}
-                            onPress={() => this.props.dispatch(insertFieldAnswer(field, '1'))} //TODO this only allows '1' to be saved...
-                            buttonColor={'#9dcbe5'}
-                            labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
-                            formHorizontal={true}
-                        />
+                        <View key={index}>
+                            <Text style={newReportStyles.textStyleClass}>Radio form</Text>
+                            <RadioForm
+                                key={index}
+                                disabled={!isEditable}
+                                radio_props={ [
+                                    { label: 'No', value: 0 },
+                                    { label: 'Yes', value: 1 }
+                                ] }
+                                initial={JSON.parse(field.answer)}
+                                onPress={(value) => this.props.dispatch(insertFieldAnswer(field, value))}
+                                buttonColor={'#9dcbe5'}
+                                labelStyle={ { paddingRight: 12, paddingLeft: 6 } }
+                                formHorizontal={true}
+                            />
+                        </View>
                     );
 
                 case 6: // Calendar
@@ -232,7 +238,7 @@ export class ReportScreen extends React.Component {
                                         borderRadius: 5,
                                     },
                                 }}
-                                date={field.answer}
+                                date={answers[field.orderNumber] ? answers[field.orderNumber].answer : field.defaultValue}
                                 mode="date"
                                 placeholder="select date"
                                 format="YYYY-MM-DD"
@@ -286,7 +292,7 @@ export class ReportScreen extends React.Component {
                                         borderRadius: 5,
                                     }
                                 }}
-                                date = {answers[field.id] ? answers[field.id].answer : field.answer}
+                                date = {answers[field.orderNumber] ? answers[field.orderNumber].answer : field.defaultValue}
                                 mode = "time"
                                 format = "HH:mm"
                                 confirmBtnText = "Confirm"
