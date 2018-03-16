@@ -56,6 +56,29 @@ const styles = EStyleSheet.create({
         },
     },
 
+    deleteButtonContainer: {
+        backgroundColor: '$primaryWhite',
+        borderRadius: '$inputBorderRadius',
+        borderWidth: 2,
+        alignContent: 'center',
+        justifyContent: 'center',
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderColor: '$delete',
+        '@media (max-width: 350)': {
+            borderRadius: '$inputBorderRadius',
+            height: 30,
+        },
+        '@media (min-width: 350)': {
+            height: 40,
+        },
+        elevation: 3,
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+    },
+
     buttonContent: {
         flexDirection: 'row',
         justifyContent: 'center',

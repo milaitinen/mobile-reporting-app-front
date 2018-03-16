@@ -21,6 +21,20 @@ const CustomButton = ({ title, type, onPress }) => {
                 </TouchableHighlight>
             </View>
         );
+    } else if (type === 'delete') {
+        return (
+            <View style={styles.view}>
+                <TouchableHighlight
+                    underlayColor={color('white').darken(0.1)}
+                    style={styles.saveButtonContainer}
+                    onPress={onPress}>
+                    <View style={styles.buttonContent}>
+                        <Icon name={'delete'} color={EStyleSheet.value('$delete')} size={18}/>
+                        <Text style={styles.text}>{title}</Text>
+                    </View>
+                </TouchableHighlight>
+            </View>
+        );
     }
     return (
         <View style={styles.view}>

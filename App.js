@@ -20,6 +20,7 @@ EStyleSheet.build({
     $gray2: '#a0a0a0',
     $draftBlue: '#8cc9e5',
     $sendGreen: '#99d9ad',
+    $delete: '#f51d1e',
     $fieldBg: '#1b305570',
     $placeholder: '#8f8f8f',
     $inactive: '#9bcff9',
