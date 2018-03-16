@@ -195,7 +195,8 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
                                     viewReport={this.viewReport}
-                                    nofReports={(reports[item.id]) ? (reports[item.id]).length : 0}
+                                    nofReports={(reports[item.id]) ? reports[item.id].filter(item => item.id >= 0).length : 0}
+                                    nofDrafts={(reports[item.id]) ? reports[item.id].filter(item => item.id < 0).length : 0}
                                     templateID={item.id}
                                     data={reports[item.id]}
                                 />
