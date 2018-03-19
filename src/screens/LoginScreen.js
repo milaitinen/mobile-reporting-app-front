@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StatusBar, Keyboard, AsyncStorage } from 'react-native';
+import { Text, StatusBar, Keyboard, NetInfo, Platform, AsyncStorage, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
@@ -8,8 +8,11 @@ import { Input } from '../components/TextInput';
 import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
-import { login } from './api';
+import { isNetworkConnected, login } from './api';
 import { NavigationActions } from 'react-navigation';
+import { toggleConnection } from '../redux/actions/connection';
+import { setInitialConnection } from '../redux/actions/connection';
+import { OfflineNotice } from '../components/OfflineNotice';
 import { LOGGED_IN_ROUTE_NAME } from '../navigation/AppNavigation';
 
 // "export" necessary in order to test component without Redux store
@@ -30,11 +33,22 @@ export class LoginScreen extends React.Component {
         }
     }
 
-    // DEV uncomment in case you need to clear AsyncStorage
-    componentWillMount() {
-        AsyncStorage.clear();
+    componentDidMount() {
+        /* First sets the initial connection state, and then adds eventlistener to listen to connection changes.
+            Unused 'isConnected' was added to ensure that setInitialConnection runs before toggling anything*/
+        isNetworkConnected()
+            .then(isConnected => {
+                this.props.dispatch(setInitialConnection({ connectionStatus: isConnected }));})
+            .then(isConnected => Platform.OS === 'android' ? NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange) : '');
     }
 
+    componentWillUnmount() {
+        if (Platform.OS === 'android') { NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange); }
+    }
+
+    handleConnectionChange = isConnected => {
+        this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
+    };
 
     /**
      * Navigates to the given route and resets navigation
@@ -66,7 +80,10 @@ export class LoginScreen extends React.Component {
     render() {
         return (
             <AppBackground>
-                <StatusBar backgroundColor='#3d4f7c' barStyle='light-content'/>
+                <StatusBar
+                    backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424'}
+                    hidden={false}
+                    barStyle="light-content"/>
 
                 <Text style={loginStyles.title}>
                     { strings('login.title') }
@@ -107,11 +124,13 @@ export class LoginScreen extends React.Component {
 
 // maps Redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.username
 const mapStateToProps = (state) => {
-    const username = state.user.username;
     const password = state.user.password;
+    const username = state.user.username;
+    const isConnected = state.connection.isConnected;
     return {
+        password,
         username,
-        password
+        isConnected,
     };
 };
 

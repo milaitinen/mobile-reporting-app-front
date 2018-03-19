@@ -16,6 +16,7 @@
     "approved": "Aprobado",
     "sent": "Despachado",
     "draft": "Boceto",
+    "drafts": "Bocetos",
     "showMore": "Enseñar más",
     "endOfReports": "No hay más reportajes",
     "preview": "Previsualización"
@@ -26,8 +27,12 @@
     "save": "Guardar",
     "createNew": "Crear un nuevo reportaje",
     "enterNew": "Entrar el nombre del reportaje",
-    "reportAdded": "Reportaje despachado"
-  },
+    "reportAdded": "Reportaje despachado",
+    "noConnection": "Spanish spanish, no hablo español",
+    "yes": "Sí",
+    "no": "Bien",
+    "cancel": "Cancelar"
+},
 
   "navigation": {
     "signOut": "Cerrar sesión"

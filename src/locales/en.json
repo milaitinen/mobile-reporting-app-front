@@ -16,6 +16,7 @@
     "approved": "Approved",
     "sent": "Sent",
     "draft": "Draft",
+    "drafts": "Drafts",
     "showMore": "Show more",
     "endOfReports": "No more reports",
     "preview": "Preview"
@@ -26,7 +27,11 @@
     "save": "Save",
     "createNew": "Create report",
     "enterNew": "Enter report name",
-    "reportAdded": "Report sent"
+    "reportAdded": "Report sent",
+    "noConnection": "Report couldn't be sent because currently there is no internet connection. Do you wish to save your changes?",
+    "yes": "Yes",
+    "no": "No",
+    "cancel": "Cancel"
   },
 
   "navigation": {

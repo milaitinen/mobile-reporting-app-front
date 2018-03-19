@@ -19,16 +19,24 @@ EStyleSheet.build({
     $gray1: '#adadad',
     $gray2: '#a0a0a0',
     $draftBlue: '#8cc9e5',
-    $fieldBg: '#f7fcff',
+    $sendGreen: '#99d9ad',
+    $delete: '#e21d1e',
+    $fieldBg: '#1b305570',
+    $placeholder: '#8f8f8f',
+    $inactive: '#9bcff9',
+    $active: '#359ef3',
+    $disabled: '#e4e4e4',
+    $disabledBorder: '#c2c2c2',
+    $disabledPlaceholder: '#c2c2c2',
     $containerBorderRadius: 5,
+    $inputBorderRadius: 3,
     $buttonBorderRadius: 10,
     $buttonBorderRadiusSmall: 7,
-    $dropdownRadius: 5,
-    $containerBorderWidth: 1.5,
+    $dropdownRadius: 3,
+    $containerBorderWidth: 2,
 });
 
 class App extends React.Component {
-
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     }
@@ -45,19 +53,19 @@ class App extends React.Component {
         return nav !== this.props.nav;
     };
 
-    render() {
-        const { dispatch, nav } = this.props;
-        const navigation = addNavigationHelpers({
-            dispatch,
-            state: nav
-        });
+render() {
+    const { dispatch, nav } = this.props;
+    const navigation = addNavigationHelpers({
+        dispatch,
+        state: nav
+    });
 
-        return <AppNavigator navigation={navigation} />;
-    }
+    return <AppNavigator navigation={navigation} />;
+}
 }
 
-const mapStateToProps = (state) => ({
-    nav: state.nav
+const mapStateToProps = state => ({
+    nav: state.nav,
 });
 
 const AppWithNavigationState = connect(mapStateToProps)(App);

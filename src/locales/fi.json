@@ -16,6 +16,7 @@
     "approved": "Hyväksytty",
     "sent": "Käsittelyssä",
     "draft": "Luonnos",
+    "drafts": "Luonnosta",
     "showMore": "Näytä lisää",
     "endOfReports": "Ei enempää raportteja",
     "preview": "Esikatselu"
@@ -26,7 +27,11 @@
     "save": "Tallenna",
     "createNew": "Uusi raportti",
     "enterNew": "Raportin nimi",
-    "reportAdded": "Raportti lähetetty"
+    "reportAdded": "Raportti lähetetty",
+    "noConnection": "Raporttia ei voitu lähettää koska laitteessa ei ole internet-yhteyttä. Haluatko tallentaa muutokset?",
+    "yes": "Kyllä",
+    "no": "Ei",
+    "cancel": "Peruuta"
   },
 
   "navigation": {

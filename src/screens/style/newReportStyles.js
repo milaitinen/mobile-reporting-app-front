@@ -5,10 +5,7 @@ const newReportStyles = EStyleSheet.create({
     ViewContainer: {
         flex: 1,
         height: 100,
-        marginHorizontal: 15,
-        paddingTop: 5,
-        paddingRight: 0,
-        paddingLeft: 0,
+        paddingVertical: 10,
         justifyContent: 'center',
         borderTopWidth: 1,
         borderTopColor: '$primaryWhite',
@@ -31,34 +28,30 @@ const newReportStyles = EStyleSheet.create({
     fieldContainer: {
         backgroundColor: '$fieldBg',
         borderRadius: '$containerBorderRadius',
-        paddingHorizontal: 15,
-        paddingBottom: 15,
+        padding: 15,
+        paddingBottom: 20,
+        marginVertical: 10,
+    },
+
+    altFieldContainer: {
+        backgroundColor: '$fieldBg',
+        borderRadius: '$containerBorderRadius',
+        padding: 15,
+        paddingBottom: 10,
         marginVertical: 10,
     },
 
     ReportScrollView: {
         backgroundColor: 'transparent',
         paddingHorizontal: 7,
+        marginBottom: 5,
     },
 
-    dateStyleClass: {
-        width: 160,
-        marginBottom: 6,
-    },
-
-    textStyleClass: {
-        //marginLeft: 5,
-        color: '$gray2',
+    text: {
+        color: '$primaryWhite',
+        fontFamily: '$primaryFont',
         fontSize: 16,
-        marginTop: 20,
-        marginBottom: 8,
-        flexDirection: 'row',
-    },
-
-    linkStyleClass: {
-        color: '$draftBlue',
-        marginBottom: 6,
-        marginTop: 5,
+        marginBottom: 10,
     },
 
     mainDropdownStyleClass: {
@@ -74,30 +67,6 @@ const newReportStyles = EStyleSheet.create({
         marginTop: 6,
         marginBottom: 6,
         width: 160,
-    },
-
-    dropdownContainer: {
-        margin: 5,
-    },
-
-    dropdownButton: {
-        width: 180,
-        borderWidth: '$containerBorderWidth',
-        backgroundColor: '$primaryWhite',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: '$dropdownRadius',
-        borderColor: '$draftBlue',
-    },
-
-    dropdownText: {
-        marginVertical: 10,
-        marginHorizontal: 6,
-        fontSize: 16,
-        color: '$gray1',
-        textAlign: 'center',
-        textAlignVertical: 'center',
     },
 
     lowerDropdownStyleClass: {
@@ -124,81 +93,56 @@ const newReportStyles = EStyleSheet.create({
         //paddingleft: 10,
     },
 
-    checkboxStyle: {
-        borderRadius: '$containerBorderRadius',
+    linkContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 
-    linkIconStyle: {
-        color: '$gray1',
+    linkIcon: {
+        color: '$inactive',
         justifyContent: 'flex-end',
         fontSize: 18,
         paddingRight: 10,
         paddingLeft: 4,
     },
 
-    dateIconStyle: {
-        color: '$gray1',
-        paddingLeft: 5,
-        paddingRight: 10,
-        justifyContent: 'flex-end',
-        fontSize: 27,
+    disabledIcon: {
+        color: '$disabledPlaceholder',
     },
 
-    multilinedTextInputStyleClass: {
-        paddingLeft: 10,
-        marginBottom: 6,
+    link: {
+        fontFamily: '$primaryFont',
+        color: '$active',
+        fontSize: 14,
+    },
+
+    disabledLink: {
+        color: '$disabledPlaceholder',
+    },
+
+    multilineTextInput: {
+        textAlignVertical: 'top',
+        paddingHorizontal: 12,
         height: 80,
-        borderWidth: '$containerBorderWidth',
-        borderRadius: '$containerBorderRadius',
-        borderColor: '$gray1',
+        borderRadius: '$inputBorderRadius',
         backgroundColor: '$primaryWhite',
-        color: '$gray2',
+        fontFamily: '$primaryFont',
+        color: '$placeholder',
     },
 
     instructions: {
-        paddingHorizontal: 10,
-        paddingVertical: 10,
         textAlignVertical: 'center',
-        marginBottom: 6,
-        borderWidth: '$containerBorderWidth',
-        borderRadius: '$containerBorderRadius',
-        borderColor: '$gray1',
-        backgroundColor: '$primaryWhite',
-        color: '$gray1',
-    },
-
-    textInputStyleClass: {
-        paddingHorizontal: 12,
-        marginBottom: 20,
-        height: 40,
-        borderWidth: '$containerBorderWidth',
-        borderRadius: '$containerBorderRadius',
-        borderColor: '$gray1',
-        backgroundColor: '$primaryWhite',
-        color: '$gray2',
+        color: '$primaryWhite',
+        fontFamily: '$primaryFont',
     },
 
     textInput: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#747474',
-        color: '#747474',
-        marginBottom: 5,
-        '@media (max-width: 350)': {
-            fontSize: 12,
-            marginHorizontal: 5,
-        },
-        '@media (min-width: 350)': {
-            fontSize: 16,
-            marginHorizontal: 5,
-        }
-    },
-
-    radioButtonContainer: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        padding: 5,
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
+        height: 40,
+        borderRadius: '$inputBorderRadius',
+        backgroundColor: '$primaryWhite',
+        fontFamily: '$primaryFont',
+        color: '$placeholder',
     },
 
     titleContainer: {
@@ -228,19 +172,14 @@ const newReportStyles = EStyleSheet.create({
     buttonView: {
         paddingHorizontal: 10,
         height: 80,
-        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#e0f5ff',
-        elevation: 15,
-        shadowOffset: {
-            width: 0,
-            height: 15,
-        },
     },
 
     disabled: {
-        backgroundColor: '#eee'
+        backgroundColor: '$disabled',
+        borderColor: '$disabledBorder',
+        borderWidth: 2,
     }
 });
 
