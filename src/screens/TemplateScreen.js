@@ -210,13 +210,15 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
                                     viewReport={this.viewReport}
-                                    nofReports={(reports[item.template_id]) ? (reports[item.template_id]).length : 0}
+                                    //nofReports={(reports[item.template_id]) ? (reports[item.template_id]).length : 0}
                                     templateID={item.template_id}
                                     data={reports[item.template_id]}
-                                    /*
-                                    nofReports={(reports[item.id]) ? reports[item.id].filter(item => item.id >= 0).length : 0}
-                                    nofDrafts={(reports[item.id]) ? reports[item.id].filter(item => item.id < 0).length : 0}
-                                    */ // TODO: selvittäkää tää pls
+                                    nofReports={(reports[item.template_id])
+                                        ? reports[item.template_id].filter(item => item.template_id >= 0).length
+                                        : 0}
+                                    nofDrafts={(reports[item.template_id]) 
+                                        ? reports[item.template_id].filter(item => item.template_id < 0).length
+                                        : 0}
                                 />
                             }
                             ListFooterComponent={

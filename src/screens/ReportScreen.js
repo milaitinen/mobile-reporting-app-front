@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, Picker } from 'react-native';
+import { /*Button, */ View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, /*Picker*/ } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import ModalDropdown from 'react-native-modal-dropdown';
+// import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { Checkbox } from '../components/Checkbox';
@@ -17,8 +17,8 @@ import { insertFieldAnswer, emptyFields, openReport, insertTitle } from '../redu
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
-import styles from '../components/Dropdown/styles';
-import EStyleSheet from 'react-native-extended-stylesheet';
+// import styles from '../components/Dropdown/styles';
+// import EStyleSheet from 'react-native-extended-stylesheet';
 
 // TODO: COMMENT EVERYTINGS great. isEditable changed based on draft/report?
 export class ReportScreen extends React.Component {
@@ -192,7 +192,7 @@ export class ReportScreen extends React.Component {
                             initial={answerIndex || 0}
                             onPress={(label) => this.props.dispatch(insertFieldAnswer(field, label, true))} //TODO this only allows '1' to be saved...
                         />
-                    )
+                    );
                 }
 
                 case 'CALENDAR': // Calendar
@@ -214,7 +214,7 @@ export class ReportScreen extends React.Component {
                     return (
                         <Text
                             style={newReportStyles.instructions}>
-                            {answer.value} //TODO: this is supposed to be the default value since instructions can't be changed
+                            {answer.value} {/*TODO: this is supposed to be the default value since instructions can't be changed*/}
                         </Text>
                     );
                 }
@@ -229,7 +229,6 @@ export class ReportScreen extends React.Component {
                             onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                             value={answer.value}
                         />
-                        </View>
                     );
                 }
 
@@ -315,9 +314,9 @@ export class ReportScreen extends React.Component {
                 {
                     (this.props.navigation.state.params.reportID < 0) &&
                     <View style={ newReportStyles.buttonView}>
-                    <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
-                    <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
-                    <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this.deleteDraft()} />
+                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
+                        <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
+                        <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this.deleteDraft()} />
                     </View>
                 }
 

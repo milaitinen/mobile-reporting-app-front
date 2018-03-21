@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
 import { EditButton } from '../components/EditButton';
-import { strings } from '../locales/i18n';
+//import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/preview';
 
 import newReportStyles from './style/newReportStyles';
@@ -113,7 +113,7 @@ export class PreviewScreen extends React.Component {
                                         Select option
                                     </Text>
                                     <Icon name={'expand-more'} color={EStyleSheet.value('$disabledPlaceholder')}
-                                          style={styles.icon}/>
+                                        style={styles.icon}/>
                                 </View>
                             </ModalDropdown>
                         );
@@ -129,8 +129,9 @@ export class PreviewScreen extends React.Component {
                             />
                         );
 
-                    case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
-                        const props = [{label: 'Yes', value: 1}, {label: 'No', value: 0}];
+                    // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
+                    case 'RADIOBUTTON': {
+                        const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
                         return (
                             <Radioform
                                 options={props}
@@ -138,6 +139,7 @@ export class PreviewScreen extends React.Component {
                                 initial={JSON.parse(field.default_value)}
                             />
                         );
+                    }
 
                     case 'CALENDAR': // Calendar
                         return (
@@ -146,7 +148,7 @@ export class PreviewScreen extends React.Component {
                                 mode={'date'}
                                 answer={field.default_value}
                                 onChange={(date) => {
-                                    this.setState({date: date});
+                                    this.setState({ date: date });
                                 }}
                             />
                         );
@@ -176,7 +178,7 @@ export class PreviewScreen extends React.Component {
                                 mode={'time'}
                                 answer={field.default_value}
                                 onChange={(time) => {
-                                    this.setState({time: time});
+                                    this.setState({ time: time });
                                 }}
                             />
                         );
@@ -219,7 +221,7 @@ export class PreviewScreen extends React.Component {
                             null
                         );
                 }
-            }
+            };
 
             return (
                 <View key={index} style={newReportStyles.fieldContainer}>
@@ -227,8 +229,9 @@ export class PreviewScreen extends React.Component {
                         {(field.required) ? field.title + ' *' : field.title}
                     </Text>
                     {renderedField()}
-                </View>);
-            )};
+                </View>
+            );
+        });
 
         return (
             <AppBackground>
