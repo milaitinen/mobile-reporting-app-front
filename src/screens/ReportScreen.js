@@ -114,180 +114,188 @@ export class ReportScreen extends React.Component {
         const optionAnswers = report.option_answers;
 
         const renderedFields = this.state.fields.map((field, index) => {
-            const stringAnswer = report.string_answers.find((answer) => answer.field_id === field.field_id);
-            const fieldOptions = field.field_options;
+            //const stringAnswer = report.string_answers.find((answer) => answer.field_id === field.field_id);
+            //const fieldOptions = field.field_options;
 
-            switch (field.type) {
-                case 'TEXTFIELD_SHORT' : // Name
-                {
-                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
-                    return (
-                        <TextInput
-                            value={answer.value}
-                            onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
-                            underlineColorAndroid='transparent'
-                            style={newReportStyles.textInput}
-                        />
-                    );
-                }
-
-                case 'CHECKBOX' : // Checkbox TODO defaultValue doesn't work here
-                {
-                    const checkboxes = field.field_options.map((option, index) => {
-                        const answer = optionAnswers.find((answer) => (answer.field_option_id === option.field_option_id) && answer.selected);
+            const renderedField = () => {
+                switch (field.type) {
+                    case 'TEXTFIELD_SHORT' : // Name
+                    {
+                        const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
                         return (
-                            <Checkbox
-                                key={index}
-                                editable={isEditable}
-                                style={newReportStyles.checkboxStyle}
-                                title={option.value}
-                                defaultValue={(answer != null)}
-                                //The ability to dispatch the checkbox status is passed on to the component
-                                //as a prop, and the component itself can call this function in its
-                                //onIconPress, i.e. when the checkbox is pressed
-                                onPressFunction={() => this.props.dispatch(insertFieldAnswer(field, option, true))}
+                            <TextInput
+                                value={answer.value}
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
+                                underlineColorAndroid='transparent'
+                                style={newReportStyles.textInput}
                             />
                         );
-                    });
-                    return (
-                        <View key={index}>
-                            {checkboxes}
-                        </View>
-                    );
-                }
+                    }
 
-                case 'DROPDOWN' : // Dropdown
-                {
-
-                    const selected = field.field_options.find((option) => {
-                        return report.option_answers.map((answer) => answer.field_option_id)
-                            .includes(option.field_option_id);
-                    });
-
-                    return (
-                        <Dropdown
-                            ref={ ModalDrop => this.modalDropdown = ModalDrop }
-                            disabled={!isEditable}
-                            defaultValue={selected.value}
-                            options={field.field_options.map((option) => option.value)}
-                        />
-                    );
-                }
-
-                case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
-                {
-                    const labels = field.field_options.map((option) => {
+                    case 'CHECKBOX' : // Checkbox TODO defaultValue doesn't work here
+                    {
+                        const checkboxes = field.field_options.map((option, index) => {
+                            const answer = optionAnswers.find((answer) => (answer.field_option_id === option.field_option_id) && answer.selected);
+                            return (
+                                <Checkbox
+                                    key={index}
+                                    editable={isEditable}
+                                    style={newReportStyles.checkboxStyle}
+                                    title={option.value}
+                                    defaultValue={(answer != null)}
+                                    //The ability to dispatch the checkbox status is passed on to the component
+                                    //as a prop, and the component itself can call this function in its
+                                    //onIconPress, i.e. when the checkbox is pressed
+                                    onPressFunction={() => this.props.dispatch(insertFieldAnswer(field, option, true))}
+                                />
+                            );
+                        });
                         return (
-                            { label: option.value, value: option }
+                            <View key={index}>
+                                {checkboxes}
+                            </View>
                         );
-                    });
+                    }
 
-                    const answerIndex = field.field_options.findIndex((option) =>
-                        (optionAnswers.find(a => a.field_option_id === option.field_option_id && a.selected)));
+                    case 'DROPDOWN' : // Dropdown
+                    {
 
-                    return (
-                        <Radioform
-                            options={labels}
-                            editable={isEditable}
-                            initial={answerIndex || 0}
-                            onPress={(label) => this.props.dispatch(insertFieldAnswer(field, label, true))} //TODO this only allows '1' to be saved...
-                        />
-                    );
-                }
+                        const selected = field.field_options.find((option) => {
+                            return report.option_answers.map((answer) => answer.field_option_id)
+                                .includes(option.field_option_id);
+                        });
 
-                case 'CALENDAR': // Calendar
-                {
-                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
-                    return (
-                        <Datepicker
-                            editable={isEditable}
-                            mode={'date'}
-                            answer={answer.value}
-                            onDateChange={(date) => this.props.dispatch(insertFieldAnswer(field, date, false))}
-                        />
-                    );
-                }
+                        return (
+                            <Dropdown
+                                ref={ModalDrop => this.modalDropdown = ModalDrop}
+                                disabled={!isEditable}
+                                defaultValue={selected.value}
+                                options={field.field_options.map((option) => option.value)}
+                            />
+                        );
+                    }
 
-                case 'INSTRUCTIONS': // Instruction
-                {
-                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
-                    return (
-                        <Text
-                            style={newReportStyles.instructions}>
-                            {answer.value} {/*TODO: this is supposed to be the default value since instructions can't be changed*/}
-                        </Text>
-                    );
-                }
+                    case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
+                    {
+                        const labels = field.field_options.map((option) => {
+                            return (
+                                { label: option.value, value: option }
+                            );
+                        });
 
-                case 'TEXTFIELD_LONG': // Text (Multiple row text field)
-                {
-                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
-                    return (
-                        <TextInput
-                            multiline
-                            style={newReportStyles.multilineTextInput}
-                            onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
-                            value={answer.value}
-                        />
-                    );
-                }
+                        const answerIndex = field.field_options.findIndex((option) =>
+                            (optionAnswers.find(a => a.field_option_id === option.field_option_id && a.selected)));
 
-                case 'TIME': // Time
-                {
-                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
-                    return (
-                        <Datepicker
-                            editable={isEditable}
-                            mode={'time'}
-                            answer={answer.value}
-                            onDateChange={(time) => this.props.dispatch(insertFieldAnswer(field, time, false))}
-                        />
-                    );
-                }
+                        return (
+                            <Radioform
+                                options={labels}
+                                editable={isEditable}
+                                initial={answerIndex || 0}
+                                onPress={(label) => this.props.dispatch(insertFieldAnswer(field, label, true))} //TODO this only allows '1' to be saved...
+                            />
+                        );
+                    }
 
-                case 'NUMBERFIELD': // Digits (Text input that only accepts numeric characters)
-                {
-                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id).value;
-                    return (
-                        <TextInput
-                            style={newReportStyles.textInput}
-                            value={answer}
-                            keyboardType='numeric'
-                            onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
-                        />
-                    );
-                }
+                    case 'CALENDAR': // Calendar
+                    {
+                        const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
+                        return (
+                            <Datepicker
+                                editable={isEditable}
+                                mode={'date'}
+                                answer={answer.value}
+                                onDateChange={(date) => this.props.dispatch(insertFieldAnswer(field, date, false))}
+                            />
+                        );
+                    }
 
-                case 'LINK': // Link
-                {
-                    const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
-                    return (
-                        <View key={index} style={newReportStyles.linkContainer}>
-                            <Icon name={'link'} type={'feather'} iconStyle={newReportStyles.linkIcon}/>
+                    case 'INSTRUCTIONS': // Instruction
+                    {
+                        const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
+                        return (
                             <Text
-                                style={newReportStyles.link}
-                                onPress={() => Linking.openURL(answer.value)}>
-                                {answer.value}
+                                style={newReportStyles.instructions}>
+                                {answer.value} {/*TODO: this is supposed to be the default value since instructions can't be changed*/}
                             </Text>
-                        </View>
-                    );
+                        );
+                    }
+
+                    case 'TEXTFIELD_LONG': // Text (Multiple row text field)
+                    {
+                        const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
+                        return (
+                            <TextInput
+                                multiline
+                                style={newReportStyles.multilineTextInput}
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
+                                value={answer.value}
+                            />
+                        );
+                    }
+
+                    case 'TIME': // Time
+                    {
+                        const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
+                        return (
+                            <Datepicker
+                                editable={isEditable}
+                                mode={'time'}
+                                answer={answer.value}
+                                onDateChange={(time) => this.props.dispatch(insertFieldAnswer(field, time, false))}
+                            />
+                        );
+                    }
+
+                    case 'NUMBERFIELD': // Digits (Text input that only accepts numeric characters)
+                    {
+                        const answer = report.string_answers.find((answer) => answer.field_id === field.field_id).value;
+                        return (
+                            <TextInput
+                                style={newReportStyles.textInput}
+                                value={answer}
+                                keyboardType='numeric'
+                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
+                            />
+                        );
+                    }
+
+                    case 'LINK': // Link
+                    {
+                        const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
+                        return (
+                            <View key={index} style={newReportStyles.linkContainer}>
+                                <Icon name={'link'} type={'feather'} iconStyle={newReportStyles.linkIcon}/>
+                                <Text
+                                    style={newReportStyles.link}
+                                    onPress={() => Linking.openURL(answer.value)}>
+                                    {answer.value}
+                                </Text>
+                            </View>
+                        );
+                    }
+                    case 'USER_DROPDOWN': // User dropdown
+                        return (
+                            <Dropdown
+                                disabled={!isEditable}
+                                defaultValue={field.answer}
+                                options={field.answer.split(',')}
+                            />
+                        );
+
+                    default:
+                        return (
+                            null
+                        );
                 }
-                case 'USER_DROPDOWN': // User dropdown
-                    return (
-                        <Dropdown
-                            disabled={!isEditable}
-                            defaultValue={field.answer}
-                            options={field.answer.split(',')}
-                        />
-                    );
+            };
 
-                default:
-                    return (
-                        null
-                    );
-            }
-
-            //TODO: add view with title and renderedField()
+            return (
+                <View key={index} style={newReportStyles.fieldContainer}>
+                    <Text style={ newReportStyles.text }>
+                        {(field.required) ? field.title + ' *' : field.title}
+                    </Text>
+                    {renderedField()}
+                </View>);
         });
 
         return (

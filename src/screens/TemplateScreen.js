@@ -216,7 +216,7 @@ export class TemplateScreen extends Component {
                                     nofReports={(reports[item.template_id])
                                         ? reports[item.template_id].filter(item => item.template_id >= 0).length
                                         : 0}
-                                    nofDrafts={(reports[item.template_id]) 
+                                    nofDrafts={(reports[item.template_id])
                                         ? reports[item.template_id].filter(item => item.template_id < 0).length
                                         : 0}
                                 />
