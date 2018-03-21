@@ -2,8 +2,8 @@
 import { INSERT_USERNAME, INSERT_PASSWORD, INSERT_TOKEN } from '../actions/user';
 
 const initialState = {
-    username: 'Maisa',      //TODO: change back to '',
-    password: 'password',   //TODO: change back to null,
+    username: '',
+    password: null,
     token: ''
 };
 
