@@ -420,7 +420,19 @@ export class NewReportScreen extends React.Component {
                                 <Text
                                     disabled={!isEditable}
                                     style={newReportStyles.link}
-                                    onPress={() => Linking.openURL(field.default_value)}>
+                                    onPress={() => {
+                                        const url = field.default_value;
+                                        // This checks if any installed app can handle the
+                                        // url before attempting to open it.
+                                        // This is done as shown in React Native docs.
+                                        Linking.canOpenURL(url).then(supported => {
+                                            if (!supported) {
+                                                console.log('Can\'t handle url: ' + url);
+                                            } else {
+                                                return Linking.openURL(url);
+                                            }
+                                        }).catch(err => console.error('An error occurred', err));
+                                    }}>
                                     Link to somewhere
                                 </Text>
                             </View>
