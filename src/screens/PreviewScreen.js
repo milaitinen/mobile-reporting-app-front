@@ -42,7 +42,16 @@ export class PreviewScreen extends React.Component {
         this.setState({ fields: fields, isEditable: isEditable, isLoading: false });
     };
 
-    // Used to prevent navigating multiple times if, for example, the user presses a button too quickly.
+    /*
+     Used to prevent navigating multiple times if, for example, the user presses a button too quickly.
+     Works just like the default this.props.navigation.navigate function, but has a debounce to prevent
+     multi-taps that might cause multiple unwanted navigations to the same route.
+     The Navigate action will update the current state with the result of a Navigate action.
+     Parameters:
+     routeName - String - Required - A destination routeName that has been registered somewhere in the app's router
+     params - Object - Optional - Params to merge into the destination route
+     action - Object - Optional - (advanced) The sub-action to run in the child router, if the screen is a navigator.
+    */
 
     navigateWithDebounce = (routeName, params, action) => {
         const { navigation } = this.props;
