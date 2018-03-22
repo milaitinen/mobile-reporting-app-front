@@ -324,18 +324,16 @@ export class ReportScreen extends React.Component {
                         <View pointerEvents={isEditable ? undefined : 'none'}>
                             {renderedFields}
                         </View>
+                        {
+                            (this.props.navigation.state.params.reportID < 0) &&
+                            <View>
+                                <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
+                                <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
+                                <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this.deleteDraft()} />
+                            </View>
+                        }
                     </ScrollView>
                 </View>
-
-                {
-                    (this.props.navigation.state.params.reportID < 0) &&
-                    <View style={ newReportStyles.buttonView}>
-                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
-                        <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
-                        <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this.deleteDraft()} />
-                    </View>
-                }
-
             </AppBackground>
 
         );
