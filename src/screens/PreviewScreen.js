@@ -64,6 +64,7 @@ export class PreviewScreen extends React.Component {
         }
 
         const { isEditable } = this.state;
+        const optionAnswers = report.option_answers;
         const renderedFields = this.state.fields.map((field, index) => {
             const renderedField = () => {
                 switch (field.type) {
@@ -81,13 +82,25 @@ export class PreviewScreen extends React.Component {
                         );
 
                     case 'CHECKBOX': // Checkbox
+                    {
+                        const checkboxes = field.field_options.map((option, index) => {
+                            const answer = optionAnswers.find((answer) => (answer.field_option_id === option.field_option_id) && answer.selected);
+                            return (
+                                <Checkbox
+                                    key={index}
+                                    editable={isEditable}
+                                    title={option.value}
+                                    defaultValue={(answer != null)}
+                                />
+                            );
+                        });
                         return (
-                            <Checkbox
-                                key={index}
-                                title={'This is a nice checkbox'}
-                                editable={isEditable}
-                            />
+                            <View key={index}>
+                                {checkboxes}
+                            </View>
                         );
+                    }
+
 
                     case 'NESTED_DROPDOWN': // Dropdown
                         return (
@@ -131,7 +144,11 @@ export class PreviewScreen extends React.Component {
 
                     // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
                     case 'RADIOBUTTON': {
-                        const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
+                        const labels = field.field_options.map((option) => {
+                            return (
+                                { label: option.value, value: option }
+                            );
+                        });
                         return (
                             <Radioform
                                 options={props}

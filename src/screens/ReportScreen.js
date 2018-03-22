@@ -140,7 +140,6 @@ export class ReportScreen extends React.Component {
                                 <Checkbox
                                     key={index}
                                     editable={isEditable}
-                                    style={newReportStyles.checkboxStyle}
                                     title={option.value}
                                     defaultValue={(answer != null)}
                                     //The ability to dispatch the checkbox status is passed on to the component
