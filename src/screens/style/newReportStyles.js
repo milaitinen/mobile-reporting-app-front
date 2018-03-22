@@ -57,21 +57,6 @@ const newReportStyles = EStyleSheet.create({
         marginBottom: 10,
     },
 
-    mainDropdownStyleClass: {
-        //flex: 1,
-        flexDirection: 'row',
-        backgroundColor: '$primaryWhite',
-        paddingLeft: 5,
-        paddingTop: 5,
-        paddingBottom: 5,
-        borderRadius: '$dropdownRadius',
-        borderWidth: '$containerBorderWidth',
-        borderColor: '$gray1',
-        marginTop: 6,
-        marginBottom: 6,
-        width: 160,
-    },
-
     lowerDropdownStyleClass: {
         flex: 1,
         paddingTop: 8,
@@ -99,6 +84,7 @@ const newReportStyles = EStyleSheet.create({
     linkContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        marginBottom: 10,
     },
 
     linkIcon: {
@@ -126,6 +112,7 @@ const newReportStyles = EStyleSheet.create({
     multilineTextInput: {
         textAlignVertical: 'top',
         paddingHorizontal: 12,
+        marginBottom: 10,
         height: 80,
         borderRadius: '$inputBorderRadius',
         backgroundColor: '$primaryWhite',
@@ -137,6 +124,7 @@ const newReportStyles = EStyleSheet.create({
         textAlignVertical: 'center',
         color: '$primaryWhite',
         fontFamily: '$primaryFont',
+        marginBottom: 10,
     },
 
     textInput: {
@@ -147,13 +135,6 @@ const newReportStyles = EStyleSheet.create({
         backgroundColor: '$primaryWhite',
         fontFamily: '$primaryFont',
         color: '$placeholder',
-    },
-
-    buttonView: {
-        paddingHorizontal: 10,
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
 
     disabled: {

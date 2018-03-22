@@ -17,6 +17,7 @@ const styles = EStyleSheet.create({
 
     dropdownButton: {
         width: 180,
+        marginBottom: 10,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

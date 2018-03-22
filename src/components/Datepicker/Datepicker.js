@@ -14,7 +14,7 @@ const Datepicker = ({ editable, mode, answer, onChange }) => {
         return (
             <DatePicker
                 disabled = {!editable}
-                style = {styles.dateStyleClass}
+                style = {styles.container}
                 customStyles={{
                     dateInput: {
                         borderWidth: border,
@@ -40,7 +40,7 @@ const Datepicker = ({ editable, mode, answer, onChange }) => {
         return (
             <DatePicker
                 disabled ={ !editable }
-                style = {styles.dateStyleClass}
+                style = {styles.container}
                 customStyles = {{
                     dateInput: {
                         borderWidth: border,
