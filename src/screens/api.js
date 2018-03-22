@@ -88,6 +88,48 @@ export const saveDraft = (username, templateID, draft) => {
         });
 };
 
+
+
+//saves unsent reports to array in AsyncStorage
+export const saveToQueueWithTemplateID = (username, templateID, report) => {
+    fetchQueuedByTemplateID(username, templateID)
+        .then(queue => {
+            queue.push(report);
+            saveData(`${url}/users/${username}/queue/${templateID}`, queue);
+            printQueueByID(username, 4);
+            return true;
+        });
+};
+
+//print queue for testing purposes
+export const printQueueByID = (username, id) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/queue/${id}`)
+        .then(data => {
+            if (data != null) {
+                const array = JSON.parse(data);
+                for ( let i = 0; i < array.length; i++) {
+                    console.log(array[i]);
+                }
+                return array;
+            } else {
+                console.log('empty array');
+                return [];
+            }
+        });
+};
+
+//fetches array of unsent reports from AsyncStorage
+export const fetchQueuedByTemplateID = (username, templateID) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/queue/${templateID}`)
+        .then(data => {
+            if (data != null) {
+                return JSON.parse(data);
+            } else {
+                return [];
+            }
+        });
+};
+
 export const removeDraft =  (username, templateID, draftID) => {
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {

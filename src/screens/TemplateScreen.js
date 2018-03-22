@@ -14,9 +14,14 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID, isNetworkConnected } from './api';
+import {
+    fetchReportsByTemplateID,
+    fetchTemplatesByUsername,
+    fetchDraftsByTemplateID,
+    fetchQueuedByTemplateID,
+    isNetworkConnected } from './api';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID, storeDraftByTemplateID, insertTemplateID } from '../redux/actions/reports';
+import { storeReportsByTemplateID, storeDraftByTemplateID, storeQueuedReportByTemplateID, insertTemplateID } from '../redux/actions/reports';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
 
@@ -103,6 +108,7 @@ export class TemplateScreen extends Component {
                 Promise.all(reportsByTemplateID)
                     .then(data => this.props.dispatch(storeReportsByTemplateID(data)))
                     .then(() => this.getDrafts())
+                    .then(() => this.getQueued())
                     .catch(err => console.error(err));
             })
             .catch(error => console.error(error))
@@ -117,6 +123,23 @@ export class TemplateScreen extends Component {
                 .then((drafts) => {
                     if (drafts.length !== 0) {
                         drafts.forEach(draft => this.props.dispatch(storeDraftByTemplateID(templateID, draft)));
+                    }
+                })
+                .catch(err => console.error(err));
+        });
+    };
+
+    getQueued = () => {
+        const { templates, username } = this.props;
+        console.log('tulee tänne');
+
+        Object.keys(templates).forEach(templateID => {
+            fetchQueuedByTemplateID(username, templateID)
+                .then(reports => {
+                    if (reports.length != 0) {
+                        reports.forEach(report => this.props.dispatch(storeQueuedReportByTemplateID(templateID, report)));
+                    } else {
+                        console.log('derp');
                     }
                 })
                 .then(() => this.setState({ refreshing: false, isLoading: false }))
@@ -213,12 +236,8 @@ export class TemplateScreen extends Component {
                                     //nofReports={(reports[item.template_id]) ? (reports[item.template_id]).length : 0}
                                     templateID={item.template_id}
                                     data={reports[item.template_id]}
-                                    nofReports={(reports[item.template_id])
-                                        ? reports[item.template_id].filter(item => item.template_id >= 0).length
-                                        : 0}
-                                    nofDrafts={(reports[item.template_id])
-                                        ? reports[item.template_id].filter(item => item.template_id < 0).length
-                                        : 0}
+                                    nofReports={(reports[item.template_id]) ? reports[item.template_id].filter(item => item.report_id >= 0).length : 0}
+                                    nofQueued={(reports[item.template_id]) ? reports[item.template_id].filter(item => item.report_id == null).length : 0}
                                 />
                             }
                             ListFooterComponent={
