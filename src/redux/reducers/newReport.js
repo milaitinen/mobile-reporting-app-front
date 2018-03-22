@@ -1,53 +1,78 @@
 /* eslint-disable no-undef */
-import { INSERT_TITLE, CREATE_REPORT, INSERT_FIELD_ANSWER, EMPTY_FIELDS, SET_UNSAVED } from '../actions/newReport';
+import {
+    INSERT_TITLE,
+    INSERT_DATE,
+    INSERT_FIELD_ANSWER,
+    EMPTY_FIELDS, SET_UNSAVED,
+    OPEN_REPORT,
+    CREATE_DRAFT
+} from '../actions/newReport';
 
-const initialState = {
-    templateID: null ,
-    title: 'Draft',
-    answers: [],
-    dateCreated: null,
-    dateAccepted: null,
-    id: null,
-    orderNo: null,
-    userID: null,
-    isUnsaved: true,
+const initialState = {};
+
+// A helper function to find the correct answer field inside the current state and update answer.
+const insertAnswer = (state, action) => {
+    // Check whether the field is option-type (dropdown, checkbox)
+    if (action.isOption) {
+        // Find answer field with the right id and update value
+
+        if ((action.field.type == 'RADIOBUTTON') || (action.field.type == 'DROPDOWN')) { //clear selections if field type is radiobutton or dropdown
+            state.option_answers.filter((answer) => {
+                return (action.field.field_options
+                    .map((option) => option.field_option_id)
+                    .includes(answer.field_option_id));
+            }).map((answer) => answer.selected = false);
+        }
+
+        state.option_answers.map(i => {
+            if (i.field_option_id == action.value.field_option_id) i.selected = !i.selected;
+        });
+    } else {
+        state.string_answers.map(i => {
+            if (i.field_id === action.field.field_id) i.value = action.value;
+        });
+    }
+
+    return {
+        ...state
+    };
 };
 
 const newReportReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CREATE_REPORT:
+        case INSERT_DATE: {
             return {
                 ...state,
-                templateID: action.templateID,
-                dateCreated: action.dateCreated
+                date_created: action.date
             };
-        case INSERT_TITLE:
+        }
+        case INSERT_TITLE: {
             return {
                 ...state,
                 title: action.title
             };
-        case INSERT_FIELD_ANSWER:
-            return {
-                ...state,
-                answers: {
-                    ...state.answers,
-                    [action.field.orderNumber]: {
-                        answer: action.answer,
-                        orderNumber: action.field.orderNumber,
-                        // fetchFieldsAsTemplateID() returns typeID, whereas fetchFieldsByReportID() returns fieldID
-                        fieldID: action.field.fieldID || action.field.typeID
-                    }
-                }
-            };
-        case EMPTY_FIELDS:
+        }
+        case CREATE_DRAFT: {
+            return action.draft;
+        }
+        case INSERT_FIELD_ANSWER: {
+            return insertAnswer(state, action);
+        }
+        case OPEN_REPORT: {
+            return action.report;
+        }
+        case EMPTY_FIELDS: {
             return initialState;
-        case SET_UNSAVED:
+        }
+        case SET_UNSAVED: {
             return {
                 ...state,
                 isUnsaved: action.isUnsaved,
             };
-        default:
+        }
+        default: {
             return state;
+        }
     }
 };
 

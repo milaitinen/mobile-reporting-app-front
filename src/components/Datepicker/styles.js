@@ -1,8 +1,9 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
-    dateStyleClass: {
+    container: {
         width: 160,
+        marginBottom: 10,
     },
 
     dateIcon: {

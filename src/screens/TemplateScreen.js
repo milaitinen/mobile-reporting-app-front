@@ -9,18 +9,17 @@ import {
     Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
 import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID,  isNetworkConnected} from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID, isNetworkConnected } from './api';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID, storeDraftByTemplateID } from '../redux/actions/reports';
-import { createReport } from '../redux/actions/newReport';
+import { storeReportsByTemplateID, storeDraftByTemplateID, insertTemplateID } from '../redux/actions/reports';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
+
 import { setInitialConnection, toggleConnection } from '../redux/actions/connection';
 
 // "export" necessary in order to test component without Redux store
@@ -87,7 +86,6 @@ export class TemplateScreen extends Component {
     */
     getTemplatesAndReports = () => {
         const { username, token } = this.props;
-
         fetchTemplatesByUsername(username, token)
             .then(responseJson => {
                 if (responseJson.length < 1) {  // handle situations where there are no templates
@@ -97,8 +95,10 @@ export class TemplateScreen extends Component {
                 }
             })
             .then(() => {
-                const reportsByTemplateID = Object.keys(this.props.templates)
-                    .map((templateID) => fetchReportsByTemplateID(username, templateID, token));
+                const templates = this.props.templates;
+
+                Object.keys(templates).forEach(id => this.props.dispatch(insertTemplateID(id)));
+                const reportsByTemplateID = Object.keys(templates).map((id) => fetchReportsByTemplateID(username, id, token));
 
                 Promise.all(reportsByTemplateID)
                     .then(data => this.props.dispatch(storeReportsByTemplateID(data)))
@@ -151,9 +151,11 @@ export class TemplateScreen extends Component {
     */
     createNew = (templateID, isEditable) => {
         if (isEditable) {
-            this.props.dispatch(createReport(templateID, moment().format('YYYY-MM-DD')));
             // this.setState({ isLoading: true });
-            this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh, isEditable: isEditable });
+            this.props.navigation.navigate('NewReport', {
+                templateID: templateID,
+                refresh: this.handleRefresh,
+                isEditable: isEditable });
         }
         else {
             this.props.dispatch(preview(templateID));
@@ -208,16 +210,21 @@ export class TemplateScreen extends Component {
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
                                     createNew={this.createNew}
                                     viewReport={this.viewReport}
-                                    nofReports={(reports[item.id]) ? reports[item.id].filter(item => item.id >= 0).length : 0}
-                                    nofDrafts={(reports[item.id]) ? reports[item.id].filter(item => item.id < 0).length : 0}
-                                    templateID={item.id}
-                                    data={reports[item.id]}
+                                    //nofReports={(reports[item.template_id]) ? (reports[item.template_id]).length : 0}
+                                    templateID={item.template_id}
+                                    data={reports[item.template_id]}
+                                    nofReports={(reports[item.template_id])
+                                        ? reports[item.template_id].filter(item => item.template_id >= 0).length
+                                        : 0}
+                                    nofDrafts={(reports[item.template_id])
+                                        ? reports[item.template_id].filter(item => item.template_id < 0).length
+                                        : 0}
                                 />
                             }
                             ListFooterComponent={
                                 (this.state.renderFooter) && <View style={{ height: 500 }}/>
                             }
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.template_id}
                             refreshing={this.state.refreshing}
                         />
                     </ScrollView>

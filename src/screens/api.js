@@ -31,20 +31,20 @@ export const createNewReport = (username, report, token) => {
     });
 };
 
-export const fetchFieldsByTemplateID = (username, templateID, token) => {
+export const fetchEmptyTemplate = (username, templateID, token) => {
     return isNetworkConnected()
         .then((isConnected) => {
-            if (!isConnected) { return fetchLocalFieldsByTemplateID(username, templateID); }
-            return fetchRemoteFieldsByTemplateID(username, templateID, token);
+            if (!isConnected) { return fetchLocalEmptyTemplate(username, templateID); }
+            return fetchRemoteEmptyTemplate(username, templateID, token);
         })
-        .then((fieldsByTemplateID) => {
-            saveData(`${url}/users/${username}/templates/${templateID}/fields`, fieldsByTemplateID);
-            return fieldsByTemplateID;
+        .then((template) => {
+            saveData(`${url}/users/${username}/templates/${templateID}/empty`, template);
+            return template;
         });
 };
 
-const fetchLocalFieldsByTemplateID = (username, templateID) => {
-    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/fields`)
+const fetchLocalEmptyTemplate = (username, templateID) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/empty`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -54,9 +54,10 @@ const fetchLocalFieldsByTemplateID = (username, templateID) => {
         });
 };
 
-export const fetchRemoteFieldsByTemplateID = (username, templateID, token) => {
+
+export const fetchRemoteEmptyTemplate = (username, templateID, token) => {
     return (
-        fetch(`${url}/users/${username}/templates/${templateID}/fields`, {
+        fetch(`${url}/users/${username}/templates/${templateID}/empty`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
@@ -72,7 +73,7 @@ export const saveDraft = (username, templateID, draft) => {
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {
             // see if there is already a draft with the same id
-            const draftIndex = drafts.findIndex(x => x.id === draft.id);
+            const draftIndex = drafts.findIndex(x => x.report_id === draft.report_id);
 
             if (draftIndex < 0) {
                 drafts.push(draft);
@@ -80,17 +81,17 @@ export const saveDraft = (username, templateID, draft) => {
                 drafts[draftIndex] = draft;
             }
             // give each draft a unique, negative id
-            drafts.map((draft, i) => draft.id = -Math.abs(i + 1));
+            drafts.map((draft, i) => draft.report_id = -Math.abs(i + 1));
             saveData(`${url}/users/${username}/templates/${templateID}`, drafts);
 
-            return (drafts[drafts.length - 1].id);
+            return (drafts[drafts.length - 1].report_id);
         });
 };
 
 export const removeDraft =  (username, templateID, draftID) => {
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {
-            const draftRemoved = drafts.filter(draft => draft.id !== draftID);
+            const draftRemoved = drafts.filter(draft => draft.report_id !== draftID);
             saveData(`${url}/users/${username}/templates/${templateID}`, draftRemoved);
         });
 };
@@ -210,7 +211,7 @@ export const fetchReportsByTemplateID = (username, templateID, token) => {
             return fetchRemoteReportsByTemplateID(username, templateID, token);
         })
         .then((reports) => {
-            saveData(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`, reports);
+            saveData(`${url}/users/${username}/templates/${templateID}/reports?sort=-date_created`, reports);
             return reports;
         });
 };
@@ -218,7 +219,7 @@ export const fetchReportsByTemplateID = (username, templateID, token) => {
 /* Fetch Reports by TemplateID from ASyncStorage in case there is no internet connection.
    If no data has been stored an empty value will be returned. */
 const fetchLocalReportsByTemplateID = (username, templateID) => {
-    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`)
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports?sort=-date_created`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -231,7 +232,7 @@ const fetchLocalReportsByTemplateID = (username, templateID) => {
 // Fetch reports by templateID from the server
 const fetchRemoteReportsByTemplateID = (username, templateID, token) => {
     return (
-        fetch(`${url}/users/${username}/templates/${templateID}/reports?sort=-datecreated`, {
+        fetch(`${url}/users/${username}/templates/${templateID}/reports?sort=-date_created`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

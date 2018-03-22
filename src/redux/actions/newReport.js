@@ -1,15 +1,15 @@
 // easier to refactor later and debug
-export const CREATE_REPORT  = 'CREATE_REPORT';
 export const INSERT_TITLE   = 'INSERT_TITLE';
 export const INSERT_FIELD_ANSWER = 'INSERT_FIELD_ANSWER';
 export const EMPTY_FIELDS = 'EMPTY_FIELDS';
 export const SET_UNSAVED = 'SET_UNSAVED';
+export const INSERT_DATE = 'INSERT_DATE';
+export const CREATE_DRAFT = 'CREATE_DRAFT';
+export const OPEN_REPORT = 'OPEN_REPORT';
 
-// return an object
-export const createReport = ( templateID, date ) => ({
-    type: CREATE_REPORT,
-    templateID: templateID,
-    dateCreated: date
+export const createDraft = (draft) => ({
+    type: CREATE_DRAFT,
+    draft: draft
 });
 
 export const insertTitle = (title) => ({
@@ -17,10 +17,21 @@ export const insertTitle = (title) => ({
     title: title
 });
 
-export const insertFieldAnswer = ( field, answer ) => ({
+export const openReport = (report) => ({
+    type: OPEN_REPORT,
+    report: report
+});
+
+export const insertDate = (date) => ({
+    type: INSERT_DATE,
+    date: date
+});
+
+export const insertFieldAnswer = ( field, value, isOption ) => ({
     type: INSERT_FIELD_ANSWER,
     field: field,
-    answer: answer
+    value: value,
+    isOption: isOption
 });
 
 export const emptyFields = () => ({

@@ -1,4 +1,4 @@
-import { STORE_REPORTS_BY_TEMPLATE_ID, EMPTY_REPORTS, STORE_DRAFT_BY_TEMPLATE_ID } from '../actions/reports';
+import { STORE_REPORTS_BY_TEMPLATE_ID, EMPTY_REPORTS, STORE_DRAFT_BY_TEMPLATE_ID, INSERT_TEMPLATE_ID } from '../actions/reports';
 
 const initialState = {};
 
@@ -10,7 +10,7 @@ const matchArrayWithTemplateID = (state, action) => {
             const reportsByID = {};
             // check if the array is empty
             if (report.length > 0) {
-                const tempID = report[0].templateID;
+                const tempID = report[0].template_id;
                 reportsByID[tempID]=report;
             }
             return reportsByID;
@@ -20,16 +20,20 @@ const matchArrayWithTemplateID = (state, action) => {
 
 const reportsByTemplateIDReducer = (state = initialState, action) => {
     switch (action.type) {
+
         case STORE_REPORTS_BY_TEMPLATE_ID: {
             const newReports = matchArrayWithTemplateID(state, action);
-            // Object.assign merges the given parameters together and returns an object
-            return Object.assign(state.reports || {}, newReports);
+            return Object.assign(state, newReports); // Merge the given parameters together and return an object
         }
         case EMPTY_REPORTS: {
             return initialState;
         }
         case STORE_DRAFT_BY_TEMPLATE_ID: {
-            state[action.templateID].unshift(action.draft); // add draft to the start of the array of reports( >< push)
+            state[action.templateID].unshift(action.draft); // Add draft to the start of the array of reports( >< push)
+            return state;
+        }
+        case INSERT_TEMPLATE_ID: {
+            state[action.templateID] = [];
             return state;
         }
         default:

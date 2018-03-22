@@ -21,6 +21,7 @@ EStyleSheet.build({
     $draftBlue: '#8cc9e5',
     $sendGreen: '#99d9ad',
     $delete: '#e21d1e',
+    $required: '#ff403b',
     $fieldBg: '#1b305570',
     $placeholder: '#8f8f8f',
     $inactive: '#9bcff9',
@@ -53,15 +54,15 @@ class App extends React.Component {
         return nav !== this.props.nav;
     };
 
-render() {
-    const { dispatch, nav } = this.props;
-    const navigation = addNavigationHelpers({
-        dispatch,
-        state: nav
-    });
+    render() {
+        const { dispatch, nav } = this.props;
+        const navigation = addNavigationHelpers({
+            dispatch,
+            state: nav
+        });
 
-    return <AppNavigator navigation={navigation} />;
-}
+        return <AppNavigator navigation={navigation} />;
+    }
 }
 
 const mapStateToProps = state => ({
