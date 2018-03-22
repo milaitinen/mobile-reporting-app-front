@@ -290,9 +290,15 @@ export class ReportScreen extends React.Component {
 
             return (
                 <View key={index} style={newReportStyles.fieldContainer}>
-                    <Text style={ newReportStyles.text }>
-                        {(field.required) ? field.title + ' *' : field.title}
-                    </Text>
+                    <View style={newReportStyles.fieldTitle}>
+                        <Text style={ newReportStyles.text }>
+                            {field.title}
+                        </Text>
+                        {
+                            (field.required) &&
+                            <Text style={newReportStyles.required}> *</Text>
+                        }
+                    </View>
                     {renderedField()}
                 </View>);
         });
@@ -302,13 +308,16 @@ export class ReportScreen extends React.Component {
                 <View style={ newReportStyles.ViewContainer }>
                     <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
                         <View style={newReportStyles.fieldContainer}>
-                            <Text style={newReportStyles.textStyleClass}>Report title</Text>
+                            <View style={newReportStyles.fieldTitle}>
+                                <Text style={newReportStyles.text}>Otsikko</Text>
+                                <Text style={newReportStyles.required}> *</Text>
+                            </View>
                             <TextInput
                                 editable={isEditable}
                                 defaultValue={this.props.navigation.state.params.title}
                                 onChangeText={(title) => this.props.dispatch(insertTitle(title))}
                                 underlineColorAndroid='transparent'
-                                style={newReportStyles.textInputStyleClass}
+                                style={newReportStyles.textInput}
                             />
                         </View>
 

@@ -29,14 +29,6 @@ const newReportStyles = EStyleSheet.create({
         backgroundColor: '$fieldBg',
         borderRadius: '$containerBorderRadius',
         padding: 15,
-        paddingBottom: 20,
-        marginVertical: 10,
-    },
-
-    altFieldContainer: {
-        backgroundColor: '$fieldBg',
-        borderRadius: '$containerBorderRadius',
-        padding: 15,
         paddingBottom: 10,
         marginVertical: 10,
     },
@@ -47,8 +39,19 @@ const newReportStyles = EStyleSheet.create({
         marginBottom: 5,
     },
 
+    fieldTitle: {
+        flexDirection: 'row',
+    },
+
     text: {
         color: '$primaryWhite',
+        fontFamily: '$primaryFont',
+        fontSize: 16,
+        marginBottom: 10,
+    },
+
+    required: {
+        color: '$required',
         fontFamily: '$primaryFont',
         fontSize: 16,
         marginBottom: 10,
@@ -138,35 +141,12 @@ const newReportStyles = EStyleSheet.create({
 
     textInput: {
         paddingHorizontal: 12,
+        marginBottom: 10,
         height: 40,
         borderRadius: '$inputBorderRadius',
         backgroundColor: '$primaryWhite',
         fontFamily: '$primaryFont',
         color: '$placeholder',
-    },
-
-    titleContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 10,
-        paddingTop: 0,
-        marginBottom: 5,
-    },
-
-    title: {
-        flex: 1,
-        marginHorizontal: 15,
-        color: '$gray2',
-        fontSize: 24,
-    },
-
-    previewIconContainer: {
-        borderRadius: 50,
-        borderWidth: 2,
-        padding: 7,
-        borderColor: '$draftBlue',
-
     },
 
     buttonView: {

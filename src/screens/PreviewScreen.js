@@ -64,7 +64,6 @@ export class PreviewScreen extends React.Component {
         }
 
         const { isEditable } = this.state;
-        const optionAnswers = report.option_answers;
         const renderedFields = this.state.fields.map((field, index) => {
             const renderedField = () => {
                 switch (field.type) {
@@ -84,13 +83,11 @@ export class PreviewScreen extends React.Component {
                     case 'CHECKBOX': // Checkbox
                     {
                         const checkboxes = field.field_options.map((option, index) => {
-                            const answer = optionAnswers.find((answer) => (answer.field_option_id === option.field_option_id) && answer.selected);
                             return (
                                 <Checkbox
                                     key={index}
                                     editable={isEditable}
                                     title={option.value}
-                                    defaultValue={(answer != null)}
                                 />
                             );
                         });
@@ -149,11 +146,15 @@ export class PreviewScreen extends React.Component {
                                 { label: option.value, value: option }
                             );
                         });
+
+                        const initialIndex = field.field_options.findIndex((option) => {
+                            return (option.default_value);
+                        });
                         return (
                             <Radioform
-                                options={props}
+                                options={labels}
                                 editable={isEditable}
-                                initial={JSON.parse(field.default_value)}
+                                initial={initialIndex}
                             />
                         );
                     }
@@ -242,9 +243,15 @@ export class PreviewScreen extends React.Component {
 
             return (
                 <View key={index} style={newReportStyles.fieldContainer}>
-                    <Text style={newReportStyles.text}>
-                        {(field.required) ? field.title + ' *' : field.title}
-                    </Text>
+                    <View style={newReportStyles.fieldTitle}>
+                        <Text style={ newReportStyles.text }>
+                            {field.title}
+                        </Text>
+                        {
+                            (field.required) &&
+                            <Text style={newReportStyles.required}> *</Text>
+                        }
+                    </View>
                     {renderedField()}
                 </View>
             );
@@ -254,6 +261,20 @@ export class PreviewScreen extends React.Component {
             <AppBackground>
                 <View style={ newReportStyles.ViewContainer }>
                     <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
+                        <View style={newReportStyles.fieldContainer}>
+                            <View style={newReportStyles.fieldTitle}>
+                                <Text style={newReportStyles.text}>Otsikko</Text>
+                                <Text style={newReportStyles.required}> *</Text>
+                            </View>
+                            <TextInput
+                                editable={isEditable}
+                                placeholder={'Otsikko'}
+                                placeholderTextColor={EStyleSheet.value('$placeholder')}
+                                underlineColorAndroid='transparent'
+                                style={[newReportStyles.textInput, newReportStyles.disabled]}
+                                onChangeText={(text) => this.props.dispatch(insertTitle(text))}
+                            />
+                        </View>
                         {renderedFields}
                     </ScrollView>
                     <EditButton onPress={() => this.handleOnPress()} />

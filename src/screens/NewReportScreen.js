@@ -447,9 +447,15 @@ export class NewReportScreen extends React.Component {
 
             return (
                 <View key={index} style={newReportStyles.fieldContainer}>
-                    <Text style={ newReportStyles.text }>
-                        {(field.required) ? field.title + ' *' : field.title}
-                    </Text>
+                    <View style={newReportStyles.fieldTitle}>
+                        <Text style={ newReportStyles.text }>
+                            {field.title}
+                        </Text>
+                        {
+                            (field.required) &&
+                            <Text style={newReportStyles.required}> *</Text>
+                        }
+                    </View>
                     {renderedField()}
                 </View>);
         });
@@ -459,7 +465,10 @@ export class NewReportScreen extends React.Component {
                 <View style={ newReportStyles.ViewContainer }>
                     <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
                         <View style={newReportStyles.fieldContainer}>
-                            <Text style={ newReportStyles.text }>Otsikko *</Text>
+                            <View style={newReportStyles.fieldTitle}>
+                                <Text style={newReportStyles.text}>Otsikko</Text>
+                                <Text style={newReportStyles.required}> *</Text>
+                            </View>
                             <TextInput
                                 editable={isEditable}
                                 placeholder={'Otsikko'}

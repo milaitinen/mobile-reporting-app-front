@@ -7,6 +7,7 @@ const styles = EStyleSheet.create({
         borderWidth: 0,
         marginLeft: 0,
         marginVertical: 0,
+        marginBottom: 10,
         justifyContent: 'center',
     },
 
@@ -17,6 +18,7 @@ const styles = EStyleSheet.create({
         borderColor: '$active',
         marginLeft: 0,
         marginVertical: 0,
+        marginBottom: 10,
         justifyContent: 'center',
     },
 
@@ -39,6 +41,7 @@ const styles = EStyleSheet.create({
         borderWidth: 2,
         marginLeft: 0,
         marginVertical: 0,
+        marginBottom: 10,
         justifyContent: 'center',
     },
 
