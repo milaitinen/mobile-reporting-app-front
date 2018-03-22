@@ -154,7 +154,7 @@ class Layout extends Component{
                                     }}
                                 />
                             }
-                            keyExtractor={item => item.report_id}
+                            keyExtractor={item => item.index}
                             ListFooterComponent={
                                 (data !== undefined && data.length > this.state.itemsCount)
                                     ?
