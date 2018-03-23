@@ -159,15 +159,23 @@ export class TemplateScreen extends Component {
     navigateWithDebounce = (routeName, params, action) => {
         const { navigation } = this.props;
         if (this.state.debounce) {
-            this.setState({ debounce: false });
-            navigation.dispatch(NavigationActions.navigate({
-                routeName,
-                params,
-                action,
-            }));
-            setTimeout(() => {
-                this.setState({ debounce: true });
-            }, 600);
+            const p = new Promise(resolve => {
+                this.setState({ debounce: false });
+                resolve();
+            });
+            p.then(() => {
+                return new Promise(resolve => {
+                    navigation.dispatch(NavigationActions.navigate({
+                        routeName,
+                        params,
+                        action,
+                    }));
+                    resolve();
+                });
+            }).then(() => {
+                setTimeout(() => {
+                    this.setState({ debounce: true });
+                }, 600);});
         }
     };
 
