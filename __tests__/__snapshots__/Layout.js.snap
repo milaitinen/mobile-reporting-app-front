@@ -143,39 +143,28 @@ exports[`renders correctly 1`] = `
           <View
             style={undefined}
           >
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              numberOfLines={1}
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "#86939e",
-                      "fontSize": 15,
-                      "fontWeight": "600",
-                      "marginTop": 1,
-                    },
-                    false,
-                    undefined,
-                    undefined,
-                  ],
-                ]
-              }
-            >
-              undefined Reports
-            </Text>
+            <View>
+              <View
+                style={undefined}
+              >
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                >
+                   
+                  Reports
+                </Text>
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                >
+                   
+                  Drafts
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
         <View
