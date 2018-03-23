@@ -20,6 +20,7 @@ export const LOGGED_IN_ROUTE_NAME = 'loggedInDrawer';
 
 // The stack that is contained within the logged in drawer
 const TemplateStack = StackNavigator({
+    //TODO pressing Icon does nothing on IOS - fix bug, navigation problems?.
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
@@ -40,6 +41,7 @@ const TemplateStack = StackNavigator({
                 </View>
         })
     },
+    //TODO add save property to Save?
     NewReport: {
         screen: NewReportScreen,
         navigationOptions: ({ navigation }) => ({
