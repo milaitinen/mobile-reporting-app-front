@@ -18,8 +18,8 @@ const withPreventDoubleClick = (WrappedComponent) => {
             // Short circuit evaluationn (if this.props.onPress is true) && (this.props.onPress() will execute)
             this.props.onPress && this.props.onPress();
         };
-        // Debounce onPress if already pressed during 1000ms.
-        onPress = debounce(this.debouncedOnPress, 1000, { leading: true, trailing: false });
+        // Debounce onPress if already pressed during 2000ms.
+        onPress = debounce(this.debouncedOnPress, 2000, { leading: true, trailing: false });
 
         render() {
             // Returns the wrapped component.

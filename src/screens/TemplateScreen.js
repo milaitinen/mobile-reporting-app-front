@@ -167,7 +167,7 @@ export class TemplateScreen extends Component {
             }));
             setTimeout(() => {
                 this.setState({ debounce: true });
-            }, 1000);
+            }, 2000);
         }
     };
 
