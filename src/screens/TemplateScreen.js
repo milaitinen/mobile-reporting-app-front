@@ -19,13 +19,13 @@ import {
     fetchTemplatesByUsername,
     fetchDraftsByTemplateID,
     fetchQueuedByTemplateID,
-    isNetworkConnected } from './api';
+} from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID, storeDraftByTemplateID, storeQueuedReportByTemplateID, insertTemplateID } from '../redux/actions/reports';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
 
-import { setInitialConnection, toggleConnection } from '../redux/actions/connection';
+import { toggleConnection } from '../redux/actions/connection';
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
@@ -131,7 +131,6 @@ export class TemplateScreen extends Component {
 
     getQueued = () => {
         const { templates, username } = this.props;
-        console.log('tulee tänne');
 
         Object.keys(templates).forEach(templateID => {
             fetchQueuedByTemplateID(username, templateID)
@@ -228,6 +227,7 @@ export class TemplateScreen extends Component {
                             renderItem={({ item, index }) =>
                                 <Layout
                                     title={item.title}
+                                    key = {item.index}
                                     moveToTop={(viewPosition = 0) => this._flatList.scrollToIndex({ animated: true, index: index, viewPosition: viewPosition })}
                                     setTemplateScreenScrollEnabled={this.setScrollEnabled}
                                     setTemplateScreenRenderFooter={this.setRenderFooter}

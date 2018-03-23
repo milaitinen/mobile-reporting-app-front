@@ -8,7 +8,7 @@ const StatusBadge = ({ dateAccepted, isDraft, inQueue }) =>{
 
     const color = isDraft ? '#87cce5' : inQueue? '#FF69B4' : !dateAccepted ? '#f3fe99' : '#99d9ad';
     const text = isDraft ? strings('templates.draft') : inQueue? 'Jonottaa' : !dateAccepted ? strings('templates.sent') : strings('templates.approved');
-    const icon = isDraft ? 'edit-2' : inQueue? 'clock' : !dateAccepted ? 'clock' : 'check';
+    const icon = isDraft ? 'edit-2' : inQueue? 'refresh-cw' : !dateAccepted ? 'clock' : 'check';
 
     return (
         <View style={styles.BadgeViewContainer}>

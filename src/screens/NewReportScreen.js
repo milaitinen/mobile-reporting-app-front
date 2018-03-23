@@ -160,42 +160,29 @@ export class NewReportScreen extends React.Component {
     };
 
     // save report locally in asyncstorage
-    save = () => {
+    save = ( isDraft ) => {
         const { username, newReport } = this.props;
         const { templateID } = this.props.navigation.state.params;
         const report = newReport;
-        report.report_id = saveDraft(username, templateID, report); // give a negative id
 
-        this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
+        if (isDraft) {
+            report.report_id = saveDraft(username, templateID, report); // give a negative id
+            this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
+            Alert.alert('Report saved!');
+        } else {
+            report.report_id = null;    //TODO: Ask about this
+            this.props.dispatch(storeQueuedReportByTemplateID(templateID, report));
+            Alert.alert(' Report queued! ');
+            saveToQueueWithTemplateID(username, templateID, report);
+        }
 
-        Alert.alert('Report saved!');
         this.setState({ isLoading: true });
-
         //this.setState({ isUnsaved: false });
 
         //return to template screen and have it refreshed
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
         this.props.navigation.dispatch(NavigationActions.back());
-    };
-
-
-    saveInQueue = () => {
-        const { username, newReport } = this.props;
-        const { templateID } = this.props.navigation.state.params;
-        const report = newReport;
-        report.report_id = null;    //TODO: Ask about this
-
-        this.props.dispatch(storeQueuedReportByTemplateID(templateID, report));
-
-        Alert.alert(' Report queued! ');
-        this.setState({ isLoading: true });
-
-        saveToQueueWithTemplateID(username, templateID, report);
-        this.props.dispatch(emptyFields());
-        this.props.navigation.state.params.refresh();
-        this.props.navigation.dispatch(NavigationActions.back());
-
     };
 
     // Inserts data to server with a post method.
@@ -210,7 +197,7 @@ export class NewReportScreen extends React.Component {
                     { text: strings('createNew.cancel'), onPress: () => console.log('Cancel pressed'), style: 'cancel' },
                     { text: 'Ok', onPress: () => {
                         console.log('Ok Pressed');
-                        this.saveInQueue();
+                        this.save(false);
                     //TODO: save and put to queue
                     },
                     }
@@ -494,7 +481,7 @@ export class NewReportScreen extends React.Component {
                             />
                         </View>
                         {renderedFields}
-                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={() => this.save()}/>
+                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={() => this.save(true)}/>
                         <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}/>
                     </ScrollView>
                 </View>

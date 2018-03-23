@@ -154,7 +154,9 @@ class Layout extends Component{
                                     }}
                                 />
                             }
-                            keyExtractor={item => item.index}
+
+                            //Generates random ID for rendering purposes. TODO:// Change to better solution maybe?
+                            keyExtractor={item => item.report_id != null ? item.report_id * Math.random() : Math.random()}
                             ListFooterComponent={
                                 (data !== undefined && data.length > this.state.itemsCount)
                                     ?
