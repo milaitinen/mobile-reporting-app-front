@@ -6,7 +6,6 @@ import {
     ScrollView,
     NetInfo,
     StatusBar,
-    Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -14,13 +13,13 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID, isNetworkConnected } from './api';
+import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID } from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID, storeDraftByTemplateID, insertTemplateID } from '../redux/actions/reports';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
 
-import { setInitialConnection, toggleConnection } from '../redux/actions/connection';
+import { toggleConnection } from '../redux/actions/connection';
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
@@ -59,7 +58,7 @@ export class TemplateScreen extends Component {
     */
     componentDidMount() {
 
-        if (Platform.OS === 'android') NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
+        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
         // TEMPORARY: not sure if this is the best solution. Current version fixes a bug (related to logging in)
         if (this.props.username !== userReducer.username) {
             this.getTemplatesAndReports();
@@ -70,7 +69,7 @@ export class TemplateScreen extends Component {
     }
 
     componentWillUnmount() {
-        if (Platform.OS === 'android') NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
+        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
     }
 
     handleConnectionChange = isConnected => {

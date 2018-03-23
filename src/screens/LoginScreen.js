@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StatusBar, Keyboard, NetInfo, Platform, AsyncStorage, View } from 'react-native';
+import { Text, StatusBar, Keyboard, NetInfo, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
@@ -39,11 +39,11 @@ export class LoginScreen extends React.Component {
         isNetworkConnected()
             .then(isConnected => {
                 this.props.dispatch(setInitialConnection({ connectionStatus: isConnected }));})
-            .then(isConnected => Platform.OS === 'android' ? NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange) : '');
+            .then(isConnected => NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange));
     }
 
     componentWillUnmount() {
-        if (Platform.OS === 'android') { NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange); }
+        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
     }
 
     handleConnectionChange = isConnected => {
@@ -80,6 +80,7 @@ export class LoginScreen extends React.Component {
     render() {
         return (
             <AppBackground>
+                <OfflineNotice />
                 <StatusBar
                     backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424'}
                     hidden={false}
