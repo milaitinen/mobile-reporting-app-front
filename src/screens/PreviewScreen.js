@@ -64,7 +64,7 @@ export class PreviewScreen extends React.Component {
             }));
             setTimeout(() => {
                 this.setState({ debounce: true });
-            }, 2000);
+            }, 600);
         }
     };
 
