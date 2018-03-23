@@ -8,6 +8,7 @@ import {
     StatusBar,
     Platform,
 } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import templateScreenStyles from './style/templateScreenStyles';
@@ -32,7 +33,8 @@ export class TemplateScreen extends Component {
             isLoading       : true,     // Checks whether the app is loading or not.
             refreshing      : false,    // Checks whether the app and its data is refreshing or not.
             scrollEnabled   : true,     // Checks whether the template screen is scrollable or not.
-            renderFooter    : false,     // If true, empty space is rendered after the last template. This is set to true while a template is opened.
+            renderFooter    : false,    // If true, empty space is rendered after the last template. This is set to true while a template is opened.
+            debounce        : true,     // Used to prevent navigating multiple times when using navigateWithDebounce function.
         };
     }
 
@@ -144,6 +146,32 @@ export class TemplateScreen extends Component {
     };
 
     /*
+     Used to prevent navigating multiple times if, for example, the user presses a button too quickly.
+     Works just like the default this.props.navigation.navigate function, but has a debounce to prevent
+     multi-taps that might cause multiple unwanted navigations to the same route.
+     The Navigate action will update the current state with the result of a Navigate action.
+     Parameters:
+     routeName - String - Required - A destination routeName that has been registered somewhere in the app's router
+     params - Object - Optional - Params to merge into the destination route
+     action - Object - Optional - (advanced) The sub-action to run in the child router, if the screen is a navigator.
+    */
+
+    navigateWithDebounce = (routeName, params, action) => {
+        const { navigation } = this.props;
+        if (this.state.debounce) {
+            this.setState({ debounce: false });
+            navigation.dispatch(NavigationActions.navigate({
+                routeName,
+                params,
+                action,
+            }));
+            setTimeout(() => {
+                this.setState({ debounce: true });
+            }, 600);
+        }
+    };
+
+    /*
      Function that passes navigation props and navigates to NewReportScreen.
      This makes it possible for the Layout component to navigate.
      Also passes the refresh function and the specific TemplateID so that the
@@ -152,7 +180,7 @@ export class TemplateScreen extends Component {
     createNew = (templateID, isEditable) => {
         if (isEditable) {
             // this.setState({ isLoading: true });
-            this.props.navigation.navigate('NewReport', {
+            this.navigateWithDebounce('NewReport', {
                 templateID: templateID,
                 refresh: this.handleRefresh,
                 isEditable: isEditable });
@@ -160,16 +188,17 @@ export class TemplateScreen extends Component {
         else {
             this.props.dispatch(preview(templateID));
             // this.setState({ isLoading: true });
-            this.props.navigation.navigate('Preview', { refresh: this.handleRefresh,  isEditable: isEditable });
+            this.navigateWithDebounce('Preview', { refresh: this.handleRefresh,  isEditable: isEditable });
         }
         //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReportScreen and uncomment this
     };
 
     viewReport = (templateID, reportID, title) => {
         //this.setState({ isLoading: true }); TODO same problem as above
-        this.props.navigation.navigate('Report',
+        this.navigateWithDebounce('Report',
             { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
     };
+
 
     render() {
         if (this.state.isLoading) {

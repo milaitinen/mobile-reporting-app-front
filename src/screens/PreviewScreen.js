@@ -17,6 +17,7 @@ import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {NavigationActions} from "react-navigation";
 
 export class PreviewScreen extends React.Component {
     constructor(props) {
@@ -25,6 +26,7 @@ export class PreviewScreen extends React.Component {
             isLoading   : true,
             isEditable  : false,
             number      : '',
+            debounce    : true,     // Used to prevent navigating multiple times when using navigateWithDebounce function.
         };
     }
 
@@ -40,8 +42,34 @@ export class PreviewScreen extends React.Component {
         this.setState({ fields: fields, isEditable: isEditable, isLoading: false });
     };
 
+    /*
+     Used to prevent navigating multiple times if, for example, the user presses a button too quickly.
+     Works just like the default this.props.navigation.navigate function, but has a debounce to prevent
+     multi-taps that might cause multiple unwanted navigations to the same route.
+     The Navigate action will update the current state with the result of a Navigate action.
+     Parameters:
+     routeName - String - Required - A destination routeName that has been registered somewhere in the app's router
+     params - Object - Optional - Params to merge into the destination route
+     action - Object - Optional - (advanced) The sub-action to run in the child router, if the screen is a navigator.
+    */
+
+    navigateWithDebounce = (routeName, params, action) => {
+        const { navigation } = this.props;
+        if (this.state.debounce) {
+            this.setState({ debounce: false });
+            navigation.dispatch(NavigationActions.navigate({
+                routeName,
+                params,
+                action,
+            }));
+            setTimeout(() => {
+                this.setState({ debounce: true });
+            }, 600);
+        }
+    };
+
     handleOnPress = () => {
-        this.props.navigation.navigate('NewReport', {
+        this.navigateWithDebounce('NewReport', {
             templateID: this.props.templateID,
             refresh: this.props.navigation.state.params.refresh,
             isEditable: true
