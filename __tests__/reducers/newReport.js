@@ -38,19 +38,7 @@ const testReport = {
 
 describe('newReportReducer reducer', () => {
     it('should return the initial state', () => {
-        expect(newReportReducer(undefined, {})).toEqual(
-            {
-                templateID: null ,
-                title: 'Draft',
-                answers: [],
-                dateCreated: null,
-                dateAccepted: null,
-                id: null,
-                orderNo: null,
-                userID: null,
-                isUnsaved: true,
-            }
-        );
+        expect(newReportReducer(undefined, {})).toEqual( {} );
     });
 
     it('should handle CREATE_REPORT', () => {
