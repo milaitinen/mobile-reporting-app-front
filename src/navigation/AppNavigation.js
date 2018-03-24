@@ -28,6 +28,9 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
+                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                        <Text style={ navigationStyles.ScreenHeaderTemplates }>{ strings('templates.templates') }</Text>
+                    </View>
                     <Icon
                         name={'menu'}
                         type={'feather'}
@@ -35,9 +38,6 @@ const TemplateStack = StackNavigator({
                         containerStyle={navigationStyles.menuIconContainer}
                         onPress={() => { navigation.navigate('DrawerOpen'); }}>
                     </Icon>
-                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
-                        <Text style={ navigationStyles.ScreenHeaderTemplates }>{ strings('templates.templates') }</Text>
-                    </View>
                 </View>
         })
     },
