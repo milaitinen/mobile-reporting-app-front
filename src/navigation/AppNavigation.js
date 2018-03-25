@@ -61,7 +61,7 @@ const TemplateStack = StackNavigator({
                                'Are you sure you want to leave without saving?',
                                [
                                    { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                                   { text: 'Save', onPress: () => ReportScreen.save() },
+                                   { text: 'Save', onPress: () => ReportScreen.save() }, // FIXME: save isn't static and can't be called here!
                                    { text: 'Don\'t save', onPress: () => {
                                        console.log('Yes Pressed');
                                        navigation.goBack(null); }

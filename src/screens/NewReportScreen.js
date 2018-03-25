@@ -45,17 +45,21 @@ import EStyleSheet from 'react-native-extended-stylesheet';
  * @param dispatch
  * @returns {boolean}
  */
-const handleBack = (isUnsaved, dispatch) => {
+const handleBack = (isUnsaved = true, dispatch) => {
+    // TODO: default value for isUnsaved is used,
+    // because checking if report is saved is not implemented yet.
+    // When the functionality will be implemented, the default value should become redundant.
     if (isUnsaved) {
         Alert.alert(
             'You have unsaved changes',
             'Are you sure you want to leave without saving?',
             [
                 { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                { text: 'No', onPress: () => console.log('No Pressed') },
-                { text: 'Yes', onPress: () => {
+                { text: 'Save', onPress: () => console.log('No Pressed') },
+                // TODO: call the save-method from NewReportScreen or ReportScreen
+                { text: 'Don\'t save', onPress: () => {
                     console.log('Yes Pressed');
-                    dispatch(emptyFields());
+                    dispatch(emptyFields()); // FIXME: this makes the app crash
                     //dispatch(setUnsaved(false));
                     dispatch(NavigationActions.back());
                 }
