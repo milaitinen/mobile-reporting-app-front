@@ -14,6 +14,7 @@ import connectionReducer from '../redux/reducers/connection';
 import { strings } from '../locales/i18n';
 import { Alert } from 'react-native';
 import OfflineNotice from '../components/OfflineNotice/OfflineNotice';
+import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
 
 export const LOGGED_OUT_ROUTE_NAME = 'loginScreen';
 export const LOGGED_IN_ROUTE_NAME = 'loggedInDrawer';
@@ -52,24 +53,10 @@ const TemplateStack = StackNavigator({
                    <OfflineNotice
                        hidden={false}
                        barStyle="light-content"/>
-                   <HeaderBackButton
+                   <ReportEditingBackButton
                        tintColor='#fff'
                        style={ navigationStyles.headerBackStyle }
-                       onPress={() => {
-                           Alert.alert(
-                               'You have unsaved changes',
-                               'Are you sure you want to leave without saving?',
-                               [
-                                   { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                                   { text: 'Save', onPress: () => ReportScreen.save() }, // FIXME: save isn't static and can't be called here!
-                                   { text: 'Don\'t save', onPress: () => {
-                                       console.log('Yes Pressed');
-                                       navigation.goBack(null); }
-                                   },
-                               ],
-                               { cancelable: false }
-                           );
-                       }}/>
+                   />
                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
                        <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.createNew') }</Text>
                    </View>
@@ -83,10 +70,10 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
-                    <HeaderBackButton
+                    <ReportEditingBackButton
                         tintColor='#fff'
                         style={ navigationStyles.headerBackStyle }
-                        onPress={() => navigation.goBack(null) }/>
+                    />
                     <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
                         <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.report') }</Text>
                     </View>

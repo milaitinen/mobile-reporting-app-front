@@ -13,7 +13,7 @@ import { Datepicker } from '../components/Datepicker';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, removeDraft, saveDraft } from './api';
 import { strings } from '../locales/i18n';
-import { insertFieldAnswer, emptyFields, openReport, insertTitle } from '../redux/actions/newReport';
+import { insertFieldAnswer, emptyFields, openReport, insertTitle, setUnsaved } from '../redux/actions/newReport';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -42,6 +42,9 @@ export class ReportScreen extends React.Component {
 
         this.props.dispatch(openReport(report));
         this.setState({ fields: fields, isEditable: reportID < 0, isLoading : false });
+        // TODO: implement checking isUnsaved. This line temporarily disables the confirmation
+        // alert when leaving. If isUnsaved would be true, the alert would be shown.
+        this.props.dispatch(setUnsaved(false));
     }
 
     // delete draft from asyncstorage

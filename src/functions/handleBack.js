@@ -11,6 +11,10 @@ import { NavigationActions } from 'react-navigation';
  *
  * Note that the return values are only needed for the Android hardware back button,
  * and are not necessary with the on-screen back button.
+ *
+ * This function is used:
+ *   1. in an Android BackHandler and is called from there directly
+ *   2. in onPress inside ReportEditingBackButton, that is used in navigation
  * @param isUnsaved
  * @param dispatch
  * @returns {boolean}
@@ -25,12 +29,12 @@ export const handleBack = (isUnsaved = true, dispatch) => {
             'Are you sure you want to leave without saving?',
             [
                 { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                { text: 'Save', onPress: () => console.log('No Pressed') },
+                { text: 'Save', onPress: () => console.log('Save Pressed') }, // TODO: add goBack() here
                 // TODO: call the save-method from NewReportScreen or ReportScreen
                 { text: 'Don\'t save', onPress: () => {
                     console.log('Yes Pressed');
-                    dispatch(emptyFields()); // FIXME: this makes the app crash
-                    //dispatch(setUnsaved(false));
+                    //dispatch(emptyFields()); // FIXME: this makes the app crash. Is this necessary?
+                    //dispatch(setUnsaved(false)); // TODO: implement isUnsaved checking
                     dispatch(NavigationActions.back());
                 }
                 },
