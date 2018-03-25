@@ -26,6 +26,7 @@ import { strings } from '../locales/i18n';
 import { emptyFields, insertFieldAnswer, insertTitle, insertDate, createDraft } from '../redux/actions/newReport';
 import { storeDraftByTemplateID } from '../redux/actions/reports';
 import { handleBack } from '../functions/handleBack';
+import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -35,50 +36,13 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 
 
-//A wrapper for the back button, that can be connected to Redux
-class HeaderBackButtonWrapper extends React.Component {
-    render() {
-        return (
-            <HeaderBackButton tintColor='#fff' onPress={() => handleBack(this.props.isUnsaved, this.props.dispatch)} />
-        );
-    }
-}
-
-
-// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
-const mapStateToProps = (state) => {
-    const token         = state.user.token;
-    const username      = state.user.username;
-    const templates     = state.templates;
-    const reports       = state.reports;
-    const newReport     = state.newReport;
-    const title         = state.newReport.title;
-    const number        = state.newReport.number;
-    const isUnsaved     = state.newReport.isUnsaved;
-    const isConnected = state.connection.isConnected;
-
-    return {
-        username,
-        templates,
-        title,
-        number,
-        newReport,
-        token,
-        reports,
-        isUnsaved,
-        isConnected,
-    };
-};
-
-const HeaderBackButtonWrapperWithRedux = connect(mapStateToProps)(HeaderBackButtonWrapper);
-
 
 // "export" necessary in order to test component without Redux store
 export class NewReportScreen extends React.Component {
     static navigationOptions = () => {
         return {
             // the Redux-connected on-screen back button is set here
-            headerLeft: HeaderBackButtonWrapperWithRedux,
+            headerLeft: ReportEditingBackButton,
         };
     };
 
@@ -464,5 +428,29 @@ export class NewReportScreen extends React.Component {
     }
 }
 
+// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+const mapStateToProps = (state) => {
+    const token         = state.user.token;
+    const username      = state.user.username;
+    const templates     = state.templates;
+    const reports       = state.reports;
+    const newReport     = state.newReport;
+    const title         = state.newReport.title;
+    const number        = state.newReport.number;
+    const isUnsaved     = state.newReport.isUnsaved;
+    const isConnected = state.connection.isConnected;
+
+    return {
+        username,
+        templates,
+        title,
+        number,
+        newReport,
+        token,
+        reports,
+        isUnsaved,
+        isConnected,
+    };
+};
 
 export default connect(mapStateToProps)(NewReportScreen);
