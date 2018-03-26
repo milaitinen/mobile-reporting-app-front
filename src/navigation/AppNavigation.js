@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
+import { StackNavigator, DrawerNavigator, HeaderBackButton, NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import { View, Text } from 'react-native';
 
@@ -141,5 +141,22 @@ const MainScreenNavigator = StackNavigator({
     title: 'Main',
     initialRouteName: LOGGED_OUT_ROUTE_NAME,
 });
+
+/*
+  Prevents navigating multiple times if this.props.navigation.navigate is triggered multiples times in a short
+  period of time inside TemplateStack by comparing current and previous navigation routes.
+*/
+
+const prevGetStateForActionTemplateStack = TemplateStack.router.getStateForAction;
+TemplateStack.router.getStateForAction = (action, state) => {
+    const { type, routeName } = action;
+    if (state &&
+        type === NavigationActions.NAVIGATE &&
+        routeName === state.routes[state.routes.length - 1].routeName) {
+        return null;
+    } else {
+        return prevGetStateForActionTemplateStack(action, state);
+    }
+};
 
 export default MainScreenNavigator;
