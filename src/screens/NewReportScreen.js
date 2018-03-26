@@ -329,7 +329,7 @@ export class NewReportScreen extends React.Component {
                             />
                         );
                     }
-                    case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
+                    case 'RADIOBUTTON':
                     {
                         const labels = field.field_options.map((option) => {
                             return (

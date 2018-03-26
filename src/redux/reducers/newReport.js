@@ -16,7 +16,7 @@ const insertAnswer = (state, action) => {
     if (action.isOption) {
         // Find answer field with the right id and update value
 
-        if ((action.field.type == 'RADIOBUTTON') || (action.field.type == 'DROPDOWN')) { //clear selections if field type is radiobutton or dropdown
+        if ((action.field.type === 'RADIOBUTTON') || (action.field.type === 'DROPDOWN')) { //clear selections if field type is radiobutton or dropdown
             state.option_answers.filter((answer) => {
                 return (action.field.field_options
                     .map((option) => option.field_option_id)
@@ -25,7 +25,7 @@ const insertAnswer = (state, action) => {
         }
 
         state.option_answers.map(i => {
-            if (i.field_option_id == action.value.field_option_id) i.selected = !i.selected;
+            if (i.field_option_id === action.value.field_option_id) i.selected = !i.selected;
         });
     } else {
         state.string_answers.map(i => {
