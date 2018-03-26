@@ -4,7 +4,7 @@ import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 
-import Checkbox from '../src/components/Checkbox/Checkbox';
+import Checkbox from '../../src/components/Checkbox/Checkbox';
 
 configure({ adapter: new Adapter() });
 

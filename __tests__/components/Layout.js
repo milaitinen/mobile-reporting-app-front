@@ -4,7 +4,7 @@ import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 
-import { Layout } from '../src/components/Layout';
+import { Layout } from '../../src/components/Layout/index';
 
 configure({ adapter: new Adapter() });
 

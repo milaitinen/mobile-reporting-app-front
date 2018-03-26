@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import StatusBadge from '../src/components/StatusBadge/StatusBadge';
+import StatusBadge from '../../src/components/StatusBadge/StatusBadge';
 
 configure({ adapter: new Adapter() });
 

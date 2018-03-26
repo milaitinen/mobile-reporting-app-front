@@ -4,7 +4,7 @@ import { wrapper, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 
-import Dropdown from '../src/components/Dropdown/Dropdown';
+import Dropdown from '../../src/components/Dropdown/Dropdown';
 
 configure({ adapter: new Adapter() });
 
