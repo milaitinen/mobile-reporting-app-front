@@ -19,7 +19,8 @@
     "drafts": "Bocetos",
     "showMore": "Enseñar más",
     "endOfReports": "No hay más reportajes",
-    "preview": "Previsualización"
+    "preview": "Previsualización",
+    "pending": "Despachando"
   },
 
   "createNew": {
@@ -31,7 +32,9 @@
     "noConnection": "Spanish spanish, no hablo español",
     "yes": "Sí",
     "no": "Bien",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "saved": "DESPACITO",
+    "queued": "TENGO LA CAMISA NEGRA"
 },
 
   "navigation": {

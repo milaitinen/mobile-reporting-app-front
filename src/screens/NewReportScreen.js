@@ -168,17 +168,16 @@ export class NewReportScreen extends React.Component {
         if (isDraft) {
             report.report_id = saveDraft(username, templateID, report); // give a negative id
             this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
-            Alert.alert('Report saved!');
+            Alert.alert(strings('createNew.saved'));
         } else {
-            report.report_id = null;    //TODO: Ask about this
-            this.props.dispatch(storeQueuedReportByTemplateID(templateID, report));
-            Alert.alert(' Report queued! ');
+            report.report_id = null;    // sets id to null, will get proper id when sent
+            this.props.dispatch(storeQueuedReportByTemplateID(templateID, report)); //store queue on top of drafts and rerports
+            Alert.alert(strings('createNew.queued'));
             saveToQueueWithTemplateID(username, templateID, report);
         }
 
         this.setState({ isLoading: true });
         //this.setState({ isUnsaved: false });
-
         //return to template screen and have it refreshed
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
