@@ -1,5 +1,8 @@
 import React from 'react';
-import { /*Button, */ View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, /*Picker*/ } from 'react-native';
+import {
+    /*Button, */ View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking,
+    BackHandler, /*Picker*/
+} from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 // import ModalDropdown from 'react-native-modal-dropdown';
@@ -17,6 +20,7 @@ import { insertFieldAnswer, emptyFields, openReport, insertTitle, setUnsaved } f
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
+import {handleBack} from "../functions/handleBack";
 // import styles from '../components/Dropdown/styles';
 // import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -34,6 +38,8 @@ export class ReportScreen extends React.Component {
         };
     }
 
+    _handleBack = () => handleBack(this.props.dispatch, this.props.newReport, this.props.username);
+
     componentDidMount() {
         const { templateID, reportID } = this.props.navigation.state.params;
         const { reports, templates } = this.props;
@@ -45,6 +51,14 @@ export class ReportScreen extends React.Component {
         // TODO: implement checking isUnsaved. This line temporarily disables the confirmation
         // alert when leaving. If isUnsaved would be true, the alert would be shown.
         this.props.dispatch(setUnsaved(false));
+
+        // BackHandler for detecting hardware button presses for back navigation (Android only)
+        BackHandler.addEventListener('hardwareBackPress', this._handleBack);
+    }
+
+    componentWillUnmount() {
+        // Removes the BackHandler EventListener when unmounting
+        BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
     }
 
     // delete draft from asyncstorage

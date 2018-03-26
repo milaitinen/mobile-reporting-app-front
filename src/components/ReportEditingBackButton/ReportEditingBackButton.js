@@ -12,7 +12,7 @@ import { HeaderBackButton } from 'react-navigation';
 class ReportEditingBackButton extends React.Component {
     render() {
         return (
-            <HeaderBackButton tintColor='#fff' onPress={() => handleBack(this.props.isUnsaved, this.props.dispatch)} />
+            <HeaderBackButton tintColor='#fff' onPress={() => handleBack(this.props.dispatch, this.props.newReport, this.props.username)} />
         );
     }
 }
@@ -23,28 +23,28 @@ const mapStateToProps = (state) => {
     // TODO: these are probably not needed: remove if so
     /*
     const token         = state.user.token;
-    const username      = state.user.username;
     const templates     = state.templates;
     const reports       = state.reports;
-    const newReport     = state.newReport;
     const title         = state.newReport.title;
     const number        = state.newReport.number;
     const isConnected = state.connection.isConnected;
     */
+    const newReport     = state.newReport;
+    const username      = state.user.username;
     const isUnsaved     = state.newReport.isUnsaved;
 
 
     return {
         /*
-        username,
         templates,
         title,
         number,
-        newReport,
         token,
         reports,
         isConnected,
         */
+        newReport,
+        username,
         isUnsaved,
     };
 };

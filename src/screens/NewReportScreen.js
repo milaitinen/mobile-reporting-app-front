@@ -56,7 +56,7 @@ export class NewReportScreen extends React.Component {
         };
     }
 
-    _handleBack = () => handleBack(this.props.isUnsaved, this.props.dispatch);
+    _handleBack = () => handleBack(this.props.dispatch, this.props.newReport, this.props.username);
 
     componentWillMount() {
         // BackHandler for detecting hardware button presses for back navigation (Android only)
@@ -68,8 +68,13 @@ export class NewReportScreen extends React.Component {
     }
 
     componentWillUnmount() {
+        console.log('calling this');
         // Removes the BackHandler EventListener when unmounting
         BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
+
+        this.setState({ isLoading: true });
+        this.setState({ isUnsaved: false });
+        this.props.navigation.state.params.refresh();
     }
 
     // TODO come up with a better name
