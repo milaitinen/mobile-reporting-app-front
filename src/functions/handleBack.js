@@ -1,8 +1,7 @@
 import { Alert } from 'react-native';
-import { emptyFields } from '../redux/actions/newReport';
 import { NavigationActions } from 'react-navigation';
 import { saveDraft } from '../screens/api';
-import { storeDraftByTemplateID } from '../redux/actions/reports';
+import { emptyFields } from '../redux/actions/newReport';
 
 /**
  * Handles the back-navigation logic when editing a report.
@@ -17,8 +16,9 @@ import { storeDraftByTemplateID } from '../redux/actions/reports';
  * This function is used:
  *   1. in an Android BackHandler and is called from there directly
  *   2. in onPress inside ReportEditingBackButton, that is used in navigation
- * @param isUnsaved
- * @param dispatch
+ * @param dispatch Dispatch function from redux
+ * @param newReport The report that will be saved
+ * @param username
  * @returns {boolean}
  */
 export const handleBack = (dispatch, newReport, username) => {
@@ -46,23 +46,21 @@ export const handleBack = (dispatch, newReport, username) => {
                     console.log(newReport);
                     saveDraft(username, template_id, newReport); // give a negative id
 
-                    dispatch(storeDraftByTemplateID(template_id, newReport)); // store drafts together with other reports in reports state)
+                    // this seems to be redundant
+                    //dispatch(storeDraftByTemplateID(template_id, newReport)); // store drafts together with other reports in reports state)
 
                     Alert.alert('Report saved!');
+                    // these are currently handled in componentWillUnmount in the screens that handle report editing
                     //this.setState({ isLoading: true });
                     //this.setState({ isUnsaved: false });
                     //return to template screen and have it refreshed
                     //dispatch(emptyFields()); // FIXME: this makes the app crash. Is this necessary?
                     //this.props.navigation.state.params.refresh(); // TODO: is this necessary?
-                    dispatch(NavigationActions.back());
-
                 }
                 },
-                // TODO: call the save-method from NewReportScreen or ReportScreen
+
                 { text: 'Don\'t save', onPress: () => {
                     console.log('Yes Pressed');
-                    //dispatch(emptyFields()); // FIXME: this makes the app crash. Is this necessary?
-                    //dispatch(setUnsaved(false)); // TODO: implement isUnsaved checking
                     dispatch(NavigationActions.back());
                 }
                 },
