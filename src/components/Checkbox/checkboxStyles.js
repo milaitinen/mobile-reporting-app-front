@@ -1,6 +1,10 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
+    $inactiveBlue: '$inactive',
+    $disabledGray: '$disabledBorder',
+    $activeBlue: '$active',
+
     container: {
         backgroundColor: '$primaryWhite',
         height: 40,

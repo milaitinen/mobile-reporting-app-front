@@ -4,7 +4,6 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import { View, Text, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-elements';
 import color from 'color';
-import EStyleSheet from 'react-native-extended-stylesheet';
 
 
 class Dropdown extends Component {
@@ -24,16 +23,16 @@ class Dropdown extends Component {
 
     renderRow = (rowData, rowID, highlighted) => {
         const evenRow = rowID % 2;
-        const active = EStyleSheet.value('$active');
+        const active = styles.$activeBlue;
         const inactive = '#cceeff';
         return (
             <TouchableHighlight underlayColor={evenRow ? color(inactive).darken(0.3) : color(active).darken(0.1)}>
                 <View style={[styles.dropdownRow, { backgroundColor: evenRow ? inactive : 'white' }]}>
-                    <Text style={[styles.dropdownRowText, highlighted && { color: EStyleSheet.value('$active') }]}>
+                    <Text style={[styles.dropdownRowText, highlighted && { color: active }]}>
                         {rowData}
                     </Text>
                     {this.state.value === rowData ? (
-                        <Icon name={'check'} type={'feather'} color={EStyleSheet.value('$active')}/>
+                        <Icon name={'check'} type={'feather'} color={active}/>
                     ) : (
                         null
                     )}
@@ -57,7 +56,7 @@ class Dropdown extends Component {
     render() {
         const button = this.props.disabled ? [styles.dropdownButton, styles.disabled] : styles.dropdownButton;
         const text = this.props.disabled ? [styles.dropdownText, styles.disabledText] : styles.dropdownText;
-        const iconColor = this.props.disabled ? EStyleSheet.value('$disabledPlaceholder') :EStyleSheet.value('$placeholder');
+        const iconColor = this.props.disabled ? styles.$gray1 : styles.$gray2;
         return (
             <ModalDropdown
                 ref={ ModalDrop => this.modalDropdown = ModalDrop }

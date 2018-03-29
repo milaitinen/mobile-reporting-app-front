@@ -2,6 +2,10 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
 
+    $activeBlue: '$active',
+    $gray1: '$disabledPlaceholder',
+    $gray2: '$placeholder',
+
     dropdownContainer: {
         margin: 5,
         flexDirection: 'row',
