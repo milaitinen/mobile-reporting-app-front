@@ -7,8 +7,8 @@ import 'isomorphic-fetch';
 import { shallow } from 'enzyme';
 import { ActivityIndicator } from 'react-native';
 
-import { PreviewScreen } from '../src/screens/PreviewScreen';
-import { url } from '../src/screens/urlsetting';
+import { PreviewScreen } from '../../src/screens/PreviewScreen';
+import { url } from '../../src/screens/urlsetting';
 
 configure({ adapter: new Adapter() });
 

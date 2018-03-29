@@ -1,0 +1,349 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  colors={
+    Array [
+      undefined,
+      undefined,
+      undefined,
+    ]
+  }
+  style={undefined}
+>
+  <View
+    style={undefined}
+  >
+    <RCTScrollView
+      keyboardShouldPersistTaps="handled"
+      style={undefined}
+    >
+      <View>
+        <View
+          style={undefined}
+        >
+          <View
+            style={undefined}
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={undefined}
+            >
+              Otsikko
+            </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={undefined}
+            >
+               *
+            </Text>
+          </View>
+          <TextInput
+            allowFontScaling={true}
+            defaultValue="Testiraportti"
+            editable={false}
+            onChangeText={[Function]}
+            style={undefined}
+            underlineColorAndroid="transparent"
+          />
+        </View>
+        <View
+          pointerEvents="none"
+        >
+          <View
+            style={undefined}
+          >
+            <View
+              style={undefined}
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={undefined}
+              >
+                Name
+              </Text>
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={undefined}
+              >
+                 *
+              </Text>
+            </View>
+            <TextInput
+              allowFontScaling={true}
+              onChangeText={[Function]}
+              style={undefined}
+              underlineColorAndroid="transparent"
+              value="Test1"
+            />
+          </View>
+          <View
+            style={undefined}
+          >
+            <View
+              style={undefined}
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={undefined}
+              >
+                Options
+              </Text>
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={undefined}
+              >
+                 *
+              </Text>
+            </View>
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  false,
+                ]
+              }
+            >
+              <View
+                style={undefined}
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "alignSelf": "center",
+                        "flexDirection": "row",
+                        "marginBottom": 5,
+                      },
+                      Array [
+                        undefined,
+                        undefined,
+                      ],
+                      false,
+                    ]
+                  }
+                >
+                  <View
+                    style={undefined}
+                  >
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "alignSelf": "center",
+                            "borderColor": "#2196f3",
+                            "borderRadius": 30,
+                            "height": 30,
+                            "justifyContent": "center",
+                            "width": 30,
+                          },
+                          Object {
+                            "borderColor": "#2196f3",
+                            "borderWidth": 1.5,
+                          },
+                          undefined,
+                          Object {
+                            "borderRadius": 12,
+                            "height": 24,
+                            "width": 24,
+                          },
+                        ]
+                      }
+                    >
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "borderRadius": 10,
+                            },
+                            false,
+                            false,
+                            false,
+                          ]
+                        }
+                      />
+                    </View>
+                  </View>
+                  <View
+                    accessibilityComponentType={undefined}
+                    accessibilityLabel={undefined}
+                    accessibilityTraits={undefined}
+                    accessible={true}
+                    hitSlop={undefined}
+                    nativeID={undefined}
+                    onLayout={undefined}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Array [
+                        undefined,
+                        Object {
+                          "alignItems": "center",
+                          "alignSelf": "center",
+                          "flexDirection": "row",
+                        },
+                      ]
+                    }
+                    testID={undefined}
+                  >
+                    <Text
+                      accessible={true}
+                      allowFontScaling={true}
+                      ellipsizeMode="tail"
+                      style={
+                        Array [
+                          Object {
+                            "lineHeight": 20,
+                            "paddingLeft": 10,
+                          },
+                          false,
+                          Object {
+                            "color": undefined,
+                          },
+                          undefined,
+                        ]
+                      }
+                    >
+                      Option 1
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={undefined}
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "alignSelf": "center",
+                        "flexDirection": "row",
+                        "marginBottom": 5,
+                      },
+                      Array [
+                        undefined,
+                        undefined,
+                      ],
+                      false,
+                    ]
+                  }
+                >
+                  <View
+                    style={undefined}
+                  >
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "alignSelf": "center",
+                            "borderColor": "#2196f3",
+                            "borderRadius": 30,
+                            "height": 30,
+                            "justifyContent": "center",
+                            "width": 30,
+                          },
+                          Object {
+                            "borderColor": "#2196f3",
+                            "borderWidth": 1.5,
+                          },
+                          undefined,
+                          Object {
+                            "borderRadius": 12,
+                            "height": 24,
+                            "width": 24,
+                          },
+                        ]
+                      }
+                    >
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "borderRadius": 10,
+                            },
+                            false,
+                            false,
+                            false,
+                          ]
+                        }
+                      />
+                    </View>
+                  </View>
+                  <View
+                    accessibilityComponentType={undefined}
+                    accessibilityLabel={undefined}
+                    accessibilityTraits={undefined}
+                    accessible={true}
+                    hitSlop={undefined}
+                    nativeID={undefined}
+                    onLayout={undefined}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Array [
+                        undefined,
+                        Object {
+                          "alignItems": "center",
+                          "alignSelf": "center",
+                          "flexDirection": "row",
+                        },
+                      ]
+                    }
+                    testID={undefined}
+                  >
+                    <Text
+                      accessible={true}
+                      allowFontScaling={true}
+                      ellipsizeMode="tail"
+                      style={
+                        Array [
+                          Object {
+                            "lineHeight": 20,
+                            "paddingLeft": 10,
+                          },
+                          false,
+                          Object {
+                            "color": undefined,
+                          },
+                          undefined,
+                        ]
+                      }
+                    >
+                      Option 2
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</View>
+`;

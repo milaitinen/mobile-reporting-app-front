@@ -5,7 +5,7 @@ import { shallow, configure } from 'enzyme';
 import { ActivityIndicator } from 'react-native';
 import renderer from 'react-test-renderer';
 
-import { TemplateScreen } from '../src/screens/TemplateScreen';
+import { TemplateScreen } from '../../src/screens/TemplateScreen';
 
 configure({ adapter: new Adapter() });
 
