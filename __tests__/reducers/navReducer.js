@@ -9,7 +9,7 @@ describe('NavReducer reducer', () => {
                 index: 0,
                 routes: [
                     {
-                        key: 'id-1522057245832-1',
+                        key: 'id-1522331586174-1',
                         routeName: 'loginScreen'
                     }
                 ]

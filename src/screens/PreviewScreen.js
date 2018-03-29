@@ -73,7 +73,7 @@ export class PreviewScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$disabledPlaceholder')}
+                                placeholderTextColor={newReportStyles.$disabledGray}
                                 onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                                 underlineColorAndroid='transparent'
                                 style={[newReportStyles.textInput, newReportStyles.disabled]}
@@ -122,7 +122,7 @@ export class PreviewScreen extends React.Component {
                                     <Text style={[styles.dropdownText, styles.disabledText]}>
                                         Select option
                                     </Text>
-                                    <Icon name={'expand-more'} color={EStyleSheet.value('$disabledPlaceholder')}
+                                    <Icon name={'expand-more'} color={newReportStyles.$disabledGray}
                                         style={styles.icon}/>
                                 </View>
                             </ModalDropdown>
@@ -133,7 +133,7 @@ export class PreviewScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$disabledPlaceholder')}
+                                placeholderTextColor={newReportStyles.$disabledGray}
                                 underlineColorAndroid='transparent'
                                 style={[newReportStyles.textInput, newReportStyles.disabled]}
                             />
@@ -185,7 +185,7 @@ export class PreviewScreen extends React.Component {
                                 editable={isEditable}
                                 style={[newReportStyles.multilineTextInput, newReportStyles.disabled]}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$disabledPlaceholder')}
+                                placeholderTextColor={newReportStyles.$disabledGray}
                             />
                         );
 
@@ -207,7 +207,7 @@ export class PreviewScreen extends React.Component {
                                 editable={isEditable}
                                 style={newReportStyles.textInput}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$disabledPlaceholder')}
+                                placeholderTextColor={newReportStyles.$disabledGray}
                                 keyboardType='numeric'
                             />
                         );
@@ -281,7 +281,7 @@ export class PreviewScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={'Otsikko'}
-                                placeholderTextColor={EStyleSheet.value('$placeholder')}
+                                placeholderTextColor={newReportStyles.$gray}
                                 underlineColorAndroid='transparent'
                                 style={[newReportStyles.textInput, newReportStyles.disabled]}
                                 onChangeText={(text) => this.props.dispatch(insertTitle(text))}

@@ -12,9 +12,15 @@ import { url } from '../src/screens/urlsetting';
 
 configure({ adapter: new Adapter() });
 
+const navigation = { state: { params: { isEditable: true } } };
+const templates = { 1: { template_id: 1, title: 'Template 1', fields: [
+    { field_id: 1, template_id: 1, order_number: 1, title: 'Name', required: true, default_value: null }
+] } };
+
+
 it('renders correctly', () => {
     const tree = renderer.create(
-        <PreviewScreen />
+        <PreviewScreen navigation={navigation} templates={templates} templateID={1}/>
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });
@@ -30,7 +36,7 @@ it('fetch finds data from the server', () => {
 describe('<PreviewScreen />', () => {
     describe('isLoading', () => {
 
-        const previewScreen = shallow(<PreviewScreen />);
+        const previewScreen = shallow(<PreviewScreen navigation={navigation} templates={templates} templateID={1}/>);
 
         it('should render an <ActivityIndicator /> if true', () => {
             previewScreen.setState({ isLoading: true });
