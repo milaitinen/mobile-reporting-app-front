@@ -12,27 +12,31 @@ import { url } from '../src/screens/urlsetting';
 
 configure({ adapter: new Adapter() });
 
-it('renders correctly', () => {
-    const tree = renderer.create(
-        <NewReportScreen />
-    ).toJSON();
-    expect(tree).toMatchSnapshot();
-});
+describe('New report screen', () => {
+    it('renders correctly', () => {
+        const componentDidMountMock = jest.fn();
+        const tree = renderer.create(
+            <NewReportScreen />
+        ).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
 
-it('fetch finds data from the server', () => {
-    const data = fetch(url + '/users/1/forms');
-    const userData = fetch(url + '/users/1');
+    it('fetch finds data from the server', () => {
+        const data = fetch(url + '/users/1/forms');
+        const userData = fetch(url + '/users/1');
 
-    expect(userData).not.toBe(null);
-    expect(data).not.toBe(null);
-});
+        expect(userData).not.toBe(null);
+        expect(data).not.toBe(null);
+    });
 
-describe('<NewReportScreen />', () => {
-    describe('isLoading', () => {
-        it('should render a <ActivityIndicator /> if true', () => {
-            const templateScreen = shallow(<NewReportScreen />);
-            templateScreen.setState({ isLoading: true });
-            expect(templateScreen.find(ActivityIndicator).length).toBe(1);
+    describe('<NewReportScreen />', () => {
+        describe('isLoading', () => {
+            it('should render a <ActivityIndicator /> if true', () => {
+                const templateScreen = shallow(<NewReportScreen />);
+                templateScreen.setState({ isLoading: true });
+                expect(templateScreen.find(ActivityIndicator).length).toBe(1);
+            });
         });
     });
 });
+
