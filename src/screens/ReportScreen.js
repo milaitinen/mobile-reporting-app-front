@@ -38,7 +38,7 @@ export class ReportScreen extends React.Component {
         };
     }
 
-    _handleBack = () => handleBack(this.props.dispatch, this.props.newReport, this.props.username);
+    _handleBack = () => handleBack(this.props.dispatch, this.props.report, this.props.username);
 
     componentDidMount() {
         const { templateID, reportID } = this.props.navigation.state.params;
@@ -50,7 +50,7 @@ export class ReportScreen extends React.Component {
         this.setState({ fields: fields, isEditable: reportID < 0, isLoading : false });
         // TODO: implement checking isUnsaved. This line temporarily disables the confirmation
         // alert when leaving. If isUnsaved would be true, the alert would be shown.
-        this.props.dispatch(setUnsaved(false));
+        this.props.dispatch(setUnsaved(true));
 
         // BackHandler for detecting hardware button presses for back navigation (Android only)
         BackHandler.addEventListener('hardwareBackPress', this._handleBack);
@@ -59,6 +59,10 @@ export class ReportScreen extends React.Component {
     componentWillUnmount() {
         // Removes the BackHandler EventListener when unmounting
         BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
+
+        if (this.props.isSavingRequested) {
+            this.save();
+        }
     }
 
     // delete draft from asyncstorage
@@ -80,18 +84,16 @@ export class ReportScreen extends React.Component {
         const { username, report } = this.props;
         const { templateID } = this.props.navigation.state.params;
         saveDraft(username, templateID, report); // give a negative id
-        report.date_created = moment().format('YYYY-MM-DD');
-
-        //this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
-
         Alert.alert('Saved!');
-
         this.setState({ isLoading: true });
-
-        //return to template screen and have it refreshed
+        //refresh template screen
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
-        this.props.navigation.dispatch(NavigationActions.back());
+    };
+
+    saveAndLeave = () => {
+        this.save();
+        this.props.navigation.goBack();
     };
 
     // Inserts data to server with a post method.
@@ -356,7 +358,7 @@ export class ReportScreen extends React.Component {
                         {
                             (this.props.navigation.state.params.reportID < 0) &&
                             <View>
-                                <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
+                                <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.saveAndLeave()} />
                                 <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
                                 <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this.deleteDraft()} />
                             </View>
@@ -378,13 +380,15 @@ const mapStateToProps = (state) => {
     const reports       = state.reports;
     const templates     = state.templates;
     const report        = state.newReport;
+    const isSavingRequested = state.newReport.isSavingRequested;
     return {
         username,
         report,
         number,
         token,
         reports,
-        templates
+        templates,
+        isSavingRequested
     };
 };
 

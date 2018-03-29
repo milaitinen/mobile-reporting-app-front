@@ -72,9 +72,9 @@ export class NewReportScreen extends React.Component {
         // Removes the BackHandler EventListener when unmounting
         BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
 
-        this.setState({ isLoading: true });
-        this.setState({ isUnsaved: false });
-        this.props.navigation.state.params.refresh();
+        if (this.props.isSavingRequested) {
+            this.save();
+        }
     }
 
     // TODO come up with a better name
@@ -97,20 +97,19 @@ export class NewReportScreen extends React.Component {
         const { username, newReport } = this.props;
         const { templateID } = this.props.navigation.state.params;
         const report = newReport;
-        report.report_id = saveDraft(username, templateID, report); // give a negative id
-
-        this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
-
+        saveDraft(username, templateID, report); // give a negative id
         Alert.alert('Report saved!');
         this.setState({ isLoading: true });
-
-        //this.setState({ isUnsaved: false });
-
-        //return to template screen and have it refreshed
+        //refresh template screen
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
-        this.props.navigation.dispatch(NavigationActions.back());
     };
+
+    //A helper method that calls save and then navigates back
+    saveAndLeave = () => {
+        this.save();
+        this.props.navigation.goBack();
+    }
 
     // Inserts data to server with a post method.
     send = () => {
@@ -424,7 +423,7 @@ export class NewReportScreen extends React.Component {
                             />
                         </View>
                         {renderedFields}
-                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={() => this.save()}/>
+                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={() => this.saveAndLeave()}/>
                         <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}/>
                     </ScrollView>
                 </View>
@@ -444,6 +443,7 @@ const mapStateToProps = (state) => {
     const number        = state.newReport.number;
     const isUnsaved     = state.newReport.isUnsaved;
     const isConnected = state.connection.isConnected;
+    const isSavingRequested = state.newReport.isSavingRequested;
 
     return {
         username,
@@ -455,6 +455,7 @@ const mapStateToProps = (state) => {
         reports,
         isUnsaved,
         isConnected,
+        isSavingRequested,
     };
 };
 

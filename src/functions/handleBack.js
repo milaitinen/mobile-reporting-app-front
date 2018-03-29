@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { saveDraft } from '../screens/api';
-import { emptyFields } from '../redux/actions/newReport';
+import {emptyFields, setSavingRequested} from '../redux/actions/newReport';
 
 /**
  * Handles the back-navigation logic when editing a report.
@@ -22,6 +22,7 @@ import { emptyFields } from '../redux/actions/newReport';
  * @returns {boolean}
  */
 export const handleBack = (dispatch, newReport, username) => {
+    // TODO: remove unused parameters
     // TODO: default value for isUnsaved is used,
     // because checking if report is saved is not implemented yet.
     // When the functionality will be implemented, the default value should become redundant.
@@ -40,22 +41,12 @@ export const handleBack = (dispatch, newReport, username) => {
                 style: 'cancel' },
 
                 { text: 'Save', onPress: () => {
-                    console.log('Save Pressed');
-                    // store report to async storage
-                    console.log('storing newReport:');
-                    console.log(newReport);
-                    saveDraft(username, template_id, newReport); // give a negative id
-
-                    // this seems to be redundant
-                    //dispatch(storeDraftByTemplateID(template_id, newReport)); // store drafts together with other reports in reports state)
-
-                    Alert.alert('Report saved!');
-                    // these are currently handled in componentWillUnmount in the screens that handle report editing
-                    //this.setState({ isLoading: true });
-                    //this.setState({ isUnsaved: false });
-                    //return to template screen and have it refreshed
-                    //dispatch(emptyFields()); // FIXME: this makes the app crash. Is this necessary?
-                    //this.props.navigation.state.params.refresh(); // TODO: is this necessary?
+                    // Saving dispatches a 'flag' through redux that tells
+                    // the current screen that it needs to save the report before
+                    // unmounting.
+                    dispatch(setSavingRequested(true));
+                    // TODO: test for possible race conditions
+                    dispatch(NavigationActions.back());
                 }
                 },
 
