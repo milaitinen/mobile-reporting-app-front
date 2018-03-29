@@ -2,6 +2,10 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
 
+    $lightBlue: '$inactive',
+    $gray: '$disabledPlaceholder',
+    $blue: '$active',
+
     radioInputContainer: {
         height: 40,
         marginBottom: 10,
