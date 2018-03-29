@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 /**
  * A modified status bar -component that changes color depending on the network connection status
  */
-class OfflineNotice extends React.Component {
+export class OfflineNotice extends React.Component {
 
     render() {
         const backgroundColor = this.props.isConnected ? '#3d4f7c' : '#b52424';
