@@ -166,7 +166,6 @@ export class ReportScreen extends React.Component {
 
                         return (
                             <Dropdown
-                                ref={ModalDrop => this.modalDropdown = ModalDrop}
                                 disabled={!isEditable}
                                 defaultValue={selected.value}
                                 options={field.field_options.map((option) => option.value)}
@@ -203,7 +202,7 @@ export class ReportScreen extends React.Component {
                                 editable={isEditable}
                                 mode={'date'}
                                 answer={answer.value}
-                                onDateChange={(date) => this.props.dispatch(insertFieldAnswer(field, date, false))}
+                                onChange={(date) => this.props.dispatch(insertFieldAnswer(field, date, false))}
                             />
                         );
                     }
@@ -240,7 +239,7 @@ export class ReportScreen extends React.Component {
                                 editable={isEditable}
                                 mode={'time'}
                                 answer={answer.value}
-                                onDateChange={(time) => this.props.dispatch(insertFieldAnswer(field, time, false))}
+                                onChange={(time) => this.props.dispatch(insertFieldAnswer(field, time, false))}
                             />
                         );
                     }
