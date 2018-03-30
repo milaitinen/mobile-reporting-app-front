@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`New report screen renders correctly 1`] = `
+<View
+  colors={
+    Array [
+      undefined,
+      undefined,
+      undefined,
+    ]
+  }
+  style={undefined}
+>
+  <ActivityIndicator
+    animating={true}
+    color="#9dcbe5"
+    hidesWhenStopped={true}
+    size="large"
+    style={
+      Array [
+        undefined,
+        Object {
+          "height": 80,
+        },
+      ]
+    }
+  />
+</View>
+`;
