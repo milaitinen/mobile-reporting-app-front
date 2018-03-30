@@ -12,11 +12,16 @@ import { url } from '../src/screens/urlsetting';
 
 configure({ adapter: new Adapter() });
 
+const navigation = { state: { params: { isEditable: true } } };
+const templates = { 1: { template_id: 1, title: 'Template 1', fields: [
+    { field_id: 1, template_id: 1, order_number: 1, title: 'Name', required: true, default_value: null }
+] } };
+
 describe('New report screen', () => {
+
     it('renders correctly', () => {
-        const componentDidMountMock = jest.fn();
         const tree = renderer.create(
-            <NewReportScreen />
+            <NewReportScreen navigation={navigation} templates={templates} templateID={1} />
         ).toJSON();
         expect(tree).toMatchSnapshot();
     });
@@ -32,7 +37,7 @@ describe('New report screen', () => {
     describe('<NewReportScreen />', () => {
         describe('isLoading', () => {
             it('should render a <ActivityIndicator /> if true', () => {
-                const templateScreen = shallow(<NewReportScreen />);
+                const templateScreen = shallow(<NewReportScreen navigation={navigation} templates={templates} templateID={1} />);
                 templateScreen.setState({ isLoading: true });
                 expect(templateScreen.find(ActivityIndicator).length).toBe(1);
             });
