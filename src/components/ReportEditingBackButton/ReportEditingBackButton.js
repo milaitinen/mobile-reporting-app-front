@@ -20,27 +20,9 @@ class ReportEditingBackButton extends React.Component {
 
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
-    // TODO: these are probably not needed: remove if so
-    /*
-    const token         = state.user.token;
-    const templates     = state.templates;
-    const reports       = state.reports;
-    const title         = state.newReport.title;
-    const number        = state.newReport.number;
-    const isConnected = state.connection.isConnected;
-    */
     const isUnsaved     = state.reportEditing.isUnsaved;
 
-
     return {
-        /*
-        templates,
-        title,
-        number,
-        token,
-        reports,
-        isConnected,
-        */
         isUnsaved,
     };
 };

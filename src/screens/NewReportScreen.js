@@ -9,7 +9,7 @@ import {
     TextInput,
     View
 } from 'react-native';
-import { HeaderBackButton, NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import moment from 'moment';
 import { connect } from 'react-redux';
