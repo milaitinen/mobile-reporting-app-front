@@ -44,6 +44,8 @@ export const handleBack = (dispatch, newReport, username) => {
                     // Saving dispatches a 'flag' through redux that tells
                     // the current screen that it needs to save the report before
                     // unmounting.
+                    // TODO: currently isSavingRequested and isUnsaved are saved in the report. Should they be
+                    // moved to a separate reducer?
                     dispatch(setSavingRequested(true));
                     // TODO: test for possible race conditions
                     dispatch(NavigationActions.back());
@@ -51,7 +53,7 @@ export const handleBack = (dispatch, newReport, username) => {
                 },
 
                 { text: 'Don\'t save', onPress: () => {
-                    console.log('Yes Pressed');
+                    dispatch(setSavingRequested(false));
                     dispatch(NavigationActions.back());
                 }
                 },

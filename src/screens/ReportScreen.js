@@ -20,7 +20,7 @@ import { insertFieldAnswer, emptyFields, openReport, insertTitle, setUnsaved } f
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
-import {handleBack} from "../functions/handleBack";
+import { handleBack } from '../functions/handleBack';
 // import styles from '../components/Dropdown/styles';
 // import EStyleSheet from 'react-native-extended-stylesheet';
 
