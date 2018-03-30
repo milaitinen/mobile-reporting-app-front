@@ -2,11 +2,10 @@
 export const INSERT_TITLE   = 'INSERT_TITLE';
 export const INSERT_FIELD_ANSWER = 'INSERT_FIELD_ANSWER';
 export const EMPTY_FIELDS = 'EMPTY_FIELDS';
-export const SET_UNSAVED = 'SET_UNSAVED';
 export const INSERT_DATE = 'INSERT_DATE';
 export const CREATE_DRAFT = 'CREATE_DRAFT';
 export const OPEN_REPORT = 'OPEN_REPORT';
-export const SET_SAVING_REQUESTED = 'SET_SAVING_REQUESTED';
+
 
 export const createDraft = (draft) => ({
     type: CREATE_DRAFT,
@@ -37,14 +36,4 @@ export const insertFieldAnswer = ( field, value, isOption ) => ({
 
 export const emptyFields = () => ({
     type: EMPTY_FIELDS
-});
-
-export const setUnsaved = ( isUnsaved ) => ({
-    type: SET_UNSAVED,
-    isUnsaved: isUnsaved,
-});
-
-export const setSavingRequested = ( isSavingRequested ) => ({
-    type: SET_SAVING_REQUESTED,
-    isSavingRequested: isSavingRequested,
 });

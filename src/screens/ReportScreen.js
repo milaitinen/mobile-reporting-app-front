@@ -16,7 +16,8 @@ import { Datepicker } from '../components/Datepicker';
 import { AppBackground } from '../components/AppBackground';
 import { createNewReport, removeDraft, saveDraft } from './api';
 import { strings } from '../locales/i18n';
-import { insertFieldAnswer, emptyFields, openReport, insertTitle, setUnsaved } from '../redux/actions/newReport';
+import { insertFieldAnswer, emptyFields, openReport, insertTitle } from '../redux/actions/newReport';
+import { setUnsaved } from '../redux/actions/reportEditing';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -30,7 +31,6 @@ export class ReportScreen extends React.Component {
         super(props);
         this.state = {
             title           : null,
-            isUnsaved       : true,
             isLoading       : true,
             number          : '',
             isEditable      : false,
@@ -38,7 +38,7 @@ export class ReportScreen extends React.Component {
         };
     }
 
-    _handleBack = () => handleBack(this.props.dispatch, this.props.report, this.props.username);
+    _handleBack = () => handleBack(this.props.dispatch, this.props.isUnsaved);
 
     componentDidMount() {
         const { templateID, reportID } = this.props.navigation.state.params;
@@ -48,9 +48,10 @@ export class ReportScreen extends React.Component {
 
         this.props.dispatch(openReport(report));
         this.setState({ fields: fields, isEditable: reportID < 0, isLoading : false });
-        // TODO: implement checking isUnsaved. This line temporarily disables the confirmation
-        // alert when leaving. If isUnsaved would be true, the alert would be shown.
-        this.props.dispatch(setUnsaved(true));
+        // TODO: implement checking isUnsaved. Now drafts are always assumed to be unsaved.
+        if (reportID < 0) {
+            this.props.dispatch(setUnsaved(true));
+        }
 
         // BackHandler for detecting hardware button presses for back navigation (Android only)
         BackHandler.addEventListener('hardwareBackPress', this._handleBack);
@@ -63,6 +64,7 @@ export class ReportScreen extends React.Component {
         if (this.props.isSavingRequested) {
             this.save();
         }
+        this.props.dispatch(setUnsaved(false));
     }
 
     // delete draft from asyncstorage
@@ -380,7 +382,8 @@ const mapStateToProps = (state) => {
     const reports       = state.reports;
     const templates     = state.templates;
     const report        = state.newReport;
-    const isSavingRequested = state.newReport.isSavingRequested;
+    const isUnsaved     = state.reportEditing.isUnsaved;
+    const isSavingRequested = state.reportEditing.isSavingRequested;
     return {
         username,
         report,
@@ -388,7 +391,8 @@ const mapStateToProps = (state) => {
         token,
         reports,
         templates,
-        isSavingRequested
+        isSavingRequested,
+        isUnsaved,
     };
 };
 

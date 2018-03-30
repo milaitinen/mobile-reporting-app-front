@@ -7,6 +7,7 @@ import newReport from './newReport';
 import navReducer from './navReducer';
 import preview from './preview';
 import connection from './connection';
+import reportEditing from './reportEditing';
 
 export default combineReducers ({
     user,
@@ -16,4 +17,5 @@ export default combineReducers ({
     nav: navReducer,
     preview,
     connection,
+    reportEditing,
 });

@@ -32,6 +32,7 @@ import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { setUnsaved } from '../redux/actions/reportEditing';
 
 
 
@@ -56,11 +57,13 @@ export class NewReportScreen extends React.Component {
         };
     }
 
-    _handleBack = () => handleBack(this.props.dispatch, this.props.newReport, this.props.username);
+    _handleBack = () => handleBack(this.props.dispatch, this.props.isUnsaved);
 
     componentWillMount() {
         // BackHandler for detecting hardware button presses for back navigation (Android only)
         BackHandler.addEventListener('hardwareBackPress', this._handleBack);
+        // TODO: implement checking isUnsaved, now it is assumed to be true.
+        this.props.dispatch(setUnsaved(true));
     }
 
     componentDidMount() {
@@ -71,10 +74,10 @@ export class NewReportScreen extends React.Component {
         console.log('calling this');
         // Removes the BackHandler EventListener when unmounting
         BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
-
         if (this.props.isSavingRequested) {
             this.save();
         }
+        this.props.dispatch(setUnsaved(false));
     }
 
     // TODO come up with a better name
@@ -441,9 +444,9 @@ const mapStateToProps = (state) => {
     const newReport     = state.newReport;
     const title         = state.newReport.title;
     const number        = state.newReport.number;
-    const isUnsaved     = state.newReport.isUnsaved;
+    const isUnsaved     = state.reportEditing.isUnsaved;
     const isConnected = state.connection.isConnected;
-    const isSavingRequested = state.newReport.isSavingRequested;
+    const isSavingRequested = state.reportEditing.isSavingRequested;
 
     return {
         username,

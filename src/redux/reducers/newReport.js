@@ -3,10 +3,9 @@ import {
     INSERT_TITLE,
     INSERT_DATE,
     INSERT_FIELD_ANSWER,
-    EMPTY_FIELDS, SET_UNSAVED,
+    EMPTY_FIELDS,
     OPEN_REPORT,
     CREATE_DRAFT,
-    SET_SAVING_REQUESTED,
 } from '../actions/newReport';
 
 const initialState = {};
@@ -65,18 +64,7 @@ const newReportReducer = (state = initialState, action) => {
         case EMPTY_FIELDS: {
             return initialState;
         }
-        case SET_UNSAVED: {
-            return {
-                ...state,
-                isUnsaved: action.isUnsaved,
-            };
-        }
-        case SET_SAVING_REQUESTED: {
-            return {
-                ...state,
-                isSavingRequested: action.isSavingRequested
-            };
-        }
+
         default: {
             return state;
         }

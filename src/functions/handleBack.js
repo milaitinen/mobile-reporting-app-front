@@ -1,7 +1,6 @@
 import { Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import { saveDraft } from '../screens/api';
-import {emptyFields, setSavingRequested} from '../redux/actions/newReport';
+import { setSavingRequested } from '../redux/actions/reportEditing';
 
 /**
  * Handles the back-navigation logic when editing a report.
@@ -17,19 +16,10 @@ import {emptyFields, setSavingRequested} from '../redux/actions/newReport';
  *   1. in an Android BackHandler and is called from there directly
  *   2. in onPress inside ReportEditingBackButton, that is used in navigation
  * @param dispatch Dispatch function from redux
- * @param newReport The report that will be saved
- * @param username
+ * @param isUnsaved
  * @returns {boolean}
  */
-export const handleBack = (dispatch, newReport, username) => {
-    // TODO: remove unused parameters
-    // TODO: default value for isUnsaved is used,
-    // because checking if report is saved is not implemented yet.
-    // When the functionality will be implemented, the default value should become redundant.
-    const isUnsaved = newReport.isUnsaved == null ? true : newReport.isUnsaved;
-    const { template_id } = newReport;
-    console.assert(template_id != null, 'template id was null');
-
+export const handleBack = (dispatch, isUnsaved) => {
     if (isUnsaved) {
         Alert.alert(
             'You have unsaved changes',
