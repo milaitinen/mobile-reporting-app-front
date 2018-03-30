@@ -8,9 +8,26 @@ import Datepicker from '../../src/components/Datepicker/Datepicker';
 
 configure({ adapter: new Adapter() });
 
-it('renders correctly', () => {
-    const tree = renderer.create(
-        <Datepicker editable={true} mode={'date'} answer={'2018-04-22'} onChange={jest.fn()} />
-    ).toJSON();
-    expect(tree).toMatchSnapshot();
+describe('Datepicker component', () => {
+    it('renders correctly on date mode', () => {
+        const tree = renderer.create(
+            <Datepicker editable={true} mode={'date'} answer={'2018-04-22'} onChange={jest.fn()} />
+        ).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    it('renders correctly on time mode', () => {
+        const tree = renderer.create(
+            <Datepicker editable={true} mode={'time'} answer={'2018-04-23'} onChange={jest.fn()} />
+        ).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    it('renders correctly when not editable', () => {
+        const tree = renderer.create(
+            <Datepicker editable={false} mode={'date'} answer={'2018-04-22'} onChange={jest.fn()} />
+        ).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
 });
+

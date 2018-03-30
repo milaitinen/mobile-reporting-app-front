@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`Datepicker component renders correctly on date mode 1`] = `
 <View
   accessibilityComponentType={undefined}
   accessibilityLabel={undefined}
@@ -65,6 +65,780 @@ exports[`renders correctly 1`] = `
           },
           false,
           false,
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "#333",
+            },
+            Object {
+              "color": undefined,
+              "fontFamily": undefined,
+            },
+          ]
+        }
+      >
+        2018-04-22
+      </Text>
+    </View>
+    <View
+      onPress={undefined}
+      style={
+        Array [
+          false,
+          false,
+          false,
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "transparent",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
+      }
+      underlayColor="white"
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "black",
+              "fontSize": 40,
+            },
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              undefined,
+            ],
+            Object {
+              "fontFamily": "EvilIcons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+    <Modal
+      animationType="none"
+      hardwareAccelerated={false}
+      onRequestClose={[Function]}
+      supportedOrientations={
+        Array [
+          "portrait",
+          "portrait-upside-down",
+          "landscape",
+          "landscape-left",
+          "landscape-right",
+        ]
+      }
+      transparent={true}
+      visible={false}
+    >
+      <View
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Object {
+                "alignItems": "flex-end",
+                "backgroundColor": "#00000077",
+                "flex": 1,
+                "flexDirection": "row",
+              },
+            ]
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                Object {
+                  "flex": 1,
+                },
+              ]
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <View
+              collapsable={undefined}
+              style={
+                Object {
+                  "backgroundColor": "#fff",
+                  "height": 0,
+                  "overflow": "hidden",
+                }
+              }
+            >
+              <View
+                pointerEvents="auto"
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderTopColor": "#ccc",
+                        "borderTopWidth": 1,
+                        "marginTop": 42,
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  <RCTDatePicker
+                    date={1524344400000}
+                    maximumDate={undefined}
+                    minimumDate={undefined}
+                    minuteInterval={undefined}
+                    mode="date"
+                    onChange={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "height": 216,
+                      }
+                    }
+                    timeZoneOffsetInMinutes={undefined}
+                  />
+                </View>
+              </View>
+              <View
+                accessibilityComponentType={undefined}
+                accessibilityLabel={undefined}
+                accessibilityTraits={undefined}
+                accessible={true}
+                hasTVPreferredFocus={undefined}
+                hitSlop={undefined}
+                isTVSelectable={true}
+                nativeID={undefined}
+                onLayout={undefined}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 42,
+                        "justifyContent": "center",
+                        "padding": 20,
+                        "position": "absolute",
+                        "top": 0,
+                      },
+                      Object {
+                        "left": 0,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+                testID={undefined}
+                tvParallaxProperties={undefined}
+              >
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                    Array [
+                      Object {
+                        "color": "#46cf98",
+                        "fontSize": 16,
+                      },
+                      Object {
+                        "color": "#666",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  Cancel
+                </Text>
+              </View>
+              <View
+                accessibilityComponentType={undefined}
+                accessibilityLabel={undefined}
+                accessibilityTraits={undefined}
+                accessible={true}
+                hasTVPreferredFocus={undefined}
+                hitSlop={undefined}
+                isTVSelectable={true}
+                nativeID={undefined}
+                onLayout={undefined}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 42,
+                        "justifyContent": "center",
+                        "padding": 20,
+                        "position": "absolute",
+                        "top": 0,
+                      },
+                      Object {
+                        "right": 0,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+                testID={undefined}
+                tvParallaxProperties={undefined}
+              >
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                    Array [
+                      Object {
+                        "color": "#46cf98",
+                        "fontSize": 16,
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  Confirm
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  </View>
+</View>
+`;
+
+exports[`Datepicker component renders correctly on time mode 1`] = `
+<View
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  hasTVPreferredFocus={undefined}
+  hitSlop={undefined}
+  isTVSelectable={true}
+  nativeID={undefined}
+  onLayout={undefined}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+      Array [
+        Object {
+          "width": 142,
+        },
+        undefined,
+      ],
+    ]
+  }
+  testID={undefined}
+  tvParallaxProperties={undefined}
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "height": 40,
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "borderColor": "#aaa",
+            "borderWidth": 1,
+            "flex": 1,
+            "height": 40,
+            "justifyContent": "center",
+          },
+          Object {
+            "backgroundColor": "white",
+            "borderColor": undefined,
+            "borderRadius": undefined,
+            "borderWidth": 0,
+          },
+          false,
+          false,
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "#333",
+            },
+            Object {
+              "color": undefined,
+              "fontFamily": undefined,
+            },
+          ]
+        }
+      >
+        20:18
+      </Text>
+    </View>
+    <View
+      onPress={undefined}
+      style={
+        Array [
+          false,
+          false,
+          false,
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "transparent",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
+      }
+      underlayColor="white"
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "black",
+              "fontSize": 40,
+            },
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              undefined,
+            ],
+            Object {
+              "fontFamily": "EvilIcons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+    <Modal
+      animationType="none"
+      hardwareAccelerated={false}
+      onRequestClose={[Function]}
+      supportedOrientations={
+        Array [
+          "portrait",
+          "portrait-upside-down",
+          "landscape",
+          "landscape-left",
+          "landscape-right",
+        ]
+      }
+      transparent={true}
+      visible={false}
+    >
+      <View
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Object {
+                "alignItems": "flex-end",
+                "backgroundColor": "#00000077",
+                "flex": 1,
+                "flexDirection": "row",
+              },
+            ]
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                Object {
+                  "flex": 1,
+                },
+              ]
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <View
+              collapsable={undefined}
+              style={
+                Object {
+                  "backgroundColor": "#fff",
+                  "height": 0,
+                  "overflow": "hidden",
+                }
+              }
+            >
+              <View
+                pointerEvents="auto"
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderTopColor": "#ccc",
+                        "borderTopWidth": 1,
+                        "marginTop": 42,
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  <RCTDatePicker
+                    date={1522430280000}
+                    maximumDate={undefined}
+                    minimumDate={undefined}
+                    minuteInterval={10}
+                    mode="time"
+                    onChange={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "height": 216,
+                      }
+                    }
+                    timeZoneOffsetInMinutes={undefined}
+                  />
+                </View>
+              </View>
+              <View
+                accessibilityComponentType={undefined}
+                accessibilityLabel={undefined}
+                accessibilityTraits={undefined}
+                accessible={true}
+                hasTVPreferredFocus={undefined}
+                hitSlop={undefined}
+                isTVSelectable={true}
+                nativeID={undefined}
+                onLayout={undefined}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 42,
+                        "justifyContent": "center",
+                        "padding": 20,
+                        "position": "absolute",
+                        "top": 0,
+                      },
+                      Object {
+                        "left": 0,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+                testID={undefined}
+                tvParallaxProperties={undefined}
+              >
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                    Array [
+                      Object {
+                        "color": "#46cf98",
+                        "fontSize": 16,
+                      },
+                      Object {
+                        "color": "#666",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  Cancel
+                </Text>
+              </View>
+              <View
+                accessibilityComponentType={undefined}
+                accessibilityLabel={undefined}
+                accessibilityTraits={undefined}
+                accessible={true}
+                hasTVPreferredFocus={undefined}
+                hitSlop={undefined}
+                isTVSelectable={true}
+                nativeID={undefined}
+                onLayout={undefined}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 42,
+                        "justifyContent": "center",
+                        "padding": 20,
+                        "position": "absolute",
+                        "top": 0,
+                      },
+                      Object {
+                        "right": 0,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+                testID={undefined}
+                tvParallaxProperties={undefined}
+              >
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                    Array [
+                      Object {
+                        "color": "#46cf98",
+                        "fontSize": 16,
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  Confirm
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  </View>
+</View>
+`;
+
+exports[`Datepicker component renders correctly when not editable 1`] = `
+<View
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  hasTVPreferredFocus={undefined}
+  hitSlop={undefined}
+  isTVSelectable={true}
+  nativeID={undefined}
+  onLayout={undefined}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+      Array [
+        Object {
+          "width": 142,
+        },
+        undefined,
+      ],
+    ]
+  }
+  testID={undefined}
+  tvParallaxProperties={undefined}
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "height": 40,
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "borderColor": "#aaa",
+            "borderWidth": 1,
+            "flex": 1,
+            "height": 40,
+            "justifyContent": "center",
+          },
+          Object {
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": undefined,
+            "borderWidth": 2,
+          },
+          Object {
+            "backgroundColor": "#eee",
+          },
+          undefined,
         ]
       }
     >

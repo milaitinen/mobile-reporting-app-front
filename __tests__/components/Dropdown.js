@@ -13,9 +13,20 @@ describe('Dropdown', () => {
     const wrapper = renderer.create(<Dropdown disabled={false} defaultValue={'some value'} options={['test1', 'test2']} />);
     const inst = wrapper.getInstance();
 
-    it('renders correctly', () => {
+    it('renders correctly when not disabled', () => {
         const tree = wrapper.toJSON();
         expect(tree).toMatchSnapshot();
+    });
+
+    it('renders correctly when disabled', () => {
+        const tree = renderer.create(
+            <Dropdown
+                disabled={true}
+                defaultValue={'some value'}
+                options={['test1', 'test2']} />
+        ).toJSON();
+        expect(tree).toMatchSnapshot();
+
     });
 
     describe('onSelect(0, "test1")', () => {
