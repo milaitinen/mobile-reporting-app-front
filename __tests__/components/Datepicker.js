@@ -7,6 +7,7 @@ import renderer from 'react-test-renderer';
 import Datepicker from '../../src/components/Datepicker/Datepicker';
 
 configure({ adapter: new Adapter() });
+jest.mock('DatePickerIOS', () => 'DatePickerIOS');
 
 describe('Datepicker component', () => {
     it('renders correctly on date mode', () => {
