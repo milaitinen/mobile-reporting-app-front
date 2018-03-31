@@ -26,7 +26,7 @@ export class OfflineNotice extends React.Component {
     }
 }
 
-const mapStateToProps = ( state ) => {
+export const mapStateToProps = ( state ) => { // exported for testing purposes
     return {
         isConnected: state.connection.isConnected,
     };

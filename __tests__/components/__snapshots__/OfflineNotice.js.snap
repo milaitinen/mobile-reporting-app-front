@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`Offline notice component renders correctly for IOS 1`] = `
 <View
   style={
     Array [
@@ -10,5 +10,35 @@ exports[`renders correctly 1`] = `
       },
     ]
   }
+>
+  <StatusBar
+    backgroundColor="#3d4f7c"
+    translucent={true}
+  />
+</View>
+`;
+
+exports[`Offline notice component renders correctly for android 1`] = `
+<StatusBar
+  backgroundColor="#3d4f7c"
+  barStyle="light-content"
 />
+`;
+
+exports[`Offline notice component renders correctly without a connection 1`] = `
+<View
+  style={
+    Array [
+      undefined,
+      Object {
+        "backgroundColor": "#b52424",
+      },
+    ]
+  }
+>
+  <StatusBar
+    backgroundColor="#b52424"
+    translucent={true}
+  />
+</View>
 `;
