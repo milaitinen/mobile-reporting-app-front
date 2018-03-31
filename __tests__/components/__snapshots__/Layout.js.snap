@@ -153,7 +153,7 @@ exports[`renders correctly 1`] = `
                   ellipsizeMode="tail"
                 >
                    
-                  Reports
+                  templates.reports
                 </Text>
                 <Text
                   accessible={true}
@@ -161,7 +161,7 @@ exports[`renders correctly 1`] = `
                   ellipsizeMode="tail"
                 >
                    
-                  Drafts
+                  templates.drafts
                 </Text>
               </View>
             </View>
@@ -354,7 +354,7 @@ exports[`renders correctly 1`] = `
               ellipsizeMode="tail"
               style={undefined}
             >
-              No more reports
+              templates.endOfReports
             </Text>
           }
           data={undefined}
@@ -392,7 +392,7 @@ exports[`renders correctly 1`] = `
                 ellipsizeMode="tail"
                 style={undefined}
               >
-                No more reports
+                templates.endOfReports
               </Text>
             </View>
           </View>

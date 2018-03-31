@@ -35,7 +35,7 @@ exports[`TemplateScreen renders correctly 1`] = `
     >
       <TextInput
         allowFontScaling={true}
-        placeholder="Search.."
+        placeholder="templates.search"
         placeholderTextColor="#86939e"
         style={
           Array [

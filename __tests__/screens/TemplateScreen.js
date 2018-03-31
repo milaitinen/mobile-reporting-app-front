@@ -20,12 +20,16 @@ describe('TemplateScreen', () => {
         expect(tree).toMatchSnapshot();
     });
 
-    /*it('createNew() triggers', () => {
-        expect(inst.createNew(1, true)).toHaveBeenCalledWith(createReport(1, true))
-    });*/
-
-
     it('should set state refreshing = true when handleRefresh is called', () => {
+
+        jest.mock('../src/screens/api', () => {
+            return {
+                fetchReportsByTemplateID: jest.fn(),
+                fetchTemplatesByUsername: jest.fn(),
+                fetchDraftsByTemplateID: jest.fn()
+            };
+        });
+
         inst.getTemplatesAndReport = jest.fn();
         inst.handleRefresh();
         expect(inst.state.refreshing).toBe(true);

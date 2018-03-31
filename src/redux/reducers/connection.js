@@ -21,5 +21,5 @@ const connectionReducer = (state = initialState, action) => {
             return state;
     }
 };
-console.log('initialStateConnection first', initialState);
+// console.log('initialStateConnection first', initialState);
 export default connectionReducer;
