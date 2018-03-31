@@ -13,10 +13,10 @@ class Datepicker extends Component {
     render() {
         const { editable, mode, answer, onChange } = this.props;
 
-        const text = editable ? styles.$gray1 : styles.$gray2;
-        const border = editable ? 0 : 2;
-        const background = editable ? 'white' : styles.$disabledBg;
-        const icon = editable ? styles.dateIcon : styles.disabledIcon;
+        const text          = editable ? styles.$gray1 : styles.$gray2;
+        const border        = editable ? 0 : 2;
+        const background    = editable ? 'white' : styles.$disabledBg;
+        const icon          = editable ? styles.dateIcon : styles.disabledIcon;
 
         if (mode === 'date') {
             return (
