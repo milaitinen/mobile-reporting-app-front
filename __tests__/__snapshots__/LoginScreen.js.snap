@@ -17,7 +17,7 @@ exports[`renders correctly 1`] = `
     ellipsizeMode="tail"
     style={undefined}
   >
-    MR-Application
+    login.title
   </Text>
   <Text
     accessible={true}
@@ -25,7 +25,7 @@ exports[`renders correctly 1`] = `
     ellipsizeMode="tail"
     style={undefined}
   >
-    Keep calm and keep reporting
+    login.slogan
   </Text>
   <View
     style={undefined}
@@ -56,7 +56,7 @@ exports[`renders correctly 1`] = `
       autoCapitalize="none"
       name="user"
       onChangeText={[Function]}
-      placeholder="Username"
+      placeholder="login.username"
       placeholderTextColor="white"
       style={undefined}
       underlineColorAndroid="transparent"
@@ -91,7 +91,7 @@ exports[`renders correctly 1`] = `
       autoCapitalize="none"
       name="lock"
       onChangeText={[Function]}
-      placeholder="Password"
+      placeholder="login.password"
       placeholderTextColor="white"
       secureTextEntry={true}
       style={undefined}
@@ -127,7 +127,7 @@ exports[`renders correctly 1`] = `
       autoCapitalize="none"
       name="globe"
       onChangeText={[Function]}
-      placeholder="Server url"
+      placeholder="login.serverUrl"
       placeholderTextColor="white"
       style={undefined}
       underlineColorAndroid="transparent"
@@ -169,7 +169,7 @@ exports[`renders correctly 1`] = `
         ellipsizeMode="tail"
         style={undefined}
       >
-        Sign in
+        login.signIn
       </Text>
     </View>
   </View>
