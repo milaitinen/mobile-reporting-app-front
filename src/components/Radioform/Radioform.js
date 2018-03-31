@@ -10,6 +10,10 @@ class Radioform extends Component {
         };
     }
 
+    press = (value) => {
+        this.setState({ value: value });
+    };
+
     render() {
         const container = this.props.editable ? styles.radioInputContainer : [styles.radioInputContainer, styles.disabled];
         const button = this.props.editable ? styles.$lightBlue : styles.$gray;
@@ -25,7 +29,7 @@ class Radioform extends Component {
                             obj={obj}
                             index={i}
                             isSelected={this.state.value === obj.value}
-                            onPress={(value) => { this.setState({ value: value }); }}
+                            onPress={(value) => this.press(value)}
                             borderWidth={1.5}
                             buttonInnerColor={'#359ef3'}
                             buttonOuterColor={this.state.value === obj.value ? styles.$blue : button}
@@ -38,7 +42,7 @@ class Radioform extends Component {
                             obj={obj}
                             index={i}
                             labelHorizontal={true}
-                            onPress={(value) => { this.setState({ value: value }); }}
+                            onPress={(value) => this.press(value)}
                             labelStyle={this.state.value === obj.value ? styles.selectedLabel : label}
                             labelWrapStyle={styles.labelWrap}
                         />
