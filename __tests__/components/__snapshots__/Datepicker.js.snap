@@ -627,7 +627,7 @@ exports[`Datepicker component renders correctly on time mode 1`] = `
                   }
                 >
                   <RCTDatePicker
-                    date={1522430280000}
+                    date={1522516680000}
                     maximumDate={undefined}
                     minimumDate={undefined}
                     minuteInterval={10}

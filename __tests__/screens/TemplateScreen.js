@@ -22,7 +22,7 @@ describe('TemplateScreen', () => {
 
     it('should set state refreshing = true when handleRefresh is called', () => {
 
-        jest.mock('../src/screens/api', () => {
+        jest.mock('../../src/screens/api', () => {
             return {
                 fetchReportsByTemplateID: jest.fn(),
                 fetchTemplatesByUsername: jest.fn(),
