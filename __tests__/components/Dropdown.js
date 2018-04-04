@@ -26,7 +26,35 @@ describe('Dropdown', () => {
                 options={['test1', 'test2']} />
         ).toJSON();
         expect(tree).toMatchSnapshot();
+    });
 
+    it('renders odd rows correctly', () => {
+        const row = inst.renderRow('test1', 1, false);
+        const render = renderer.create(row).toJSON();
+        expect(render).toMatchSnapshot();
+    });
+
+    it('renders even rows correctly', () => {
+        const row = inst.renderRow('test2', 2, true);
+        const render = renderer.create(row).toJSON();
+        expect(render).toMatchSnapshot();
+    });
+
+    it('renders row with selected value correctly', () =>{
+        inst.setState({ value: 'test1' });
+        const row = inst.renderRow('test1', 1, false);
+        const render = renderer.create(row).toJSON();
+        expect(render).toMatchSnapshot();
+    });
+
+    it('should render separator between rows', () => {
+        const separator = inst.renderSeparator(0);
+        expect(separator).toBeDefined();
+    });
+
+    it('should not render the separator after the last row', () => {
+        const separator = inst.renderSeparator(1);
+        expect(separator).toBeUndefined();
     });
 
     describe('onSelect(0, "test1")', () => {
