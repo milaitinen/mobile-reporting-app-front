@@ -5,7 +5,7 @@ exports[`renders correctly 1`] = `
   collapsable={undefined}
   style={
     Object {
-      "height": 60,
+      "height": 50,
     }
   }
 >
@@ -341,7 +341,7 @@ exports[`renders correctly 1`] = `
     <RCTScrollView
       style={
         Object {
-          "height": 415,
+          "height": 425,
         }
       }
     >
