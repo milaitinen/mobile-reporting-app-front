@@ -41,7 +41,7 @@ class Dropdown extends Component {
         );
     };
 
-    renderSeparator(sectionID, rowID) {
+    renderSeparator(rowID) {
         if (rowID === this.props.options.length - 1) return;
         const key = 'spr_${rowID}';
         return (
@@ -70,7 +70,7 @@ class Dropdown extends Component {
                 onSelect={(idx, value) => this.onSelect(idx, value)}
                 renderButtonText={(rowData) => rowData}
                 renderRow={this.renderRow.bind(this)}
-                renderSeparator={(sectionID, rowID) => this.renderSeparator(sectionID, rowID)}
+                renderSeparator={(rowID) => this.renderSeparator(rowID)}
             >
                 <View style={styles.buttonContent}>
                     <Text style={text}>
