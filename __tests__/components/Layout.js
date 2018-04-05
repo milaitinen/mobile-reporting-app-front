@@ -1,8 +1,9 @@
 import 'react-native';
 import React from 'react';
-import { configure } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
+import sinon from 'sinon';
 
 import { Layout } from '../../src/components/Layout/index';
 import { Platform } from 'react-native';
@@ -81,6 +82,14 @@ describe('Layout', () => {
 
             expect(inst.state.itemsCount).toBe(40);
             expect(inst.state.updated).toBe(true);
+        });
+
+        it('should be called when Show more is pressed', () => {
+            /*const wrapper = shallow(<Layout data={[]} />);
+            const inst = wrapper.instance();
+            spyOn(instance, 'showMore').and.callThrough();
+            wrapper.find({ testID: 'showMore' }).simulate('press');
+            expect(spy.calledOnce).toEqual(true);*/
         });
     });
 });
