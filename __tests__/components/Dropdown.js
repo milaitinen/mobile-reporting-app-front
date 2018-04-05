@@ -1,8 +1,9 @@
 import 'react-native';
 import React from 'react';
-import { configure } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
+import sinon from 'sinon';
 
 import Dropdown from '../../src/components/Dropdown/Dropdown';
 
@@ -55,6 +56,14 @@ describe('Dropdown', () => {
     it('should not render the separator after the last row', () => {
         const separator = inst.renderSeparator(1);
         expect(separator).toBeUndefined();
+    });
+
+    it('should call onSelect() appropriately', () => {
+        const spy = sinon.spy(Dropdown.prototype, 'onSelect');
+        const wrapper = shallow(<Dropdown disabled={false} defaultValue={'some value'} options={['test1', 'test2']} />);
+        wrapper.find('ModalDropdown').simulate('select');
+        expect(spy.calledOnce).toEqual(true);
+
     });
 
     describe('onSelect(0, "test1")', () => {

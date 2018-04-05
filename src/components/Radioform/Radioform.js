@@ -10,9 +10,9 @@ class Radioform extends Component {
         };
     }
 
-    press = (value) => {
+    press(value) {
         this.setState({ value: value });
-    };
+    }
 
     render() {
         const container = this.props.editable ? styles.radioInputContainer : [styles.radioInputContainer, styles.disabled];

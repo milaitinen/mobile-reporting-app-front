@@ -1,8 +1,9 @@
 import 'react-native';
 import React from 'react';
-import { /*shallow,*/ configure } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
+import sinon from 'sinon';
 
 import Radioform from '../../src/components/Radioform/Radioform';
 
@@ -28,73 +29,49 @@ const options = [
 ];
 
 describe('Radioform component', () => {
+    const radioform = renderer.create(<Radioform
+        options={options}
+        editable={true}
+        initial={0}
+        itemRealKey='value'
+        onPress={jest.fn()}
+    />);
+
+    const inst = radioform.getInstance();
+
     it('renders correctly', () => {
-        const tree = renderer.create(
-            <Radioform
-                options={options}
-                editable={true}
-                initial={0}
-                itemRealKey='value'
-                onPress={jest.fn()}
-            />
-        ).toJSON();
-        expect(tree).toMatchSnapshot();
+        expect(radioform.toJSON()).toMatchSnapshot();
     });
 
     it('works as expected when press function called', () => {
-        const radioform = renderer.create(
-            <Radioform
-                options={options}
-                editable={true}
-                initial={0}
-                itemRealKey='value'
-                onPress={jest.fn()}
-            />
-        ).getInstance();
-        radioform.press('Option 1');
-        expect(radioform.state.value).toEqual('Option 1');
+        inst.press('Option 1');
+        expect(inst.state.value).toEqual('Option 1');
     });
+});
 
-    /* TODO: test pressing label and button
-    it('works as expected when radio button pressed', () => {
+describe('Radioform presses', () => {
+    const spy = sinon.spy(Radioform.prototype, 'press');
+    const radioform = shallow(
+        <Radioform
+            options={options}
+            editable={true}
+            initial={0}
+            itemRealKey='value'
+        />
+    );
 
-        const radioform = shallow(
-            <Radioform
-                options={options}
-                editable={true}
-                initial={0}
-                itemRealKey='value'
-                onPress={jest.fn()}
-            />
-        );
-
-        const render = radioform.dive();
-        render.find('RadioButtonInput').forEach(child => {
+    it('work as expected when radio button pressed', () => {
+        radioform.find('RadioButtonInput').forEach(child =>{
             child.simulate('press');
+            expect(spy.called).toEqual(true);
         });
     });
 
-    /*it('works as expected when label pressed', () => {
-        const radioform = shallow(
-            <Radioform
-                options={options}
-                editable={true}
-                initial={0}
-                itemRealKey='value'
-                onPress={jest.fn()}
-            />
-        );
-
-        const render = radioform.dive();
-        const radioButtonLabel = render.find('RadioButtonLabel');
-
-        radioButtonLabel.forEach(child => {
+    it('work as expected when radio label pressed', () => {
+        radioform.find('RadioButtonLabel').forEach(child =>{
             child.simulate('press');
-            expect(radioform).toEqual(child.obj);
+            expect(spy.called).toEqual(true);
         });
-
-
-    });*/
-
+    });
 });
 
