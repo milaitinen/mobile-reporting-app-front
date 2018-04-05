@@ -15,12 +15,13 @@ import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
 import {
-    createNewReport,
-    fetchAllQueued,
+    // createNewReport,
+    // fetchAllQueued,
     fetchReportsByTemplateID,
     fetchTemplatesByUsername,
     fetchDraftsByTemplateID,
     fetchQueuedByTemplateID,
+    sendPendingReportsByTemplateID
 } from './api';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID, storeDraftByTemplateID, storeQueuedReportByTemplateID, insertTemplateID } from '../redux/actions/reports';
@@ -90,7 +91,16 @@ export class TemplateScreen extends Component {
 
         //send queued if status changes back to online
         if (isConnected) {
-            console.log('queue:');
+            const { username, token } = this.props;
+            const templates = this.props.templates;
+
+            // Send pending reports by templateID if such reports exist
+            Object.keys(templates).forEach(id => sendPendingReportsByTemplateID(username, id, token));
+
+            // TODO call handleRefresh() only when a pending report has been sent?
+            this.handleRefresh();
+
+            /*console.log('queue:');
             const queue = fetchAllQueued(this.props.username);
 
             console.log('queue.length: ' + Object.keys(queue).length);
@@ -112,7 +122,7 @@ export class TemplateScreen extends Component {
                         console.error(error);
                     });
                 console.log('sent something?');
-            }
+            }*/
         }
 
     };
@@ -137,7 +147,11 @@ export class TemplateScreen extends Component {
             .then(() => {
                 const templates = this.props.templates;
 
-                Object.keys(templates).forEach(id => this.props.dispatch(insertTemplateID(id)));
+                Object.keys(templates).forEach(id => {
+                    this.props.dispatch(insertTemplateID(id));
+                    // sendPendingReportsByTemplateID(username, id, token);
+                });
+
                 const reportsByTemplateID = Object.keys(templates).map((id) => fetchReportsByTemplateID(username, id, token));
 
                 Promise.all(reportsByTemplateID)

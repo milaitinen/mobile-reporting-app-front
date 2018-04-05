@@ -34,6 +34,8 @@ export class LoginScreen extends React.Component {
     }
 
     componentDidMount() {
+        // AsyncStorage.clear();
+
         /* First sets the initial connection state, and then adds eventlistener to listen to connection changes.
             Unused 'isConnected' was added to ensure that setInitialConnection runs before toggling anything*/
         isNetworkConnected()

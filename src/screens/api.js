@@ -18,6 +18,30 @@ export const login = (username, password) => {
     }).catch(err => alert(err));
 };
 
+/**
+ * Send pending (enqueued) reports to the server if there is internet connection.
+ * Remove reports from AsyncStorage after sending.
+ */
+export const sendPendingReportsByTemplateID = (username, templateID, token) => {
+    return isNetworkConnected()
+        .then((isConnected) => {
+            if (isConnected) {
+                AsyncStorage.getItem(`${url}/users/${username}/queue/${templateID}`)
+                    .then(data => {
+                        if (data) {
+                            const report = Object.values(JSON.parse(data));
+                            report.forEach(r => createNewReport(username, r, token));
+                        }
+                    })
+                    .then(() => {
+                        removeData(`${url}/users/${username}/queue/${templateID}`);
+                    })
+                    .catch(err => alert(err));
+            }
+        });
+
+};
+
 // Send a new report to the server, along with the username and token.
 export const createNewReport = (username, report, token) => {
     return fetch(`${url}/users/${username}/reports`, {
@@ -333,13 +357,14 @@ const fetchRemoteReportsByUsername = (username, token) => {
     );
 };
 
+
+
 /* Store data (layouts, reports - depending on the url) to ASyncStorage, a simple key-value storage system global to the app.
    Keys and values are stored as a string. */
 const saveData = (dataUrl, data) => {
     AsyncStorage.setItem(dataUrl, JSON.stringify(data));
 };
 
-/*
 const removeData = (dataUrl) => {
     try {
         AsyncStorage.removeItem(dataUrl);
@@ -347,7 +372,6 @@ const removeData = (dataUrl) => {
         console.error(error);
     }
 };
-*/
 
 // Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178
 export function isNetworkConnected() {
