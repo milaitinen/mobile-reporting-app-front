@@ -130,6 +130,18 @@ export const fetchQueuedByTemplateID = (username, templateID) => {
         });
 };
 
+export const fetchAllQueued = (username) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/queue/1`)
+        .then(data => {
+            if (data != null) {
+                return JSON.parse(data);
+            } else {
+                console.log('so empty');
+                return [];
+            }
+        });
+};
+
 export const removeDraft =  (username, templateID, draftID) => {
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {
@@ -199,7 +211,6 @@ const fetchRemoteFieldsByReportID = (username, templateID, reportID, token) => {
             })
     );
 };
-
 
 /*
  Fetch templates from the server or ASyncStorage, depending on the availability of internet connection.

@@ -15,6 +15,8 @@ import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
 import {
+    createNewReport,
+    fetchAllQueued,
     fetchReportsByTemplateID,
     fetchTemplatesByUsername,
     fetchDraftsByTemplateID,
@@ -80,6 +82,39 @@ export class TemplateScreen extends Component {
 
     handleConnectionChange = isConnected => {
         this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
+
+        // console.log('templateID:t jeejee:');
+        // const templates = this.props.templates;
+        // const ids = templates.length;
+        // console.log('templateja: ' + templates);
+
+        //send queued if status changes back to online
+        if (isConnected) {
+            console.log('queue:');
+            const queue = fetchAllQueued(this.props.username);
+
+            console.log('queue.length: ' + Object.keys(queue).length);
+
+            for (let i = 0; i < queue.length; i++) {
+                console.log('queue[i]: '+ queue[i]);
+
+                const { username, token } = this.props;
+                createNewReport(username, queue[i], token)
+                    .then(response => {
+                        if (response.status === 200) {
+                            this.props.navigation.state.params.refresh();
+                            return true;
+                        } else {
+                            return response.status;
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+                console.log('sent something?');
+            }
+        }
+
     };
 
     /*
@@ -137,8 +172,6 @@ export class TemplateScreen extends Component {
                 .then(reports => {
                     if (reports.length != 0) {
                         reports.forEach(report => this.props.dispatch(storeQueuedReportByTemplateID(templateID, report)));
-                    } else {
-                        console.log('derp');
                     }
                 })
                 .then(() => this.setState({ refreshing: false, isLoading: false }))
