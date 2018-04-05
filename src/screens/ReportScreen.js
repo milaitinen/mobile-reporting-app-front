@@ -81,6 +81,24 @@ export class ReportScreen extends React.Component {
     send = () => {
         const { username, report, token } = this.props;
 
+        if (!this.props.isConnected){
+            Alert.alert(
+                'You are offline',
+                'Report will be added to queue and will be sent when online',
+                [
+                    { text: strings('createNew.cancel'), onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                    { text: 'Ok', onPress: () => {
+                        console.log('Ok Pressed');
+                        this.save(false);
+                    //TODO: save and put to queue
+                    },
+                    }
+                ],
+                { cancelable: false }
+            );
+            return true;
+        }
+
         createNewReport(username, report, token).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
