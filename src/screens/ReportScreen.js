@@ -11,9 +11,11 @@ import { Dropdown } from '../components/Dropdown';
 import { Button } from '../components/Button';
 import { Datepicker } from '../components/Datepicker';
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, removeDraft, saveDraft } from './api';
+import { createNewReport, removeDraft, saveDraft, saveToQueueWithTemplateID } from './api';
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields, openReport, insertTitle } from '../redux/actions/newReport';
+import { storeDraftByTemplateID, storeQueuedReportByTemplateID } from '../redux/actions/reports';
+
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -59,18 +61,23 @@ export class ReportScreen extends React.Component {
         this.props.navigation.dispatch(NavigationActions.back());
     };
 
-    save = () => {
+    save = ( isDraft ) => {
         const { username, report } = this.props;
         const { templateID } = this.props.navigation.state.params;
-        saveDraft(username, templateID, report); // give a negative id
-        report.date_created = moment().format('YYYY-MM-DD');
 
-        //this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
-
-        Alert.alert('Saved!');
+        if (isDraft) {
+            report.report_id = saveDraft(username, templateID, report); // give a negative id
+            this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
+            Alert.alert(strings('createNew.saved'));
+        } else {
+            report.report_id = null;    // sets id to null, will get proper id when sent
+            this.props.dispatch(storeQueuedReportByTemplateID(templateID, report)); //store queue on top of drafts and rerports
+            Alert.alert(strings('createNew.queued'));
+            saveToQueueWithTemplateID(username, templateID, report);
+        }
 
         this.setState({ isLoading: true });
-
+        //this.setState({ isUnsaved: false });
         //return to template screen and have it refreshed
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
@@ -80,6 +87,7 @@ export class ReportScreen extends React.Component {
     // Inserts data to server with a post method.
     send = () => {
         const { username, report, token } = this.props;
+        const { templateID, reportID } = this.props.navigation.state.params;
 
         if (!this.props.isConnected){
             Alert.alert(
@@ -90,7 +98,7 @@ export class ReportScreen extends React.Component {
                     { text: 'Ok', onPress: () => {
                         console.log('Ok Pressed');
                         this.save(false);
-                    //TODO: save and put to queue
+                        removeDraft(username, templateID, reportID);
                     },
                     }
                 ],
@@ -103,6 +111,7 @@ export class ReportScreen extends React.Component {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
+                removeDraft(username, templateID, reportID);
                 return Alert.alert('Report sent!');
             } else {
                 return response.status;
@@ -361,13 +370,15 @@ const mapStateToProps = (state) => {
     const reports       = state.reports;
     const templates     = state.templates;
     const report        = state.newReport;
+    const isConnected   = state.connection.isConnected;
     return {
         username,
         report,
         number,
         token,
         reports,
-        templates
+        templates,
+        isConnected
     };
 };
 
