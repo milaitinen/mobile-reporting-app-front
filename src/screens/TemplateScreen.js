@@ -7,6 +7,7 @@ import {
     NetInfo,
     StatusBar,
     Platform,
+    Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -72,67 +73,45 @@ export class TemplateScreen extends Component {
         if (this.props.username !== userReducer.username) {
             this.getTemplatesAndReports();
         } else {
-            this.setState({ refreshing: false, isLoading: false });
+            this.setState({ refreshing: false, isLoading: false, });
         }
 
     }
 
     componentWillUnmount() {
+        console.log('componentWillUnMount');
         if (Platform.OS === 'android') NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
     }
 
     handleConnectionChange = isConnected => {
         this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
 
-        // console.log('templateID:t jeejee:');
-        // const templates = this.props.templates;
-        // const ids = templates.length;
-        // console.log('templateja: ' + templates);
+        if (isConnected) { this.sendPendingReports(); }
 
-        //send queued if status changes back to online
-        if (isConnected) {
-            const { username, token } = this.props;
-            const templates = this.props.templates;
+    }
 
-            // Send pending reports by templateID if such reports exist
-            Object.keys(templates).forEach(id => sendPendingReportsByTemplateID(username, id, token));
 
-            // TODO call handleRefresh() only when a pending report has been sent?
-            this.handleRefresh();
+    sendPendingReports = () => {
+        const { username, token } = this.props;
+        const templates = this.props.templates;
 
-            /*console.log('queue:');
-            const queue = fetchAllQueued(this.props.username);
+        // Send pending reports by templateID if such reports exist
+        Object.keys(templates).forEach(id =>
+            sendPendingReportsByTemplateID(username, id, token)
+        );
 
-            console.log('queue.length: ' + Object.keys(queue).length);
+        //TODO: Only call this if sent raports?
+        this.setState({ refreshing: true }, () => {
+            this.getTemplatesAndReports();
+        });
+    }
 
-            for (let i = 0; i < queue.length; i++) {
-                console.log('queue[i]: '+ queue[i]);
-
-                const { username, token } = this.props;
-                createNewReport(username, queue[i], token)
-                    .then(response => {
-                        if (response.status === 200) {
-                            this.props.navigation.state.params.refresh();
-                            return true;
-                        } else {
-                            return response.status;
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-                console.log('sent something?');
-            }*/
-        }
-
-    };
-
-    /*
-    Fetches the data from the server in two parts.
-    1) Fetches the templates from the server
-    2) Fetches the reports under their specific template by making a separate fetch request using
-        Promise.all. After all the promises have been fetched, the function updates the state
-        of reportsByTemplates, and sets isLoading and refreshing to false.
+    /**
+    * Fetches the data from the server in two parts.
+    * 1) Fetches the templates from the server
+    * 2) Fetches the reports under their specific template by making a separate fetch request using
+    *    Promise.all. After all the promises have been fetched, the function updates the state
+    *    of reportsByTemplates, and sets isLoading and refreshing to false.
     */
     getTemplatesAndReports = () => {
         const { username, token } = this.props;
@@ -149,7 +128,6 @@ export class TemplateScreen extends Component {
 
                 Object.keys(templates).forEach(id => {
                     this.props.dispatch(insertTemplateID(id));
-                    // sendPendingReportsByTemplateID(username, id, token);
                 });
 
                 const reportsByTemplateID = Object.keys(templates).map((id) => fetchReportsByTemplateID(username, id, token));
@@ -196,7 +174,7 @@ export class TemplateScreen extends Component {
     // Handler function for refreshing the data and refetching.
     handleRefresh = () => {
         this.setState({ refreshing: true, }, () => { this.getTemplatesAndReports(); });
-        this.setState({ isLoading: true });
+        this.setState({ isLoading: true, });
     };
 
     // Determines whether this screen is scrollable or not.
@@ -204,9 +182,9 @@ export class TemplateScreen extends Component {
         this.setState({ scrollEnabled : bool });
     };
 
-    /*
-     Determines whether empty space is rendered after the last template.
-     Without this function it wouldn't be possible to autoscroll to the last templates.
+    /**
+     * Determines whether empty space is rendered after the last template.
+     * Without this function it wouldn't be possible to autoscroll to the last templates.
      */
     setRenderFooter = (bool) => {
         this.setState({ renderFooter: bool });

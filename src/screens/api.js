@@ -18,6 +18,7 @@ export const login = (username, password) => {
     }).catch(err => alert(err));
 };
 
+
 /**
  * Send pending (enqueued) reports to the server if there is internet connection.
  * Remove reports from AsyncStorage after sending.
@@ -39,10 +40,24 @@ export const sendPendingReportsByTemplateID = (username, templateID, token) => {
                     .catch(err => alert(err));
             }
         });
-
 };
 
-// Send a new report to the server, along with the username and token.
+/**
+ * Fetches templates and then sends pending queue by template ids. Needed in for sending pending
+ * reports when logged in, because templates are not yet fetched and stored in redux. In other screens
+ * use of sendPendingReportsByTemplateID is wiser to avoid unnecessary fetching.
+ * TODO: Maybe only fetch templates and reports after login and not in TemplateScreen?
+ */
+export const sendAllPendingReports = (username, token) => {
+    fetchTemplatesByUsername(username, token)
+        .then(templates => {
+            templates.forEach(template => sendPendingReportsByTemplateID(username, template.template_id, token));
+        });
+};
+
+/**
+ *  Send a new report to the server, along with the username and token.
+ */
 export const createNewReport = (username, report, token) => {
     return fetch(`${url}/users/${username}/reports`, {
         method: 'POST',
@@ -92,7 +107,6 @@ export const fetchRemoteEmptyTemplate = (username, templateID, token) => {
     );
 };
 
-// used to store drafts
 export const saveDraft = (username, templateID, draft) => {
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {
@@ -114,18 +128,21 @@ export const saveDraft = (username, templateID, draft) => {
 
 
 
-//saves unsent reports to array in AsyncStorage
+/**
+ * Saves unsent reports to array in AsyncStorage by templateID
+ */
 export const saveToQueueWithTemplateID = (username, templateID, report) => {
     fetchQueuedByTemplateID(username, templateID)
         .then(queue => {
             queue.push(report);
             saveData(`${url}/users/${username}/queue/${templateID}`, queue);
-            printQueueByID(username, 4);
             return true;
         });
 };
 
-//print queue for testing purposes
+/**
+ * Prints queue for testing purposes
+ * */
 export const printQueueByID = (username, id) => {
     return AsyncStorage.getItem(`${url}/users/${username}/queue/${id}`)
         .then(data => {
@@ -142,25 +159,15 @@ export const printQueueByID = (username, id) => {
         });
 };
 
-//fetches array of unsent reports from AsyncStorage
+/**
+ *  Fetches array of unsent reports from AsyncStorage under specified templateID
+ */
 export const fetchQueuedByTemplateID = (username, templateID) => {
     return AsyncStorage.getItem(`${url}/users/${username}/queue/${templateID}`)
         .then(data => {
             if (data != null) {
                 return JSON.parse(data);
             } else {
-                return [];
-            }
-        });
-};
-
-export const fetchAllQueued = (username) => {
-    return AsyncStorage.getItem(`${url}/users/${username}/queue/1`)
-        .then(data => {
-            if (data != null) {
-                return JSON.parse(data);
-            } else {
-                console.log('so empty');
                 return [];
             }
         });
@@ -359,8 +366,9 @@ const fetchRemoteReportsByUsername = (username, token) => {
 
 
 
-/* Store data (layouts, reports - depending on the url) to ASyncStorage, a simple key-value storage system global to the app.
-   Keys and values are stored as a string. */
+/** Store data (layouts, reports - depending on the url) to ASyncStorage, a simple key-value storage system global to the app.
+** Keys and values are stored as a string.
+*/
 const saveData = (dataUrl, data) => {
     AsyncStorage.setItem(dataUrl, JSON.stringify(data));
 };
@@ -373,7 +381,10 @@ const removeData = (dataUrl) => {
     }
 };
 
-// Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178
+/**
+* Necessary because of a bug on iOS
+** link: https://github.com/facebook/react-native/issues/8615#issuecomment-287977178
+*/
 export function isNetworkConnected() {
     if (Platform.OS === 'ios') {
         return new Promise(resolve => {
