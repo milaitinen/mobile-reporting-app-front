@@ -59,7 +59,8 @@ const newReportReducer = (state = initialState, action) => {
             return insertAnswer(state, action);
         }
         case OPEN_REPORT: {
-            return action.report;
+            // Create deep copy, so that modifying the opened report doesn't affect the version saved in store.reports
+            return JSON.parse(JSON.stringify(action.report));
         }
         case EMPTY_FIELDS: {
             return initialState;
