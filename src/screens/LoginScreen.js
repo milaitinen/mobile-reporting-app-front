@@ -23,12 +23,6 @@ export class LoginScreen extends React.Component {
         super(props);
 
         if (this.props.token) { // this.props.token != null
-            //TODO: verify token
-            /*
-            const response = verifyToken(this.props.user.token);
-            if (someCondition(response)) {
-            }
-            */
             this.props.navigation.navigate(LOGGED_IN_ROUTE_NAME);
         }
     }
