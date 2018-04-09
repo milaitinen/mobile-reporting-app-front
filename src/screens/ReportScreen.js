@@ -1,5 +1,8 @@
 import React from 'react';
-import { /*Button, */ View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, /*Picker*/ } from 'react-native';
+import {
+    /*Button, */ View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking,
+    BackHandler, /*Picker*/
+} from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 // import ModalDropdown from 'react-native-modal-dropdown';
@@ -14,9 +17,11 @@ import { AppBackground } from '../components/AppBackground';
 import { createNewReport, removeDraft, saveDraft } from './api';
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields, openReport, insertTitle } from '../redux/actions/newReport';
+import { setUnsaved } from '../redux/actions/reportEditing';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
+import { handleBack } from '../functions/handleBack';
 // import styles from '../components/Dropdown/styles';
 // import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -26,13 +31,14 @@ export class ReportScreen extends React.Component {
         super(props);
         this.state = {
             title           : null,
-            isUnsaved       : true,
             isLoading       : true,
             number          : '',
             isEditable      : false,
             fields          : null,
         };
     }
+
+    _handleBack = () => handleBack(this.props.dispatch, this.props.isUnsaved);
 
     componentDidMount() {
         const { templateID, reportID } = this.props.navigation.state.params;
@@ -42,6 +48,23 @@ export class ReportScreen extends React.Component {
 
         this.props.dispatch(openReport(report));
         this.setState({ fields: fields, isEditable: reportID < 0, isLoading : false });
+        // TODO: implement checking isUnsaved. Now drafts are always assumed to be unsaved.
+        if (reportID < 0) {
+            this.props.dispatch(setUnsaved(true));
+        }
+
+        // BackHandler for detecting hardware button presses for back navigation (Android only)
+        BackHandler.addEventListener('hardwareBackPress', this._handleBack);
+    }
+
+    componentWillUnmount() {
+        // Removes the BackHandler EventListener when unmounting
+        BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
+
+        if (this.props.isSavingRequested) {
+            this.save();
+        }
+        this.props.dispatch(setUnsaved(false));
     }
 
     // delete draft from asyncstorage
@@ -63,18 +86,16 @@ export class ReportScreen extends React.Component {
         const { username, report } = this.props;
         const { templateID } = this.props.navigation.state.params;
         saveDraft(username, templateID, report); // give a negative id
-        report.date_created = moment().format('YYYY-MM-DD');
-
-        //this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
-
         Alert.alert('Saved!');
-
         this.setState({ isLoading: true });
-
-        //return to template screen and have it refreshed
+        //refresh template screen
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
-        this.props.navigation.dispatch(NavigationActions.back());
+    };
+
+    saveAndLeave = () => {
+        this.save();
+        this.props.navigation.goBack();
     };
 
     // Inserts data to server with a post method.
@@ -338,7 +359,7 @@ export class ReportScreen extends React.Component {
                         {
                             (this.props.navigation.state.params.reportID < 0) &&
                             <View>
-                                <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
+                                <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.saveAndLeave()} />
                                 <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
                                 <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this.deleteDraft()} />
                             </View>
@@ -360,13 +381,17 @@ const mapStateToProps = (state) => {
     const reports       = state.reports;
     const templates     = state.templates;
     const report        = state.newReport;
+    const isUnsaved     = state.reportEditing.isUnsaved;
+    const isSavingRequested = state.reportEditing.isSavingRequested;
     return {
         username,
         report,
         number,
         token,
         reports,
-        templates
+        templates,
+        isSavingRequested,
+        isUnsaved,
     };
 };
 

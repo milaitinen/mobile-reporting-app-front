@@ -14,12 +14,14 @@ import connectionReducer from '../redux/reducers/connection';
 import { strings } from '../locales/i18n';
 import { Alert } from 'react-native';
 import OfflineNotice from '../components/OfflineNotice/OfflineNotice';
+import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
 
 export const LOGGED_OUT_ROUTE_NAME = 'loginScreen';
 export const LOGGED_IN_ROUTE_NAME = 'loggedInDrawer';
 
 // The stack that is contained within the logged in drawer
 const TemplateStack = StackNavigator({
+    //TODO pressing Icon does nothing on IOS - fix bug, navigation problems?.
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
@@ -40,6 +42,7 @@ const TemplateStack = StackNavigator({
                 </View>
         })
     },
+    //TODO add save property to Save?
     NewReport: {
         screen: NewReportScreen,
         navigationOptions: ({ navigation }) => ({
@@ -51,24 +54,10 @@ const TemplateStack = StackNavigator({
                        hidden={false}
                        barStyle="light-content"/>
                    <View style={ navigationStyles.backButtonContainer }>
-                       <HeaderBackButton
+                       <ReportEditingBackButton
                            tintColor='#fff'
                            style={ navigationStyles.headerBackStyle }
-                           onPress={() => {
-                               Alert.alert(
-                                   'You have unsaved changes',
-                                   'Are you sure you want to leave without saving?',
-                                   [
-                                       { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                                       { text: 'No', onPress: () => console.log('No Pressed') },
-                                       { text: 'Yes', onPress: () => {
-                                           console.log('Yes Pressed');
-                                           navigation.goBack(null); }
-                                       },
-                                   ],
-                                   { cancelable: false }
-                               );
-                           }}/>
+                       />
                    </View>
 
                    <View style={ navigationStyles.titleContainer }>
@@ -85,10 +74,10 @@ const TemplateStack = StackNavigator({
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
                     <View style={ navigationStyles.backButtonContainer }>
-                        <HeaderBackButton
+                        <ReportEditingBackButton
                             tintColor='#fff'
                             style={ navigationStyles.headerBackStyle }
-                            onPress={() => navigation.goBack(null) }/>
+                        />
                     </View>
                     <View style={ navigationStyles.titleContainer }>
                         <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.report') }</Text>
