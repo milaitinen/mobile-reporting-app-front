@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
+import { StackNavigator, DrawerNavigator, HeaderBackButton, NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import { View, Text } from 'react-native';
 
@@ -29,9 +29,6 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
-                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
-                        <Text style={ navigationStyles.ScreenHeaderTemplates }>{ strings('templates.templates') }</Text>
-                    </View>
                     <Icon
                         name={'menu'}
                         type={'feather'}
@@ -39,6 +36,9 @@ const TemplateStack = StackNavigator({
                         containerStyle={navigationStyles.menuIconContainer}
                         onPress={() => { navigation.navigate('DrawerOpen'); }}>
                     </Icon>
+                    <View style={ navigationStyles.titleContainer }>
+                        <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.templates') }</Text>
+                    </View>
                 </View>
         })
     },
@@ -53,11 +53,14 @@ const TemplateStack = StackNavigator({
                    <OfflineNotice
                        hidden={false}
                        barStyle="light-content"/>
-                   <ReportEditingBackButton
-                       tintColor='#fff'
-                       style={ navigationStyles.headerBackStyle }
-                   />
-                   <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                   <View style={ navigationStyles.backButtonContainer }>
+                       <ReportEditingBackButton
+                           tintColor='#fff'
+                           style={ navigationStyles.headerBackStyle }
+                       />
+                   </View>
+
+                   <View style={ navigationStyles.titleContainer }>
                        <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.createNew') }</Text>
                    </View>
                </View>,
@@ -70,11 +73,13 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
-                    <ReportEditingBackButton
-                        tintColor='#fff'
-                        style={ navigationStyles.headerBackStyle }
-                    />
-                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                    <View style={ navigationStyles.backButtonContainer }>
+                        <ReportEditingBackButton
+                            tintColor='#fff'
+                            style={ navigationStyles.headerBackStyle }
+                        />
+                    </View>
+                    <View style={ navigationStyles.titleContainer }>
                         <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.report') }</Text>
                     </View>
                 </View>,
@@ -89,11 +94,14 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
-                    <HeaderBackButton
-                        tintColor='#fff'
-                        style={ navigationStyles.headerBackStyle }
-                        onPress={() => navigation.goBack(null) }/>
-                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                    <View style={ navigationStyles.backButtonContainer }>
+                        <HeaderBackButton
+                            tintColor='#fff'
+                            style={ navigationStyles.headerBackStyle }
+                            onPress={() => navigation.goBack(null) }/>
+                    </View>
+
+                    <View style={ navigationStyles.titleContainer }>
                         <Text style={ navigationStyles.ScreenHeader }>Preview</Text>
                     </View>
                 </View>,
@@ -130,5 +138,29 @@ const MainScreenNavigator = StackNavigator({
     title: 'Main',
     initialRouteName: LOGGED_OUT_ROUTE_NAME,
 });
+
+/*
+  Prevents navigating multiple times if this.props.navigation.navigate is triggered multiples times in a short
+  period of time inside TemplateStack by comparing current and previous navigation routes. Router action and state
+  are provided as parameters.
+*/
+
+const prevGetStateForActionTemplateStack = TemplateStack.router.getStateForAction;
+TemplateStack.router.getStateForAction = (action, state) => {
+    // Action type and routeName
+    const { type, routeName } = action;
+    /*
+      If navigating to the same route after already navigating there, null is returned to prevent multiple navigations.
+      Prevents from navigating to the same route in TemplateStack if already in the corresponding screen.
+    */
+    if (state &&
+        type === NavigationActions.NAVIGATE &&
+        routeName === state.routes[state.routes.length - 1].routeName) {
+        return null;
+    // Else add a screen to the stack - i.e. call default action for navigating.
+    } else {
+        return prevGetStateForActionTemplateStack(action, state);
+    }
+};
 
 export default MainScreenNavigator;

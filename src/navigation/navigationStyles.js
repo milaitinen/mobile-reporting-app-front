@@ -1,5 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Platform, Dimensions } from 'react-native';
+import { Platform } from 'react-native';
 
 const navigationStyles = EStyleSheet.create({
 
@@ -7,29 +7,22 @@ const navigationStyles = EStyleSheet.create({
         backgroundColor: '$darkBlue',
         borderBottomWidth: 0,
         borderBottomColor: 'transparent',
-        paddingTop: Platform.OS === 'ios' ? 20 : 0,
+        paddingTop: Platform.OS === 'ios' ? 15 : 0,
         flexDirection: 'row',
         elevation: 0,
+        height: 56,
         '@media (max-width: 350)': {
-            paddingRight: 7,
+            paddingHorizontal: 7,
         },
         '@media (min-width: 350)': {
-            paddingRight: 10,
+            paddingHorizontal: 10,
         },
     },
 
-    ScreenHeaderTemplates: {
-        color: '#fff',
-        fontWeight: 'normal',
-        fontFamily: '$primaryFont',
-        paddingRight: 50,
-        '@media (max-width: 350)': {
-            fontSize: 25,
-        },
-        '@media (min-width: 350)': {
-            fontSize: 30,
-        },
-
+    titleContainer: {
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     ScreenHeader: {
@@ -38,7 +31,6 @@ const navigationStyles = EStyleSheet.create({
         fontFamily: '$primaryFont',
         textAlignVertical: 'center',
         textAlign: 'center',
-        paddingRight: 100,
         '@media (max-width: 350)': {
             fontSize: 25,
         },
@@ -59,11 +51,19 @@ const navigationStyles = EStyleSheet.create({
 
     },
 
+    backButtonContainer: {
+        paddingLeft: 10,
+        marginTop: Platform.OS === 'ios' ? 12 : 0 ,
+        top: 0,
+        position: 'absolute',
+    },
+
     menuIconContainer: {
         paddingRight: 0,
-        paddingLeft: 20,
-        marginTop: Platform.OS === 'ios' ? 22 : 0 ,
-        left:0,
+        paddingLeft: 25,
+        marginVertical: 5,
+        marginTop: Platform.OS === 'ios' ? 8 : 0 ,
+        top: 12,
         position: 'absolute',
     },
 
@@ -71,10 +71,10 @@ const navigationStyles = EStyleSheet.create({
     menuIcon: {
         color: '#fff',
         '@media (max-width: 350)': {
-            fontSize: 30,
+            fontSize: 32,
         },
         '@media (min-width: 350)': {
-            fontSize: 30,
+            fontSize: 32,
         },
     },
 
