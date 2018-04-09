@@ -104,15 +104,6 @@ describe('Layout', () => {
             expect(inst.state.updated).toBe(true);
         });
 
-        it('should be called when Show more is pressed', () => {
-            const wrapper = shallow(<Layout data={exampleData} />);
-            wrapper.setProps({ itemsCount: 0 });
-            const showMorePress = jest.spyOn(wrapper.instance(), 'showMore');
-            wrapper.instance().forceUpdate();
-            wrapper.update();
-            wrapper.find({ testID: 'showMore' }).first().simulate('press');
-            expect(showMorePress.mock.calls.length).toBe(1);
-        });
     });
 });
 

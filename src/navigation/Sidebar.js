@@ -8,7 +8,7 @@ import { emptyReports } from '../redux/actions/reports';
 import { connect } from 'react-redux';
 import { LOGGED_OUT_ROUTE_NAME } from './AppNavigation';
 
-class Sidebar extends React.Component {
+export class Sidebar extends React.Component {
 
     signOut() {
         // perform other logging out related tasks here
