@@ -12,6 +12,26 @@ configure({ adapter: new Adapter() });
 
 jest.mock('Dimensions');
 
+const exampleData = [
+    {
+        report_id: 78,
+        user_id: 1,
+        template_id: 4,
+        title: 'N├ñppistesti 2',
+        date_created: '2018-03-23',
+        date_accepted: null,
+        string_answers: [],
+        option_answers: [
+            {
+                option_answer_id: 208,
+                report_id: 78,
+                field_option_id: 21,
+                selected: true
+            }
+        ]
+    },
+];
+
 it('renders correctly', () => {
     const tree = renderer.create(
         <Layout />
@@ -85,11 +105,13 @@ describe('Layout', () => {
         });
 
         it('should be called when Show more is pressed', () => {
-            /*const wrapper = shallow(<Layout data={[]} />);
-            const inst = wrapper.instance();
-            spyOn(instance, 'showMore').and.callThrough();
-            wrapper.find({ testID: 'showMore' }).simulate('press');
-            expect(spy.calledOnce).toEqual(true);*/
+            const wrapper = shallow(<Layout data={exampleData} />);
+            wrapper.setProps({ itemsCount: 0 });
+            const showMorePress = jest.spyOn(wrapper.instance(), 'showMore');
+            wrapper.instance().forceUpdate();
+            wrapper.update();
+            wrapper.find({ testID: 'showMore' }).first().simulate('press');
+            expect(showMorePress.mock.calls.length).toBe(1);
         });
     });
 });
