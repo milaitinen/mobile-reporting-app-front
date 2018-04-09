@@ -34,8 +34,8 @@ const TemplateStack = StackNavigator({
                         containerStyle={navigationStyles.menuIconContainer}
                         onPress={() => { navigation.navigate('DrawerOpen'); }}>
                     </Icon>
-                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
-                        <Text style={ navigationStyles.ScreenHeaderTemplates }>{ strings('templates.templates') }</Text>
+                    <View style={ navigationStyles.titleContainer }>
+                        <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.templates') }</Text>
                     </View>
                 </View>
         })
@@ -50,25 +50,28 @@ const TemplateStack = StackNavigator({
                    <OfflineNotice
                        hidden={false}
                        barStyle="light-content"/>
-                   <HeaderBackButton
-                       tintColor='#fff'
-                       style={ navigationStyles.headerBackStyle }
-                       onPress={() => {
-                           Alert.alert(
-                               'You have unsaved changes',
-                               'Are you sure you want to leave without saving?',
-                               [
-                                   { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                                   { text: 'No', onPress: () => console.log('No Pressed') },
-                                   { text: 'Yes', onPress: () => {
-                                       console.log('Yes Pressed');
-                                       navigation.goBack(null); }
-                                   },
-                               ],
-                               { cancelable: false }
-                           );
-                       }}/>
-                   <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                   <View style={ navigationStyles.backButtonContainer }>
+                       <HeaderBackButton
+                           tintColor='#fff'
+                           style={ navigationStyles.headerBackStyle }
+                           onPress={() => {
+                               Alert.alert(
+                                   'You have unsaved changes',
+                                   'Are you sure you want to leave without saving?',
+                                   [
+                                       { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                                       { text: 'No', onPress: () => console.log('No Pressed') },
+                                       { text: 'Yes', onPress: () => {
+                                           console.log('Yes Pressed');
+                                           navigation.goBack(null); }
+                                       },
+                                   ],
+                                   { cancelable: false }
+                               );
+                           }}/>
+                   </View>
+
+                   <View style={ navigationStyles.titleContainer }>
                        <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.createNew') }</Text>
                    </View>
                </View>,
@@ -81,11 +84,13 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
-                    <HeaderBackButton
-                        tintColor='#fff'
-                        style={ navigationStyles.headerBackStyle }
-                        onPress={() => navigation.goBack(null) }/>
-                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                    <View style={ navigationStyles.backButtonContainer }>
+                        <HeaderBackButton
+                            tintColor='#fff'
+                            style={ navigationStyles.headerBackStyle }
+                            onPress={() => navigation.goBack(null) }/>
+                    </View>
+                    <View style={ navigationStyles.titleContainer }>
                         <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.report') }</Text>
                     </View>
                 </View>,
@@ -100,11 +105,14 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
-                    <HeaderBackButton
-                        tintColor='#fff'
-                        style={ navigationStyles.headerBackStyle }
-                        onPress={() => navigation.goBack(null) }/>
-                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                    <View style={ navigationStyles.backButtonContainer }>
+                        <HeaderBackButton
+                            tintColor='#fff'
+                            style={ navigationStyles.headerBackStyle }
+                            onPress={() => navigation.goBack(null) }/>
+                    </View>
+
+                    <View style={ navigationStyles.titleContainer }>
                         <Text style={ navigationStyles.ScreenHeader }>Preview</Text>
                     </View>
                 </View>,
