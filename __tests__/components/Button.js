@@ -22,10 +22,18 @@ it('delete button renders correctly', () => {
     expect(tree).toMatchSnapshot();
 });
 
+it('save button renders correctly', () => {
+    const tree = renderer.create(
+        <Button title='delete button' type={'save'} onPress={jest.fn()} />
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
+});
+
+/*
 it('renders only one text field when dateAccepted = null', () => {
     expect(shallow(<Button title='some button' type={'save'} onPress={jest.fn()} />).find(TouchableHighlight).length).toEqual(1);
 });
-
+*/
 
 
 

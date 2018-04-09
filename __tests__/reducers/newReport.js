@@ -372,7 +372,7 @@ describe('newReportReducer reducer', () => {
     });
 
 
-    //TODO: use testReport with this.
+    /*
     it('should handle SET_UNSAVED', () => {
         expect(
             newReportReducer(initialState, {
@@ -382,5 +382,5 @@ describe('newReportReducer reducer', () => {
         ).toEqual({
             isUnsaved: false,
         });
-    });
+    });*/
 });

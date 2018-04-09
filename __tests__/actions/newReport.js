@@ -26,8 +26,9 @@ describe('Test newReport actions',()=>{
         const insert = emptyFields();
         expect(insert).toEqual({ type:'EMPTY_FIELDS' });
     });
+    /*
     it('setUnsaved', () => {
         const insert = setUnsaved(false);
         expect(insert).toEqual({ type:'SET_UNSAVED', isUnsaved: false });
-    });
+    });*/
 });

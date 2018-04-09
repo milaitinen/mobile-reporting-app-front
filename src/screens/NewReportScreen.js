@@ -112,7 +112,7 @@ export class NewReportScreen extends React.Component {
     saveAndLeave = () => {
         this.save();
         this.props.navigation.goBack();
-    }
+    };
 
     // Inserts data to server with a post method.
     send = () => {
