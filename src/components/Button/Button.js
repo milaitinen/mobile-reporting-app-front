@@ -3,6 +3,7 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styles from './buttonStyles';
 import color from 'color';
+import withPreventDoubleClick from '../../functions/withPreventDoubleClick/withPreventDoubleClick';
 
 const CustomButton = ({ title, type, onPress }) => {
 
@@ -50,4 +51,4 @@ const CustomButton = ({ title, type, onPress }) => {
     );
 };
 
-export default CustomButton;
+export default withPreventDoubleClick(CustomButton);
