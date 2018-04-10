@@ -1,28 +1,18 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import { configure } from 'enzyme';
-import configureStore from 'redux-mock-store';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import ReportEditingBackButton from '../../src/components/ReportEditingBackButton/ReportEditingBackButton';
+import { ReportEditingBackButton } from '../../src/components/ReportEditingBackButton/ReportEditingBackButton';
 
 configure({ adapter: new Adapter() });
 
-describe('ReportEditingBackButton', () => {
-    const mockStore = configureStore();
-    const initialState = {
-        state: {
-            reportEditing: {
-                isUnsaved: true
-            }
-        }
-    };
+test('ReportEditingBackButton', () => {
+
     const dispatch = jest.fn();
-    const store = mockStore(initialState);
+    const component = shallow(
+        <ReportEditingBackButton dispatch={dispatch} isUnsaved={true}/>
+    );
 
-
-    it('should render correctly', () => {
-        const tree = renderer.create(<ReportEditingBackButton store={store} dispatch={dispatch} isUnsaved={true}/>);
-        expect(tree.toJSON()).toMatchSnapshot();
-    });
+    component.find('HeaderBackButton').simulate('press');
+    expect(component).toMatchSnapshot();
 });

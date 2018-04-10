@@ -9,7 +9,7 @@ import { HeaderBackButton } from 'react-navigation';
  *  This button is used in report editing screens so that it can show
  *  a confirmation message based on redux data (isUnsaved) and dispatch redux actions accordingly.
  */
-class ReportEditingBackButton extends React.Component {
+export class ReportEditingBackButton extends React.Component {
     render() {
         return (
             <HeaderBackButton tintColor='#fff' onPress={() => handleBack(this.props.dispatch, this.props.isUnsaved)} />

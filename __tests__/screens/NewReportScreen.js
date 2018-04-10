@@ -23,7 +23,13 @@ describe('New report screen', () => {
 
     it('renders correctly', () => {
         const tree = renderer.create(
-            <NewReportScreen navigation={navigation} dispatch={mockDispatch} templates={templates} templateID={1} newReport={newReport}/>
+            <NewReportScreen
+                navigation={navigation}
+                dispatch={mockDispatch}
+                templates={templates}
+                templateID={1}
+                newReport={newReport}
+            />
         ).toJSON();
         expect(tree).toMatchSnapshot();
     });
@@ -40,7 +46,13 @@ describe('New report screen', () => {
         describe('isLoading', () => {
             it('should render a <ActivityIndicator /> if true', () => {
                 const templateScreen = shallow(
-                    <NewReportScreen navigation={navigation} dispatch={mockDispatch} templates={templates} templateID={1} newReport={newReport}/>
+                    <NewReportScreen
+                        navigation={navigation}
+                        dispatch={mockDispatch}
+                        templates={templates}
+                        templateID={1}
+                        newReport={newReport}
+                    />
                 );
                 templateScreen.setState({ isLoading: true });
                 expect(templateScreen.find(ActivityIndicator).length).toBe(1);
