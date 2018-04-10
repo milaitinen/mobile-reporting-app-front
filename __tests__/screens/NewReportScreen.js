@@ -17,12 +17,13 @@ const mockDispatch = jest.fn();
 const templates = { 1: { template_id: 1, title: 'Template 1', fields: [
     { field_id: 1, template_id: 1, order_number: 1, title: 'Name', required: true, default_value: null }
 ] } };
+const newReport = { option_answers: null };
 
 describe('New report screen', () => {
 
     it('renders correctly', () => {
         const tree = renderer.create(
-            <NewReportScreen navigation={navigation} dispatch={mockDispatch} templates={templates} templateID={1} />
+            <NewReportScreen navigation={navigation} dispatch={mockDispatch} templates={templates} templateID={1} newReport={newReport}/>
         ).toJSON();
         expect(tree).toMatchSnapshot();
     });
@@ -38,7 +39,9 @@ describe('New report screen', () => {
     describe('<NewReportScreen />', () => {
         describe('isLoading', () => {
             it('should render a <ActivityIndicator /> if true', () => {
-                const templateScreen = shallow(<NewReportScreen navigation={navigation} dispatch={mockDispatch} templates={templates} templateID={1} />);
+                const templateScreen = shallow(
+                    <NewReportScreen navigation={navigation} dispatch={mockDispatch} templates={templates} templateID={1} newReport={newReport}/>
+                );
                 templateScreen.setState({ isLoading: true });
                 expect(templateScreen.find(ActivityIndicator).length).toBe(1);
             });

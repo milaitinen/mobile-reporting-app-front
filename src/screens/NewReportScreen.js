@@ -174,7 +174,7 @@ export class NewReportScreen extends React.Component {
                                 editable={isEditable}
                                 placeholder={field.default_value}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
-                                placeholderTextColor={EStyleSheet.value('$placeholder')}
+                                placeholderTextColor={newReportStyles.$gray}
                                 //Title is now set separately from this field
                                 //onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                                 underlineColorAndroid='transparent'
@@ -230,7 +230,7 @@ export class NewReportScreen extends React.Component {
                                     <Text style={styles.dropdownText}>
                                         Select option
                                     </Text>
-                                    <Icon name={'expand-more'} color={EStyleSheet.value('$placeholder')} style={styles.icon}/>
+                                    <Icon name={'expand-more'} color={newReportStyles.$gray} style={styles.icon}/>
                                 </View>
                             </ModalDropdown>
                         );
@@ -257,7 +257,7 @@ export class NewReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$placeholder')}
+                                placeholderTextColor={newReportStyles.$gray}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInput}
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
@@ -318,7 +318,7 @@ export class NewReportScreen extends React.Component {
                                 style={ newReportStyles.multilineTextInput }
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$placeholder')}
+                                placeholderTextColor={newReportStyles.$gray}
                             />
                         );
                     }
@@ -341,7 +341,7 @@ export class NewReportScreen extends React.Component {
                                 editable={isEditable}
                                 style={newReportStyles.textInput}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$placeholder')}
+                                placeholderTextColor={newReportStyles.$gray}
                                 keyboardType='numeric'
                                 onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
                             />
@@ -419,7 +419,7 @@ export class NewReportScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={'Otsikko'}
-                                placeholderTextColor={EStyleSheet.value('$placeholder')}
+                                placeholderTextColor={newReportStyles.$gray}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInput}
                                 onChangeText={(text) => this.props.dispatch(insertTitle(text))}

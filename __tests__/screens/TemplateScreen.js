@@ -11,8 +11,8 @@ configure({ adapter: new Adapter() });
 
 describe('TemplateScreen', () => {
 
-    const templateScreen = shallow(<TemplateScreen templates={{}}/>);
-    const wrapper = renderer.create(<TemplateScreen templates={{}}/>);
+    const templateScreen = shallow(<TemplateScreen templates={{}} dispatch={jest.fn()}/>);
+    const wrapper = renderer.create(<TemplateScreen templates={{}} dispatch={jest.fn()}/>);
     const inst = wrapper.getInstance();
 
     it('renders correctly', () => {
