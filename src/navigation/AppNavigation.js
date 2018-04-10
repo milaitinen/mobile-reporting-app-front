@@ -21,7 +21,6 @@ export const LOGGED_IN_ROUTE_NAME = 'loggedInDrawer';
 
 // The stack that is contained within the logged in drawer
 const TemplateStack = StackNavigator({
-    //TODO pressing Icon does nothing on IOS - fix bug, navigation problems?.
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
@@ -29,6 +28,9 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
+                    <View style={ navigationStyles.titleContainer }>
+                        <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.templates') }</Text>
+                    </View>
                     <Icon
                         name={'menu'}
                         type={'feather'}
@@ -36,16 +38,12 @@ const TemplateStack = StackNavigator({
                         containerStyle={navigationStyles.menuIconContainer}
                         onPress={() => { navigation.navigate('DrawerOpen'); }}>
                     </Icon>
-                    <View style={ navigationStyles.titleContainer }>
-                        <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.templates') }</Text>
-                    </View>
                 </View>
         })
     },
-    //TODO add save property to Save?
     NewReport: {
         screen: NewReportScreen,
-        navigationOptions: ({ navigation }) => ({
+        navigationOptions: () => ({
             flex: 0.3,
             drawerLockMode: 'locked-closed',
             header:
@@ -53,34 +51,33 @@ const TemplateStack = StackNavigator({
                    <OfflineNotice
                        hidden={false}
                        barStyle="light-content"/>
+                   <View style={ navigationStyles.titleContainer }>
+                       <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.createNew') }</Text>
+                   </View>
                    <View style={ navigationStyles.backButtonContainer }>
                        <ReportEditingBackButton
                            tintColor='#fff'
                            style={ navigationStyles.headerBackStyle }
                        />
                    </View>
-
-                   <View style={ navigationStyles.titleContainer }>
-                       <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.createNew') }</Text>
-                   </View>
                </View>,
         })
     },
     Report: {
         screen: ReportScreen,
-        navigationOptions: ({ navigation }) => ({
+        navigationOptions: () => ({
             flex: 0.3,
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
+                    <View style={ navigationStyles.titleContainer }>
+                        <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.report') }</Text>
+                    </View>
                     <View style={ navigationStyles.backButtonContainer }>
                         <ReportEditingBackButton
                             tintColor='#fff'
                             style={ navigationStyles.headerBackStyle }
                         />
-                    </View>
-                    <View style={ navigationStyles.titleContainer }>
-                        <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.report') }</Text>
                     </View>
                 </View>,
 
@@ -94,15 +91,14 @@ const TemplateStack = StackNavigator({
             header:
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
+                    <View style={ navigationStyles.titleContainer }>
+                        <Text style={ navigationStyles.ScreenHeader }>Preview</Text>
+                    </View>
                     <View style={ navigationStyles.backButtonContainer }>
                         <HeaderBackButton
                             tintColor='#fff'
                             style={ navigationStyles.headerBackStyle }
                             onPress={() => navigation.goBack(null) }/>
-                    </View>
-
-                    <View style={ navigationStyles.titleContainer }>
-                        <Text style={ navigationStyles.ScreenHeader }>Preview</Text>
                     </View>
                 </View>,
         })

@@ -7,10 +7,10 @@ const navigationStyles = EStyleSheet.create({
         backgroundColor: '$darkBlue',
         borderBottomWidth: 0,
         borderBottomColor: 'transparent',
-        paddingTop: Platform.OS === 'ios' ? 15 : 0,
+        paddingTop: Platform.OS === 'ios' ? 20 : 0,
         flexDirection: 'row',
         elevation: 0,
-        height: 56,
+        height: Platform.OS === 'ios' ? 76 : 56,
         '@media (max-width: 350)': {
             paddingHorizontal: 7,
         },
@@ -52,8 +52,8 @@ const navigationStyles = EStyleSheet.create({
     },
 
     backButtonContainer: {
-        paddingLeft: 10,
-        marginTop: Platform.OS === 'ios' ? 12 : 0 ,
+        paddingLeft: Platform.OS === 'ios' ? 20 : 10,
+        marginTop: Platform.OS === 'ios' ? 26 : 0 ,
         top: 0,
         position: 'absolute',
     },
@@ -62,7 +62,7 @@ const navigationStyles = EStyleSheet.create({
         paddingRight: 0,
         paddingLeft: 25,
         marginVertical: 5,
-        marginTop: Platform.OS === 'ios' ? 8 : 0 ,
+        marginTop: Platform.OS === 'ios' ? 20 : 0 ,
         top: 12,
         position: 'absolute',
     },
