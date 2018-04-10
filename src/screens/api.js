@@ -68,8 +68,11 @@ export const fetchRemoteEmptyTemplate = (username, templateID, token) => {
     );
 };
 
-// used to store drafts
+// Used to store drafts. All drafts are stored under the same templateID, and are therefore stored inside arrays.
 export const saveDraft = (username, templateID, draft) => {
+    // In case an empty draft is given, it won't be saved in AsyncStorage.
+    if (Object.keys(draft).length === 0) return;
+
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {
             // see if there is already a draft with the same id
