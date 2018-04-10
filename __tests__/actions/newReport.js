@@ -1,4 +1,4 @@
-import { createDraft, insertTitle, openReport, insertDate, insertFieldAnswer, emptyFields, setUnsaved } from '../../src/redux/actions/newReport';
+import { createDraft, insertTitle, openReport, insertDate, insertFieldAnswer, emptyFields } from '../../src/redux/actions/newReport';
 
 describe('Test newReport actions',()=>{
 
@@ -26,9 +26,4 @@ describe('Test newReport actions',()=>{
         const insert = emptyFields();
         expect(insert).toEqual({ type:'EMPTY_FIELDS' });
     });
-    /*
-    it('setUnsaved', () => {
-        const insert = setUnsaved(false);
-        expect(insert).toEqual({ type:'SET_UNSAVED', isUnsaved: false });
-    });*/
 });
