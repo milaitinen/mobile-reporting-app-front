@@ -9,7 +9,7 @@ import {
     TextInput,
     View
 } from 'react-native';
-import { HeaderBackButton, NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -25,88 +25,17 @@ import { createNewReport, saveDraft, fetchEmptyTemplate } from './api';
 import { strings } from '../locales/i18n';
 import { emptyFields, insertFieldAnswer, insertTitle, insertDate, createDraft } from '../redux/actions/newReport';
 import { storeDraftByTemplateID } from '../redux/actions/reports';
+import { handleBack } from '../functions/handleBack';
+import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { setUnsaved } from '../redux/actions/reportEditing';
 
 
-/**
- * Handles the back-navigation logic in newReportScreen.
- *
- * This should be used inside a Redux-connected component, so that the
- * component can get the parameters from Redux and pass them on to this function.
- * Then this function can i.e. dispatch Redux actions.
- *
- * Note that the return values are only needed for the Android hardware back button,
- * and are not necessary with the on-screen back button.
- * @param isUnsaved
- * @param dispatch
- * @returns {boolean}
- */
-const handleBack = (isUnsaved, dispatch) => {
-    if (isUnsaved) {
-        Alert.alert(
-            'You have unsaved changes',
-            'Are you sure you want to leave without saving?',
-            [
-                { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                { text: 'No', onPress: () => console.log('No Pressed') },
-                { text: 'Yes', onPress: () => {
-                    console.log('Yes Pressed');
-                    dispatch(emptyFields());
-                    //dispatch(setUnsaved(false));
-                    dispatch(NavigationActions.back());
-                }
-                },
-            ],
-            { cancelable: false }
-        );
-        return true;
-    }
-    dispatch(NavigationActions.back());
-    // A true return value will prevent the regular handling of the Android back button,
-    // whereas false would allow the previous backhandlers to take action after this.
-    return true;
-};
 
-//A wrapper for the back button, that can be connected to Redux
-class HeaderBackButtonWrapper extends React.Component {
-    render() {
-        return (
-            <HeaderBackButton tintColor='#fff' onPress={() => handleBack(this.props.isUnsaved, this.props.dispatch)} />
-        );
-    }
-}
-
-
-// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
-const mapStateToProps = (state) => {
-    const token         = state.user.token;
-    const username      = state.user.username;
-    const templates     = state.templates;
-    const reports       = state.reports;
-    const newReport     = state.newReport;
-    const title         = state.newReport.title;
-    const number        = state.newReport.number;
-    const isUnsaved     = state.newReport.isUnsaved;
-    const isConnected = state.connection.isConnected;
-
-    return {
-        username,
-        templates,
-        title,
-        number,
-        newReport,
-        token,
-        reports,
-        isUnsaved,
-        isConnected,
-    };
-};
-
-const HeaderBackButtonWrapperWithRedux = connect(mapStateToProps)(HeaderBackButtonWrapper);
 
 
 // "export" necessary in order to test component without Redux store
@@ -114,7 +43,7 @@ export class NewReportScreen extends React.Component {
     static navigationOptions = () => {
         return {
             // the Redux-connected on-screen back button is set here
-            headerLeft: HeaderBackButtonWrapperWithRedux,
+            headerLeft: ReportEditingBackButton,
         };
     };
 
@@ -128,11 +57,13 @@ export class NewReportScreen extends React.Component {
         };
     }
 
-    _handleBack = () => handleBack(this.props.isUnsaved, this.props.dispatch);
+    _handleBack = () => handleBack(this.props.dispatch, this.props.isUnsaved);
 
     componentWillMount() {
         // BackHandler for detecting hardware button presses for back navigation (Android only)
         BackHandler.addEventListener('hardwareBackPress', this._handleBack);
+        // TODO: implement checking isUnsaved, now it is assumed to be true.
+        this.props.dispatch(setUnsaved(true));
     }
 
     componentDidMount() {
@@ -140,8 +71,13 @@ export class NewReportScreen extends React.Component {
     }
 
     componentWillUnmount() {
+        console.log('calling this');
         // Removes the BackHandler EventListener when unmounting
         BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
+        if (this.props.isSavingRequested) {
+            this.save();
+        }
+        this.props.dispatch(setUnsaved(false));
     }
 
     // TODO come up with a better name
@@ -164,20 +100,19 @@ export class NewReportScreen extends React.Component {
         const { username, newReport } = this.props;
         const { templateID } = this.props.navigation.state.params;
         const report = newReport;
-        report.report_id = saveDraft(username, templateID, report); // give a negative id
-
-        this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
-
+        saveDraft(username, templateID, report); // give a negative id
         Alert.alert('Report saved!');
         this.setState({ isLoading: true });
-
-        //this.setState({ isUnsaved: false });
-
-        //return to template screen and have it refreshed
+        //refresh template screen
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
-        this.props.navigation.dispatch(NavigationActions.back());
     };
+
+    //A helper method that calls save and then navigates back
+    saveAndLeave = () => {
+        this.save();
+        this.props.navigation.goBack();
+    }
 
     // Inserts data to server with a post method.
     send = () => {
@@ -491,7 +426,7 @@ export class NewReportScreen extends React.Component {
                             />
                         </View>
                         {renderedFields}
-                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={() => this.save()}/>
+                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={() => this.saveAndLeave()}/>
                         <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}/>
                     </ScrollView>
                 </View>
@@ -500,5 +435,31 @@ export class NewReportScreen extends React.Component {
     }
 }
 
+// maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
+const mapStateToProps = (state) => {
+    const token         = state.user.token;
+    const username      = state.user.username;
+    const templates     = state.templates;
+    const reports       = state.reports;
+    const newReport     = state.newReport;
+    const title         = state.newReport.title;
+    const number        = state.newReport.number;
+    const isUnsaved     = state.reportEditing.isUnsaved;
+    const isConnected = state.connection.isConnected;
+    const isSavingRequested = state.reportEditing.isSavingRequested;
+
+    return {
+        username,
+        templates,
+        title,
+        number,
+        newReport,
+        token,
+        reports,
+        isUnsaved,
+        isConnected,
+        isSavingRequested,
+    };
+};
 
 export default connect(mapStateToProps)(NewReportScreen);
