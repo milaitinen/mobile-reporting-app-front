@@ -46,32 +46,32 @@ const TemplateStack = StackNavigator({
             flex: 0.3,
             drawerLockMode: 'locked-closed',
             header:
-               <View style={ navigationStyles.HeaderContainer}>
-                   <OfflineNotice
-                       hidden={false}
-                       barStyle="light-content"/>
-                   <HeaderBackButton
-                       tintColor='#fff'
-                       style={ navigationStyles.headerBackStyle }
-                       onPress={() => {
-                           Alert.alert(
-                               'You have unsaved changes',
-                               'Are you sure you want to leave without saving?',
-                               [
-                                   { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                                   { text: 'No', onPress: () => console.log('No Pressed') },
-                                   { text: 'Yes', onPress: () => {
-                                       console.log('Yes Pressed');
-                                       navigation.goBack(null); }
-                                   },
-                               ],
-                               { cancelable: false }
-                           );
-                       }}/>
-                   <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
-                       <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.createNew') }</Text>
-                   </View>
-               </View>,
+                <View style={ navigationStyles.HeaderContainer}>
+                    <OfflineNotice
+                        hidden={false}
+                        barStyle="light-content"/>
+                    <HeaderBackButton
+                        tintColor='#fff'
+                        style={ navigationStyles.headerBackStyle }
+                        onPress={() => {
+                            Alert.alert(
+                                'You have unsaved changes',
+                                'Are you sure you want to leave without saving?',
+                                [
+                                    { text: 'Cancel', onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                                    { text: 'No', onPress: () => console.log('No Pressed') },
+                                    { text: 'Yes', onPress: () => {
+                                        console.log('Yes Pressed');
+                                        navigation.goBack(null); }
+                                    },
+                                ],
+                                { cancelable: false }
+                            );
+                        }}/>
+                    <View style={ { flex:1,justifyContent: 'center',alignItems: 'center' } }>
+                        <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.createNew') }</Text>
+                    </View>
+                </View>,
         })
     },
     Report: {

@@ -30,3 +30,4 @@ export const insertTemplateID = (templateID) => ({
 export const emptyReports = () => ({
     type: EMPTY_REPORTS
 });
+

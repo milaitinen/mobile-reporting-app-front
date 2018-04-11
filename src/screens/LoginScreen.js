@@ -74,10 +74,13 @@ export class LoginScreen extends React.Component {
                     Keyboard.dismiss();
                     sendAllPendingReports(this.props.username, token)
                         .then(sentPending => {
-                            if (sentPending) { Alert.alert('Pending reports sent!');}
+                            if (sentPending) {
+                                Alert.alert('Pending reports sent!');}
+                        })
+                        .then(() => {
+                            this.resetNavigationTo(LOGGED_IN_ROUTE_NAME);
+                            this.props.dispatch(insertPassword(null));
                         });
-                    this.resetNavigationTo(LOGGED_IN_ROUTE_NAME);
-                    this.props.dispatch(insertPassword(null));
                 }
             });
     };
