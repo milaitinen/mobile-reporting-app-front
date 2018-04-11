@@ -24,6 +24,9 @@ import {
     fetchQueuedByTemplateID,
     sendPendingReportsByTemplateID
 } from './api';
+import {
+    asyncForEach
+} from './helpers';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID, storeDraftByTemplateID, storeQueuedReportByTemplateID, insertTemplateID } from '../redux/actions/reports';
 import { preview } from '../redux/actions/preview';
@@ -79,7 +82,6 @@ export class TemplateScreen extends Component {
     }
 
     componentWillUnmount() {
-        console.log('componentWillUnMount');
         if (Platform.OS === 'android') NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
     }
 
@@ -95,15 +97,22 @@ export class TemplateScreen extends Component {
         const { username, token } = this.props;
         const templates = this.props.templates;
 
-        // Send pending reports by templateID if such reports exist
-        Object.keys(templates).forEach(id =>
-            sendPendingReportsByTemplateID(username, id, token)
-        );
+        let sentSomething = false;
 
-        //TODO: Only call this if sent raports?
-        this.setState({ refreshing: true }, () => {
-            this.getTemplatesAndReports();
-        });
+        const send = async () => {
+            await asyncForEach(Object.keys(templates), async id => {
+                const status = await sendPendingReportsByTemplateID(username, id, token);
+                if (status == true) { sentSomething = true; }
+            });
+
+            if (sentSomething) {
+                this.setState({ refreshing: true }, () => { this.handleRefresh(); });
+                Alert.alert('Pending reports sent!');
+            }
+        };
+
+        if (this.props.isConnected) { send(); }
+
     }
 
     /**

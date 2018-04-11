@@ -1,4 +1,4 @@
-import { Platform, AsyncStorage, NetInfo } from 'react-native';
+import { Platform, AsyncStorage, NetInfo, Alert } from 'react-native';
 
 import { url } from './urlsetting';
 
@@ -20,26 +20,29 @@ export const login = (username, password) => {
 
 
 /**
- * Send pending (enqueued) reports to the server if there is internet connection.
+ * Send pending (enqueued) reports to the server. Doesn't check for connection, need to do that elsewhere.
  * Remove reports from AsyncStorage after sending.
+ * Returns true if sent reports, false if nothing was sent.
  */
 export const sendPendingReportsByTemplateID = (username, templateID, token) => {
-    return isNetworkConnected()
-        .then((isConnected) => {
-            if (isConnected) {
-                AsyncStorage.getItem(`${url}/users/${username}/queue/${templateID}`)
-                    .then(data => {
-                        if (data) {
-                            const report = Object.values(JSON.parse(data));
-                            report.forEach(r => createNewReport(username, r, token));
-                        }
-                    })
-                    .then(() => {
-                        removeData(`${url}/users/${username}/queue/${templateID}`);
-                    })
-                    .catch(err => alert(err));
-            }
-        });
+    console.log('starting in api');
+
+    const getItemThatWaits = async () => {
+        const data = await AsyncStorage.getItem(`${url}/users/${username}/queue/${templateID}`);
+        if (data) {
+            console.log('true- branch');
+            const report = Object.values(JSON.parse(data));
+            report.forEach(r => createNewReport(username, r, token));
+            removeData(`${url}/users/${username}/queue/${templateID}`);
+            return true;
+        }
+        else {
+            console.log('false- branch');
+            return false;
+        }
+    };
+
+    return getItemThatWaits();
 };
 
 /**
@@ -52,6 +55,10 @@ export const sendAllPendingReports = (username, token) => {
     fetchTemplatesByUsername(username, token)
         .then(templates => {
             templates.forEach(template => sendPendingReportsByTemplateID(username, template.template_id, token));
+        })
+        .then(() => {
+        //TODO: How to know if anything was sent???
+        // return Alert.alert('Pending raports sent!');
         });
 };
 
