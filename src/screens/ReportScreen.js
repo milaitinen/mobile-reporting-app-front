@@ -58,9 +58,10 @@ export class ReportScreen extends React.Component {
     _handleBack = () => handleBack(this.props.dispatch, this.props.isUnsaved);
 
     componentWillMount() {
-        this.setState({ isNewReport: this.props.navigation.state.params.isNewReport });
+        const isNewReport = this.props.navigation.state.params.isNewReport;
+        this.setState({ isNewReport: isNewReport });
 
-        if (this.state.isNewReport) {
+        if (isNewReport) {
             // BackHandler for detecting hardware button presses for back navigation (Android only)
             BackHandler.addEventListener('hardwareBackPress', this._handleBack);
             // TODO: implement checking isUnsaved, now it is assumed to be true.
@@ -151,12 +152,17 @@ export class ReportScreen extends React.Component {
     // Inserts data to server with a post method.
     send = () => {
         const { username, report, newReport, token } = this.props;
-        const draft = this.state.isNewReport ? newReport : report;
+        const { isNewReport } = this.state;
+        const draft = isNewReport ? newReport : report;
 
         createNewReport(username, draft, token).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
+                if (!isNewReport) {
+                    const { templateID, reportID } = this.props.navigation.state.params;
+                    removeDraft(username, templateID, reportID);
+                }
                 return Alert.alert('Report sent!');
             } else {
                 return response.status;

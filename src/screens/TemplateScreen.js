@@ -153,26 +153,33 @@ export class TemplateScreen extends Component {
     */
     createNew = (templateID, isEditable) => {
         if (isEditable) {
-            // this.setState({ isLoading: true });
             this.props.navigation.navigate('Report', {
                 isNewReport: true,
                 templateID: templateID,
+                reportID: null,
                 refresh: this.handleRefresh,
                 isEditable: isEditable
             });
         }
         else {
             this.props.dispatch(preview(templateID));
-            // this.setState({ isLoading: true });
-            this.props.navigation.navigate('Preview', { refresh: this.handleRefresh,  isEditable: isEditable });
+            this.props.navigation.navigate('Preview', {
+                refresh: this.handleRefresh,
+                isEditable: isEditable
+            });
         }
         //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReportScreen and uncomment this
     };
 
     viewReport = (templateID, reportID, title) => {
         //this.setState({ isLoading: true }); TODO same problem as above
-        this.props.navigation.navigate('Report',
-            { isNewReport: false, refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
+        this.props.navigation.navigate('Report', {
+            isNewReport: false,
+            templateID: templateID,
+            reportID: reportID,
+            refresh: this.handleRefresh,
+            title: title
+        });
     };
 
     render() {

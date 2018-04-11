@@ -87,6 +87,7 @@ describe('TemplateScreen', () => {
         expect(navigate).toHaveBeenCalledWith('Report', {
             isNewReport: true,
             templateID: 1,
+            reportID: null,
             refresh: inst.handleRefresh,
             isEditable: true
         });
