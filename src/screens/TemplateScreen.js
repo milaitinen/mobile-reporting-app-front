@@ -16,8 +16,6 @@ import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
 import {
-    // createNewReport,
-    // fetchAllQueued,
     fetchReportsByTemplateID,
     fetchTemplatesByUsername,
     fetchDraftsByTemplateID,

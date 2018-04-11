@@ -148,7 +148,7 @@ export const saveToQueueWithTemplateID = (username, templateID, report) => {
 };
 
 /**
- * Prints queue for testing purposes
+ * Prints queue for testing purposes. Not really necessary :)
  * */
 export const printQueueByID = (username, id) => {
     return AsyncStorage.getItem(`${url}/users/${username}/queue/${id}`)

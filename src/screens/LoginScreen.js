@@ -72,6 +72,8 @@ export class LoginScreen extends React.Component {
                 } else {
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
+
+                    //Send all pending reports, and then navigate to next screen.
                     sendAllPendingReports(this.props.username, token)
                         .then(sentPending => {
                             if (sentPending) {
