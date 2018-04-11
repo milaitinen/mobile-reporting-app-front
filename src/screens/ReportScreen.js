@@ -315,13 +315,13 @@ export class ReportScreen extends React.Component {
                     case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
                     {
                         const labels = field.field_options.map((option) => {
-                            return (
-                                { label: option.value, value: option }
-                            );
+                            return ({ label: option.value, value: option });
                         });
 
                         const answerIndex = field.field_options.findIndex((option) =>
-                            isNewReport ? option.default_value : (optionAnswers.find(a => a.field_option_id === option.field_option_id && a.selected)));
+                            isNewReport
+                                ? option.default_value
+                                : (optionAnswers.find(a => a.field_option_id === option.field_option_id && a.selected)));
 
                         return (
                             <Radioform
@@ -329,7 +329,7 @@ export class ReportScreen extends React.Component {
                                 editable={isEditable}
                                 initial={answerIndex || 0}
                                 itemRealKey="value"
-                                onPress={(label) => this.insertAnswer(field, label, true)} //TODO this only allows '1' to be saved...
+                                onPress={(label) => this.insertAnswer(field, label, true)}
                             />
                         );
                     }
