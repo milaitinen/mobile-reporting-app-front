@@ -41,7 +41,8 @@ export class PreviewScreen extends React.Component {
     };
 
     handleOnPress = () => {
-        this.props.navigation.navigate('NewReport', {
+        this.props.navigation.navigate('Report', {
+            isNewReport: true,
             templateID: this.props.templateID,
             refresh: this.props.navigation.state.params.refresh,
             isEditable: true
