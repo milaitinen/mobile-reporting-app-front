@@ -68,7 +68,7 @@ export class PreviewScreen extends React.Component {
         const renderedFields = this.state.fields.map((field, index) => {
             const renderedField = () => {
                 switch (field.type) {
-
+                    /*
                     case 'NAME': // Name
                         return (
                             <TextInput
@@ -80,7 +80,7 @@ export class PreviewScreen extends React.Component {
                                 style={[newReportStyles.textInput, newReportStyles.disabled]}
                             />
                         );
-
+                    */
                     case 'CHECKBOX': // Checkbox
                     {
                         const checkboxes = field.field_options.map((option, index) => {

@@ -70,7 +70,7 @@ export class ReportScreen extends React.Component {
 
     componentDidMount() {
         if (this.state.isNewReport) {
-            this.instantiate();
+            this._createDraft();
         } else {
             const { templateID, reportID } = this.props.navigation.state.params;
             const { reports, templates } = this.props;
@@ -99,7 +99,7 @@ export class ReportScreen extends React.Component {
         this.props.dispatch(setUnsaved(false));
     }
 
-    instantiate = () => {
+    _createDraft = () => {
         const { username, templates, token } = this.props;
         const { isEditable, templateID } = this.props.navigation.state.params;
 
@@ -114,7 +114,7 @@ export class ReportScreen extends React.Component {
     };
 
     // delete draft from asyncstorage
-    deleteDraft = () => {
+    _deleteDraft = () => {
         const { templateID, reportID } = this.props.navigation.state.params;
         const { username } = this.props;
 
@@ -154,21 +154,23 @@ export class ReportScreen extends React.Component {
         const { isNewReport } = this.state;
         const draft = isNewReport ? newReport : report;
 
-        createNewReport(username, draft, token).then(response => {
-            if (response.status === 200) {
-                this.props.navigation.state.params.refresh();
-                this.props.navigation.dispatch(NavigationActions.back());
-                if (!isNewReport) {
-                    const { templateID, reportID } = this.props.navigation.state.params;
-                    removeDraft(username, templateID, reportID);
+        createNewReport(username, draft, token)
+            .then(response => {
+                if (response.status === 200) {
+                    this.props.navigation.state.params.refresh();
+                    this.props.navigation.dispatch(NavigationActions.back());
+                    if (!isNewReport) {
+                        const { templateID, reportID } = this.props.navigation.state.params;
+                        removeDraft(username, templateID, reportID);
+                    }
+                    return Alert.alert('Report sent!');
+                } else {
+                    console.log('response.status', response.status);
+                    return response.status;
                 }
-                return Alert.alert('Report sent!');
-            } else {
-                return response.status;
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
+            }).catch((error) => {
+                console.error(error);
+            });
     };
 
     insertAnswer = (field, value, isOption) => {
@@ -201,6 +203,7 @@ export class ReportScreen extends React.Component {
 
             const renderedField = () => {
                 switch (field.type) {
+                    /*
                     case 'NAME': // Name TODO: necessary? same as title?
                     {
                         return (
@@ -215,6 +218,7 @@ export class ReportScreen extends React.Component {
                             />
                         );
                     }
+                    */
                     case 'TEXTFIELD_SHORT' : // Name
                     {
                         const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
@@ -254,6 +258,38 @@ export class ReportScreen extends React.Component {
                             </View>
                         );
                     }
+
+                    /*
+                    case 'NESTED_DROPDOWN': // Dropdown
+                    {
+                        return (
+                            <ModalDropdown
+                                disabled={!isEditable}
+                                options={['option 1', 'option 2']}
+                                dropdownStyle={styles.dropStyleClass}
+                                defaultValue={'Select option'}
+                                style={styles.dropdownButton}
+                                textStyle={styles.dropdownText}
+                                renderRow={ () =>
+                                    <View>
+                                        <ModalDropdown
+                                            options={['option 3', 'option 4']}
+                                            style={styles.lowerDropdownStyleClass}
+                                            dropdownStyle={styles.dropStyleClass}
+                                        />
+                                    </View>
+                                }
+                            >
+                                <View style={styles.buttonContent}>
+                                    <Text style={styles.dropdownText}>
+                                        Select option
+                                    </Text>
+                                    <Icon name={'expand-more'} color={EStyleSheet.value('$placeholder')} style={styles.icon}/>
+                                </View>
+                            </ModalDropdown>
+                        );
+                    }
+                     */
 
                     case 'DROPDOWN' : // Dropdown
                     {
@@ -330,7 +366,7 @@ export class ReportScreen extends React.Component {
                                 multiline
                                 style={newReportStyles.multilineTextInput}
                                 onChangeText={(text) => this.insertAnswer(field, text, false)}
-                                value={answer.value}
+                                value={answer ? answer.value : null}
                                 placeholder={isNewReport ? field.default_value : null}
                                 placeholderTextColor={isNewReport ? newReportStyles.$gray : null}
                             />
@@ -459,7 +495,7 @@ export class ReportScreen extends React.Component {
                             <View>
                                 <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.saveAndLeave()} />
                                 <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
-                                <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this.deleteDraft()} />
+                                <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this._deleteDraft()} />
                             </View>
                         }
                         {

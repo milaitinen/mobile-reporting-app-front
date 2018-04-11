@@ -114,12 +114,9 @@ describe('TemplateScreen', () => {
     });
 
     it('getDraft', async () => {
-
         jest.unmock('../../src/screens/api');
         const api = require.requireActual('../../src/screens/api');
-        api.fetchDraftsByTemplateID = jest.fn(() => {
-            return new Promise(resolve => resolve([{ report_id: -1, title: 'draft1' }]));
-        });
+        api.fetchDraftsByTemplateID = jest.fn(() => new Promise(resolve => resolve([{ report_id: -1, title: 'draft1' }])));
 
         const inst = wrapper.getInstance();
         await inst.getDrafts();
