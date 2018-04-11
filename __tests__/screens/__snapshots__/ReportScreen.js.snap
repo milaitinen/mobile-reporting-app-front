@@ -47,6 +47,8 @@ exports[`renders correctly 1`] = `
             defaultValue="Testiraportti"
             editable={false}
             onChangeText={[Function]}
+            placeholder={null}
+            placeholderTextColor={null}
             style={undefined}
             underlineColorAndroid="transparent"
           />
@@ -80,6 +82,8 @@ exports[`renders correctly 1`] = `
             <TextInput
               allowFontScaling={true}
               onChangeText={[Function]}
+              placeholder={null}
+              placeholderTextColor={null}
               style={undefined}
               underlineColorAndroid="transparent"
               value="Test1"

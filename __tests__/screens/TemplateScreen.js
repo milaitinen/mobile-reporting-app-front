@@ -84,7 +84,8 @@ describe('TemplateScreen', () => {
         const inst = wrapper.getInstance();
 
         inst.createNew(1, true);
-        expect(navigate).toHaveBeenCalledWith('NewReport', {
+        expect(navigate).toHaveBeenCalledWith('Report', {
+            isNewReport: true,
             templateID: 1,
             refresh: inst.handleRefresh,
             isEditable: true
@@ -96,6 +97,7 @@ describe('TemplateScreen', () => {
 
         inst.viewReport(1, 2, 'some title');
         expect(navigate).toHaveBeenCalledWith('Report', {
+            isNewReport: false,
             refresh: inst.handleRefresh,
             templateID: 1,
             reportID: 2,
