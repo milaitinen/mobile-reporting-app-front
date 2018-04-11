@@ -24,14 +24,12 @@ import { AppBackground } from '../components/AppBackground';
 import { createNewReport, saveDraft, fetchEmptyTemplate } from './api';
 import { strings } from '../locales/i18n';
 import { emptyFields, insertFieldAnswer, insertTitle, insertDate, createDraft } from '../redux/actions/newReport';
-import { storeDraftByTemplateID } from '../redux/actions/reports';
 import { handleBack } from '../functions/handleBack';
 import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
-import EStyleSheet from 'react-native-extended-stylesheet';
 import { setUnsaved } from '../redux/actions/reportEditing';
 
 
@@ -112,7 +110,7 @@ export class NewReportScreen extends React.Component {
     saveAndLeave = () => {
         this.save();
         this.props.navigation.goBack();
-    };
+    }
 
     // Inserts data to server with a post method.
     send = () => {
