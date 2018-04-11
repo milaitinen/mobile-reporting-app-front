@@ -112,10 +112,13 @@ export class TemplateScreen extends Component {
         const { templates, username } = this.props;
 
         Object.keys(templates).forEach((templateID) => {
-            fetchDraftsByTemplateID(username, templateID)
+            // TODO parseInt has been added recently. Take it away if there's trouble.
+            const id = parseInt(templateID);
+
+            fetchDraftsByTemplateID(username, id)
                 .then((drafts) => {
                     if (drafts.length !== 0) {
-                        drafts.forEach(draft => this.props.dispatch(storeDraftByTemplateID(templateID, draft)));
+                        drafts.forEach(draft => this.props.dispatch(storeDraftByTemplateID(id, draft)));
                     }
                 })
                 .then(() => this.setState({ refreshing: false, isLoading: false }))
