@@ -154,7 +154,8 @@ export class TemplateScreen extends Component {
             this.props.navigation.navigate('NewReport', {
                 templateID: templateID,
                 refresh: this.handleRefresh,
-                isEditable: isEditable });
+                isEditable: isEditable
+            });
         }
         else {
             this.props.dispatch(preview(templateID));
