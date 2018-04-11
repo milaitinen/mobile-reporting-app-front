@@ -99,6 +99,7 @@ export class TemplateScreen extends Component {
 
         let sentSomething = false;
 
+        //Helper function to perform all these async functions in correct order :)
         const send = async () => {
             await asyncForEach(Object.keys(templates), async id => {
                 const status = await sendPendingReportsByTemplateID(username, id, token);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StatusBar, Keyboard, NetInfo, Platform, } from 'react-native';
+import { Text, StatusBar, Keyboard, NetInfo, Platform, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
@@ -72,7 +72,10 @@ export class LoginScreen extends React.Component {
                 } else {
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
-                    sendAllPendingReports(this.props.username, token);
+                    sendAllPendingReports(this.props.username, token)
+                        .then(sentPending => {
+                            if (sentPending) { Alert.alert('Pending reports sent!');}
+                        });
                     this.resetNavigationTo(LOGGED_IN_ROUTE_NAME);
                     this.props.dispatch(insertPassword(null));
                 }
