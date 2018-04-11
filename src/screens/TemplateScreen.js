@@ -154,7 +154,8 @@ export class TemplateScreen extends Component {
     createNew = (templateID, isEditable) => {
         if (isEditable) {
             // this.setState({ isLoading: true });
-            this.props.navigation.navigate('NewReport', {
+            this.props.navigation.navigate('Report', {
+                isNewReport: true,
                 templateID: templateID,
                 refresh: this.handleRefresh,
                 isEditable: isEditable
@@ -171,7 +172,7 @@ export class TemplateScreen extends Component {
     viewReport = (templateID, reportID, title) => {
         //this.setState({ isLoading: true }); TODO same problem as above
         this.props.navigation.navigate('Report',
-            { refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
+            { isNewReport: false, refresh: this.handleRefresh, templateID: templateID, reportID: reportID, title: title });
     };
 
     render() {
