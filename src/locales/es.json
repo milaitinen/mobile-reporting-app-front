@@ -11,14 +11,14 @@
   "templates": {
     "templates": "Plantillas",
     "search": "Buscar..",
-    "report": "Reportaje",
-    "reports": "Reportajes",
+    "report": "Reporte",
+    "reports": "Reportes",
     "approved": "Aprobado",
     "sent": "Despachado",
     "draft": "Boceto",
     "drafts": "Bocetos",
     "showMore": "Enseñar más",
-    "endOfReports": "No hay más reportajes",
+    "endOfReports": "No hay más reportes",
     "preview": "Previsualización",
     "pending": "Despachando"
   },
@@ -26,15 +26,15 @@
   "createNew": {
     "send": "Enviar",
     "save": "Guardar",
-    "createNew": "Crear un nuevo reportaje",
-    "enterNew": "Entrar el nombre del reportaje",
-    "reportAdded": "Reportaje despachado",
-    "noConnection": "Spanish spanish, no hablo español",
+    "createNew": "Crear un nuevo reporte",
+    "enterNew": "Entrar el nombre del reporte",
+    "reportAdded": "Reporte enviado",
+    "noConnection": "El envío del reporte ha fallado debido a un problema de red. ¿Desea guardar sus cambios?",
     "yes": "Sí",
-    "no": "Bien",
+    "no": "No",
     "cancel": "Cancelar",
-    "saved": "DESPACITO",
-    "queued": "TENGO LA CAMISA NEGRA"
+    "saved": "Reporte guardado",
+    "queued": "El reporte ha sido añadido a la fila"
 },
 
   "navigation": {
