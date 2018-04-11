@@ -15,7 +15,6 @@ const insertAnswer = (state, action) => {
     // Check whether the field is option-type (dropdown, checkbox)
     if (action.isOption) {
         // Find answer field with the right id and update value
-
         if ((action.field.type === 'RADIOBUTTON') || (action.field.type === 'DROPDOWN')) { //clear selections if field type is radiobutton or dropdown
             state.option_answers.filter((answer) => {
                 return (action.field.field_options

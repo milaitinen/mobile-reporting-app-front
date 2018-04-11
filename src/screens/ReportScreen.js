@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import ModalDropdown from 'react-native-modal-dropdown';
+// import ModalDropdown from 'react-native-modal-dropdown';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
@@ -24,13 +24,13 @@ import { AppBackground } from '../components/AppBackground';
 import { createNewReport, removeDraft, saveDraft, fetchEmptyTemplate } from './api';
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields, openReport, insertDate, insertTitle, createDraft } from '../redux/actions/newReport';
-import { setUnsaved } from '../redux/actions/reportEditing';
+import { setUnsaved, setSavingRequested } from '../redux/actions/reportEditing';
 import { handleBack } from '../functions/handleBack';
 import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
-import styles from '../components/Dropdown/styles';
+// import styles from '../components/Dropdown/styles';
 // import EStyleSheet from 'react-native-extended-stylesheet';
 
 // TODO: COMMENT EVERYTINGS great. isEditable changed based on draft/report?
@@ -64,7 +64,6 @@ export class ReportScreen extends React.Component {
         if (isNewReport) {
             // BackHandler for detecting hardware button presses for back navigation (Android only)
             BackHandler.addEventListener('hardwareBackPress', this._handleBack);
-            // TODO: implement checking isUnsaved, now it is assumed to be true.
             this.props.dispatch(setUnsaved(true));
         }
     }
@@ -75,15 +74,12 @@ export class ReportScreen extends React.Component {
         } else {
             const { templateID, reportID } = this.props.navigation.state.params;
             const { reports, templates } = this.props;
+
             const report = reports[templateID].find((obj) => obj.report_id === reportID);
             const fields = templates[templateID] ? templates[templateID].fields : [];
 
             this.props.dispatch(openReport(report));
             this.setState({ fields: fields, isEditable: reportID < 0, isLoading : false });
-            // TODO: implement checking isUnsaved. Now drafts are always assumed to be unsaved.
-            if (reportID < 0) {
-                this.props.dispatch(setUnsaved(true));
-            }
 
             // BackHandler for detecting hardware button presses for back navigation (Android only)
             BackHandler.addEventListener('hardwareBackPress', this._handleBack);
@@ -95,8 +91,10 @@ export class ReportScreen extends React.Component {
         BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
 
         if (this.props.isSavingRequested) {
-            // TODO when is isSavingRequested false?
-            if (this.state.isNewReport || this.props.navigation.state.params.reportID < 0) this.save();
+            if (this.state.isNewReport || this.props.navigation.state.params.reportID < 0) {
+                this.save();
+                this.props.dispatch(setSavingRequested(false));
+            }
         }
         this.props.dispatch(setUnsaved(false));
     }
@@ -135,10 +133,11 @@ export class ReportScreen extends React.Component {
         const { templateID } = this.props.navigation.state.params;
         const draft = this.state.isNewReport ? newReport : report;
 
-        saveDraft(username, templateID, draft); // give a negative id
-
+        saveDraft(username, templateID, draft); // save draft to AsyncStorage
         Alert.alert('Draft saved!');
+
         this.setState({ isLoading: true });
+
         //refresh template screen
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
@@ -172,6 +171,13 @@ export class ReportScreen extends React.Component {
         });
     };
 
+    insertAnswer = (field, value, isOption) => {
+        const { dispatch, isUnsaved } = this.props;
+
+        dispatch(insertFieldAnswer(field, value, isOption));
+        if (!isUnsaved) dispatch(setUnsaved(true));
+    };
+
     render() {
 
         if (this.state.isLoading) {
@@ -188,7 +194,7 @@ export class ReportScreen extends React.Component {
         }
 
         const { isEditable, isNewReport } = this.state;
-        const { report, newReport } = this.props;
+        const { report, newReport, isUnsaved, dispatch } = this.props;
         const optionAnswers = isNewReport ? newReport.option_answers : report.option_answers;
 
         const renderedFields = this.state.fields.map((field, index) => {
@@ -200,7 +206,7 @@ export class ReportScreen extends React.Component {
                         return (
                             <TextInput
                                 placeholder={field.default_value}
-                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
+                                onChangeText={(text) => this.insertAnswer(field, text, false)}
                                 placeholderTextColor={newReportStyles.$gray}
                                 //Title is now set separately from this field
                                 //onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
@@ -217,7 +223,7 @@ export class ReportScreen extends React.Component {
                                 placeholder={isNewReport ? field.default_value : null}
                                 placeholderTextColor={isNewReport ? newReportStyles.$gray : null}
                                 value={isNewReport ? null : answer.value}
-                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
+                                onChangeText={(text) => this.insertAnswer(field, text, false)}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInput}
                             />
@@ -238,7 +244,7 @@ export class ReportScreen extends React.Component {
                                     //The ability to dispatch the checkbox status is passed on to the component
                                     //as a prop, and the component itself can call this function in its
                                     //onIconPress, i.e. when the checkbox is pressed
-                                    onPressFunction={() => this.props.dispatch(insertFieldAnswer(field, option, true))}
+                                    onPressFunction={() => this.insertAnswer(field, option, true)}
                                 />
                             );
                         });
@@ -265,7 +271,7 @@ export class ReportScreen extends React.Component {
                                 disabled={!isEditable}
                                 defaultValue={isNewReport ? 'Select user' : selected.value}
                                 options={field.field_options.map((option) => option.value)}
-                                onSelect={(value) => this.props.dispatch(insertFieldAnswer(field, getOptionByValue(value), true))}
+                                onSelect={(value) => this.insertAnswer(field, getOptionByValue(value), true)}
                             />
                         );
                     }
@@ -287,7 +293,7 @@ export class ReportScreen extends React.Component {
                                 editable={isEditable}
                                 initial={answerIndex || 0}
                                 itemRealKey="value"
-                                onPress={(label) => this.props.dispatch(insertFieldAnswer(field, label, true))} //TODO this only allows '1' to be saved...
+                                onPress={(label) => this.insertAnswer(field, label, true)} //TODO this only allows '1' to be saved...
                             />
                         );
                     }
@@ -302,7 +308,7 @@ export class ReportScreen extends React.Component {
                                 editable={isEditable}
                                 mode={'date'}
                                 answer={answer}
-                                onChange={(date) => this.props.dispatch(insertFieldAnswer(field, date, false))}
+                                onChange={(date) => this.insertAnswer(field, date, false)}
                             />
                         );
                     }
@@ -323,7 +329,7 @@ export class ReportScreen extends React.Component {
                             <TextInput
                                 multiline
                                 style={newReportStyles.multilineTextInput}
-                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
+                                onChangeText={(text) => this.insertAnswer(field, text, false)}
                                 value={answer.value}
                                 placeholder={isNewReport ? field.default_value : null}
                                 placeholderTextColor={isNewReport ? newReportStyles.$gray : null}
@@ -342,7 +348,7 @@ export class ReportScreen extends React.Component {
                                 editable={isEditable}
                                 mode={'time'}
                                 answer={answer}
-                                onChange={(time) => this.props.dispatch(insertFieldAnswer(field, time, false))}
+                                onChange={(time) => this.insertAnswer(field, time, false)}
                             />
                         );
                     }
@@ -357,7 +363,7 @@ export class ReportScreen extends React.Component {
                                 placeholder={isNewReport ? field.default_value : null}
                                 placeholderTextColor={isNewReport ? newReportStyles.$gray: null}
                                 keyboardType='numeric'
-                                onChangeText={(text) => this.props.dispatch(insertFieldAnswer(field, text, false))}
+                                onChangeText={(text) => this.insertAnswer(field, text, false)}
                             />
                         );
                     }
@@ -436,7 +442,10 @@ export class ReportScreen extends React.Component {
                                 placeholder={isNewReport ? 'Otsikko' : null}
                                 placeholderTextColor={isNewReport ? newReportStyles.$gray : null}
                                 defaultValue={isNewReport ? null : this.props.navigation.state.params.title}
-                                onChangeText={(title) => this.props.dispatch(insertTitle(title))}
+                                onChangeText={(title) => {
+                                    dispatch(insertTitle(title));
+                                    if (!isUnsaved) dispatch(setUnsaved(true));
+                                }}
                                 underlineColorAndroid='transparent'
                                 style={newReportStyles.textInput}
                             />
