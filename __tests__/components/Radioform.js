@@ -44,8 +44,8 @@ describe('Radioform component', () => {
     });
 
     it('works as expected when press function called', () => {
-        inst.press('Option 1');
-        expect(inst.state.value).toEqual('Option 1');
+        inst.press(2);
+        expect(inst.state.index).toEqual(2);
     });
 });
 
@@ -57,6 +57,7 @@ describe('Radioform presses', () => {
             editable={true}
             initial={0}
             itemRealKey='value'
+            onPress={jest.fn()}
         />
     );
 

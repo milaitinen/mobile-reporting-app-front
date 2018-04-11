@@ -29,7 +29,10 @@ class Radioform extends Component {
                             obj={obj}
                             index={i}
                             isSelected={this.state.index === i}
-                            onPress={() => this.press(i)}
+                            onPress={(value) => {
+                                this.props.onPress(value);
+                                this.press(i);
+                            }}
                             borderWidth={1.5}
                             buttonInnerColor={'#359ef3'}
                             buttonOuterColor={this.state.index === i ? styles.$blue : button}

@@ -382,7 +382,7 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
                           pointerEvents="auto"
                         >
                           <DatePickerIOS
-                            date={2018-04-11T11:00:00.000Z}
+                            date={2018-04-12T11:00:00.000Z}
                             maximumDate={undefined}
                             minimumDate={undefined}
                             minuteInterval={10}
