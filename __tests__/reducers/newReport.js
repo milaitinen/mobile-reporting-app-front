@@ -371,8 +371,6 @@ describe('newReportReducer reducer', () => {
         ).toEqual(initialState);
     });
 
-
-    /*
     it('should handle SET_UNSAVED', () => {
         expect(
             newReportReducer(initialState, {
@@ -382,5 +380,5 @@ describe('newReportReducer reducer', () => {
         ).toEqual({
             isUnsaved: false,
         });
-    });*/
+    });
 });
