@@ -133,7 +133,11 @@ export class ReportScreen extends React.Component {
     save = () => {
         const { username, report, newReport } = this.props;
         const { templateID } = this.props.navigation.state.params;
-        const draft = this.state.isNewReport ? newReport : report;
+        const { isNewReport } = this.state;
+        const draft = isNewReport ? newReport : report;
+
+        // Update date_created to current date
+        if (!isNewReport) draft.date_created = moment().format('YYYY-MM-DD');
 
         saveDraft(username, templateID, draft); // give a negative id
         Alert.alert(strings('createNew.saved'));
@@ -151,6 +155,9 @@ export class ReportScreen extends React.Component {
         const { templateID, reportID } = this.props.navigation.state.params;
 
         report.report_id = null;    // sets id to null, will get proper id when sent
+        // Update date_created to current date
+        if (!this.state.isNewReport) report.date_created = moment().format('YYYY-MM-DD');
+
         Alert.alert(strings('createNew.queued'));
         saveToQueueWithTemplateID(username, templateID, report);
 
