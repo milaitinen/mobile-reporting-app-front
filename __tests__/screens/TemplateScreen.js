@@ -72,21 +72,25 @@ describe('TemplateScreen', () => {
 
     it('if isEditable=false createNew() should call this.props.navigation.navigate("Preview", ...)', () => {
         const inst = wrapper.getInstance();
-
+        inst.setState({ isNavigating: false });
         inst.createNew(1, false);
+
         expect(navigate).toHaveBeenCalledWith('Preview', {
             refresh: inst.handleRefresh,
+            navigateDebounce: inst.handleNavigatingDebounce,
             isEditable: false
         });
     });
 
     it('if isEditable=true createNew() should call this.props.navigation.navigate("NewReport", ...)', () => {
         const inst = wrapper.getInstance();
-
+        inst.setState({ isNavigating: false });
         inst.createNew(1, true);
+
         expect(navigate).toHaveBeenCalledWith('Report', {
             isNewReport: true,
             templateID: 1,
+            navigateDebounce: inst.handleNavigatingDebounce,
             reportID: null,
             refresh: inst.handleRefresh,
             isEditable: true
@@ -95,11 +99,13 @@ describe('TemplateScreen', () => {
 
     it('viewReport() call this.props.navigation.navigate("Report", ...)', () => {
         const inst = wrapper.getInstance();
-
+        inst.setState({ isNavigating: false });
         inst.viewReport(1, 2, 'some title');
+
         expect(navigate).toHaveBeenCalledWith('Report', {
             isNewReport: false,
             refresh: inst.handleRefresh,
+            navigateDebounce: inst.handleNavigatingDebounce,
             templateID: 1,
             reportID: 2,
             title: 'some title'
