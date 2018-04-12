@@ -15,6 +15,7 @@ configure({ adapter: new Adapter() });
 describe('<PreviewScreen />', () => {
 
     jest.mock('DatePickerIOS', () => 'DatePickerIOS');
+    Date.now = jest.fn(() => new Date(Date.UTC(2018, 4, 12)).valueOf());
 
     const navigate = jest.fn();
     const navigation = { navigate: navigate, state: { params: { refresh: jest.fn(), isEditable: true } } };

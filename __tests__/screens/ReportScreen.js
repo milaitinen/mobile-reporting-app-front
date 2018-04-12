@@ -15,6 +15,7 @@ import { ReportScreen } from '../../src/screens/ReportScreen';
 configure({ adapter: new Adapter() });
 
 jest.mock('DatePickerIOS', () => 'DatePickerIOS');
+Date.now = jest.fn(() => new Date(Date.UTC(2018, 4, 12)).valueOf());
 
 const templates = {
     1: {
