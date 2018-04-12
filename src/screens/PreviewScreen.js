@@ -33,6 +33,11 @@ export class PreviewScreen extends React.Component {
         this.getTemplateFields(templates, templateID);
     }
 
+    componentWillUnmount() {
+        // Calls handler function to set isNavigating back to false in TemplateScreen.
+        this.props.navigation.state.params.navigateDebounce();
+    }
+
     getTemplateFields = (templates, templateID) => {
         const isEditable = this.props.navigation.state.params.isEditable;
         const fields = templates[templateID] ? templates[templateID].fields : [];
@@ -45,7 +50,8 @@ export class PreviewScreen extends React.Component {
             isNewReport: true,
             templateID: this.props.templateID,
             refresh: this.props.navigation.state.params.refresh,
-            isEditable: true
+            isEditable: true,
+            navigateDebounce: this.props.navigation.state.params.navigateDebounce
         });
     };
 
