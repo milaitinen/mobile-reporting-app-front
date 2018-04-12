@@ -45,22 +45,6 @@ export class TemplateScreen extends Component {
     }
 
     /*
-    handleBackPress = () => {
-        if (this.backPressed && this.backPressed > 0) {
-            this.props.navigator.popToRoot({ animated: false });
-            return false;
-        }
-
-        this.backPressed = 1;
-        this.props.navigator.showSnackbar({
-            text: 'Press one more time to exit',
-            duration: 'long',
-        });
-        return true;
-    }
-    */
-
-    /*
      componentDidMount() is invoked immediately after the component is mounted. Initialization that requires
      DOM nodes happens here. The function calls getTemplates which loads data from a remote url,
      and instantiates the network request.

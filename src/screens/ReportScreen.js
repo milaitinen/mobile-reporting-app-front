@@ -35,7 +35,6 @@ import templateScreenStyles from './style/templateScreenStyles';
 // import styles from '../components/Dropdown/styles';
 // import EStyleSheet from 'react-native-extended-stylesheet';
 
-// TODO: COMMENT EVERYTINGS great. isEditable changed based on draft/report?
 export class ReportScreen extends React.Component {
 
     static navigationOptions = () => {
@@ -251,22 +250,7 @@ export class ReportScreen extends React.Component {
 
             const renderedField = () => {
                 switch (field.type) {
-                    /*
-                    case 'NAME': // Name TODO: necessary? same as title?
-                    {
-                        return (
-                            <TextInput
-                                placeholder={field.default_value}
-                                onChangeText={(text) => this.insertAnswer(field, text, false)}
-                                placeholderTextColor={newReportStyles.$gray}
-                                //Title is now set separately from this field
-                                //onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
-                                underlineColorAndroid='transparent'
-                                style={newReportStyles.textInput}
-                            />
-                        );
-                    }
-                    */
+
                     case 'TEXTFIELD_SHORT' : // Name
                     {
                         const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);

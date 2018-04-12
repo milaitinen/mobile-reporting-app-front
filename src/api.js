@@ -397,18 +397,6 @@ const removeData = (dataUrl) => {
     }
 };
 
-// Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178?
-/* Is this really necessary? TODO: Testing this change with the android peeps
-    if (Platform.OS === 'ios') {
-        return new Promise(resolve => {
-            const handleFirstConnectivityChangeIOS = isConnected => {
-                NetInfo.isConnected.removeEventListener('connectionChange', handleFirstConnectivityChangeIOS);
-                resolve(isConnected);
-            };
-            NetInfo.isConnected.addEventListener('connectionChange', handleFirstConnectivityChangeIOS);
-        });
-    }
- */
 export function isNetworkConnected() {
 
     return NetInfo.isConnected.fetch();

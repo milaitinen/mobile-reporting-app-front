@@ -16,7 +16,6 @@ import { insertTitle } from '../redux/actions/preview';
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
-import EStyleSheet from 'react-native-extended-stylesheet';
 
 export class PreviewScreen extends React.Component {
     constructor(props) {
@@ -74,19 +73,7 @@ export class PreviewScreen extends React.Component {
         const renderedFields = this.state.fields.map((field, index) => {
             const renderedField = () => {
                 switch (field.type) {
-                    /*
-                    case 'NAME': // Name
-                        return (
-                            <TextInput
-                                editable={isEditable}
-                                placeholder={field.default_value}
-                                placeholderTextColor={newReportStyles.$disabledGray}
-                                onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
-                                underlineColorAndroid='transparent'
-                                style={[newReportStyles.textInput, newReportStyles.disabled]}
-                            />
-                        );
-                    */
+
                     case 'CHECKBOX': // Checkbox
                     {
                         const checkboxes = field.field_options.map((option, index) => {
@@ -105,6 +92,7 @@ export class PreviewScreen extends React.Component {
                         );
                     }
 
+                    /*
                     case 'NESTED_DROPDOWN': // Dropdown
                         return (
                             <ModalDropdown
@@ -133,6 +121,7 @@ export class PreviewScreen extends React.Component {
                                 </View>
                             </ModalDropdown>
                         );
+                    */
 
                     case 'TEXTFIELD_SHORT': // TextRow (One row text field)
                         return (
