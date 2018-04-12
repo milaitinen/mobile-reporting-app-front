@@ -39,7 +39,8 @@ export class TemplateScreen extends Component {
             isLoading       : true,     // Checks whether the app is loading or not.
             refreshing      : false,    // Checks whether the app and its data is refreshing or not.
             scrollEnabled   : true,     // Checks whether the template screen is scrollable or not.
-            renderFooter    : false,     // If true, empty space is rendered after the last template. This is set to true while a template is opened.
+            renderFooter    : false,    // If true, empty space is rendered after the last template. This is set to true while a template is opened.
+            isNavigating    : false,    // Checks whether the user is navigating to another screen in the stack.
         };
     }
 
@@ -179,6 +180,11 @@ export class TemplateScreen extends Component {
         this.setState({ isLoading: true, });
     };
 
+    // Handler function to set isNavigating to false if user returns back to this screen.
+    handleNavigatingDebounce = () => {
+        this.setState({ isNavigating: false });
+    }
+
     // Determines whether this screen is scrollable or not.
     setScrollEnabled = (bool) => {
         this.setState({ scrollEnabled : bool });
@@ -199,34 +205,53 @@ export class TemplateScreen extends Component {
      app knows to which template the new report has to be added.
     */
     createNew = (templateID, isEditable) => {
-        if (isEditable) {
-            this.props.navigation.navigate('Report', {
-                isNewReport: true,
-                templateID: templateID,
-                reportID: null,
-                refresh: this.handleRefresh,
-                isEditable: isEditable
-            });
-        }
-        else {
-            this.props.dispatch(preview(templateID));
-            this.props.navigation.navigate('Preview', {
-                refresh: this.handleRefresh,
-                isEditable: isEditable
-            });
+        /*
+         * Condition checks whether user is already navigating.
+         * Used to prevent multiple navigations simultaneously to different routes
+         * if the user presses different buttons too quickly.
+        */
+        if (!this.state.isNavigating) {
+            this.setState({ isNavigating: true });
+            if (isEditable) {
+                this.props.navigation.navigate('Report', {
+                    isNewReport: true,
+                    templateID: templateID,
+                    reportID: null,
+                    refresh: this.handleRefresh,
+                    isEditable: isEditable,
+                    navigateDebounce: this.handleNavigatingDebounce
+                });
+            }
+            else {
+                this.props.dispatch(preview(templateID));
+                this.props.navigation.navigate('Preview', {
+                    refresh: this.handleRefresh,
+                    isEditable: isEditable,
+                    navigateDebounce: this.handleNavigatingDebounce
+                });
+            }
         }
         //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReportScreen and uncomment this
     };
 
     viewReport = (templateID, reportID, title) => {
         //this.setState({ isLoading: true }); TODO same problem as above
-        this.props.navigation.navigate('Report', {
-            isNewReport: false,
-            templateID: templateID,
-            reportID: reportID,
-            refresh: this.handleRefresh,
-            title: title
-        });
+        /*
+         * Condition checks whether user is already navigating.
+         * Used to prevent multiple navigations simultaneously to different routes
+         * if the user presses different buttons too quickly.
+        */
+        if (!this.state.isNavigating) {
+            this.setState({ isNavigating: true });
+            this.props.navigation.navigate('Report', {
+                isNewReport: false,
+                templateID: templateID,
+                reportID: reportID,
+                refresh: this.handleRefresh,
+                title: title,
+                navigateDebounce: this.handleNavigatingDebounce
+            });
+        }
     };
 
     render() {

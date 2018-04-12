@@ -89,6 +89,8 @@ export class ReportScreen extends React.Component {
     }
 
     componentWillUnmount() {
+        // Calls handler function to set isNavigating back to false in TemplateScreen.
+        this.props.navigation.state.params.navigateDebounce();
         // Removes the BackHandler EventListener when unmounting
         BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
 
