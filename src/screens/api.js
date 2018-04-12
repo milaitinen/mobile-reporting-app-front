@@ -1,7 +1,10 @@
 import { AsyncStorage, NetInfo, } from 'react-native';
+import Config from 'react-native-config';
 import { asyncForEach } from '../functions/helpers';
 
-import { url } from './urlsetting';
+//import { url } from './urlsetting';
+
+const url = Config.API_URL;
 
 export const login = (username, password) => {
     return fetch(`${url}/login`, {
