@@ -10,6 +10,7 @@ import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
 import { isNetworkConnected, login, sendAllPendingReports } from './api';
 import { NavigationActions } from 'react-navigation';
+import { OfflineNotice } from '../components/OfflineNotice';
 import { toggleConnection } from '../redux/actions/connection';
 import { setInitialConnection } from '../redux/actions/connection';
 import { LOGGED_IN_ROUTE_NAME } from '../navigation/AppNavigation';

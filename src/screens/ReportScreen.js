@@ -86,7 +86,7 @@ export class ReportScreen extends React.Component {
     save = ( isDraft ) => {
         const { username, report } = this.props;
         const { templateID } = this.props.navigation.state.params;
-      
+
        if (isDraft) {
             report.report_id = saveDraft(username, templateID, report); // give a negative id
             Alert.alert(strings('createNew.saved'));
@@ -95,7 +95,7 @@ export class ReportScreen extends React.Component {
             Alert.alert(strings('createNew.queued'));
             saveToQueueWithTemplateID(username, templateID, report);
         }
-      
+
         this.setState({ isLoading: true });
         //refresh template screen
         this.props.dispatch(emptyFields());
@@ -136,7 +136,7 @@ export class ReportScreen extends React.Component {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
                 removeDraft(username, templateID, reportID);
-           
+
                 return Alert.alert('Report sent!');
             } else {
                 return response.status;
@@ -423,7 +423,7 @@ const mapStateToProps = (state) => {
         token,
         reports,
         templates,
-        isConnected
+        isConnected,
         isSavingRequested,
         isUnsaved,
     };
