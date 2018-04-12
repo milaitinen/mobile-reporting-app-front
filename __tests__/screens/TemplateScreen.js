@@ -33,7 +33,7 @@ describe('TemplateScreen', () => {
 
         const inst = wrapper.getInstance();
 
-        jest.mock('../../src/screens/api', () => {
+        jest.mock('../../src/api', () => {
             return {
                 fetchReportsByTemplateID: jest.fn(),
                 fetchTemplatesByUsername: jest.fn(),
@@ -114,8 +114,8 @@ describe('TemplateScreen', () => {
     });
 
     it('getDraft', async () => {
-        jest.unmock('../../src/screens/api');
-        const api = require.requireActual('../../src/screens/api');
+        jest.unmock('../../src/api');
+        const api = require.requireActual('../../src/api');
         api.fetchDraftsByTemplateID = jest.fn(() => new Promise(resolve => resolve([{ report_id: -1, title: 'draft1' }])));
 
         const inst = wrapper.getInstance();

@@ -1,7 +1,7 @@
 import { AsyncStorage, NetInfo, } from 'react-native';
-import { asyncForEach } from '../functions/helpers';
+import { asyncForEach } from './functions/helpers';
 
-import { url } from './urlsetting';
+import { url } from './screens/urlsetting';
 
 export const login = (username, password) => {
     return fetch(`${url}/login`, {

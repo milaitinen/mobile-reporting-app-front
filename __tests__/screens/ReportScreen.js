@@ -98,8 +98,8 @@ describe('TemplateScreen', () => {
             dispatch={dispatch} />
     );
 
-    jest.unmock('../../src/screens/api');
-    const api = require.requireActual('../../src/screens/api');
+    jest.unmock('../../src/api');
+    const api = require.requireActual('../../src/api');
     api.fetchEmptyTemplate = jest.fn(() => new Promise(resolve => resolve({ template_id: 2, report_id: null, user_id: 4 })));
     api.createNewReport = jest.fn(() => new Promise(resolve => resolve({ status: 200 })));
     api.removeDraft = removeDraft;

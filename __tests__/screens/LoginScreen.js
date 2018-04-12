@@ -25,8 +25,8 @@ describe('Login screen', () => {
         expect(tree).toMatchSnapshot();
     });
 
-    jest.unmock('../../src/screens/api');
-    const api = require.requireActual('../../src/screens/api');
+    jest.unmock('../../src/api');
+    const api = require.requireActual('../../src/api');
 
     const navigate = jest.fn();
     const dispatch = jest.fn();

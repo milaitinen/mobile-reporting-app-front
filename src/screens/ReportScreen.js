@@ -21,7 +21,7 @@ import { Dropdown } from '../components/Dropdown';
 import { Button } from '../components/Button';
 import { Datepicker } from '../components/Datepicker';
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, removeDraft, saveDraft, fetchEmptyTemplate, saveToQueueWithTemplateID } from './api';
+import { createNewReport, removeDraft, saveDraft, fetchEmptyTemplate, saveToQueueWithTemplateID } from '../api';
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields, openReport, insertDate, insertTitle, createDraft } from '../redux/actions/newReport';
 import { setUnsaved, setSavingRequested } from '../redux/actions/reportEditing';

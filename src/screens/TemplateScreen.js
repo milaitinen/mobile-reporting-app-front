@@ -20,7 +20,7 @@ import {
     fetchDraftsByTemplateID,
     fetchQueuedByTemplateID,
     sendPendingReportsByTemplateID
-} from './api';
+} from '../api';
 import { asyncForEach } from '../functions/helpers';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID, storeDraftByTemplateID, storeQueuedReportByTemplateID, insertTemplateID } from '../redux/actions/reports';

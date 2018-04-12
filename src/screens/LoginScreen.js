@@ -8,7 +8,7 @@ import { Input } from '../components/TextInput';
 import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
-import { isNetworkConnected, login, sendAllPendingReports } from './api';
+import { isNetworkConnected, login, sendAllPendingReports } from '../api';
 import { NavigationActions } from 'react-navigation';
 import { OfflineNotice } from '../components/OfflineNotice';
 import { toggleConnection } from '../redux/actions/connection';
