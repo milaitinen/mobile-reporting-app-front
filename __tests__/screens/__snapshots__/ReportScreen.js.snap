@@ -782,10 +782,14 @@ exports[`ReportScreen renders correctly 1`] = `
             <TextInput
               allowFontScaling={true}
               multiline={true}
+              onBlur={[Function]}
               onChangeText={[Function]}
+              onFocus={[Function]}
               placeholder={null}
               placeholderTextColor={null}
+              selectionColor={undefined}
               style={undefined}
+              underlineColorAndroid="transparent"
               value={null}
             />
           </View>
@@ -1690,10 +1694,14 @@ exports[`ReportScreen renders correctly 1`] = `
             <TextInput
               allowFontScaling={true}
               keyboardType="numeric"
+              onBlur={[Function]}
               onChangeText={[Function]}
+              onFocus={[Function]}
               placeholder={null}
               placeholderTextColor={null}
+              selectionColor={undefined}
               style={undefined}
+              underlineColorAndroid="transparent"
               value="21789"
             />
           </View>
