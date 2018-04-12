@@ -1,5 +1,8 @@
 import React from 'react';
-import { /*Button, */ View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking, /*Picker*/ } from 'react-native';
+import {
+    View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking,
+    BackHandler,
+} from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 // import ModalDropdown from 'react-native-modal-dropdown';
@@ -15,10 +18,12 @@ import { createNewReport, removeDraft, saveDraft, saveToQueueWithTemplateID } fr
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields, openReport, insertTitle } from '../redux/actions/newReport';
 import { storeDraftByTemplateID, storeQueuedReportByTemplateID } from '../redux/actions/reports';
-
+import { setUnsaved } from '../redux/actions/reportEditing';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
+import { handleBack } from '../functions/handleBack';
+
 // import styles from '../components/Dropdown/styles';
 // import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -28,7 +33,6 @@ export class ReportScreen extends React.Component {
         super(props);
         this.state = {
             title           : null,
-            isUnsaved       : true,
             isLoading       : true,
             number          : '',
             isEditable      : false,
@@ -36,14 +40,32 @@ export class ReportScreen extends React.Component {
         };
     }
 
+    _handleBack = () => handleBack(this.props.dispatch, this.props.isUnsaved);
+
     componentDidMount() {
         const { templateID, reportID } = this.props.navigation.state.params;
         const { reports, templates } = this.props;
         const report = reports[templateID].find((obj) => obj.report_id === reportID);
         const fields = templates[templateID] ? templates[templateID].fields : [];
-
         this.props.dispatch(openReport(report));
         this.setState({ fields: fields, isEditable: reportID < 0, isLoading : false });
+        // TODO: implement checking isUnsaved. Now drafts are always assumed to be unsaved.
+        if (reportID < 0) {
+            this.props.dispatch(setUnsaved(true));
+        }
+
+        // BackHandler for detecting hardware button presses for back navigation (Android only)
+        BackHandler.addEventListener('hardwareBackPress', this._handleBack);
+    }
+
+    componentWillUnmount() {
+        // Removes the BackHandler EventListener when unmounting
+        BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
+
+        if (this.props.isSavingRequested) {
+            this.save();
+        }
+        this.props.dispatch(setUnsaved(false));
     }
 
     // delete draft from asyncstorage
@@ -64,24 +86,26 @@ export class ReportScreen extends React.Component {
     save = ( isDraft ) => {
         const { username, report } = this.props;
         const { templateID } = this.props.navigation.state.params;
-
-        if (isDraft) {
+      
+       if (isDraft) {
             report.report_id = saveDraft(username, templateID, report); // give a negative id
-            this.props.dispatch(storeDraftByTemplateID(templateID, report)); // store drafts together with other reports in reports state)
             Alert.alert(strings('createNew.saved'));
         } else {
             report.report_id = null;    // sets id to null, will get proper id when sent
-            this.props.dispatch(storeQueuedReportByTemplateID(templateID, report)); //store queue on top of drafts and rerports
             Alert.alert(strings('createNew.queued'));
             saveToQueueWithTemplateID(username, templateID, report);
         }
-
+      
         this.setState({ isLoading: true });
-        //this.setState({ isUnsaved: false });
-        //return to template screen and have it refreshed
+        //refresh template screen
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
-        this.props.navigation.dispatch(NavigationActions.back());
+
+ };
+
+    saveAndLeave = ( isDraft ) => {
+        this.save( isDraft );
+        this.props.navigation.goBack();
     };
 
     // Inserts data to server with a post method.
@@ -112,6 +136,7 @@ export class ReportScreen extends React.Component {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
                 removeDraft(username, templateID, reportID);
+           
                 return Alert.alert('Report sent!');
             } else {
                 return response.status;
@@ -167,7 +192,6 @@ export class ReportScreen extends React.Component {
                                 <Checkbox
                                     key={index}
                                     editable={isEditable}
-                                    style={newReportStyles.checkboxStyle}
                                     title={option.value}
                                     defaultValue={(answer != null)}
                                     //The ability to dispatch the checkbox status is passed on to the component
@@ -201,7 +225,6 @@ export class ReportScreen extends React.Component {
                             />
                         );
                     }
-
                     case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
                     {
                         const labels = field.field_options.map((option) => {
@@ -209,7 +232,6 @@ export class ReportScreen extends React.Component {
                                 { label: option.value, value: option }
                             );
                         });
-
                         const answerIndex = field.field_options.findIndex((option) =>
                             (optionAnswers.find(a => a.field_option_id === option.field_option_id && a.selected)));
 
@@ -294,7 +316,19 @@ export class ReportScreen extends React.Component {
                                 <Icon name={'link'} type={'feather'} iconStyle={newReportStyles.linkIcon}/>
                                 <Text
                                     style={newReportStyles.link}
-                                    onPress={() => Linking.openURL(answer.value)}>
+                                    onPress={() => {
+                                        const url = answer.value;
+                                        // This checks if any installed app can handle the
+                                        // url before attempting to open it.
+                                        // This is done as shown in React Native docs.
+                                        Linking.canOpenURL(url).then(supported => {
+                                            if (!supported) {
+                                                console.log('Can\'t handle url: ' + url);
+                                            } else {
+                                                return Linking.openURL(url);
+                                            }
+                                        }).catch(err => console.error('An error occurred', err));
+                                    }}>
                                     {answer.value}
                                 </Text>
                             </View>
@@ -318,9 +352,15 @@ export class ReportScreen extends React.Component {
 
             return (
                 <View key={index} style={newReportStyles.fieldContainer}>
-                    <Text style={ newReportStyles.text }>
-                        {(field.required) ? field.title + ' *' : field.title}
-                    </Text>
+                    <View style={newReportStyles.fieldTitle}>
+                        <Text style={ newReportStyles.text }>
+                            {field.title}
+                        </Text>
+                        {
+                            (field.required) &&
+                            <Text style={newReportStyles.required}> *</Text>
+                        }
+                    </View>
                     {renderedField()}
                 </View>);
         });
@@ -330,31 +370,33 @@ export class ReportScreen extends React.Component {
                 <View style={ newReportStyles.ViewContainer }>
                     <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
                         <View style={newReportStyles.fieldContainer}>
-                            <Text style={newReportStyles.textStyleClass}>Report title</Text>
+                            <View style={newReportStyles.fieldTitle}>
+                                <Text style={newReportStyles.text}>Otsikko</Text>
+                                <Text style={newReportStyles.required}> *</Text>
+                            </View>
                             <TextInput
                                 editable={isEditable}
                                 defaultValue={this.props.navigation.state.params.title}
                                 onChangeText={(title) => this.props.dispatch(insertTitle(title))}
                                 underlineColorAndroid='transparent'
-                                style={newReportStyles.textInputStyleClass}
+                                style={newReportStyles.textInput}
                             />
                         </View>
 
                         <View pointerEvents={isEditable ? undefined : 'none'}>
                             {renderedFields}
                         </View>
+
+                        {
+                            (this.props.navigation.state.params.reportID < 0) &&
+                            <View>
+                                <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.saveAndLeave()} />
+                                <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
+                                <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this.deleteDraft()} />
+                            </View>
+                        }
                     </ScrollView>
                 </View>
-
-                {
-                    (this.props.navigation.state.params.reportID < 0) &&
-                    <View style={ newReportStyles.buttonView}>
-                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.save()} />
-                        <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
-                        <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this.deleteDraft()} />
-                    </View>
-                }
-
             </AppBackground>
 
         );
@@ -371,6 +413,9 @@ const mapStateToProps = (state) => {
     const templates     = state.templates;
     const report        = state.newReport;
     const isConnected   = state.connection.isConnected;
+    const isUnsaved     = state.reportEditing.isUnsaved;
+    const isSavingRequested = state.reportEditing.isSavingRequested;
+
     return {
         username,
         report,
@@ -379,6 +424,8 @@ const mapStateToProps = (state) => {
         reports,
         templates,
         isConnected
+        isSavingRequested,
+        isUnsaved,
     };
 };
 

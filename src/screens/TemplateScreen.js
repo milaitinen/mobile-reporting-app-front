@@ -6,7 +6,6 @@ import {
     ScrollView,
     NetInfo,
     StatusBar,
-    Platform,
     Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -69,7 +68,7 @@ export class TemplateScreen extends Component {
     */
     componentDidMount() {
 
-        if (Platform.OS === 'android') NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
+        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
         // TEMPORARY: not sure if this is the best solution. Current version fixes a bug (related to logging in)
         if (this.props.username !== userReducer.username) {
             this.getTemplatesAndReports();
@@ -80,7 +79,7 @@ export class TemplateScreen extends Component {
     }
 
     componentWillUnmount() {
-        if (Platform.OS === 'android') NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
+        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
     }
 
     handleConnectionChange = isConnected => {
@@ -134,10 +133,7 @@ export class TemplateScreen extends Component {
             .then(() => {
                 const templates = this.props.templates;
 
-                Object.keys(templates).forEach(id => {
-                    this.props.dispatch(insertTemplateID(id));
-                });
-
+                Object.keys(templates).forEach(id => this.props.dispatch(insertTemplateID(id)));
                 const reportsByTemplateID = Object.keys(templates).map((id) => fetchReportsByTemplateID(username, id, token));
 
                 Promise.all(reportsByTemplateID)

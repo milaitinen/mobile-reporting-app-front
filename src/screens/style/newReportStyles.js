@@ -29,14 +29,6 @@ const newReportStyles = EStyleSheet.create({
         backgroundColor: '$fieldBg',
         borderRadius: '$containerBorderRadius',
         padding: 15,
-        paddingBottom: 20,
-        marginVertical: 10,
-    },
-
-    altFieldContainer: {
-        backgroundColor: '$fieldBg',
-        borderRadius: '$containerBorderRadius',
-        padding: 15,
         paddingBottom: 10,
         marginVertical: 10,
     },
@@ -47,6 +39,10 @@ const newReportStyles = EStyleSheet.create({
         marginBottom: 5,
     },
 
+    fieldTitle: {
+        flexDirection: 'row',
+    },
+
     text: {
         color: '$primaryWhite',
         fontFamily: '$primaryFont',
@@ -54,19 +50,11 @@ const newReportStyles = EStyleSheet.create({
         marginBottom: 10,
     },
 
-    mainDropdownStyleClass: {
-        //flex: 1,
-        flexDirection: 'row',
-        backgroundColor: '$primaryWhite',
-        paddingLeft: 5,
-        paddingTop: 5,
-        paddingBottom: 5,
-        borderRadius: '$dropdownRadius',
-        borderWidth: '$containerBorderWidth',
-        borderColor: '$gray1',
-        marginTop: 6,
-        marginBottom: 6,
-        width: 160,
+    required: {
+        color: '$required',
+        fontFamily: '$primaryFont',
+        fontSize: 16,
+        marginBottom: 10,
     },
 
     lowerDropdownStyleClass: {
@@ -96,6 +84,7 @@ const newReportStyles = EStyleSheet.create({
     linkContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        marginBottom: 10,
     },
 
     linkIcon: {
@@ -123,6 +112,7 @@ const newReportStyles = EStyleSheet.create({
     multilineTextInput: {
         textAlignVertical: 'top',
         paddingHorizontal: 12,
+        marginBottom: 10,
         height: 80,
         borderRadius: '$inputBorderRadius',
         backgroundColor: '$primaryWhite',
@@ -134,46 +124,17 @@ const newReportStyles = EStyleSheet.create({
         textAlignVertical: 'center',
         color: '$primaryWhite',
         fontFamily: '$primaryFont',
+        marginBottom: 10,
     },
 
     textInput: {
         paddingHorizontal: 12,
+        marginBottom: 10,
         height: 40,
         borderRadius: '$inputBorderRadius',
         backgroundColor: '$primaryWhite',
         fontFamily: '$primaryFont',
         color: '$placeholder',
-    },
-
-    titleContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 10,
-        paddingTop: 0,
-        marginBottom: 5,
-    },
-
-    title: {
-        flex: 1,
-        marginHorizontal: 15,
-        color: '$gray2',
-        fontSize: 24,
-    },
-
-    previewIconContainer: {
-        borderRadius: 50,
-        borderWidth: 2,
-        padding: 7,
-        borderColor: '$draftBlue',
-
-    },
-
-    buttonView: {
-        paddingHorizontal: 10,
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
 
     disabled: {

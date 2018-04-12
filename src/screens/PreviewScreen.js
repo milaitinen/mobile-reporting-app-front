@@ -81,13 +81,22 @@ export class PreviewScreen extends React.Component {
                         );
 
                     case 'CHECKBOX': // Checkbox
+                    {
+                        const checkboxes = field.field_options.map((option, index) => {
+                            return (
+                                <Checkbox
+                                    key={index}
+                                    editable={isEditable}
+                                    title={option.value}
+                                />
+                            );
+                        });
                         return (
-                            <Checkbox
-                                key={index}
-                                title={'This is a nice checkbox'}
-                                editable={isEditable}
-                            />
+                            <View key={index}>
+                                {checkboxes}
+                            </View>
                         );
+                    }
 
                     case 'NESTED_DROPDOWN': // Dropdown
                         return (
@@ -131,12 +140,20 @@ export class PreviewScreen extends React.Component {
 
                     // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
                     case 'RADIOBUTTON': {
-                        const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
+                        const labels = field.field_options.map((option) => {
+                            return (
+                                { label: option.value, value: option }
+                            );
+                        });
+
+                        const initialIndex = field.field_options.findIndex((option) => {
+                            return (option.default_value);
+                        });
                         return (
                             <Radioform
-                                options={props}
+                                options={labels}
                                 editable={isEditable}
-                                initial={JSON.parse(field.default_value)}
+                                initial={initialIndex}
                             />
                         );
                     }
@@ -201,7 +218,19 @@ export class PreviewScreen extends React.Component {
                                 <Text
                                     disabled={!isEditable}
                                     style={[newReportStyles.link, newReportStyles.disabledLink]}
-                                    onPress={() => Linking.openURL(field.default_value)}>
+                                    onPress={() => {
+                                        const url = field.default_value;
+                                        // This checks if any installed app can handle the
+                                        // url before attempting to open it.
+                                        // This is done as shown in React Native docs.
+                                        Linking.canOpenURL(url).then(supported => {
+                                            if (!supported) {
+                                                console.log('Can\'t handle url: ' + url);
+                                            } else {
+                                                return Linking.openURL(url);
+                                            }
+                                        }).catch(err => console.error('An error occurred', err));
+                                    }}>
                                     Link to somewhere
                                 </Text>
                             </View>
@@ -225,9 +254,15 @@ export class PreviewScreen extends React.Component {
 
             return (
                 <View key={index} style={newReportStyles.fieldContainer}>
-                    <Text style={newReportStyles.text}>
-                        {(field.required) ? field.title + ' *' : field.title}
-                    </Text>
+                    <View style={newReportStyles.fieldTitle}>
+                        <Text style={ newReportStyles.text }>
+                            {field.title}
+                        </Text>
+                        {
+                            (field.required) &&
+                            <Text style={newReportStyles.required}> *</Text>
+                        }
+                    </View>
                     {renderedField()}
                 </View>
             );
@@ -237,6 +272,20 @@ export class PreviewScreen extends React.Component {
             <AppBackground>
                 <View style={ newReportStyles.ViewContainer }>
                     <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
+                        <View style={newReportStyles.fieldContainer}>
+                            <View style={newReportStyles.fieldTitle}>
+                                <Text style={newReportStyles.text}>Otsikko</Text>
+                                <Text style={newReportStyles.required}> *</Text>
+                            </View>
+                            <TextInput
+                                editable={isEditable}
+                                placeholder={'Otsikko'}
+                                placeholderTextColor={EStyleSheet.value('$placeholder')}
+                                underlineColorAndroid='transparent'
+                                style={[newReportStyles.textInput, newReportStyles.disabled]}
+                                onChangeText={(text) => this.props.dispatch(insertTitle(text))}
+                            />
+                        </View>
                         {renderedFields}
                     </ScrollView>
                     <EditButton onPress={() => this.handleOnPress()} />

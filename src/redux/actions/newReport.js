@@ -37,8 +37,3 @@ export const insertFieldAnswer = ( field, value, isOption ) => ({
 export const emptyFields = () => ({
     type: EMPTY_FIELDS
 });
-
-export const setUnsaved = ( isUnsaved ) => ({
-    type: SET_UNSAVED,
-    isUnsaved: isUnsaved,
-});
