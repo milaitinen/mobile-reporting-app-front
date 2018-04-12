@@ -60,7 +60,7 @@ describe('Dropdown', () => {
 
     it('should call onSelect() appropriately', () => {
         const spy = sinon.spy(Dropdown.prototype, 'onSelect');
-        const wrapper = shallow(<Dropdown disabled={false} defaultValue={'some value'} options={['test1', 'test2']} />);
+        const wrapper = shallow(<Dropdown disabled={false} defaultValue={'some value'} onSelect={jest.fn()} options={['test1', 'test2']} />);
         wrapper.find('ModalDropdown').simulate('select');
         expect(spy.calledOnce).toEqual(true);
 
