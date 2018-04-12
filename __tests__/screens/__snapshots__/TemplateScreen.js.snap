@@ -318,9 +318,9 @@ exports[`TemplateScreen renders correctly 1`] = `
                                 allowFontScaling={true}
                                 ellipsizeMode="tail"
                               >
-                                0
+                                1
                                  
-                                templates.reports
+                                templates.report
                               </Text>
                               <Text
                                 accessible={true}
@@ -329,7 +329,7 @@ exports[`TemplateScreen renders correctly 1`] = `
                               >
                                 0
                                  
-                                templates.drafts
+                                Odottavaa
                               </Text>
                             </View>
                           </View>

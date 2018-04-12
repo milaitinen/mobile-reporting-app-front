@@ -161,7 +161,7 @@ exports[`renders correctly 1`] = `
                   ellipsizeMode="tail"
                 >
                    
-                  templates.drafts
+                  Odottavaa
                 </Text>
               </View>
             </View>

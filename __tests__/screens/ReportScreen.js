@@ -120,7 +120,7 @@ describe('TemplateScreen', () => {
     it('send() calls this.props.navigation.state.params.refresh() when response status is 200', async () => {
         const inst = wrapper.getInstance();
         await inst.send();
-        expect(removeDraft).toHaveBeenCalled();
+        expect(refresh).toHaveBeenCalled();
     });
 
     it('_createDraft should dispatch(createDraft(...))', async () => {
