@@ -132,23 +132,36 @@ export class ReportScreen extends React.Component {
 
     save = () => {
         const { username, report, newReport } = this.props;
-        const { templateID, reportID } = this.props.navigation.state.params;
+        const { templateID } = this.props.navigation.state.params;
         const draft = this.state.isNewReport ? newReport : report;
 
-        if (this.state.isNewReport || reportID < 0) {
-            saveDraft(username, templateID, draft); // give a negative id
-            Alert.alert(strings('createNew.saved'));
-        } else {
-            report.report_id = null;    // sets id to null, will get proper id when sent
-            Alert.alert(strings('createNew.queued'));
-            saveToQueueWithTemplateID(username, templateID, draft);
-        }
+        saveDraft(username, templateID, draft); // give a negative id
+        Alert.alert(strings('createNew.saved'));
 
         this.setState({ isLoading: true });
 
         //refresh template screen
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
+
+    };
+
+    saveToPending = () => {
+        const { username, report } = this.props;
+        const { templateID, reportID } = this.props.navigation.state.params;
+
+        report.report_id = null;    // sets id to null, will get proper id when sent
+        Alert.alert(strings('createNew.queued'));
+        saveToQueueWithTemplateID(username, templateID, report);
+
+        if (!this.state.isNewReport) removeDraft(username, templateID, reportID);
+
+        this.setState({ isLoading: true });
+
+        //refresh template screen
+        this.props.dispatch(emptyFields());
+        this.props.navigation.state.params.refresh();
+        this.props.navigation.goBack();
 
     };
 
@@ -160,7 +173,6 @@ export class ReportScreen extends React.Component {
     // Inserts data to server with a post method.
     send = () => {
         const { username, report, newReport, token } = this.props;
-        const { templateID, reportID } = this.props.navigation.state.params;
         const { isNewReport } = this.state;
         const draft = isNewReport ? newReport : report;
 
@@ -172,8 +184,7 @@ export class ReportScreen extends React.Component {
                     { text: strings('createNew.cancel'), onPress: () => console.log('Cancel pressed'), style: 'cancel' },
                     { text: 'Ok', onPress: () => {
                         console.log('Ok Pressed');
-                        this.save(false);
-                        removeDraft(username, templateID, reportID);
+                        this.saveToPending();
                     },
                     }
                 ],
@@ -265,7 +276,9 @@ export class ReportScreen extends React.Component {
                     case 'CHECKBOX' : // Checkbox TODO defaultValue doesn't work here
                     {
                         const checkboxes = field.field_options.map((option, index) => {
-                            const answer = optionAnswers.find((answer) => (answer.field_option_id === option.field_option_id) && answer.selected);
+                            const answer = optionAnswers
+                                .find((answer) => (answer.field_option_id === option.field_option_id) && answer.selected);
+
                             return (
                                 <Checkbox
                                     key={index}

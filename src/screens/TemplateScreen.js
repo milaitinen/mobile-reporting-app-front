@@ -84,8 +84,7 @@ export class TemplateScreen extends Component {
         this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
 
         if (isConnected) { this.sendPendingReports(); }
-
-    }
+    };
 
 
     sendPendingReports = () => {
@@ -106,10 +105,8 @@ export class TemplateScreen extends Component {
                 Alert.alert('Pending reports sent!');
             }
         };
-
         if (this.props.isConnected) { send(); }
-
-    }
+    };
 
     /**
     * Fetches the data from the server in two parts.
