@@ -68,8 +68,6 @@ class Dropdown extends Component {
                 disabled={this.props.disabled}
                 options={this.props.options}
                 onSelect={(idx, value) => {
-                    console.log('idx', idx);
-                    console.log('value', value);
                     this.props.onSelect(value);
                     this.onSelect(idx, value);
                 }}

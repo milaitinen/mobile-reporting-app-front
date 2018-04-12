@@ -188,9 +188,8 @@ export class ReportScreen extends React.Component {
                 'You are offline',
                 'Report will be added to queue and will be sent when online',
                 [
-                    { text: strings('createNew.cancel'), onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                    { text: strings('createNew.cancel'), style: 'cancel' },
                     { text: 'Ok', onPress: () => {
-                        console.log('Ok Pressed');
                         this.saveToPending();
                     },
                     }
@@ -213,7 +212,6 @@ export class ReportScreen extends React.Component {
                     }
                     return Alert.alert('Report sent!');
                 } else {
-                    console.log('response.status', response.status);
                     return response.status;
                 }
             }).catch((error) => {
