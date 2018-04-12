@@ -275,7 +275,8 @@ export class ReportScreen extends React.Component {
                                 value={isNewReport ? null : answer.value}
                                 onChangeText={(text) => this.insertAnswer(field, text, false)}
                                 underlineColorAndroid='transparent'
-                                style={newReportStyles.textInput}
+                                selectionColor={newReportStyles.$activeBlue}
+                                style={isFocused? [newReportStyles.textInput, newReportStyles.active] : newReportStyles.textInput}
                             />
                         );
                     }

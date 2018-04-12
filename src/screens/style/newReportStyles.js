@@ -4,6 +4,7 @@ const newReportStyles = EStyleSheet.create({
 
     $disabledGray: '$disabledPlaceholder',
     $gray: '$placeholder',
+    $activeBlue: '$active',
 
     ViewContainer: {
         flex: 1,
@@ -138,6 +139,11 @@ const newReportStyles = EStyleSheet.create({
         backgroundColor: '$primaryWhite',
         fontFamily: '$primaryFont',
         color: '$placeholder',
+    },
+
+    active: {
+        borderColor: '$active',
+        borderWidth: 2,
     },
 
     disabled: {

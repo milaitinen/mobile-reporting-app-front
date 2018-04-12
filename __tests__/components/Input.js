@@ -4,14 +4,14 @@ import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 
-import Input from '../../src/components/TextInput/Input';
+import IconInput from '../../src/components/TextInput/IconInput';
 
 configure({ adapter: new Adapter() });
 
-describe('Input component', () => {
+describe('IconInput component', () => {
     it('renders correctly', () => {
         const tree = renderer.create(
-            <Input name={'user'} placeholder={'Username'} onChangeText={jest.fn()}/>
+            <IconInput name={'user'} placeholder={'Username'} onChangeText={jest.fn()}/>
         ).toJSON();
         expect(tree).toMatchSnapshot();
     });

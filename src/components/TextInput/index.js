@@ -1,4 +1,4 @@
-import Input from './Input';
+import IconInput from './IconInput';
 import styles from './styles';
 
-export { Input, styles };
+export { IconInput, styles };
