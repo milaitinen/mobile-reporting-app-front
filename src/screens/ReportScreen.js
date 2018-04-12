@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-    /*Button, */ View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking,
-    BackHandler, /*Picker*/
+    View, ScrollView, TextInput, Alert, Text, ActivityIndicator, Linking,
+    BackHandler,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
@@ -14,14 +14,16 @@ import { Dropdown } from '../components/Dropdown';
 import { Button } from '../components/Button';
 import { Datepicker } from '../components/Datepicker';
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, removeDraft, saveDraft } from './api';
+import { createNewReport, removeDraft, saveDraft, saveToQueueWithTemplateID } from './api';
 import { strings } from '../locales/i18n';
 import { insertFieldAnswer, emptyFields, openReport, insertTitle } from '../redux/actions/newReport';
+import { storeDraftByTemplateID, storeQueuedReportByTemplateID } from '../redux/actions/reports';
 import { setUnsaved } from '../redux/actions/reportEditing';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import { handleBack } from '../functions/handleBack';
+
 // import styles from '../components/Dropdown/styles';
 // import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -45,7 +47,6 @@ export class ReportScreen extends React.Component {
         const { reports, templates } = this.props;
         const report = reports[templateID].find((obj) => obj.report_id === reportID);
         const fields = templates[templateID] ? templates[templateID].fields : [];
-
         this.props.dispatch(openReport(report));
         this.setState({ fields: fields, isEditable: reportID < 0, isLoading : false });
         // TODO: implement checking isUnsaved. Now drafts are always assumed to be unsaved.
@@ -82,30 +83,60 @@ export class ReportScreen extends React.Component {
         this.props.navigation.dispatch(NavigationActions.back());
     };
 
-    save = () => {
+    save = ( isDraft ) => {
         const { username, report } = this.props;
         const { templateID } = this.props.navigation.state.params;
-        saveDraft(username, templateID, report); // give a negative id
-        Alert.alert('Saved!');
+      
+       if (isDraft) {
+            report.report_id = saveDraft(username, templateID, report); // give a negative id
+            Alert.alert(strings('createNew.saved'));
+        } else {
+            report.report_id = null;    // sets id to null, will get proper id when sent
+            Alert.alert(strings('createNew.queued'));
+            saveToQueueWithTemplateID(username, templateID, report);
+        }
+      
         this.setState({ isLoading: true });
         //refresh template screen
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
-    };
 
-    saveAndLeave = () => {
-        this.save();
+ };
+
+    saveAndLeave = ( isDraft ) => {
+        this.save( isDraft );
         this.props.navigation.goBack();
     };
 
     // Inserts data to server with a post method.
     send = () => {
         const { username, report, token } = this.props;
+        const { templateID, reportID } = this.props.navigation.state.params;
+
+        if (!this.props.isConnected){
+            Alert.alert(
+                'You are offline',
+                'Report will be added to queue and will be sent when online',
+                [
+                    { text: strings('createNew.cancel'), onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                    { text: 'Ok', onPress: () => {
+                        console.log('Ok Pressed');
+                        this.save(false);
+                        removeDraft(username, templateID, reportID);
+                    },
+                    }
+                ],
+                { cancelable: false }
+            );
+            return true;
+        }
 
         createNewReport(username, report, token).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();
                 this.props.navigation.dispatch(NavigationActions.back());
+                removeDraft(username, templateID, reportID);
+           
                 return Alert.alert('Report sent!');
             } else {
                 return response.status;
@@ -194,7 +225,6 @@ export class ReportScreen extends React.Component {
                             />
                         );
                     }
-
                     case 'RADIOBUTTON': // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
                     {
                         const labels = field.field_options.map((option) => {
@@ -202,7 +232,6 @@ export class ReportScreen extends React.Component {
                                 { label: option.value, value: option }
                             );
                         });
-
                         const answerIndex = field.field_options.findIndex((option) =>
                             (optionAnswers.find(a => a.field_option_id === option.field_option_id && a.selected)));
 
@@ -357,6 +386,7 @@ export class ReportScreen extends React.Component {
                         <View pointerEvents={isEditable ? undefined : 'none'}>
                             {renderedFields}
                         </View>
+
                         {
                             (this.props.navigation.state.params.reportID < 0) &&
                             <View>
@@ -382,8 +412,10 @@ const mapStateToProps = (state) => {
     const reports       = state.reports;
     const templates     = state.templates;
     const report        = state.newReport;
+    const isConnected   = state.connection.isConnected;
     const isUnsaved     = state.reportEditing.isUnsaved;
     const isSavingRequested = state.reportEditing.isSavingRequested;
+
     return {
         username,
         report,
@@ -391,6 +423,7 @@ const mapStateToProps = (state) => {
         token,
         reports,
         templates,
+        isConnected
         isSavingRequested,
         isUnsaved,
     };

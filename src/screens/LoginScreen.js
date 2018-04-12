@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StatusBar, Keyboard, NetInfo, AsyncStorage } from 'react-native';
+import { Text, StatusBar, Keyboard, NetInfo, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
@@ -8,11 +8,10 @@ import { Input } from '../components/TextInput';
 import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
-import { isNetworkConnected, login } from './api';
+import { isNetworkConnected, login, sendAllPendingReports } from './api';
 import { NavigationActions } from 'react-navigation';
 import { toggleConnection } from '../redux/actions/connection';
 import { setInitialConnection } from '../redux/actions/connection';
-import { OfflineNotice } from '../components/OfflineNotice';
 import { LOGGED_IN_ROUTE_NAME } from '../navigation/AppNavigation';
 
 // "export" necessary in order to test component without Redux store
@@ -34,6 +33,8 @@ export class LoginScreen extends React.Component {
     }
 
     componentDidMount() {
+        // AsyncStorage.clear();
+
         /* First sets the initial connection state, and then adds eventlistener to listen to connection changes.
             Unused 'isConnected' was added to ensure that setInitialConnection runs before toggling anything*/
         isNetworkConnected()
@@ -71,8 +72,17 @@ export class LoginScreen extends React.Component {
                 } else {
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
-                    this.resetNavigationTo(LOGGED_IN_ROUTE_NAME);
-                    this.props.dispatch(insertPassword(null));
+
+                    //Send all pending reports, and then navigate to next screen.
+                    sendAllPendingReports(this.props.username, token)
+                        .then(sentPending => {
+                            if (sentPending) {
+                                Alert.alert('Pending reports sent!');}
+                        })
+                        .then(() => {
+                            this.resetNavigationTo(LOGGED_IN_ROUTE_NAME);
+                            this.props.dispatch(insertPassword(null));
+                        });
                 }
             });
     };

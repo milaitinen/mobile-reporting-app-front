@@ -19,7 +19,8 @@
     "drafts": "Luonnosta",
     "showMore": "Näytä lisää",
     "endOfReports": "Ei enempää raportteja",
-    "preview": "Esikatselu"
+    "preview": "Esikatselu",
+    "pending": "Lähdössä"
   },
 
   "createNew": {
@@ -31,7 +32,9 @@
     "noConnection": "Raporttia ei voitu lähettää koska laitteessa ei ole internet-yhteyttä. Haluatko tallentaa muutokset?",
     "yes": "Kyllä",
     "no": "Ei",
-    "cancel": "Peruuta"
+    "cancel": "Peruuta",
+    "saved": "Raportti tallennettu",
+    "queued": "Raportti on lisätty jonoon"
   },
 
   "navigation": {

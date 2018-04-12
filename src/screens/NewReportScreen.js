@@ -21,10 +21,10 @@ import { Button } from '../components/Button';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 import { AppBackground } from '../components/AppBackground';
-import { createNewReport, saveDraft, fetchEmptyTemplate } from './api';
+import { createNewReport, saveDraft, fetchEmptyTemplate, saveToQueueWithTemplateID } from './api';
 import { strings } from '../locales/i18n';
 import { emptyFields, insertFieldAnswer, insertTitle, insertDate, createDraft } from '../redux/actions/newReport';
-import { storeDraftByTemplateID } from '../redux/actions/reports';
+import { storeDraftByTemplateID, storeQueuedReportByTemplateID } from '../redux/actions/reports';
 import { handleBack } from '../functions/handleBack';
 import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
 
@@ -33,9 +33,6 @@ import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { setUnsaved } from '../redux/actions/reportEditing';
-
-
-
 
 
 // "export" necessary in order to test component without Redux store
@@ -96,14 +93,23 @@ export class NewReportScreen extends React.Component {
     };
 
     // save report locally in asyncstorage
-    save = () => {
+    save = ( isDraft ) => {
         const { username, newReport } = this.props;
         const { templateID } = this.props.navigation.state.params;
         const report = newReport;
-        saveDraft(username, templateID, report); // give a negative id
-        Alert.alert('Report saved!');
+
+        if (isDraft) {
+            report.report_id = saveDraft(username, templateID, report); // give a negative id
+            Alert.alert(strings('createNew.saved'));
+        } else {
+            report.report_id = null;    // sets id to null, will get proper id when sent
+            Alert.alert(strings('createNew.queued'));
+            saveToQueueWithTemplateID(username, templateID, report);
+        }
+
         this.setState({ isLoading: true });
-        //refresh template screen
+        //this.setState({ isUnsaved: false });
+        //return to template screen and have it refreshed
         this.props.dispatch(emptyFields());
         this.props.navigation.state.params.refresh();
     };
@@ -117,20 +123,23 @@ export class NewReportScreen extends React.Component {
     // Inserts data to server with a post method.
     send = () => {
         const { username, newReport, token } = this.props;
-        /*
         if (!this.props.isConnected){
             Alert.alert(
-                strings('createNew.noConnection'),
+                'You are offline',
+                'Report will be added to queue and will be sent when online',
                 [
                     { text: strings('createNew.cancel'), onPress: () => console.log('Cancel pressed'), style: 'cancel' },
-                    { text: strings('createNew.no'), onPress: () => console.log('No Pressed') },
-                    { text: strings('createNew.yes'), onPress: () => console.log('Yes Pressed') },
-                    //TODO: actually save changes when no connection :D
+                    { text: 'Ok', onPress: () => {
+                        console.log('Ok Pressed');
+                        this.save(false);
+                    },
+                    }
                 ],
-                { cancellable: false }
+                { cancelable: false }
             );
+            return true;
         }
-        */
+      
         createNewReport(username, newReport, token).then(response => {
             if (response.status === 200) {
                 this.props.navigation.state.params.refresh();

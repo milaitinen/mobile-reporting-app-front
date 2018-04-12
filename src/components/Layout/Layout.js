@@ -105,7 +105,7 @@ class Layout extends Component{
 
     render(){
         // simplifies referencing (instead of this.props.title, title is enough)
-        const { title, nofReports, nofDrafts, templateID, data } = this.props;
+        const { title, nofReports, nofQueued, templateID, data } = this.props;
         return (
             <Animated.View
                 style={[styles.animatedContainer,{ height: this.state.animation }]}>
@@ -118,7 +118,7 @@ class Layout extends Component{
                         //Number of reports as a subtitle
                         subtitle={
                             <View style={ styles.subtitle }><Text>{nofReports} {(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}</Text>
-                                <Text>{nofDrafts} {(nofDrafts === 1) ? strings('templates.draft') : strings('templates.drafts')}</Text></View>}
+                                <Text>{nofQueued} {(nofQueued === 1) ? 'Odottava' : 'Odottavaa'}</Text></View>}
                         hideChevron={true}
                         badge={{ element: <RightButton
                             onPressNew={() => this.props.createNew(templateID, true)}
@@ -136,9 +136,9 @@ class Layout extends Component{
                             /* Renders the reports from the state array
                               with the help of an index from the earlier
                               renderItem function. */
-                            renderItem={({ item }) =>
+                            renderItem={({ item, index }) =>
                                 <ListItem
-                                    key={item.title}
+                                    key={index}
                                     onPress={() => this.props.viewReport(templateID, item.report_id, item.title)}
                                     containerStyle={ styles.reportContainer }
                                     titleStyle = { styles.reportTitle }
@@ -149,11 +149,14 @@ class Layout extends Component{
                                         <StatusBadge
                                             dateAccepted={item.date_accepted}
                                             isDraft={item.report_id < 0}
+                                            inQueue={item.report_id == null}
                                         />
                                     }}
                                 />
                             }
-                            keyExtractor={item => item.report_id}
+
+                            //Generates random ID for rendering purposes. TODO:// Change to better solution maybe?
+                            keyExtractor={item => item.report_id != null ? item.report_id * Math.random() : Math.random()}
                             ListFooterComponent={
                                 (data !== undefined && data.length > this.state.itemsCount)
                                     ?
