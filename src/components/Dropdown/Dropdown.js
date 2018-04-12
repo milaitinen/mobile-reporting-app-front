@@ -15,7 +15,7 @@ class Dropdown extends Component {
         };
     }
 
-    /* commented it out at least temporarily to easy testing
+    /* commented it out at least temporarily for easy testing
     renderButtonText = (rowData) => {
         return rowData;
     };
@@ -27,7 +27,7 @@ class Dropdown extends Component {
         const inactive = '#cceeff';
         return (
             <TouchableHighlight underlayColor={evenRow ? color(inactive).darken(0.3) : color(active).darken(0.1)}>
-                <View style={[styles.dropdownRow, { backgroundColor: evenRow ? inactive : 'white' }]}>
+                <View style={[styles.dropdownRow, { backgroundColor: evenRow ? '#eef8ff' : 'white' }]}>
                     <Text style={[styles.dropdownRowText, highlighted && { color: active }]}>
                         {rowData}
                     </Text>
@@ -54,9 +54,11 @@ class Dropdown extends Component {
     }
 
     render() {
-        const button = this.props.disabled ? [styles.dropdownButton, styles.disabled] : styles.dropdownButton;
-        const text = this.props.disabled ? [styles.dropdownText, styles.disabledText] : styles.dropdownText;
-        const iconColor = this.props.disabled ? styles.$gray1 : styles.$gray2;
+        const disabled = this.props.disabled;
+        const isPreview = this.props.isPreview;
+        const button = (disabled && isPreview) ? [styles.dropdownButton, styles.disabled] : styles.dropdownButton;
+        const text = (disabled && isPreview) ? [styles.dropdownText, styles.disabledText] : styles.dropdownText;
+        const iconColor = (disabled && isPreview) ? styles.$gray1 : styles.$gray2;
         return (
             <ModalDropdown
                 ref={ ModalDrop => this.modalDropdown = ModalDrop }
@@ -65,7 +67,7 @@ class Dropdown extends Component {
                 textStyle={text}
                 dropdownStyle={styles.dropStyleClass}
                 defaultValue={this.state.value}
-                disabled={this.props.disabled}
+                disabled={disabled}
                 options={this.props.options}
                 onSelect={(idx, value) => {
                     this.props.onSelect(value);

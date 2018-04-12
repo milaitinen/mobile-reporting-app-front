@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Text, ActivityIndicator, Linking } from 'react-native';
+import { View, ScrollView, Text, ActivityIndicator, Linking } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Checkbox } from '../components/Checkbox';
 import { Radioform } from '../components/Radioform';
 import { Dropdown } from '../components/Dropdown';
 import { Datepicker } from '../components/Datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
+import { Input } from '../components/TextInput';
 import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
@@ -73,7 +74,7 @@ export class PreviewScreen extends React.Component {
         const renderedFields = this.state.fields.map((field, index) => {
             const renderedField = () => {
                 switch (field.type) {
-
+                    
                     case 'CHECKBOX': // Checkbox
                     {
                         const checkboxes = field.field_options.map((option, index) => {
@@ -81,6 +82,7 @@ export class PreviewScreen extends React.Component {
                                 <Checkbox
                                     key={index}
                                     editable={isEditable}
+                                    isPreview={true}
                                     title={option.value}
                                 />
                             );
@@ -125,12 +127,11 @@ export class PreviewScreen extends React.Component {
 
                     case 'TEXTFIELD_SHORT': // TextRow (One row text field)
                         return (
-                            <TextInput
+                            <Input
                                 editable={isEditable}
+                                isPreview={true}
                                 placeholder={field.default_value}
                                 placeholderTextColor={newReportStyles.$disabledGray}
-                                underlineColorAndroid='transparent'
-                                style={[newReportStyles.textInput, newReportStyles.disabled]}
                             />
                         );
 
@@ -149,6 +150,7 @@ export class PreviewScreen extends React.Component {
                             <Radioform
                                 options={labels}
                                 editable={isEditable}
+                                isPreview={true}
                                 initial={initialIndex}
                             />
                         );
@@ -158,6 +160,7 @@ export class PreviewScreen extends React.Component {
                         return (
                             <Datepicker
                                 editable={isEditable}
+                                isPreview={true}
                                 mode={'date'}
                                 answer={field.default_value}
                                 onChange={(date) => {
@@ -175,10 +178,10 @@ export class PreviewScreen extends React.Component {
 
                     case 'TEXTFIELD_LONG': // Text (Multiple row text field)
                         return (
-                            <TextInput
+                            <Input
                                 multiline
                                 editable={isEditable}
-                                style={[newReportStyles.multilineTextInput, newReportStyles.disabled]}
+                                isPreview={true}
                                 placeholder={field.default_value}
                                 placeholderTextColor={newReportStyles.$disabledGray}
                             />
@@ -188,6 +191,7 @@ export class PreviewScreen extends React.Component {
                         return (
                             <Datepicker
                                 editable={isEditable}
+                                isPreview={true}
                                 mode={'time'}
                                 answer={field.default_value}
                                 onChange={(time) => {
@@ -198,9 +202,9 @@ export class PreviewScreen extends React.Component {
 
                     case 'NUMBERFIELD': // Digits (Text input that only accepts numeric characters)
                         return (
-                            <TextInput
+                            <Input
                                 editable={isEditable}
-                                style={newReportStyles.textInput}
+                                isPreview={true}
                                 placeholder={field.default_value}
                                 placeholderTextColor={newReportStyles.$disabledGray}
                                 keyboardType='numeric'
@@ -236,6 +240,7 @@ export class PreviewScreen extends React.Component {
                         return (
                             <Dropdown
                                 disabled={!isEditable}
+                                isPreview={true}
                                 defaultValue={'Select user'}
                                 options={JSON.parse(field.default_value)}
                             />
@@ -273,12 +278,11 @@ export class PreviewScreen extends React.Component {
                                 <Text style={newReportStyles.text}>Otsikko</Text>
                                 <Text style={newReportStyles.required}> *</Text>
                             </View>
-                            <TextInput
+                            <Input
                                 editable={isEditable}
+                                isPreview={true}
                                 placeholder={'Otsikko'}
                                 placeholderTextColor={newReportStyles.$gray}
-                                underlineColorAndroid='transparent'
-                                style={[newReportStyles.textInput, newReportStyles.disabled]}
                                 onChangeText={(text) => this.props.dispatch(insertTitle(text))}
                             />
                         </View>

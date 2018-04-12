@@ -167,7 +167,7 @@ const report = {
     ]
 };
 
-describe('TemplateScreen', () => {
+describe('ReportScreen', () => {
 
     const dispatch = jest.fn();
     const goBack = jest.fn();

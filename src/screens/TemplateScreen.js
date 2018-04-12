@@ -215,11 +215,9 @@ export class TemplateScreen extends Component {
                 });
             }
         }
-        //this.setState({ isLoading: true }); TODO fix backhandler issue in NewReport, Preview, and ReportScreen and uncomment this
     };
 
     viewReport = (templateID, reportID, title) => {
-        //this.setState({ isLoading: true }); TODO same problem as above
         /*
          * Condition checks whether user is already navigating.
          * Used to prevent multiple navigations simultaneously to different routes

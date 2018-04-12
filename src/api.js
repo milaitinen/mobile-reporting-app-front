@@ -380,7 +380,6 @@ const fetchRemoteReportsByUsername = (username, token) => {
 };
 
 
-
 /**
  * Store data (layouts, reports - depending on the url) to ASyncStorage, a simple key-value storage system global to the app.
  * Keys and values are stored as a string.

@@ -810,10 +810,10 @@ exports[`Datepicker component renders correctly when not editable 1`] = `
             "justifyContent": "center",
           },
           Object {
-            "backgroundColor": undefined,
+            "backgroundColor": "white",
             "borderColor": undefined,
             "borderRadius": undefined,
-            "borderWidth": 2,
+            "borderWidth": 0,
           },
           Object {
             "backgroundColor": "#eee",

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
 import { strings } from '../locales/i18n';
-import { Input } from '../components/TextInput';
+import { IconInput } from '../components/TextInput';
 import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
@@ -99,18 +99,18 @@ export class LoginScreen extends React.Component {
                     {strings('login.slogan')}
                 </Text>
 
-                <Input
+                <IconInput
                     name={'user'}
                     placeholder={ strings('login.username') }
                     onChangeText={username => this.props.dispatch(insertUsername(username))}
                 />
-                <Input
+                <IconInput
                     name={'lock'}
                     secureTextEntry={true}
                     placeholder={ strings('login.password') }
                     onChangeText={password => this.props.dispatch(insertPassword(password))}
                 />
-                <Input
+                <IconInput
                     name={'globe'}
                     placeholder={ strings('login.serverUrl') }
                     onChangeText={serverUrl => this.setState({ serverUrl })}

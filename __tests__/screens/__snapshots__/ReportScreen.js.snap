@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TemplateScreen renders correctly 1`] = `
+exports[`ReportScreen renders correctly 1`] = `
 <View
   colors={
     Array [
@@ -46,9 +46,12 @@ exports[`TemplateScreen renders correctly 1`] = `
             allowFontScaling={true}
             defaultValue="Test"
             editable={true}
+            onBlur={[Function]}
             onChangeText={[Function]}
+            onFocus={[Function]}
             placeholder={null}
             placeholderTextColor={null}
+            selectionColor={undefined}
             style={undefined}
             underlineColorAndroid="transparent"
           />
@@ -81,9 +84,12 @@ exports[`TemplateScreen renders correctly 1`] = `
             </View>
             <TextInput
               allowFontScaling={true}
+              onBlur={[Function]}
               onChangeText={[Function]}
+              onFocus={[Function]}
               placeholder={null}
               placeholderTextColor={null}
+              selectionColor={undefined}
               style={undefined}
               underlineColorAndroid="transparent"
               value="Test1"
@@ -416,7 +422,7 @@ exports[`TemplateScreen renders correctly 1`] = `
                               "width": 16,
                             },
                             Object {
-                              "backgroundColor": "#359ef3",
+                              "backgroundColor": "#2196f3",
                             },
                           ]
                         }
@@ -776,10 +782,14 @@ exports[`TemplateScreen renders correctly 1`] = `
             <TextInput
               allowFontScaling={true}
               multiline={true}
+              onBlur={[Function]}
               onChangeText={[Function]}
+              onFocus={[Function]}
               placeholder={null}
               placeholderTextColor={null}
+              selectionColor={undefined}
               style={undefined}
+              underlineColorAndroid="transparent"
               value={null}
             />
           </View>
@@ -1684,10 +1694,14 @@ exports[`TemplateScreen renders correctly 1`] = `
             <TextInput
               allowFontScaling={true}
               keyboardType="numeric"
+              onBlur={[Function]}
               onChangeText={[Function]}
+              onFocus={[Function]}
               placeholder={null}
               placeholderTextColor={null}
+              selectionColor={undefined}
               style={undefined}
+              underlineColorAndroid="transparent"
               value="21789"
             />
           </View>

@@ -4,6 +4,7 @@ const newReportStyles = EStyleSheet.create({
 
     $disabledGray: '$disabledPlaceholder',
     $gray: '$placeholder',
+    $activeBlue: '$active',
 
     ViewContainer: {
         flex: 1,
@@ -112,32 +113,11 @@ const newReportStyles = EStyleSheet.create({
         color: '$disabledPlaceholder',
     },
 
-    multilineTextInput: {
-        textAlignVertical: 'top',
-        paddingHorizontal: 12,
-        marginBottom: 10,
-        height: 80,
-        borderRadius: '$inputBorderRadius',
-        backgroundColor: '$primaryWhite',
-        fontFamily: '$primaryFont',
-        color: '$placeholder',
-    },
-
     instructions: {
         textAlignVertical: 'center',
         color: '$primaryWhite',
         fontFamily: '$primaryFont',
         marginBottom: 10,
-    },
-
-    textInput: {
-        paddingHorizontal: 12,
-        marginBottom: 10,
-        height: 40,
-        borderRadius: '$inputBorderRadius',
-        backgroundColor: '$primaryWhite',
-        fontFamily: '$primaryFont',
-        color: '$placeholder',
     },
 
     disabled: {

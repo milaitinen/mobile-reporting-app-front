@@ -48,6 +48,15 @@ const insertIDState = {
     }, {
         template_id: 2,
         user_id: 1,
+        report_id: null,
+        title: 'Draft',
+        date_created: '2018-04-01',
+        date_accepted: null,
+        string_answers: [],
+        option_answers: []
+    }, {
+        template_id: 2,
+        user_id: 1,
         report_id: 15,
         title: 'Example',
         date_created: '2018-04-01',
@@ -100,7 +109,49 @@ const draftsAndReports = {
     }]
 };
 
+const queuedState = {
+    2 : [{
+        template_id: 2,
+        user_id: 1,
+        report_id: null,
+        title: 'Draft',
+        date_created: '2018-04-01',
+        date_accepted: null,
+        string_answers: [],
+        option_answers: []
+    }, {
+        template_id: 2,
+        user_id: 1,
+        report_id: null,
+        title: 'Draft',
+        date_created: '2018-04-01',
+        date_accepted: null,
+        string_answers: [],
+        option_answers: []
+    }, {
+        template_id: 2,
+        user_id: 1,
+        report_id: 15,
+        title: 'Example',
+        date_created: '2018-04-01',
+        date_accepted: null,
+        string_answers: [],
+        option_answers: []
+    }],
+    3 : [{
+        template_id: 3,
+        user_id: 1,
+        report_id: 12,
+        title: 'Example2',
+        date_created: '2018-05-16',
+        date_accepted: null,
+        string_answers: [],
+        option_answers: []
+    }]
+};
+
 describe('reports reducer', () => {
+
     it('should return the initial state', () => {
         expect(reportsReducer(undefined, {})).toEqual({});
     });
@@ -149,6 +200,14 @@ describe('reports reducer', () => {
 
     it('should handle EMPTY_REPORTS', () => {
         expect(reportsReducer(exampleState, { type: types.EMPTY_REPORTS })).toEqual({});
+    });
+
+    it('should handle STORE_QUEUED_REPORT_BY_TEMPLATE_ID', () => {
+        expect(reportsReducer(exampleState, {
+            type: types.STORE_QUEUED_REPORT_BY_TEMPLATE_ID,
+            templateID: 2,
+            report: exampleDraft
+        })).toEqual(queuedState);
     });
 
     it('should handle INSERT_TEMPLATE_ID', () => {
