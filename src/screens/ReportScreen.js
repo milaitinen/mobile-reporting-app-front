@@ -293,14 +293,14 @@ export class ReportScreen extends React.Component {
 
                     case 'DROPDOWN' : // Dropdown
                     {
-                        const selected = isNewReport ? null : field.field_options.find((option) => {
-                            return report.option_answers.map((answer) => answer.field_option_id)
-                                .includes(option.field_option_id);
-                        });
+                        const selected = isNewReport
+                            ? null
+                            : field.field_options.find((option) => {
+                                return report.option_answers
+                                    .find((answer) => answer.field_option_id === option.field_option_id && answer.selected);
+                            });
 
-                        const getOptionByValue = (value) => {
-                            return field.field_options[value];
-                        };
+                        const getOptionByValue = (value) => field.field_options.find(op => op.value === value);
 
                         return (
                             <Dropdown

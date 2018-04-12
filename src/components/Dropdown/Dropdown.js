@@ -67,7 +67,12 @@ class Dropdown extends Component {
                 defaultValue={this.state.value}
                 disabled={this.props.disabled}
                 options={this.props.options}
-                onSelect={(idx, value) => this.onSelect(idx, value)}
+                onSelect={(idx, value) => {
+                    console.log('idx', idx);
+                    console.log('value', value);
+                    this.props.onSelect(value);
+                    this.onSelect(idx, value);
+                }}
                 renderButtonText={(rowData) => rowData}
                 renderRow={this.renderRow.bind(this)}
                 renderSeparator={(rowID) => this.renderSeparator(rowID)}
