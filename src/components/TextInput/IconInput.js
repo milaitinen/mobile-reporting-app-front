@@ -15,6 +15,7 @@ const IconInput = (props) => {
                 underlineColorAndroid='transparent'
                 style={styles.IconInputStyle}
                 placeholderTextColor='white'
+                selectionColor={styles.$activeBlue}
                 {...props}
             />
         </View>

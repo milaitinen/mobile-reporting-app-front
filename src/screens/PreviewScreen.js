@@ -16,7 +16,6 @@ import { insertTitle } from '../redux/actions/preview';
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
 import styles from '../components/Dropdown/styles';
-import EStyleSheet from 'react-native-extended-stylesheet';
 
 export class PreviewScreen extends React.Component {
     constructor(props) {
@@ -88,6 +87,7 @@ export class PreviewScreen extends React.Component {
                                 <Checkbox
                                     key={index}
                                     editable={isEditable}
+                                    isPreview={true}
                                     title={option.value}
                                 />
                             );
@@ -154,6 +154,7 @@ export class PreviewScreen extends React.Component {
                             <Radioform
                                 options={labels}
                                 editable={isEditable}
+                                isPreview={true}
                                 initial={initialIndex}
                             />
                         );
@@ -163,6 +164,7 @@ export class PreviewScreen extends React.Component {
                         return (
                             <Datepicker
                                 editable={isEditable}
+                                isPreview={true}
                                 mode={'date'}
                                 answer={field.default_value}
                                 onChange={(date) => {
@@ -193,6 +195,7 @@ export class PreviewScreen extends React.Component {
                         return (
                             <Datepicker
                                 editable={isEditable}
+                                isPreview={true}
                                 mode={'time'}
                                 answer={field.default_value}
                                 onChange={(time) => {
@@ -205,7 +208,7 @@ export class PreviewScreen extends React.Component {
                         return (
                             <TextInput
                                 editable={isEditable}
-                                style={newReportStyles.textInput}
+                                style={[newReportStyles.textInput, newReportStyles.disabled]}
                                 placeholder={field.default_value}
                                 placeholderTextColor={newReportStyles.$disabledGray}
                                 keyboardType='numeric'
@@ -241,6 +244,7 @@ export class PreviewScreen extends React.Component {
                         return (
                             <Dropdown
                                 disabled={!isEditable}
+                                isPreview={true}
                                 defaultValue={'Select user'}
                                 options={JSON.parse(field.default_value)}
                             />

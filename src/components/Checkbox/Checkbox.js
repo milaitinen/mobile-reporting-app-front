@@ -19,14 +19,16 @@ class Checkbox extends Component {
     };
 
     render(){
-        const unchecked = this.props.editable ? styles.$inactiveBlue : styles.$disabledGray;
-        const text = this.props.editable ? styles.text : styles.disabledText;
-        const container = this.props.editable ? styles.container : styles.disabled;
+        const editable = this.props.editable;
+        const isPreview = this.props.isPreview;
+        const unchecked = (editable || !isPreview) ? styles.$inactiveBlue : styles.$disabledGray;
+        const text = (editable || !isPreview) ? styles.text : styles.disabledText;
+        const container = (editable || !isPreview) ? styles.container : styles.disabled;
         return (
             <CheckBox
                 title={this.props.title}
                 checked={this.state.checked}
-                disabled={!this.props.editable}
+                disabled={!editable}
                 iconType={'material'}
                 uncheckedIcon={'check-box-outline-blank'}
                 checkedIcon={'check-box'}

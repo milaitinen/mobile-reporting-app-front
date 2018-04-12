@@ -195,7 +195,7 @@ exports[`ReportScreen renders correctly 1`] = `
                               "width": 16,
                             },
                             Object {
-                              "backgroundColor": "#359ef3",
+                              "backgroundColor": "#2196f3",
                             },
                           ]
                         }

@@ -1,7 +1,7 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
-    $activeBlue: '$active',
+    $activeBlue: '$inactive',
 
     IconInputContainer: {
         flexDirection: 'row',

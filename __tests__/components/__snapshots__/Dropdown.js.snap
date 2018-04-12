@@ -21,18 +21,8 @@ exports[`Dropdown renders correctly when disabled 1`] = `
   renderSeparator={[Function]}
   scrollEnabled={true}
   showsVerticalScrollIndicator={true}
-  style={
-    Array [
-      undefined,
-      undefined,
-    ]
-  }
-  textStyle={
-    Array [
-      undefined,
-      undefined,
-    ]
-  }
+  style={undefined}
+  textStyle={undefined}
 >
   <View
     accessibilityComponentType={undefined}
@@ -65,12 +55,7 @@ exports[`Dropdown renders correctly when disabled 1`] = `
         accessible={true}
         allowFontScaling={true}
         ellipsizeMode="tail"
-        style={
-          Array [
-            undefined,
-            undefined,
-          ]
-        }
+        style={undefined}
       >
         some value
       </Text>

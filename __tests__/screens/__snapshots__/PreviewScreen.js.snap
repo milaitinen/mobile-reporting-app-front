@@ -1299,7 +1299,12 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
             keyboardType="numeric"
             placeholder="3123"
             placeholderTextColor={undefined}
-            style={undefined}
+            style={
+              Array [
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
         <View
