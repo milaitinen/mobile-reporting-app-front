@@ -1,4 +1,5 @@
-import { Platform, AsyncStorage, NetInfo } from 'react-native';
+import { AsyncStorage, NetInfo, } from 'react-native';
+import { asyncForEach } from '../functions/helpers';
 
 import { url } from './urlsetting';
 
@@ -18,7 +19,52 @@ export const login = (username, password) => {
     }).catch(err => alert(err));
 };
 
-// Send a new report to the server, along with the username and token.
+
+/**
+ * Send pending (enqueued) reports to the server. Doesn't check for connection, need to do that elsewhere.
+ * Remove reports from AsyncStorage after sending.
+ * Returns true if sent reports, false if nothing was sent.
+ */
+export const sendPendingReportsByTemplateID = (username, templateID, token) => {
+
+    const getItemThatWaits = async () => {
+        const data = await AsyncStorage.getItem(`${url}/users/${username}/queue/${templateID}`);
+        if (data) {
+            const report = Object.values(JSON.parse(data));
+            report.forEach(r => createNewReport(username, r, token));
+            removeData(`${url}/users/${username}/queue/${templateID}`);
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+
+    return getItemThatWaits();
+};
+
+/**
+ * Fetches templates and then sends pending queue by template ids. Needed in for sending pending
+ * reports when logged in, because templates are not yet fetched and stored in redux. In other screens
+ * use of sendPendingReportsByTemplateID is wiser to avoid unnecessary fetching.
+ * Returns true if sent something, false otherwise
+ * TODO: Maybe only fetch templates and reports after login and not in TemplateScreen?
+ */
+export const sendAllPendingReports = (username, token) => {
+    let sentSomething = false;
+    return fetchTemplatesByUsername(username, token)
+        .then(async templates => {
+            await asyncForEach(templates, async template => {
+                const status = await sendPendingReportsByTemplateID(username, template.template_id, token);
+                if (status == true) { sentSomething = true; }
+            });
+            return sentSomething;
+        });
+};
+
+/**
+ *  Send a new report to the server, along with the username and token.
+ */
 export const createNewReport = (username, report, token) => {
     return fetch(`${url}/users/${username}/reports`, {
         method: 'POST',
@@ -68,6 +114,7 @@ export const fetchRemoteEmptyTemplate = (username, templateID, token) => {
     );
 };
 
+
 // Used to store drafts. All drafts are stored under the same templateID, and are therefore stored inside arrays.
 export const saveDraft = (username, templateID, draft) => {
     // In case an empty draft is given, it won't be saved in AsyncStorage.
@@ -88,6 +135,53 @@ export const saveDraft = (username, templateID, draft) => {
             saveData(`${url}/users/${username}/templates/${templateID}`, drafts);
 
             return (drafts[drafts.length - 1].report_id);
+        });
+};
+
+
+
+/**
+ * Saves unsent reports to array in AsyncStorage by templateID
+ */
+export const saveToQueueWithTemplateID = (username, templateID, report) => {
+    fetchQueuedByTemplateID(username, templateID)
+        .then(queue => {
+            queue.push(report);
+            saveData(`${url}/users/${username}/queue/${templateID}`, queue);
+            return true;
+        });
+};
+
+/**
+ * Prints queue for testing purposes. Not really necessary :)
+ * */
+export const printQueueByID = (username, id) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/queue/${id}`)
+        .then(data => {
+            if (data != null) {
+                const array = JSON.parse(data);
+                for ( let i = 0; i < array.length; i++) {
+                    console.log(array[i]);
+                }
+                return array;
+            } else {
+                console.log('empty array');
+                return [];
+            }
+        });
+};
+
+/**
+ *  Fetches array of unsent reports from AsyncStorage under specified templateID
+ */
+export const fetchQueuedByTemplateID = (username, templateID) => {
+    return AsyncStorage.getItem(`${url}/users/${username}/queue/${templateID}`)
+        .then(data => {
+            if (data != null) {
+                return JSON.parse(data);
+            } else {
+                return [];
+            }
         });
 };
 
@@ -160,7 +254,6 @@ const fetchRemoteFieldsByReportID = (username, templateID, reportID, token) => {
             })
     );
 };
-
 
 /*
  Fetch templates from the server or ASyncStorage, depending on the availability of internet connection.
@@ -283,13 +376,15 @@ const fetchRemoteReportsByUsername = (username, token) => {
     );
 };
 
-/* Store data (layouts, reports - depending on the url) to ASyncStorage, a simple key-value storage system global to the app.
-   Keys and values are stored as a string. */
+
+
+/** Store data (layouts, reports - depending on the url) to ASyncStorage, a simple key-value storage system global to the app.
+** Keys and values are stored as a string.
+*/
 const saveData = (dataUrl, data) => {
     AsyncStorage.setItem(dataUrl, JSON.stringify(data));
 };
 
-/*
 const removeData = (dataUrl) => {
     try {
         AsyncStorage.removeItem(dataUrl);
@@ -297,7 +392,6 @@ const removeData = (dataUrl) => {
         console.error(error);
     }
 };
-*/
 
 // Necessary because of a bug on iOS https://github.com/facebook/react-native/issues/8615#issuecomment-287977178?
 /* Is this really necessary? TODO: Testing this change with the android peeps

@@ -6,6 +6,7 @@ import {
     ScrollView,
     NetInfo,
     StatusBar,
+    Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -13,9 +14,16 @@ import templateScreenStyles from './style/templateScreenStyles';
 import { Layout } from '../components/Layout';
 import { AppBackground } from '../components/AppBackground';
 import { ReportSearchBar } from '../components/ReportSearchBar';
-import { fetchReportsByTemplateID, fetchTemplatesByUsername, fetchDraftsByTemplateID } from './api';
+import {
+    fetchReportsByTemplateID,
+    fetchTemplatesByUsername,
+    fetchDraftsByTemplateID,
+    fetchQueuedByTemplateID,
+    sendPendingReportsByTemplateID
+} from './api';
+import { asyncForEach } from '../functions/helpers';
 import { storeTemplates } from '../redux/actions/templates';
-import { storeReportsByTemplateID, storeDraftByTemplateID, insertTemplateID } from '../redux/actions/reports';
+import { storeReportsByTemplateID, storeDraftByTemplateID, storeQueuedReportByTemplateID, insertTemplateID } from '../redux/actions/reports';
 import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
 
@@ -63,7 +71,7 @@ export class TemplateScreen extends Component {
         if (this.props.username !== userReducer.username) {
             this.getTemplatesAndReports();
         } else {
-            this.setState({ refreshing: false, isLoading: false });
+            this.setState({ refreshing: false, isLoading: false, });
         }
 
     }
@@ -74,14 +82,41 @@ export class TemplateScreen extends Component {
 
     handleConnectionChange = isConnected => {
         this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
-    };
 
-    /*
-    Fetches the data from the server in two parts.
-    1) Fetches the templates from the server
-    2) Fetches the reports under their specific template by making a separate fetch request using
-        Promise.all. After all the promises have been fetched, the function updates the state
-        of reportsByTemplates, and sets isLoading and refreshing to false.
+        if (isConnected) { this.sendPendingReports(); }
+
+    }
+
+
+    sendPendingReports = () => {
+        const { username, token } = this.props;
+        const templates = this.props.templates;
+
+        let sentSomething = false;
+
+        //Helper function to perform all these async functions in correct order :)
+        const send = async () => {
+            await asyncForEach(Object.keys(templates), async id => {
+                const status = await sendPendingReportsByTemplateID(username, id, token);
+                if (status == true) { sentSomething = true; }
+            });
+
+            if (sentSomething) {
+                this.setState({ refreshing: true }, () => { this.handleRefresh(); });
+                Alert.alert('Pending reports sent!');
+            }
+        };
+
+        if (this.props.isConnected) { send(); }
+
+    }
+
+    /**
+    * Fetches the data from the server in two parts.
+    * 1) Fetches the templates from the server
+    * 2) Fetches the reports under their specific template by making a separate fetch request using
+    *    Promise.all. After all the promises have been fetched, the function updates the state
+    *    of reportsByTemplates, and sets isLoading and refreshing to false.
     */
     getTemplatesAndReports = () => {
         const { username, token } = this.props;
@@ -102,6 +137,7 @@ export class TemplateScreen extends Component {
                 Promise.all(reportsByTemplateID)
                     .then(data => this.props.dispatch(storeReportsByTemplateID(data)))
                     .then(() => this.getDrafts())
+                    .then(() => this.getQueued())
                     .catch(err => console.error(err));
             })
             .catch(error => console.error(error))
@@ -121,6 +157,20 @@ export class TemplateScreen extends Component {
                         drafts.forEach(draft => this.props.dispatch(storeDraftByTemplateID(id, draft)));
                     }
                 })
+                .catch(err => console.error(err));
+        });
+    };
+
+    getQueued = () => {
+        const { templates, username } = this.props;
+
+        Object.keys(templates).forEach(templateID => {
+            fetchQueuedByTemplateID(username, templateID)
+                .then(reports => {
+                    if (reports.length != 0) {
+                        reports.forEach(report => this.props.dispatch(storeQueuedReportByTemplateID(templateID, report)));
+                    }
+                })
                 .then(() => this.setState({ refreshing: false, isLoading: false }))
                 .catch(err => console.error(err));
         });
@@ -129,7 +179,7 @@ export class TemplateScreen extends Component {
     // Handler function for refreshing the data and refetching.
     handleRefresh = () => {
         this.setState({ refreshing: true, }, () => { this.getTemplatesAndReports(); });
-        this.setState({ isLoading: true });
+        this.setState({ isLoading: true, });
     };
 
     // Determines whether this screen is scrollable or not.
@@ -137,9 +187,9 @@ export class TemplateScreen extends Component {
         this.setState({ scrollEnabled : bool });
     };
 
-    /*
-     Determines whether empty space is rendered after the last template.
-     Without this function it wouldn't be possible to autoscroll to the last templates.
+    /**
+     * Determines whether empty space is rendered after the last template.
+     * Without this function it wouldn't be possible to autoscroll to the last templates.
      */
     setRenderFooter = (bool) => {
         this.setState({ renderFooter: bool });
@@ -216,6 +266,7 @@ export class TemplateScreen extends Component {
                             renderItem={({ item, index }) =>
                                 <Layout
                                     title={item.title}
+                                    key = {item.index}
                                     moveToTop={(viewPosition = 0) => this._flatList.scrollToIndex({ animated: true, index: index, viewPosition: viewPosition })}
                                     setTemplateScreenScrollEnabled={this.setScrollEnabled}
                                     setTemplateScreenRenderFooter={this.setRenderFooter}
@@ -224,12 +275,8 @@ export class TemplateScreen extends Component {
                                     //nofReports={(reports[item.template_id]) ? (reports[item.template_id]).length : 0}
                                     templateID={item.template_id}
                                     data={reports[item.template_id]}
-                                    nofReports={(reports[item.template_id])
-                                        ? reports[item.template_id].filter(item => item.template_id >= 0).length
-                                        : 0}
-                                    nofDrafts={(reports[item.template_id])
-                                        ? reports[item.template_id].filter(item => item.template_id < 0).length
-                                        : 0}
+                                    nofReports={(reports[item.template_id]) ? reports[item.template_id].filter(item => item.report_id >= 0).length : 0}
+                                    nofQueued={(reports[item.template_id]) ? reports[item.template_id].filter(item => item.report_id == null).length : 0}
                                 />
                             }
                             ListFooterComponent={

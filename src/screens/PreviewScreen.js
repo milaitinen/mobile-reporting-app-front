@@ -99,7 +99,6 @@ export class PreviewScreen extends React.Component {
                         );
                     }
 
-
                     case 'NESTED_DROPDOWN': // Dropdown
                         return (
                             <ModalDropdown

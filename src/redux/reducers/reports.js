@@ -1,4 +1,5 @@
-import { STORE_REPORTS_BY_TEMPLATE_ID, EMPTY_REPORTS, STORE_DRAFT_BY_TEMPLATE_ID, INSERT_TEMPLATE_ID } from '../actions/reports';
+import { STORE_REPORTS_BY_TEMPLATE_ID, EMPTY_REPORTS, STORE_DRAFT_BY_TEMPLATE_ID,
+    STORE_QUEUED_REPORT_BY_TEMPLATE_ID, INSERT_TEMPLATE_ID } from '../actions/reports';
 
 const initialState = {};
 
@@ -30,6 +31,10 @@ const reportsByTemplateIDReducer = (state = initialState, action) => {
         }
         case STORE_DRAFT_BY_TEMPLATE_ID: {
             state[action.templateID].unshift(action.draft); // Add draft to the start of the array of reports( >< push)
+            return state;
+        }
+        case STORE_QUEUED_REPORT_BY_TEMPLATE_ID: {
+            state[action.templateID].unshift(action.report);
             return state;
         }
         case INSERT_TEMPLATE_ID: {
