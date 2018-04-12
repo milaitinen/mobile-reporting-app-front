@@ -27,6 +27,7 @@ import { insertFieldAnswer, emptyFields, openReport, insertDate, insertTitle, cr
 import { setUnsaved, setSavingRequested } from '../redux/actions/reportEditing';
 import { handleBack } from '../functions/handleBack';
 import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
+import { MultilineInput } from '../components/TextInput';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -56,6 +57,11 @@ export class ReportScreen extends React.Component {
     }
 
     _handleBack = () => handleBack(this.props.dispatch, this.props.isUnsaved);
+
+    // Determines whether this screen is scrollable or not.
+    setScrollEnabled = (bool) => {
+        this.setState({ scrollEnabled : bool });
+    };
 
     componentWillMount() {
         const isNewReport = this.props.navigation.state.params.isNewReport;
@@ -362,6 +368,13 @@ export class ReportScreen extends React.Component {
                     {
                         const answer = isNewReport ? null : report.string_answers.find((answer) => answer.field_id === field.field_id);
                         return (
+                            <MultilineInput
+                                onChangeFunction={(text) => this.insertAnswer(field, text, false)}
+                                value={answer ? answer.value : ''}
+                                placeholder={isNewReport ? field.default_value : null}
+                                placeholderTextColor={isNewReport ? newReportStyles.$gray : null}
+                            />
+                            /*
                             <TextInput
                                 multiline
                                 style={newReportStyles.multilineTextInput}
@@ -369,7 +382,7 @@ export class ReportScreen extends React.Component {
                                 value={answer ? answer.value : null}
                                 placeholder={isNewReport ? field.default_value : null}
                                 placeholderTextColor={isNewReport ? newReportStyles.$gray : null}
-                            />
+                            />*/
                         );
                     }
 

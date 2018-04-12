@@ -36,6 +36,24 @@ const styles = EStyleSheet.create({
             marginLeft: 5,
         }
     },
+
+    scrollContainer: {
+        backgroundColor: '$primaryWhite',
+        borderWidth: 1,
+        borderColor: '$primaryWhite',
+        borderRadius: '$inputBorderRadius',
+        height: 90,
+        paddingHorizontal: 10,
+        marginBottom: 10,
+    },
+
+    multilineInput: {
+        textAlignVertical: 'top',
+        minHeight: 80,
+        borderRadius: '$inputBorderRadius',
+        fontFamily: '$primaryFont',
+        color: '$placeholder',
+    },
 });
 
 export default styles;

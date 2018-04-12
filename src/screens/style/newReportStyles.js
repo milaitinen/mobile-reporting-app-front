@@ -116,7 +116,7 @@ const newReportStyles = EStyleSheet.create({
         textAlignVertical: 'top',
         paddingHorizontal: 12,
         marginBottom: 10,
-        height: 80,
+        minHeight: 80,
         borderRadius: '$inputBorderRadius',
         backgroundColor: '$primaryWhite',
         fontFamily: '$primaryFont',
