@@ -50,7 +50,8 @@ export class PreviewScreen extends React.Component {
             isNewReport: true,
             templateID: this.props.templateID,
             refresh: this.props.navigation.state.params.refresh,
-            isEditable: true
+            isEditable: true,
+            navigateDebounce: this.props.navigation.state.params.navigateDebounce
         });
     };
 
