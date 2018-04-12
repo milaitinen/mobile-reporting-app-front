@@ -200,6 +200,8 @@ export class ReportScreen extends React.Component {
             return;
         }
 
+        if (!isNewReport) draft.date_created = moment().format('YYYY-MM-DD');
+
         createNewReport(username, draft, token)
             .then(response => {
                 if (response.status === 200) {
