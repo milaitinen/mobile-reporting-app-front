@@ -24,7 +24,6 @@ import { AppBackground } from '../components/AppBackground';
 import { createNewReport, saveDraft, fetchEmptyTemplate, saveToQueueWithTemplateID } from './api';
 import { strings } from '../locales/i18n';
 import { emptyFields, insertFieldAnswer, insertTitle, insertDate, createDraft } from '../redux/actions/newReport';
-import { storeDraftByTemplateID, storeQueuedReportByTemplateID } from '../redux/actions/reports';
 import { handleBack } from '../functions/handleBack';
 import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
 

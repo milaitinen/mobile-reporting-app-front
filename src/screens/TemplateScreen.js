@@ -21,9 +21,7 @@ import {
     fetchQueuedByTemplateID,
     sendPendingReportsByTemplateID
 } from './api';
-import {
-    asyncForEach
-} from './helpers';
+import { asyncForEach } from '../functions/helpers';
 import { storeTemplates } from '../redux/actions/templates';
 import { storeReportsByTemplateID, storeDraftByTemplateID, storeQueuedReportByTemplateID, insertTemplateID } from '../redux/actions/reports';
 import { preview } from '../redux/actions/preview';

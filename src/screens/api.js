@@ -1,5 +1,5 @@
-import { Platform, AsyncStorage, NetInfo, Alert } from 'react-native';
-import { asyncForEach } from './helpers';
+import { AsyncStorage, NetInfo, } from 'react-native';
+import { asyncForEach } from '../functions/helpers';
 
 import { url } from './urlsetting';
 
