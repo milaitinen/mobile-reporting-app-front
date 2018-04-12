@@ -8,7 +8,7 @@ import { Input } from '../components/TextInput';
 import { SignInButton } from '../components/Button';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
-import { isNetworkConnected, login, sendAllPendingReports } from './api';
+import { isNetworkConnected, login, sendAllPendingReports } from '../api';
 import { NavigationActions } from 'react-navigation';
 import { OfflineNotice } from '../components/OfflineNotice';
 import { toggleConnection } from '../redux/actions/connection';
@@ -23,12 +23,6 @@ export class LoginScreen extends React.Component {
         super(props);
 
         if (this.props.token) { // this.props.token != null
-            //TODO: verify token
-            /*
-            const response = verifyToken(this.props.user.token);
-            if (someCondition(response)) {
-            }
-            */
             this.props.navigation.navigate(LOGGED_IN_ROUTE_NAME);
         }
     }

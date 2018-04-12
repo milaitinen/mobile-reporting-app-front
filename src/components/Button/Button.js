@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-elements';
-import EStyleSheet from 'react-native-extended-stylesheet';
 import styles from './buttonStyles';
 import color from 'color';
 import withPreventDoubleClick from '../../functions/withPreventDoubleClick/withPreventDoubleClick';
@@ -16,7 +15,7 @@ const CustomButton = ({ title, type, onPress }) => {
                     style={styles.sendButtonContainer}
                     onPress={onPress}>
                     <View style={styles.buttonContent}>
-                        <Icon name={'send'} color={EStyleSheet.value('$sendGreen')} size={18}/>
+                        <Icon name={'send'} color={styles.$green} size={18}/>
                         <Text style={styles.text}>{title}</Text>
                     </View>
                 </TouchableHighlight>
@@ -30,7 +29,7 @@ const CustomButton = ({ title, type, onPress }) => {
                     style={styles.deleteButtonContainer}
                     onPress={onPress}>
                     <View style={styles.buttonContent}>
-                        <Icon name={'delete'} color={EStyleSheet.value('$delete')} size={18}/>
+                        <Icon name={'delete'} color={styles.$red} size={18}/>
                         <Text style={styles.text}>{title}</Text>
                     </View>
                 </TouchableHighlight>
@@ -44,7 +43,7 @@ const CustomButton = ({ title, type, onPress }) => {
                 style={styles.saveButtonContainer}
                 onPress={onPress}>
                 <View style={styles.buttonContent}>
-                    <Icon name={'save'} color={EStyleSheet.value('$draftBlue')} size={18}/>
+                    <Icon name={'save'} color={styles.$blue} size={18}/>
                     <Text style={styles.text}>{title}</Text>
                 </View>
             </TouchableHighlight>

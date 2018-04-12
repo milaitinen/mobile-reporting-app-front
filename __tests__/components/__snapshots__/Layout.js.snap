@@ -5,7 +5,7 @@ exports[`renders correctly 1`] = `
   collapsable={undefined}
   style={
     Object {
-      "height": 60,
+      "height": 50,
     }
   }
 >
@@ -143,39 +143,28 @@ exports[`renders correctly 1`] = `
           <View
             style={undefined}
           >
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              numberOfLines={1}
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "#86939e",
-                      "fontSize": 15,
-                      "fontWeight": "600",
-                      "marginTop": 1,
-                    },
-                    false,
-                    undefined,
-                    undefined,
-                  ],
-                ]
-              }
-            >
-              undefined Reports
-            </Text>
+            <View>
+              <View
+                style={undefined}
+              >
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                >
+                   
+                  templates.reports
+                </Text>
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                >
+                   
+                  Odottavaa
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
         <View
@@ -352,7 +341,7 @@ exports[`renders correctly 1`] = `
     <RCTScrollView
       style={
         Object {
-          "height": 415,
+          "height": 425,
         }
       }
     >
@@ -365,7 +354,7 @@ exports[`renders correctly 1`] = `
               ellipsizeMode="tail"
               style={undefined}
             >
-              No more reports
+              templates.endOfReports
             </Text>
           }
           data={undefined}
@@ -403,7 +392,7 @@ exports[`renders correctly 1`] = `
                 ellipsizeMode="tail"
                 style={undefined}
               >
-                No more reports
+                templates.endOfReports
               </Text>
             </View>
           </View>

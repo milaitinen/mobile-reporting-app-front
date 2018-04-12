@@ -5,7 +5,6 @@ import { View, Text } from 'react-native';
 
 import LoginScreen from '../screens/LoginScreen';
 import TemplateScreen from '../screens/TemplateScreen';
-import NewReportScreen from '../screens/NewReportScreen';
 import PreviewScreen from '../screens/PreviewScreen';
 import ReportScreen from '../screens/ReportScreen';
 import navigationStyles from './navigationStyles';
@@ -21,6 +20,7 @@ export const LOGGED_IN_ROUTE_NAME = 'loggedInDrawer';
 
 // The stack that is contained within the logged in drawer
 const TemplateStack = StackNavigator({
+    //TODO pressing Icon does nothing on IOS - fix bug, navigation problems?.
     Templates: {
         screen: TemplateScreen,
         navigationOptions: ({ navigation }) => ({
@@ -41,8 +41,9 @@ const TemplateStack = StackNavigator({
                 </View>
         })
     },
-    NewReport: {
-        screen: NewReportScreen,
+    //TODO add save property to Save?
+    Report: {
+        screen: ReportScreen,
         navigationOptions: () => ({
             flex: 0.3,
             drawerLockMode: 'locked-closed',
@@ -61,26 +62,6 @@ const TemplateStack = StackNavigator({
                        />
                    </View>
                </View>,
-        })
-    },
-    Report: {
-        screen: ReportScreen,
-        navigationOptions: () => ({
-            flex: 0.3,
-            header:
-                <View style={ navigationStyles.HeaderContainer}>
-                    <OfflineNotice />
-                    <View style={ navigationStyles.titleContainer }>
-                        <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.report') }</Text>
-                    </View>
-                    <View style={ navigationStyles.backButtonContainer }>
-                        <ReportEditingBackButton
-                            tintColor='#fff'
-                            style={ navigationStyles.headerBackStyle }
-                        />
-                    </View>
-                </View>,
-
         })
     },
     Preview: {

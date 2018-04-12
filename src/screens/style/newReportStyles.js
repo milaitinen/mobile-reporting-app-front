@@ -2,6 +2,9 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const newReportStyles = EStyleSheet.create({
 
+    $disabledGray: '$disabledPlaceholder',
+    $gray: '$placeholder',
+
     ViewContainer: {
         flex: 1,
         height: 100,

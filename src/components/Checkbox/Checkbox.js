@@ -1,6 +1,5 @@
 import { CheckBox } from 'react-native-elements';
 import React, { Component } from 'react';
-import EStyleSheet from 'react-native-extended-stylesheet';
 import styles from './checkboxStyles';
 
 class Checkbox extends Component {
@@ -20,7 +19,7 @@ class Checkbox extends Component {
     };
 
     render(){
-        const unchecked = this.props.editable ? EStyleSheet.value('$inactive') : EStyleSheet.value('$disabledBorder');
+        const unchecked = this.props.editable ? styles.$inactiveBlue : styles.$disabledGray;
         const text = this.props.editable ? styles.text : styles.disabledText;
         const container = this.props.editable ? styles.container : styles.disabled;
         return (
@@ -32,7 +31,7 @@ class Checkbox extends Component {
                 uncheckedIcon={'check-box-outline-blank'}
                 checkedIcon={'check-box'}
                 uncheckedColor={unchecked}
-                checkedColor={EStyleSheet.value('$active')}
+                checkedColor={styles.$activeBlue}
                 textStyle={this.state.checked ? styles.selectedText : text}
                 containerStyle={this.state.checked ? styles.selectedContainer : container}
                 onPress={() => {

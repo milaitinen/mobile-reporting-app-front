@@ -12,15 +12,15 @@ describe('templatesReducer reducer', () => {
                 {
                     type: types.STORE_TEMPLATES,
                     templates: [
-                        { title: 'Eka', reportCount: 40, amountOfReports: 40, id: 1 },
-                        { title: 'Information security management', reportCount: 1020, amountOfReports: 1020, id: 4 }
+                        { title: 'Eka', reportCount: 40, amountOfReports: 40, template_id: 1 },
+                        { title: 'Information security management', reportCount: 1020, amountOfReports: 1020, template_id: 4 }
                     ]
                 }
             )
         ).toEqual(
             {
-                1 : { title: 'Eka', reportCount: 40, amountOfReports: 40, id: 1 },
-                4 : { title: 'Information security management', reportCount: 1020, amountOfReports: 1020, id: 4 }
+                1 : { title: 'Eka', reportCount: 40, amountOfReports: 40, template_id: 1 },
+                4 : { title: 'Information security management', reportCount: 1020, amountOfReports: 1020, template_id: 4 }
             }
         );
     });

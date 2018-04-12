@@ -1,7 +1,7 @@
 import { AsyncStorage, NetInfo, } from 'react-native';
-import { asyncForEach } from '../functions/helpers';
+import { asyncForEach } from './functions/helpers';
 
-import { url } from './urlsetting';
+import { url } from './screens/urlsetting';
 
 export const login = (username, password) => {
     return fetch(`${url}/login`, {
@@ -114,31 +114,34 @@ export const fetchRemoteEmptyTemplate = (username, templateID, token) => {
     );
 };
 
-
-// Used to store drafts. All drafts are stored under the same templateID, and are therefore stored inside arrays.
+/**
+ *Store drafts. All drafts are stored under the same templateID, and are therefore stored inside arrays.
+ */
 export const saveDraft = (username, templateID, draft) => {
     // In case an empty draft is given, it won't be saved in AsyncStorage.
     if (Object.keys(draft).length === 0) return;
 
     fetchDraftsByTemplateID(username, templateID)
         .then((drafts) => {
-            // see if there is already a draft with the same id
+
+            let updatedDrafts = drafts;
             const draftIndex = drafts.findIndex(x => x.report_id === draft.report_id);
 
-            if (draftIndex < 0) {
-                drafts.push(draft);
-            } else {
-                drafts[draftIndex] = draft;
+            // If the draft already exists in AsyncStorage, remove it so that negative id can be given
+            // in order from the oldest draft to the newest.
+            if (draftIndex >= 0 ) {
+                updatedDrafts = drafts.filter(d => d.report_id !== draft.report_id);
             }
+
+            updatedDrafts.push(draft);
+
             // give each draft a unique, negative id
-            drafts.map((draft, i) => draft.report_id = -Math.abs(i + 1));
-            saveData(`${url}/users/${username}/templates/${templateID}`, drafts);
+            updatedDrafts.map((draft, i) => draft.report_id = -Math.abs(i + 1));
+            saveData(`${url}/users/${username}/templates/${templateID}`, updatedDrafts);
 
             return (drafts[drafts.length - 1].report_id);
         });
 };
-
-
 
 /**
  * Saves unsent reports to array in AsyncStorage by templateID
@@ -307,7 +310,7 @@ export const fetchReportsByTemplateID = (username, templateID, token) => {
             return fetchRemoteReportsByTemplateID(username, templateID, token);
         })
         .then((reports) => {
-            saveData(`${url}/users/${username}/templates/${templateID}/reports?sort=-date_created`, reports);
+            saveData(`${url}/users/${username}/templates/${templateID}/reports?sort=-report_id`, reports);
             return reports;
         });
 };
@@ -315,7 +318,7 @@ export const fetchReportsByTemplateID = (username, templateID, token) => {
 /* Fetch Reports by TemplateID from ASyncStorage in case there is no internet connection.
    If no data has been stored an empty value will be returned. */
 const fetchLocalReportsByTemplateID = (username, templateID) => {
-    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports?sort=-date_created`)
+    return AsyncStorage.getItem(`${url}/users/${username}/templates/${templateID}/reports?sort=-report_id`)
         .then(data => {
             if (data !== null) {
                 return JSON.parse(data);
@@ -328,7 +331,7 @@ const fetchLocalReportsByTemplateID = (username, templateID) => {
 // Fetch reports by templateID from the server
 const fetchRemoteReportsByTemplateID = (username, templateID, token) => {
     return (
-        fetch(`${url}/users/${username}/templates/${templateID}/reports?sort=-date_created`, {
+        fetch(`${url}/users/${username}/templates/${templateID}/reports?sort=-report_id`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -378,9 +381,10 @@ const fetchRemoteReportsByUsername = (username, token) => {
 
 
 
-/** Store data (layouts, reports - depending on the url) to ASyncStorage, a simple key-value storage system global to the app.
-** Keys and values are stored as a string.
-*/
+/**
+ * Store data (layouts, reports - depending on the url) to ASyncStorage, a simple key-value storage system global to the app.
+ * Keys and values are stored as a string.
+ */
 const saveData = (dataUrl, data) => {
     AsyncStorage.setItem(dataUrl, JSON.stringify(data));
 };

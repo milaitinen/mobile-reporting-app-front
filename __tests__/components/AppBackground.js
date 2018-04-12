@@ -1,21 +1,20 @@
 import 'react-native';
 import React from 'react';
-import { configure } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import LinearGradient from 'react-native-linear-gradient';
 import renderer from 'react-test-renderer';
 
-import Checkbox from '../src/components/Checkbox/Checkbox';
+import AppBackground from '../../src/components/AppBackground/AppBackground';
 
 configure({ adapter: new Adapter() });
 
 it('renders correctly', () => {
     const tree = renderer.create(
-        <Checkbox title='some checkbox' editable={false} />
+        <AppBackground children={null}/>
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });
-
-
 
 
 

@@ -33,6 +33,11 @@ export class PreviewScreen extends React.Component {
         this.getTemplateFields(templates, templateID);
     }
 
+    componentWillUnmount() {
+        // Calls handler function to set isNavigating back to false in TemplateScreen.
+        this.props.navigation.state.params.navigateDebounce();
+    }
+
     getTemplateFields = (templates, templateID) => {
         const isEditable = this.props.navigation.state.params.isEditable;
         const fields = templates[templateID] ? templates[templateID].fields : [];
@@ -41,10 +46,12 @@ export class PreviewScreen extends React.Component {
     };
 
     handleOnPress = () => {
-        this.props.navigation.navigate('NewReport', {
+        this.props.navigation.navigate('Report', {
+            isNewReport: true,
             templateID: this.props.templateID,
             refresh: this.props.navigation.state.params.refresh,
-            isEditable: true
+            isEditable: true,
+            navigateDebounce: this.props.navigation.state.params.navigateDebounce
         });
     };
 
@@ -67,19 +74,19 @@ export class PreviewScreen extends React.Component {
         const renderedFields = this.state.fields.map((field, index) => {
             const renderedField = () => {
                 switch (field.type) {
-
+                    /*
                     case 'NAME': // Name
                         return (
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$disabledPlaceholder')}
+                                placeholderTextColor={newReportStyles.$disabledGray}
                                 onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
                                 underlineColorAndroid='transparent'
                                 style={[newReportStyles.textInput, newReportStyles.disabled]}
                             />
                         );
-
+                    */
                     case 'CHECKBOX': // Checkbox
                     {
                         const checkboxes = field.field_options.map((option, index) => {
@@ -121,7 +128,7 @@ export class PreviewScreen extends React.Component {
                                     <Text style={[styles.dropdownText, styles.disabledText]}>
                                         Select option
                                     </Text>
-                                    <Icon name={'expand-more'} color={EStyleSheet.value('$disabledPlaceholder')}
+                                    <Icon name={'expand-more'} color={newReportStyles.$disabledGray}
                                         style={styles.icon}/>
                                 </View>
                             </ModalDropdown>
@@ -132,7 +139,7 @@ export class PreviewScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$disabledPlaceholder')}
+                                placeholderTextColor={newReportStyles.$disabledGray}
                                 underlineColorAndroid='transparent'
                                 style={[newReportStyles.textInput, newReportStyles.disabled]}
                             />
@@ -184,7 +191,7 @@ export class PreviewScreen extends React.Component {
                                 editable={isEditable}
                                 style={[newReportStyles.multilineTextInput, newReportStyles.disabled]}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$disabledPlaceholder')}
+                                placeholderTextColor={newReportStyles.$disabledGray}
                             />
                         );
 
@@ -206,7 +213,7 @@ export class PreviewScreen extends React.Component {
                                 editable={isEditable}
                                 style={newReportStyles.textInput}
                                 placeholder={field.default_value}
-                                placeholderTextColor={EStyleSheet.value('$disabledPlaceholder')}
+                                placeholderTextColor={newReportStyles.$disabledGray}
                                 keyboardType='numeric'
                             />
                         );
@@ -280,7 +287,7 @@ export class PreviewScreen extends React.Component {
                             <TextInput
                                 editable={isEditable}
                                 placeholder={'Otsikko'}
-                                placeholderTextColor={EStyleSheet.value('$placeholder')}
+                                placeholderTextColor={newReportStyles.$gray}
                                 underlineColorAndroid='transparent'
                                 style={[newReportStyles.textInput, newReportStyles.disabled]}
                                 onChangeText={(text) => this.props.dispatch(insertTitle(text))}

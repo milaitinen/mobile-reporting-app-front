@@ -1,35 +1,41 @@
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import React, { Component } from 'react';
-import EStyleSheet from 'react-native-extended-stylesheet';
 import styles from './styles';
 
 class Radioform extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: null,
+            index: this.props.initial || 0
         };
+    }
+
+    press(index) {
+        this.setState({ index: index });
     }
 
     render() {
         const container = this.props.editable ? styles.radioInputContainer : [styles.radioInputContainer, styles.disabled];
-        const button = this.props.editable ? EStyleSheet.value('$inactive') : EStyleSheet.value('$disabledPlaceholder');
+        const button = this.props.editable ? styles.$lightBlue : styles.$gray;
         const label = this.props.editable ? styles.radioLabel : styles.disabledText;
         return (
             <RadioForm>
                 {this.props.options.map((obj, i) =>
                     <RadioButton
                         key={i}
-                        style={this.state.value === obj.value ? styles.selectedInputContainer : container}>
+                        style={this.state.index === i ? styles.selectedInputContainer : container}>
                         <RadioButtonInput
                             disabled={!this.props.editable}
                             obj={obj}
                             index={i}
-                            isSelected={this.state.value === obj.value}
-                            onPress={(value) => { this.setState({ value: value }); }}
+                            isSelected={this.state.index === i}
+                            onPress={(value) => {
+                                this.props.onPress(value);
+                                this.press(i);
+                            }}
                             borderWidth={1.5}
                             buttonInnerColor={'#359ef3'}
-                            buttonOuterColor={this.state.value === obj.value ? EStyleSheet.value('$active') : button}
+                            buttonOuterColor={this.state.index === i ? styles.$blue : button}
                             buttonSize={16}
                             buttonOuterSize={24}
                             buttonWrapStyle={styles.buttonWrap}
@@ -39,8 +45,11 @@ class Radioform extends Component {
                             obj={obj}
                             index={i}
                             labelHorizontal={true}
-                            onPress={(value) => { this.setState({ value: value }); }}
-                            labelStyle={this.state.value === obj.value ? styles.selectedLabel : label}
+                            onPress={(value) => {
+                                this.props.onPress(value);
+                                this.press(i);
+                            }}
+                            labelStyle={this.state.index === i ? styles.selectedLabel : label}
                             labelWrapStyle={styles.labelWrap}
                         />
                     </RadioButton>

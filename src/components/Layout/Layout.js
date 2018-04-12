@@ -160,7 +160,7 @@ class Layout extends Component{
                             ListFooterComponent={
                                 (data !== undefined && data.length > this.state.itemsCount)
                                     ?
-                                    <Text style={styles.more} onPress={() => this.showMore()}>
+                                    <Text testID={'showMore'} style={styles.more} onPress={() => this.showMore()}>
                                         { strings('templates.showMore') }
                                     </Text>
                                     :

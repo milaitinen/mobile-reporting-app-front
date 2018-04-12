@@ -8,9 +8,9 @@ import { emptyReports } from '../redux/actions/reports';
 import { connect } from 'react-redux';
 import { LOGGED_OUT_ROUTE_NAME } from './AppNavigation';
 
-class Sidebar extends React.Component {
+export class Sidebar extends React.Component {
 
-    signOut = () => {
+    signOut() {
         // perform other logging out related tasks here
 
         this.props.dispatch(insertUsername(null));
@@ -29,7 +29,7 @@ class Sidebar extends React.Component {
             actions: [NavigationActions.navigate({ routeName: LOGGED_OUT_ROUTE_NAME })]
         });
         this.props.navigation.dispatch(actionToDispatch);
-    };
+    }
 
     // TODO: update the look and consider removing inline style
     render () {

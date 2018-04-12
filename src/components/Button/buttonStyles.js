@@ -1,6 +1,10 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
+    $blue: '$draftBlue',
+    $green: '$sendGreen',
+    $red: '$delete',
+
     view: {
         backgroundColor: 'transparent',
         borderRadius: '$buttonBorderRadius',
