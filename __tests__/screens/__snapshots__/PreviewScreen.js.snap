@@ -45,9 +45,13 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
           <TextInput
             allowFontScaling={true}
             editable={true}
+            isPreview={true}
+            onBlur={[Function]}
             onChangeText={[Function]}
+            onFocus={[Function]}
             placeholder="Otsikko"
             placeholderTextColor={undefined}
+            selectionColor={undefined}
             style={
               Array [
                 undefined,
@@ -83,8 +87,12 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
           <TextInput
             allowFontScaling={true}
             editable={true}
+            isPreview={true}
+            onBlur={[Function]}
+            onFocus={[Function]}
             placeholder={null}
             placeholderTextColor={undefined}
+            selectionColor={undefined}
             style={
               Array [
                 undefined,
@@ -120,9 +128,13 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
           <TextInput
             allowFontScaling={true}
             editable={true}
+            isPreview={true}
             multiline={true}
+            onBlur={[Function]}
+            onFocus={[Function]}
             placeholder="Lorem ipsum dolor sit amet, consectetur adipisci elit..."
             placeholderTextColor={undefined}
+            selectionColor={undefined}
             style={
               Array [
                 undefined,
@@ -1296,9 +1308,13 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
           <TextInput
             allowFontScaling={true}
             editable={true}
+            isPreview={true}
             keyboardType="numeric"
+            onBlur={[Function]}
+            onFocus={[Function]}
             placeholder="3123"
             placeholderTextColor={undefined}
+            selectionColor={undefined}
             style={
               Array [
                 undefined,

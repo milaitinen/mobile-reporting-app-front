@@ -27,7 +27,7 @@ class Dropdown extends Component {
         const inactive = '#cceeff';
         return (
             <TouchableHighlight underlayColor={evenRow ? color(inactive).darken(0.3) : color(active).darken(0.1)}>
-                <View style={[styles.dropdownRow, { backgroundColor: evenRow ? inactive : 'white' }]}>
+                <View style={[styles.dropdownRow, { backgroundColor: evenRow ? '#eef8ff' : 'white' }]}>
                     <Text style={[styles.dropdownRowText, highlighted && { color: active }]}>
                         {rowData}
                     </Text>

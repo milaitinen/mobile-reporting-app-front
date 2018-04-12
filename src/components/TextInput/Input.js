@@ -19,7 +19,8 @@ class Input extends Component {
     }
 
     render() {
-        const containerStyle = this.props.multiline ? styles.multilineInput : styles.inputContainer;
+        const inputStyle = this.props.multiline ? styles.multilineInput : styles.inputContainer;
+        const containerStyle = this.props.isPreview ? [inputStyle, styles.disabled] : inputStyle;
         const isFocused = this.state.isFocused;
         const input_style = isFocused? [containerStyle, styles.active] : containerStyle;
         return (

@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Text, ActivityIndicator, Linking } from 'react-native';
+import { View, ScrollView, Text, ActivityIndicator, Linking } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Checkbox } from '../components/Checkbox';
 import { Radioform } from '../components/Radioform';
 import { Dropdown } from '../components/Dropdown';
 import { Datepicker } from '../components/Datepicker';
 import ModalDropdown from 'react-native-modal-dropdown';
+import { Input } from '../components/TextInput';
 import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
@@ -130,8 +131,9 @@ export class PreviewScreen extends React.Component {
 
                     case 'TEXTFIELD_SHORT': // TextRow (One row text field)
                         return (
-                            <TextInput
+                            <Input
                                 editable={isEditable}
+                                isPreview={true}
                                 placeholder={field.default_value}
                                 placeholderTextColor={newReportStyles.$disabledGray}
                                 underlineColorAndroid='transparent'
@@ -182,9 +184,10 @@ export class PreviewScreen extends React.Component {
 
                     case 'TEXTFIELD_LONG': // Text (Multiple row text field)
                         return (
-                            <TextInput
+                            <Input
                                 multiline
                                 editable={isEditable}
+                                isPreview={true}
                                 style={[newReportStyles.multilineTextInput, newReportStyles.disabled]}
                                 placeholder={field.default_value}
                                 placeholderTextColor={newReportStyles.$disabledGray}
@@ -206,8 +209,9 @@ export class PreviewScreen extends React.Component {
 
                     case 'NUMBERFIELD': // Digits (Text input that only accepts numeric characters)
                         return (
-                            <TextInput
+                            <Input
                                 editable={isEditable}
+                                isPreview={true}
                                 style={[newReportStyles.textInput, newReportStyles.disabled]}
                                 placeholder={field.default_value}
                                 placeholderTextColor={newReportStyles.$disabledGray}
@@ -282,8 +286,9 @@ export class PreviewScreen extends React.Component {
                                 <Text style={newReportStyles.text}>Otsikko</Text>
                                 <Text style={newReportStyles.required}> *</Text>
                             </View>
-                            <TextInput
+                            <Input
                                 editable={isEditable}
+                                isPreview={true}
                                 placeholder={'Otsikko'}
                                 placeholderTextColor={newReportStyles.$gray}
                                 underlineColorAndroid='transparent'

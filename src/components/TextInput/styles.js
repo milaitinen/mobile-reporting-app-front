@@ -63,6 +63,12 @@ const styles = EStyleSheet.create({
     active: {
         borderColor: '$active',
         borderWidth: 2,
+    },
+
+    disabled: {
+        backgroundColor: '$disabled',
+        borderColor: '$disabledBorder',
+        borderWidth: 2,
     }
 });
 
