@@ -15,6 +15,7 @@ exports[`Input component should render correctly when focused 1`] = `
       undefined,
     ]
   }
+  underlineColorAndroid="transparent"
   value={null}
 />
 `;
@@ -30,6 +31,7 @@ exports[`Input component should render correctly when multiline 1`] = `
   placeholderTextColor="gray"
   selectionColor={undefined}
   style={undefined}
+  underlineColorAndroid="transparent"
   value={null}
 />
 `;
@@ -44,6 +46,7 @@ exports[`Input component should render correctly when not focused 1`] = `
   placeholderTextColor="gray"
   selectionColor={undefined}
   style={undefined}
+  underlineColorAndroid="transparent"
   value={null}
 />
 `;

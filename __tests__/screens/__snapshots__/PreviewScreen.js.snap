@@ -141,6 +141,7 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
                 undefined,
               ]
             }
+            underlineColorAndroid="transparent"
           />
         </View>
         <View
@@ -1321,6 +1322,7 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
                 undefined,
               ]
             }
+            underlineColorAndroid="transparent"
           />
         </View>
         <View

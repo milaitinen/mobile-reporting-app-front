@@ -91,6 +91,7 @@ exports[`ReportScreen renders correctly 1`] = `
               placeholderTextColor={null}
               selectionColor={undefined}
               style={undefined}
+              underlineColorAndroid="transparent"
               value="Test1"
             />
           </View>
