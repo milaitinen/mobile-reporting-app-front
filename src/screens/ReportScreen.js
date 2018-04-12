@@ -6,7 +6,6 @@ import {
     Linking,
     ScrollView,
     Text,
-    TextInput,
     View
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
@@ -28,6 +27,7 @@ import { setUnsaved, setSavingRequested } from '../redux/actions/reportEditing';
 import { handleBack } from '../functions/handleBack';
 import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
 // import { storeDraftByTemplateID, storeQueuedReportByTemplateID } from '../redux/actions/reports';
+import { Input } from '../components/TextInput';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
@@ -269,14 +269,11 @@ export class ReportScreen extends React.Component {
                     {
                         const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);
                         return (
-                            <TextInput
+                            <Input
                                 placeholder={isNewReport ? field.default_value : null}
                                 placeholderTextColor={isNewReport ? newReportStyles.$gray : null}
                                 value={isNewReport ? null : answer.value}
                                 onChangeText={(text) => this.insertAnswer(field, text, false)}
-                                underlineColorAndroid='transparent'
-                                selectionColor={newReportStyles.$activeBlue}
-                                style={isFocused? [newReportStyles.textInput, newReportStyles.active] : newReportStyles.textInput}
                             />
                         );
                     }
@@ -409,7 +406,7 @@ export class ReportScreen extends React.Component {
                     {
                         const answer = isNewReport ? null : report.string_answers.find((answer) => answer.field_id === field.field_id);
                         return (
-                            <TextInput
+                            <Input
                                 multiline
                                 style={newReportStyles.multilineTextInput}
                                 onChangeText={(text) => this.insertAnswer(field, text, false)}
@@ -440,8 +437,7 @@ export class ReportScreen extends React.Component {
                     {
                         const answer = isNewReport ? null : report.string_answers.find((answer) => answer.field_id === field.field_id).value;
                         return (
-                            <TextInput
-                                style={newReportStyles.textInput}
+                            <Input
                                 value={answer}
                                 placeholder={isNewReport ? field.default_value : null}
                                 placeholderTextColor={isNewReport ? newReportStyles.$gray: null}
@@ -520,7 +516,7 @@ export class ReportScreen extends React.Component {
                                 <Text style={newReportStyles.text}>Otsikko</Text>
                                 <Text style={newReportStyles.required}> *</Text>
                             </View>
-                            <TextInput
+                            <Input
                                 editable={isEditable}
                                 placeholder={isNewReport ? 'Otsikko' : null}
                                 placeholderTextColor={isNewReport ? newReportStyles.$gray : null}
@@ -530,7 +526,6 @@ export class ReportScreen extends React.Component {
                                     if (!isUnsaved) dispatch(setUnsaved(true));
                                 }}
                                 underlineColorAndroid='transparent'
-                                style={newReportStyles.textInput}
                             />
                         </View>
 

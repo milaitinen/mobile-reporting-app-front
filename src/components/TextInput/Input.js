@@ -10,19 +10,25 @@ class Input extends Component {
         };
     }
 
-    handleFocus = () => this.setState({ isFocused: true });
-    handleBlur = () => this.setState({ isFocused: false });
+    handleFocus() {
+        this.setState({ isFocused: true });
+    }
+
+    handleBlur() {
+        this.setState({ isFocused: false });
+    }
 
     render() {
-        const props = this.props;
-        const isFocused = this.state;
-        const input_style = isFocused? [styles.inputContainer, styles.active] : styles.inputContainer;
+        const containerStyle = this.props.multiline ? styles.multilineInput : styles.inputContainer;
+        const isFocused = this.state.isFocused;
+        const input_style = isFocused? [containerStyle, styles.active] : containerStyle;
         return (
             <TextInput
-                {...props}
+                {...this.props}
                 style={input_style}
-                onFocus={this.handleFocus()}
-                onBlur={this.handleBlur()}
+                onFocus={() => this.handleFocus()}
+                onBlur={() => this.handleBlur()}
+                selectionColor={styles.$activeBlue}
             />
         );
     }
