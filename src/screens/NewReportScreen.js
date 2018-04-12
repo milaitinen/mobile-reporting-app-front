@@ -115,8 +115,8 @@ export class NewReportScreen extends React.Component {
     };
 
     //A helper method that calls save and then navigates back
-    saveAndLeave = () => {
-        this.save();
+    saveAndLeave = (isDraft) => {
+        this.save(isDraft);
         this.props.navigation.goBack();
     }
 
@@ -131,7 +131,7 @@ export class NewReportScreen extends React.Component {
                     { text: strings('createNew.cancel'), onPress: () => console.log('Cancel pressed'), style: 'cancel' },
                     { text: 'Ok', onPress: () => {
                         console.log('Ok Pressed');
-                        this.save(false);
+                        this.saveAndLeave(false);
                     },
                     }
                 ],
@@ -435,7 +435,7 @@ export class NewReportScreen extends React.Component {
                             />
                         </View>
                         {renderedFields}
-                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={() => this.saveAndLeave()}/>
+                        <Button title={strings('createNew.save')} key={999} type={'save'} onPress={() => this.saveAndLeave(true)}/>
                         <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}/>
                     </ScrollView>
                 </View>
