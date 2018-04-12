@@ -12,7 +12,6 @@ export class OfflineNotice extends React.Component {
         const backgroundColor = this.props.isConnected ? '#3d4f7c' : '#b52424';
 
         if (Platform.OS === 'ios') {
-            console.log('connection at offlinenotice: '+this.props.isConnected);
             return (
                 <View style={[styles.offlineContainer, { backgroundColor }]}>
                     <StatusBar translucent backgroundColor={ backgroundColor }/>

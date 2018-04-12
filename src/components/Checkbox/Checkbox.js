@@ -24,6 +24,7 @@ class Checkbox extends Component {
         const unchecked = (editable || !isPreview) ? styles.$inactiveBlue : styles.$disabledGray;
         const text = (editable || !isPreview) ? styles.text : styles.disabledText;
         const container = (editable || !isPreview) ? styles.container : styles.disabled;
+
         return (
             <CheckBox
                 title={this.props.title}

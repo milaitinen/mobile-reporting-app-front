@@ -35,7 +35,6 @@ import templateScreenStyles from './style/templateScreenStyles';
 // import styles from '../components/Dropdown/styles';
 // import EStyleSheet from 'react-native-extended-stylesheet';
 
-// TODO: COMMENT EVERYTINGS great. isEditable changed based on draft/report?
 export class ReportScreen extends React.Component {
 
     static navigationOptions = () => {
@@ -79,7 +78,6 @@ export class ReportScreen extends React.Component {
 
             const report = reports[templateID].find((obj) => obj.report_id === reportID);
             const fields = templates[templateID] ? templates[templateID].fields : [];
-
             this.props.dispatch(openReport(report));
             this.setState({ fields: fields, isEditable: reportID < 0, isLoading : false });
 
@@ -89,6 +87,8 @@ export class ReportScreen extends React.Component {
     }
 
     componentWillUnmount() {
+        // Calls handler function to set isNavigating back to false in TemplateScreen.
+        this.props.navigation.state.params.navigateDebounce();
         // Removes the BackHandler EventListener when unmounting
         BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
 
@@ -188,9 +188,8 @@ export class ReportScreen extends React.Component {
                 'You are offline',
                 'Report will be added to queue and will be sent when online',
                 [
-                    { text: strings('createNew.cancel'), onPress: () => console.log('Cancel pressed'), style: 'cancel' },
+                    { text: strings('createNew.cancel'), style: 'cancel' },
                     { text: 'Ok', onPress: () => {
-                        console.log('Ok Pressed');
                         this.saveToPending();
                     },
                     }
@@ -199,6 +198,8 @@ export class ReportScreen extends React.Component {
             );
             return;
         }
+
+        if (!isNewReport) draft.date_created = moment().format('YYYY-MM-DD');
 
         createNewReport(username, draft, token)
             .then(response => {
@@ -211,13 +212,12 @@ export class ReportScreen extends React.Component {
                     }
                     return Alert.alert('Report sent!');
                 } else {
-                    console.log('response.status', response.status);
                     return response.status;
                 }
             }).catch((error) => {
                 console.error(error);
             });
-    };
+     };
 
     insertAnswer = (field, value, isOption) => {
         const { dispatch, isUnsaved } = this.props;
@@ -249,22 +249,7 @@ export class ReportScreen extends React.Component {
 
             const renderedField = () => {
                 switch (field.type) {
-                    /*
-                    case 'NAME': // Name TODO: necessary? same as title?
-                    {
-                        return (
-                            <TextInput
-                                placeholder={field.default_value}
-                                onChangeText={(text) => this.insertAnswer(field, text, false)}
-                                placeholderTextColor={newReportStyles.$gray}
-                                //Title is now set separately from this field
-                                //onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
-                                underlineColorAndroid='transparent'
-                                style={newReportStyles.textInput}
-                            />
-                        );
-                    }
-                    */
+
                     case 'TEXTFIELD_SHORT' : // Name
                     {
                         const answer = report.string_answers.find((answer) => answer.field_id === field.field_id);

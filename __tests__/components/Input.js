@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 import sinon from 'sinon';
 
+
 import Input from '../../src/components/TextInput/Input';
 
 configure({ adapter: new Adapter() });

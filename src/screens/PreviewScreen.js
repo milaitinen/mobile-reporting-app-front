@@ -33,6 +33,11 @@ export class PreviewScreen extends React.Component {
         this.getTemplateFields(templates, templateID);
     }
 
+    componentWillUnmount() {
+        // Calls handler function to set isNavigating back to false in TemplateScreen.
+        this.props.navigation.state.params.navigateDebounce();
+    }
+
     getTemplateFields = (templates, templateID) => {
         const isEditable = this.props.navigation.state.params.isEditable;
         const fields = templates[templateID] ? templates[templateID].fields : [];
@@ -45,7 +50,8 @@ export class PreviewScreen extends React.Component {
             isNewReport: true,
             templateID: this.props.templateID,
             refresh: this.props.navigation.state.params.refresh,
-            isEditable: true
+            isEditable: true,
+            navigateDebounce: this.props.navigation.state.params.navigateDebounce
         });
     };
 
@@ -68,19 +74,7 @@ export class PreviewScreen extends React.Component {
         const renderedFields = this.state.fields.map((field, index) => {
             const renderedField = () => {
                 switch (field.type) {
-                    /*
-                    case 'NAME': // Name
-                        return (
-                            <TextInput
-                                editable={isEditable}
-                                placeholder={field.default_value}
-                                placeholderTextColor={newReportStyles.$disabledGray}
-                                onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
-                                underlineColorAndroid='transparent'
-                                style={[newReportStyles.textInput, newReportStyles.disabled]}
-                            />
-                        );
-                    */
+                    
                     case 'CHECKBOX': // Checkbox
                     {
                         const checkboxes = field.field_options.map((option, index) => {
@@ -100,6 +94,7 @@ export class PreviewScreen extends React.Component {
                         );
                     }
 
+                    /*
                     case 'NESTED_DROPDOWN': // Dropdown
                         return (
                             <ModalDropdown
@@ -128,6 +123,7 @@ export class PreviewScreen extends React.Component {
                                 </View>
                             </ModalDropdown>
                         );
+                    */
 
                     case 'TEXTFIELD_SHORT': // TextRow (One row text field)
                         return (
