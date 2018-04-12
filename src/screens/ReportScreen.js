@@ -408,7 +408,6 @@ export class ReportScreen extends React.Component {
                         return (
                             <Input
                                 multiline
-                                style={newReportStyles.multilineTextInput}
                                 onChangeText={(text) => this.insertAnswer(field, text, false)}
                                 value={answer ? answer.value : null}
                                 placeholder={isNewReport ? field.default_value : null}

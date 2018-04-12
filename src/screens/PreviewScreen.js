@@ -136,8 +136,6 @@ export class PreviewScreen extends React.Component {
                                 isPreview={true}
                                 placeholder={field.default_value}
                                 placeholderTextColor={newReportStyles.$disabledGray}
-                                underlineColorAndroid='transparent'
-                                style={[newReportStyles.textInput, newReportStyles.disabled]}
                             />
                         );
 
@@ -188,7 +186,6 @@ export class PreviewScreen extends React.Component {
                                 multiline
                                 editable={isEditable}
                                 isPreview={true}
-                                style={[newReportStyles.multilineTextInput, newReportStyles.disabled]}
                                 placeholder={field.default_value}
                                 placeholderTextColor={newReportStyles.$disabledGray}
                             />
@@ -212,7 +209,6 @@ export class PreviewScreen extends React.Component {
                             <Input
                                 editable={isEditable}
                                 isPreview={true}
-                                style={[newReportStyles.textInput, newReportStyles.disabled]}
                                 placeholder={field.default_value}
                                 placeholderTextColor={newReportStyles.$disabledGray}
                                 keyboardType='numeric'
@@ -291,8 +287,6 @@ export class PreviewScreen extends React.Component {
                                 isPreview={true}
                                 placeholder={'Otsikko'}
                                 placeholderTextColor={newReportStyles.$gray}
-                                underlineColorAndroid='transparent'
-                                style={[newReportStyles.textInput, newReportStyles.disabled]}
                                 onChangeText={(text) => this.props.dispatch(insertTitle(text))}
                             />
                         </View>

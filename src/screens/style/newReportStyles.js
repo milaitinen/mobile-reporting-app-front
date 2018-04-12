@@ -113,37 +113,11 @@ const newReportStyles = EStyleSheet.create({
         color: '$disabledPlaceholder',
     },
 
-    multilineTextInput: {
-        textAlignVertical: 'top',
-        paddingHorizontal: 12,
-        marginBottom: 10,
-        height: 80,
-        borderRadius: '$inputBorderRadius',
-        backgroundColor: '$primaryWhite',
-        fontFamily: '$primaryFont',
-        color: '$placeholder',
-    },
-
     instructions: {
         textAlignVertical: 'center',
         color: '$primaryWhite',
         fontFamily: '$primaryFont',
         marginBottom: 10,
-    },
-
-    textInput: {
-        paddingHorizontal: 12,
-        marginBottom: 10,
-        height: 40,
-        borderRadius: '$inputBorderRadius',
-        backgroundColor: '$primaryWhite',
-        fontFamily: '$primaryFont',
-        color: '$placeholder',
-    },
-
-    active: {
-        borderColor: '$active',
-        borderWidth: 2,
     },
 
     disabled: {

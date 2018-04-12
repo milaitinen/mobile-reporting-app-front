@@ -30,6 +30,7 @@ class Input extends Component {
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
                 selectionColor={styles.$activeBlue}
+                underlineColorAndroid='transparent'
             />
         );
     }
