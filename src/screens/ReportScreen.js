@@ -217,7 +217,7 @@ export class ReportScreen extends React.Component {
             }).catch((error) => {
                 console.error(error);
             });
-     };
+    };
 
     insertAnswer = (field, value, isOption) => {
         const { dispatch, isUnsaved } = this.props;
