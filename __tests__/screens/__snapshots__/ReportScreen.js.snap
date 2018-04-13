@@ -1121,7 +1121,7 @@ exports[`ReportScreen renders correctly 1`] = `
                                 ]
                               }
                             >
-                              Cancel
+                              createNew.cancel
                             </Text>
                           </View>
                           <View
@@ -1179,7 +1179,7 @@ exports[`ReportScreen renders correctly 1`] = `
                                 ]
                               }
                             >
-                              Confirm
+                              createNew.confirm
                             </Text>
                           </View>
                         </View>
@@ -1518,7 +1518,7 @@ exports[`ReportScreen renders correctly 1`] = `
                                 ]
                               }
                             >
-                              Cancel
+                              createNew.cancel
                             </Text>
                           </View>
                           <View
@@ -1576,7 +1576,7 @@ exports[`ReportScreen renders correctly 1`] = `
                                 ]
                               }
                             >
-                              Confirm
+                              createNew.confirm
                             </Text>
                           </View>
                         </View>
@@ -1966,7 +1966,7 @@ exports[`ReportScreen renders correctly 1`] = `
                   ellipsizeMode="tail"
                   style={undefined}
                 >
-                  Delete
+                  createNew.delete
                 </Text>
               </View>
             </View>

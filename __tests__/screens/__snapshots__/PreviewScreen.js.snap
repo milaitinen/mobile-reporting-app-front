@@ -49,7 +49,7 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
             onBlur={[Function]}
             onChangeText={[Function]}
             onFocus={[Function]}
-            placeholder="Otsikko"
+            placeholder="createNew.title"
             placeholderTextColor={undefined}
             selectionColor={undefined}
             style={
@@ -472,7 +472,7 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
                               ]
                             }
                           >
-                            Cancel
+                            createNew.cancel
                           </Text>
                         </View>
                         <View
@@ -530,7 +530,7 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
                               ]
                             }
                           >
-                            Confirm
+                            createNew.confirm
                           </Text>
                         </View>
                       </View>
@@ -869,7 +869,7 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
                               ]
                             }
                           >
-                            Cancel
+                            createNew.cancel
                           </Text>
                         </View>
                         <View
@@ -927,7 +927,7 @@ exports[`<PreviewScreen /> renders correctly 1`] = `
                               ]
                             }
                           >
-                            Confirm
+                            createNew.confirm
                           </Text>
                         </View>
                       </View>

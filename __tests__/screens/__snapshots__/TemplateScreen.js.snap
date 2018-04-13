@@ -329,7 +329,7 @@ exports[`TemplateScreen renders correctly 1`] = `
                               >
                                 0
                                  
-                                Odottavaa
+                                templates.queuedPlural
                               </Text>
                             </View>
                           </View>

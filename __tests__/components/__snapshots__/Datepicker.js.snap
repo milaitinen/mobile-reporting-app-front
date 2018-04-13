@@ -306,7 +306,7 @@ exports[`Datepicker component renders correctly on date mode 1`] = `
                     ]
                   }
                 >
-                  Cancel
+                  createNew.cancel
                 </Text>
               </View>
               <View
@@ -364,7 +364,7 @@ exports[`Datepicker component renders correctly on date mode 1`] = `
                     ]
                   }
                 >
-                  Confirm
+                  createNew.confirm
                 </Text>
               </View>
             </View>
@@ -682,7 +682,7 @@ exports[`Datepicker component renders correctly on time mode 1`] = `
                     ]
                   }
                 >
-                  Cancel
+                  createNew.cancel
                 </Text>
               </View>
               <View
@@ -740,7 +740,7 @@ exports[`Datepicker component renders correctly on time mode 1`] = `
                     ]
                   }
                 >
-                  Confirm
+                  createNew.confirm
                 </Text>
               </View>
             </View>
@@ -1060,7 +1060,7 @@ exports[`Datepicker component renders correctly when not editable 1`] = `
                     ]
                   }
                 >
-                  Cancel
+                  createNew.cancel
                 </Text>
               </View>
               <View
@@ -1118,7 +1118,7 @@ exports[`Datepicker component renders correctly when not editable 1`] = `
                     ]
                   }
                 >
-                  Confirm
+                  createNew.confirm
                 </Text>
               </View>
             </View>
