@@ -7,7 +7,7 @@ import { strings } from '../../locales/i18n';
 const StatusBadge = ({ dateAccepted, isDraft, inQueue }) =>{
 
     const color = isDraft ? '#87cce5' : inQueue? '#ffbe61' : !dateAccepted ? '#f3fe99' : '#99d9ad';
-    const text = isDraft ? strings('templates.draft') : inQueue? strings('templates.pending') : !dateAccepted ? strings('templates.sent') : strings('templates.approved');
+    const text = isDraft ? strings('templates.draft') : inQueue? strings('templates.queued') : !dateAccepted ? strings('templates.sent') : strings('templates.approved');
     const icon = isDraft ? 'edit-2' : inQueue? 'refresh-cw' : !dateAccepted ? 'clock' : 'check';
 
     return (

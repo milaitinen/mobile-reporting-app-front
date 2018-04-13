@@ -9,9 +9,8 @@ import PreviewScreen from '../screens/PreviewScreen';
 import ReportScreen from '../screens/ReportScreen';
 import navigationStyles from './navigationStyles';
 import Sidebar from '../navigation/Sidebar';
-import connectionReducer from '../redux/reducers/connection';
+//import connectionReducer from '../redux/reducers/connection';
 import { strings } from '../locales/i18n';
-import { Alert } from 'react-native';
 import OfflineNotice from '../components/OfflineNotice/OfflineNotice';
 import { ReportEditingBackButton } from '../components/ReportEditingBackButton';
 
@@ -53,7 +52,9 @@ const TemplateStack = StackNavigator({
                        hidden={false}
                        barStyle="light-content"/>
                    <View style={ navigationStyles.titleContainer }>
-                       <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.createNew') }</Text>
+                       {/*TODO: header title needs to be chosen based on the report being new or already sent.
+                          Possible solution: https://reactnavigation.org/docs/headers.html#using-params-in-the-title */}
+                       <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.report') }</Text>
                    </View>
                    <View style={ navigationStyles.backButtonContainer }>
                        <ReportEditingBackButton
@@ -73,7 +74,7 @@ const TemplateStack = StackNavigator({
                 <View style={ navigationStyles.HeaderContainer}>
                     <OfflineNotice />
                     <View style={ navigationStyles.titleContainer }>
-                        <Text style={ navigationStyles.ScreenHeader }>Preview</Text>
+                        <Text style={ navigationStyles.ScreenHeader }>{strings('templates.preview')}</Text>
                     </View>
                     <View style={ navigationStyles.backButtonContainer }>
                         <HeaderBackButton

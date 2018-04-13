@@ -5,7 +5,9 @@
     "username": "Username",
     "password": "Password",
     "serverUrl": "Server url",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "invalid": "Invalid username or password",
+    "queuedSent": "Queued reports sent!"
   },
 
   "templates": {
@@ -20,21 +22,34 @@
     "showMore": "Show more",
     "endOfReports": "No more reports",
     "preview": "Preview",
-    "pending": "Pending"
+    "queued": "Queued",
+    "queuedSingular": "Queued",
+    "queuedPlural": "Queued"
   },
 
   "createNew": {
+    "selectUser": "Select user",
+    "title": "Title",
     "send": "Send",
     "save": "Save",
+    "delete": "Delete",
+    "dontSave": "Don't save",
     "createNew": "Create report",
     "enterNew": "Enter report name",
-    "reportAdded": "Report sent",
+    "reportAdded": "Report sent!",
+    "draftDeleted": "Draft deleted.",
+    "offline": "You are offline",
+    "AddedToQueue": "Report will be added to queue and will be sent when online",
     "noConnection": "Report couldn't be sent because currently there is no internet connection. Do you wish to save your changes?",
     "yes": "Yes",
     "no": "No",
+    "ok": "Ok",
+    "confirm": "Confirm",
     "cancel": "Cancel",
     "saved": "Report saved",
-    "queued": "Report added to queue"
+    "queued": "Report added to queue",
+    "unsavedChanges": "You have unsaved changes.",
+    "leaveWithoutSaving": "Are you sure you want to leave without saving?"
     },
 
   "navigation": {

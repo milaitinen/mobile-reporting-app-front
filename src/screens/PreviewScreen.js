@@ -5,18 +5,16 @@ import { Checkbox } from '../components/Checkbox';
 import { Radioform } from '../components/Radioform';
 import { Dropdown } from '../components/Dropdown';
 import { Datepicker } from '../components/Datepicker';
-import ModalDropdown from 'react-native-modal-dropdown';
 import { Input } from '../components/TextInput';
 import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
 import { EditButton } from '../components/EditButton';
-//import { strings } from '../locales/i18n';
+import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/preview';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
-import styles from '../components/Dropdown/styles';
 
 export class PreviewScreen extends React.Component {
     constructor(props) {
@@ -241,7 +239,7 @@ export class PreviewScreen extends React.Component {
                             <Dropdown
                                 disabled={!isEditable}
                                 isPreview={true}
-                                defaultValue={'Select user'}
+                                defaultValue={strings('createNew.selectUser')}
                                 options={JSON.parse(field.default_value)}
                             />
                         );
@@ -281,7 +279,7 @@ export class PreviewScreen extends React.Component {
                             <Input
                                 editable={isEditable}
                                 isPreview={true}
-                                placeholder={'Otsikko'}
+                                placeholder={strings('createNew.title')}
                                 placeholderTextColor={newReportStyles.$gray}
                                 onChangeText={(text) => this.props.dispatch(insertTitle(text))}
                             />

@@ -2,6 +2,7 @@ import DatePicker from 'react-native-datepicker';
 import React, { Component } from 'react';
 import styles from './styles';
 import { Icon } from 'react-native-elements';
+import { strings } from '../../locales/i18n';
 
 
 class Datepicker extends Component {
@@ -38,8 +39,8 @@ class Datepicker extends Component {
                     date={answer}
                     mode={mode}
                     format="YYYY-MM-DD"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
+                    confirmBtnText={strings('createNew.confirm')}
+                    cancelBtnText={strings('createNew.cancel')}
                     iconComponent={<Icon name={'calendar'} type={'evilicon'} size={40} iconStyle={icon}/>}
                     onDateChange={onChange}
                 />
@@ -64,8 +65,8 @@ class Datepicker extends Component {
                     date={answer}
                     mode={mode}
                     format="HH:mm"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
+                    confirmBtnText={strings('createNew.confirm')}
+                    cancelBtnText={strings('createNew.cancel')}
                     minuteInterval={10}
                     iconComponent={<Icon name={'clock'} type={'evilicon'} size={40} iconStyle={icon}/>}
                     onDateChange={onChange}

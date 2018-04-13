@@ -5,7 +5,9 @@
     "username": "Nombre de usuario",
     "password": "Contraseña",
     "serverUrl": "Dirección del servidor",
-    "signIn": "Iniciar sesión"
+    "signIn": "Iniciar sesión",
+    "invalid": "El nombre de usuario o la contraseña no es correcta",
+    "queuedSent": "Los reportes en la fila han despachado!"
   },
 
   "templates": {
@@ -20,21 +22,34 @@
     "showMore": "Enseñar más",
     "endOfReports": "No hay más reportes",
     "preview": "Previsualización",
-    "pending": "Despachando"
+    "queued": "Despachando",
+    "queuedSingular": "Despachando",
+    "queuedPlural": "Despachando"
   },
 
   "createNew": {
+    "selectUser": "Seleccione usuario",
+    "title": "El título",
     "send": "Enviar",
     "save": "Guardar",
+    "delete": "Borrar",
+    "dontSave": "Salir sin guardar",
     "createNew": "Crear un nuevo reporte",
     "enterNew": "Entrar el nombre del reporte",
-    "reportAdded": "Reporte enviado",
+    "reportAdded": "Reporte enviado!",
+    "draftDeleted": "Boceto borrado.",
+    "offline": "No hay conexión a internet",
+    "AddedToQueue": "El reporte se añadirá a la fila y se enviará cuando hay conexión a internet",
     "noConnection": "El envío del reporte ha fallado debido a un problema de red. ¿Desea guardar sus cambios?",
     "yes": "Sí",
     "no": "No",
+    "ok": "De acuerdo",
+    "confirm": "Confirmar",
     "cancel": "Cancelar",
     "saved": "Reporte guardado",
-    "queued": "El reporte ha sido añadido a la fila"
+    "queued": "El reporte ha sido añadido a la fila",
+    "unsavedChanges": "Hay cambios que no se han guardado.",
+    "leaveWithoutSaving": "¿Está seguro que quiere salir sin guardar los cambios?"
 },
 
   "navigation": {

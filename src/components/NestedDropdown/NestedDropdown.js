@@ -5,7 +5,9 @@ import { Icon } from 'react-native-elements';
 import styles from './styles';
 import color from 'color';
 
-
+/*
+* Initial implementation of nested dropdowns. Does not completely work and is not in use yet.
+* */
 class NestedDropdown extends Component {
 
     constructor(props) {

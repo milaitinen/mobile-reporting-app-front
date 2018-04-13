@@ -5,7 +5,9 @@
     "username": "Käyttäjänimi",
     "password": "Salasana",
     "serverUrl": "Palvelimen osoite",
-    "signIn": "Kirjaudu"
+    "signIn": "Kirjaudu",
+    "invalid": "Käyttäjätunnus tai salasana on virheellinen",
+    "queuedSent": "Lähtevät raportit on lähetetty!"
   },
 
   "templates": {
@@ -20,21 +22,34 @@
     "showMore": "Näytä lisää",
     "endOfReports": "Ei enempää raportteja",
     "preview": "Esikatselu",
-    "pending": "Lähdössä"
+    "queued": "Lähdössä",
+    "queuedSingular": "Lähtevä",
+    "queuedPlural": "Lähtevää"
   },
 
   "createNew": {
+    "selectUser": "Valitse käyttäjä",
+    "title": "Otsikko",
     "send": "Lähetä",
     "save": "Tallenna",
+    "delete": "Poista",
+    "dontSave": "Älä tallenna",
     "createNew": "Uusi raportti",
     "enterNew": "Raportin nimi",
-    "reportAdded": "Raportti lähetetty",
-    "noConnection": "Raporttia ei voitu lähettää koska laitteessa ei ole internet-yhteyttä. Haluatko tallentaa muutokset?",
+    "reportAdded": "Raportti lähetetty!",
+    "draftDeleted": "Luonnos poistettu.",
+    "offline": "Ei internet-yhteyttä",
+    "AddedToQueue": "Raportti lisätään lähtevien jonoon ja lähetetään yhteyden palatessa",
+    "noConnection": "Raporttia ei voitu lähettä, koska laitteessa ei ole internet-yhteyttä. Haluatko tallentaa muutokset?",
     "yes": "Kyllä",
     "no": "Ei",
+    "ok": "Ok",
+    "confirm": "Valitse",
     "cancel": "Peruuta",
     "saved": "Raportti tallennettu",
-    "queued": "Raportti on lisätty jonoon"
+    "queued": "Raportti on lisätty jonoon",
+    "unsavedChanges": "Sinulla on tallentamattomia muutoksia.",
+    "leaveWithoutSaving": "Oletko varma, että haluat poistua tallentamatta?"
   },
 
   "navigation": {

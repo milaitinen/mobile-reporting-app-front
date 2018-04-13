@@ -1,6 +1,7 @@
 import { Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { setSavingRequested } from '../redux/actions/reportEditing';
+import { strings } from '../locales/i18n';
 
 /**
  * Handles the back-navigation logic when editing a report.
@@ -22,15 +23,15 @@ import { setSavingRequested } from '../redux/actions/reportEditing';
 export const handleBack = (dispatch, isUnsaved) => {
     if (isUnsaved) {
         Alert.alert(
-            'You have unsaved changes',
-            'Are you sure you want to leave without saving?',
+            strings('createNew.unsavedChanges'),
+            strings('leaveWithoutSaving'),
             [
-                { text: 'Cancel', onPress: () => {
+                { text: strings('createNew.cancel'), onPress: () => {
                     console.log('Cancel pressed');
                 },
                 style: 'cancel' },
 
-                { text: 'Save', onPress: () => {
+                { text: strings('createNew.save'), onPress: () => {
                     // Saving dispatches a 'flag' through redux that tells
                     // the current screen that it needs to save the report before
                     // unmounting.
@@ -41,7 +42,7 @@ export const handleBack = (dispatch, isUnsaved) => {
                 }
                 },
 
-                { text: 'Don\'t save', onPress: () => {
+                { text: strings('createNew.dontSave'), onPress: () => {
                     dispatch(setSavingRequested(false));
                     dispatch(NavigationActions.back());
                 }

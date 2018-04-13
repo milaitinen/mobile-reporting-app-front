@@ -63,7 +63,7 @@ export class LoginScreen extends React.Component {
         login(this.props.username, this.props.password)
             .then(token => {
                 if (token === undefined) {
-                    alert('Invalid username or password');
+                    alert(strings('login.invalid'));
                 } else {
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
@@ -72,7 +72,7 @@ export class LoginScreen extends React.Component {
                     sendAllPendingReports(this.props.username, token)
                         .then(sentPending => {
                             if (sentPending) {
-                                Alert.alert('Pending reports sent!');}
+                                Alert.alert(strings('login.queuedSent'));}
                         })
                         .then(() => {
                             this.resetNavigationTo(LOGGED_IN_ROUTE_NAME);

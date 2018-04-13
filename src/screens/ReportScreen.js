@@ -121,7 +121,7 @@ export class ReportScreen extends React.Component {
         const { username } = this.props;
 
         removeDraft(username, templateID, reportID);
-        Alert.alert('Deleted draft.');
+        Alert.alert(strings('createNew.draftDeleted'));
 
         this.setState({ isLoading: true });
 
@@ -185,11 +185,11 @@ export class ReportScreen extends React.Component {
 
         if (!this.props.isConnected){
             Alert.alert(
-                'You are offline',
-                'Report will be added to queue and will be sent when online',
+                strings('createNew.offline'),
+                strings('createNew.AddedToQueue'),
                 [
                     { text: strings('createNew.cancel'), style: 'cancel' },
-                    { text: 'Ok', onPress: () => {
+                    { text: strings('createNew.ok'), onPress: () => {
                         this.saveToPending();
                     },
                     }
@@ -210,7 +210,7 @@ export class ReportScreen extends React.Component {
                         const { templateID, reportID } = this.props.navigation.state.params;
                         removeDraft(username, templateID, reportID);
                     }
-                    return Alert.alert('Report sent!');
+                    return Alert.alert(strings('createNew.reportAdded'));
                 } else {
                     return response.status;
                 }
@@ -336,7 +336,7 @@ export class ReportScreen extends React.Component {
                         return (
                             <Dropdown
                                 disabled={!isEditable}
-                                defaultValue={isNewReport ? 'Select user' : selected.value}
+                                defaultValue={isNewReport ? strings('createNew.selectUser') : selected.value}
                                 options={field.field_options.map((option) => option.value)}
                                 onSelect={(value) => this.insertAnswer(field, getOptionByValue(value), true)}
                             />
@@ -464,7 +464,7 @@ export class ReportScreen extends React.Component {
                         return (
                             <Dropdown
                                 disabled={!isEditable}
-                                defaultValue={isNewReport ? 'Select user' : field.answer}
+                                defaultValue={isNewReport ? strings('createNew.selectUser') : field.answer}
                                 options={isNewReport ? JSON.parse(field.default_value) : field.answer.split(',')}
                             />
                         );
@@ -502,14 +502,13 @@ export class ReportScreen extends React.Component {
                             </View>
                             <Input
                                 editable={isEditable}
-                                placeholder={isNewReport ? 'Otsikko' : null}
+                                placeholder={isNewReport ? strings('createNew.title') : null}
                                 placeholderTextColor={isNewReport ? newReportStyles.$gray : null}
                                 defaultValue={isNewReport ? null : this.props.navigation.state.params.title}
                                 onChangeText={(title) => {
                                     dispatch(insertTitle(title));
                                     if (!isUnsaved) dispatch(setUnsaved(true));
                                 }}
-                                underlineColorAndroid='transparent'
                             />
                         </View>
 
@@ -522,7 +521,7 @@ export class ReportScreen extends React.Component {
                             <View>
                                 <Button title={strings('createNew.save')} key={999} type={'save'} onPress={ () => this.saveAndLeave()} />
                                 <Button title={strings('createNew.send')} type={'send'} onPress={() => this.send()}  />
-                                <Button title={'Delete'} type={'delete'} disabled={false} onPress={() => this._deleteDraft()} />
+                                <Button title={strings('createNew.delete')} type={'delete'} disabled={false} onPress={() => this._deleteDraft()} />
                             </View>
                         }
                         {

@@ -118,7 +118,7 @@ class Layout extends Component{
                         //Number of reports as a subtitle
                         subtitle={
                             <View style={ styles.subtitle }><Text>{nofReports} {(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}</Text>
-                                <Text>{nofQueued} {(nofQueued === 1) ? 'Odottava' : 'Odottavaa'}</Text></View>}
+                                <Text>{nofQueued} {(nofQueued === 1) ? strings('templates.queuedSingular') : strings('templates.queuedPlural')}</Text></View>}
                         hideChevron={true}
                         badge={{ element: <RightButton
                             onPressNew={() => this.props.createNew(templateID, true)}

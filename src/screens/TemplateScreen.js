@@ -28,6 +28,7 @@ import { preview } from '../redux/actions/preview';
 import userReducer from '../redux/reducers/user';
 
 import { toggleConnection } from '../redux/actions/connection';
+import { strings } from '../locales/i18n';
 
 // "export" necessary in order to test component without Redux store
 export class TemplateScreen extends Component {
@@ -82,12 +83,12 @@ export class TemplateScreen extends Component {
         const send = async () => {
             await asyncForEach(Object.keys(templates), async id => {
                 const status = await sendPendingReportsByTemplateID(username, id, token);
-                if (status == true) { sentSomething = true; }
+                if (status === true) { sentSomething = true; }
             });
 
             if (sentSomething) {
                 this.setState({ refreshing: true }, () => { this.handleRefresh(); });
-                Alert.alert('Pending reports sent!');
+                Alert.alert(strings('login.queuedSent'));
             }
         };
         if (this.props.isConnected) { send(); }
@@ -149,7 +150,7 @@ export class TemplateScreen extends Component {
         Object.keys(templates).forEach(templateID => {
             fetchQueuedByTemplateID(username, templateID)
                 .then(reports => {
-                    if (reports.length != 0) {
+                    if (reports.length !== 0) {
                         reports.forEach(report => this.props.dispatch(storeQueuedReportByTemplateID(templateID, report)));
                     }
                 })
