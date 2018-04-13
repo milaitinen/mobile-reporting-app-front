@@ -8,7 +8,7 @@ const matchTemplateID = (state, action) => {
     return (
         action.templates.map((template) => {
             const templateObj = {};
-            templateObj[template.id] = template;
+            templateObj[template.template_id] = template;
             return templateObj;
         }).reduce((allTemplates, currentTemplate) => Object.assign(allTemplates, currentTemplate))
     );

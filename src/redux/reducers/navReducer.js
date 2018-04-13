@@ -1,4 +1,4 @@
-import Navigator from '../../navigation/AppNavigation';
+import Navigator, { LOGGED_OUT_ROUTE_NAME } from '../../navigation/AppNavigation';
 import { NavigationActions } from 'react-navigation';
 
 
@@ -7,7 +7,7 @@ const initialNavState = Navigator.router.getStateForAction(NavigationActions.res
     key: null,
     actions: [
         NavigationActions.navigate({
-            routeName: 'loginStack',
+            routeName: LOGGED_OUT_ROUTE_NAME,
         }),
     ],
 }));

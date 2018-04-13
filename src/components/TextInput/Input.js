@@ -1,24 +1,39 @@
-import React from 'react';
-import { View, TextInput } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-
+import React, { Component } from 'react';
+import { TextInput } from 'react-native';
 import styles from './styles';
 
-const Input = (props) => {
-    return (
-        <View
-            style={styles.InputContainer}>
-            <Icon name={props.name} color={'white'} size={16} />
+class Input extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isFocused: false
+        };
+    }
+
+    handleFocus() {
+        this.setState({ isFocused: true });
+    }
+
+    handleBlur() {
+        this.setState({ isFocused: false });
+    }
+
+    render() {
+        const inputStyle = this.props.multiline ? styles.multilineInput : styles.inputContainer;
+        const containerStyle = this.props.isPreview ? [inputStyle, styles.disabled] : inputStyle;
+        const isFocused = this.state.isFocused;
+        const input_style = isFocused? [containerStyle, styles.active] : containerStyle;
+        return (
             <TextInput
-                autoCapitalize = 'none'
-                onChangeText={props.onChangeText}
+                {...this.props}
+                style={input_style}
+                onFocus={() => this.handleFocus()}
+                onBlur={() => this.handleBlur()}
+                selectionColor={styles.$activeBlue}
                 underlineColorAndroid='transparent'
-                style={styles.InputStyle}
-                placeholderTextColor='white'
-                {...props}
             />
-        </View>
-    );
-};
+        );
+    }
+}
 
 export default Input;

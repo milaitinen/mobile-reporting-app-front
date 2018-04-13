@@ -1,7 +1,9 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
-    InputContainer: {
+    $activeBlue: '$inactive',
+
+    IconInputContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -20,7 +22,7 @@ const styles = EStyleSheet.create({
         },
     },
 
-    InputStyle: {
+    IconInputStyle: {
         fontFamily: '$primaryFont',
         color: 'white',
         height: 40,
@@ -36,6 +38,38 @@ const styles = EStyleSheet.create({
             marginLeft: 5,
         }
     },
+
+    inputContainer: {
+        paddingHorizontal: 12,
+        marginBottom: 10,
+        height: 40,
+        borderRadius: '$inputBorderRadius',
+        backgroundColor: '$primaryWhite',
+        fontFamily: '$primaryFont',
+        color: '$placeholder',
+    },
+
+    multilineInput: {
+        textAlignVertical: 'top',
+        paddingHorizontal: 12,
+        marginBottom: 10,
+        height: 80,
+        borderRadius: '$inputBorderRadius',
+        backgroundColor: '$primaryWhite',
+        fontFamily: '$primaryFont',
+        color: '$placeholder',
+    },
+
+    active: {
+        borderColor: '$active',
+        borderWidth: 2,
+    },
+
+    disabled: {
+        backgroundColor: '$disabled',
+        borderColor: '$disabledBorder',
+        borderWidth: 2,
+    }
 });
 
 export default styles;

@@ -15,7 +15,7 @@ class Dropdown extends Component {
         };
     }
 
-    /* commented it out at least temporarily to easy testing
+    /* commented it out at least temporarily for easy testing
     renderButtonText = (rowData) => {
         return rowData;
     };
@@ -23,14 +23,16 @@ class Dropdown extends Component {
 
     renderRow = (rowData, rowID, highlighted) => {
         const evenRow = rowID % 2;
+        const active = styles.$activeBlue;
+        const inactive = '#cceeff';
         return (
-            <TouchableHighlight underlayColor={evenRow ? color('#DFF1F6').darken(0.2) : color('#87d8f6').darken(0.1)}>
-                <View style={[styles.dropdownRow, { backgroundColor: evenRow ? '#DFF1F6' : 'white' }]}>
-                    <Text style={[styles.dropdownRowText, highlighted && { color: '#8cc9e5' }]}>
+            <TouchableHighlight underlayColor={evenRow ? color(inactive).darken(0.3) : color(active).darken(0.1)}>
+                <View style={[styles.dropdownRow, { backgroundColor: evenRow ? '#eef8ff' : 'white' }]}>
+                    <Text style={[styles.dropdownRowText, highlighted && { color: active }]}>
                         {rowData}
                     </Text>
                     {this.state.value === rowData ? (
-                        <Icon name={'check'} type={'feather'} color={'#8cc9e5'}/>
+                        <Icon name={'check'} type={'feather'} color={active}/>
                     ) : (
                         null
                     )}
@@ -39,7 +41,7 @@ class Dropdown extends Component {
         );
     };
 
-    renderSeparator(sectionID, rowID) {
+    renderSeparator(rowID) {
         if (rowID === this.props.options.length - 1) return;
         const key = 'spr_${rowID}';
         return (
@@ -52,26 +54,34 @@ class Dropdown extends Component {
     }
 
     render() {
+        const disabled = this.props.disabled;
+        const isPreview = this.props.isPreview;
+        const button = (disabled && isPreview) ? [styles.dropdownButton, styles.disabled] : styles.dropdownButton;
+        const text = (disabled && isPreview) ? [styles.dropdownText, styles.disabledText] : styles.dropdownText;
+        const iconColor = (disabled && isPreview) ? styles.$gray1 : styles.$gray2;
         return (
             <ModalDropdown
                 ref={ ModalDrop => this.modalDropdown = ModalDrop }
                 onPress={() => this.modalDropdown.show()}
-                style={styles.dropdownButton}
-                textStyle={styles.dropdownText}
-                dropdownStyle={ styles.dropStyleClass }
+                style={button}
+                textStyle={text}
+                dropdownStyle={styles.dropStyleClass}
                 defaultValue={this.state.value}
-                disabled={this.props.disabled}
+                disabled={disabled}
                 options={this.props.options}
-                onSelect={(idx, value) => this.onSelect(idx, value)}
+                onSelect={(idx, value) => {
+                    this.props.onSelect(value);
+                    this.onSelect(idx, value);
+                }}
                 renderButtonText={(rowData) => rowData}
                 renderRow={this.renderRow.bind(this)}
-                renderSeparator={(sectionID, rowID) => this.renderSeparator(sectionID, rowID)}
+                renderSeparator={(rowID) => this.renderSeparator(rowID)}
             >
                 <View style={styles.buttonContent}>
-                    <Text style={styles.dropdownText}>
+                    <Text style={text}>
                         {this.state.value}
                     </Text>
-                    <Icon name={'expand-more'} color={'#adadad'} style={styles.icon}/>
+                    <Icon name={'expand-more'} color={iconColor} style={styles.icon}/>
                 </View>
             </ModalDropdown>
         );

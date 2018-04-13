@@ -26,6 +26,7 @@ export default EStyleSheet.create({
 
     templateContainer: {
         borderRadius: 5,
+        flexDirection: 'column',
         backgroundColor: '$primaryWhite',
         paddingTop: 0,
         paddingRight: 0,
@@ -38,6 +39,10 @@ export default EStyleSheet.create({
         '@media (min-width: 350)': {
             height: 60,
         }
+    },
+
+    subtitle: {
+        flexDirection: 'column',
     },
 
     folderIcon: {

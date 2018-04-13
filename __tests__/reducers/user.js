@@ -5,10 +5,9 @@ describe('user reducer', () => {
     it('should return the initial state', () => {
         expect(userReducer(undefined, {})).toEqual(
             {
-                username: null,
+                username: '',
                 password: null,
-                serverUrl: null,
-                token: null
+                token: ''
             }
         );
     });
@@ -23,8 +22,7 @@ describe('user reducer', () => {
             {
                 username: 'Maisa',
                 password: null,
-                serverUrl: null,
-                token: null,
+                token: '',
             }
         );
     });
@@ -38,10 +36,9 @@ describe('user reducer', () => {
             })
         ).toEqual(
             {
-                username: null,
+                username: '',
                 password: 'fdhjaklfhaj',
-                serverUrl: null,
-                token: null,
+                token: '',
             }
         );
     });
@@ -54,9 +51,8 @@ describe('user reducer', () => {
             })
         ).toEqual(
             {
-                username: null,
+                username: '',
                 password: null,
-                serverUrl: null,
                 token: '02fafa.hjkfldhjfa.fdaeu',
             }
         );

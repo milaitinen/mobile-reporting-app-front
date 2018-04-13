@@ -26,6 +26,9 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+# jest
+/coverage
+
 # dependencies
 /node_modules
 npm-debug.log

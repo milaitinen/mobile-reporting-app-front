@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input component should render correctly when focused 1`] = `
+<TextInput
+  allowFontScaling={true}
+  onBlur={[Function]}
+  onChangeText={[Function]}
+  onFocus={[Function]}
+  placeholder="Testi"
+  placeholderTextColor="gray"
+  selectionColor={undefined}
+  style={
+    Array [
+      undefined,
+      undefined,
+    ]
+  }
+  underlineColorAndroid="transparent"
+  value={null}
+/>
+`;
+
+exports[`Input component should render correctly when multiline 1`] = `
+<TextInput
+  allowFontScaling={true}
+  multiline={true}
+  onBlur={[Function]}
+  onChangeText={[Function]}
+  onFocus={[Function]}
+  placeholder="Testi"
+  placeholderTextColor="gray"
+  selectionColor={undefined}
+  style={undefined}
+  underlineColorAndroid="transparent"
+  value={null}
+/>
+`;
+
+exports[`Input component should render correctly when not focused 1`] = `
+<TextInput
+  allowFontScaling={true}
+  onBlur={[Function]}
+  onChangeText={[Function]}
+  onFocus={[Function]}
+  placeholder="Testi"
+  placeholderTextColor="gray"
+  selectionColor={undefined}
+  style={undefined}
+  underlineColorAndroid="transparent"
+  value={null}
+/>
+`;

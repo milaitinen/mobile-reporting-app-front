@@ -1,64 +1,56 @@
 import React from 'react';
-import { View, ScrollView, TextInput, Text, ActivityIndicator, Linking } from 'react-native';
+import { View, ScrollView, Text, ActivityIndicator, Linking } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Checkbox } from '../components/Checkbox';
+import { Radioform } from '../components/Radioform';
 import { Dropdown } from '../components/Dropdown';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
-import DatePicker from 'react-native-datepicker';
-import ModalDropdown from 'react-native-modal-dropdown';
+import { Datepicker } from '../components/Datepicker';
+import { Input } from '../components/TextInput';
 import { connect } from 'react-redux';
 
 import { AppBackground } from '../components/AppBackground';
 import { EditButton } from '../components/EditButton';
-import { fetchFieldsByTemplateID } from './api';
 import { strings } from '../locales/i18n';
 import { insertTitle } from '../redux/actions/preview';
-import { createReport } from '../redux/actions/newReport';
 
 import newReportStyles from './style/newReportStyles';
 import templateScreenStyles from './style/templateScreenStyles';
-import styles from '../components/Dropdown/styles';
 
-// "export" necessary in order to test component without Redux store
 export class PreviewScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading      : true,
-            number         : '',
+            isLoading   : true,
+            isEditable  : false,
+            number      : '',
         };
     }
 
     componentDidMount() {
-        this.getFieldsByID();
+        const { templates, templateID } = this.props;
+        this.getTemplateFields(templates, templateID);
     }
 
-    getFieldsByID = () => {
-        fetchFieldsByTemplateID(this.props.username, this.props.templateID, this.props.token)
-            .then(responseJson => {
-                this.setState({ dataFieldsByID: responseJson, isLoading: false });
-            })
-            .catch(error => console.error(error) )
-            .done();
+    componentWillUnmount() {
+        // Calls handler function to set isNavigating back to false in TemplateScreen.
+        this.props.navigation.state.params.navigateDebounce();
+    }
+
+    getTemplateFields = (templates, templateID) => {
+        const isEditable = this.props.navigation.state.params.isEditable;
+        const fields = templates[templateID] ? templates[templateID].fields : [];
+
+        this.setState({ fields: fields, isEditable: isEditable, isLoading: false });
     };
 
     handleOnPress = () => {
-        this.props.dispatch(createReport(this.props.templateID, true));
-        this.props.navigation.navigate('NewReport', { refresh: this.handleRefresh });
-    };
-
-    onChanged = (text) => {
-        let newText = '';
-        const numbers = '0123456789';
-
-        for (let i=0; i < text.length; i++) {
-            if (numbers.indexOf(text[i]) > -1 ) {
-                newText = newText + text[i];
-            } else {
-                alert('Please enter numbers only');
-            }
-        }
-        this.setState({ number: newText });
+        this.props.navigation.navigate('Report', {
+            isNewReport: true,
+            templateID: this.props.templateID,
+            refresh: this.props.navigation.state.params.refresh,
+            isEditable: true,
+            navigateDebounce: this.props.navigation.state.params.navigateDebounce
+        });
     };
 
     render() {
@@ -76,295 +68,227 @@ export class PreviewScreen extends React.Component {
             );
         }
 
-        const { isEditable } = this.props;
-        const renderedFields = this.state.dataFieldsByID.map((field, index) => {
-            switch (field.typeID) {
+        const { isEditable } = this.state;
+        const renderedFields = this.state.fields.map((field, index) => {
+            const renderedField = () => {
+                switch (field.type) {
+                    
+                    case 'CHECKBOX': // Checkbox
+                    {
+                        const checkboxes = field.field_options.map((option, index) => {
+                            return (
+                                <Checkbox
+                                    key={index}
+                                    editable={isEditable}
+                                    isPreview={true}
+                                    title={option.value}
+                                />
+                            );
+                        });
+                        return (
+                            <View key={index}>
+                                {checkboxes}
+                            </View>
+                        );
+                    }
 
-                case 1: // Name
-                    return (
-                        <View key={index}>
-                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
-                            <TextInput
-                                editable={isEditable}
-                                placeholder={field.defaultValue}
-                                placeholderTextColor={'#adadad'}
-                                onSubmitEditing={(event) => this.props.dispatch(insertTitle(event.nativeEvent.text))}
-                                underlineColorAndroid='transparent'
-                                style={newReportStyles.textInputStyleClass}
-                            />
-                        </View>
-                    );
-
-                case 2: // Checkbox
-                    return (
-                        <View key={index}>
-                            <Text style={newReportStyles.textStyleClass}>{field.title}</Text>
-                            <Checkbox
-                                key={index}
-                                style={ newReportStyles.checkboxStyle }
-                                title={'This is a nice checkbox'}
-                                editable={isEditable}
-                            />
-                        </View>
-                    );
-
-                case 3: // Dropdown
-                    return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                    /*
+                    case 'NESTED_DROPDOWN': // Dropdown
+                        return (
                             <ModalDropdown
                                 disabled={!isEditable}
                                 options={['option 1', 'option 2']}
-                                dropdownStyle={ newReportStyles.dropStyleClass }
+                                dropdownStyle={styles.dropStyleClass}
                                 defaultValue={'Select option'}
-                                style={newReportStyles.dropdownButton}
-                                textStyle={newReportStyles.dropdownText}
-                                renderRow={ () =>
+                                style={[styles.dropdownButton, styles.disabled]}
+                                textStyle={[styles.dropdownText, styles.disabledText]}
+                                renderRow={() =>
                                     <View>
                                         <ModalDropdown
                                             options={['option 3', 'option 4']}
-                                            style={ newReportStyles.lowerDropdownStyleClass }
-                                            dropdownStyle={ styles.dropStyleClass }
+                                            style={styles.lowerDropdownStyleClass}
+                                            dropdownStyle={styles.dropStyleClass}
                                         />
                                     </View>
                                 }
                             >
                                 <View style={styles.buttonContent}>
-                                    <Text style={styles.dropdownText}>
+                                    <Text style={[styles.dropdownText, styles.disabledText]}>
                                         Select option
                                     </Text>
-                                    <Icon name={'expand-more'} color={'#adadad'} style={styles.icon}/>
+                                    <Icon name={'expand-more'} color={newReportStyles.$disabledGray}
+                                        style={styles.icon}/>
                                 </View>
                             </ModalDropdown>
-                        </View>
+                        );
+                    */
 
-                    );
-
-                case 4: // TextRow (One row text field)
-                    return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
-                            <TextInput
+                    case 'TEXTFIELD_SHORT': // TextRow (One row text field)
+                        return (
+                            <Input
                                 editable={isEditable}
-                                placeholder={field.defaultValue}
-                                placeholderTextColor={'#adadad'}
-                                underlineColorAndroid='transparent'
-                                style={newReportStyles.textInputStyleClass}
+                                isPreview={true}
+                                placeholder={field.default_value}
+                                placeholderTextColor={newReportStyles.$disabledGray}
                             />
-                        </View>
-                    );
+                        );
 
-                case 5: // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
-                    const props = [{ label: 'Yes', value: 1 }, { label: 'No', value: 0 }];
-                    return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
-                            <View style={ newReportStyles.radioButtonContainer }>
-                                <RadioForm
-                                    animation={true}
-                                    formHorizontal={true}
-                                >
-                                    {props.map((obj, i) =>
-                                        <RadioButton
-                                            key={i}
-                                        >
-                                            <RadioButtonInput
-                                                disabled={!isEditable}
-                                                obj={obj}
-                                                index={i}
-                                                isSelected={this.state.value === obj.value}
-                                                onPress={(value) => { this.setState({ value: value }); }}
-                                                borderWidth={1}
-                                                buttonColor={'#8cc9e5'}
-                                                buttonSize={16}
-                                                buttonOuterSize={24}
-                                                buttonStyle={{}}
-                                                buttonWrapStyle={{}}
-                                            />
-                                            <RadioButtonLabel
-                                                disabled={!isEditable}
-                                                obj={obj}
-                                                index={i}
-                                                labelHorizontal={true}
-                                                onPress={(value) => { this.setState({ value: value }); }}
-                                                labelStyle={{ marginRight: 20 }}
-                                                labelWrapStyle={{}}
-                                            />
-                                        </RadioButton>
-                                    )}
-                                </RadioForm>
+                    // Choice (Yes/No) NOTE: Error will be removed when options come from the database.
+                    case 'RADIOBUTTON': {
+                        const labels = field.field_options.map((option) => {
+                            return (
+                                { label: option.value, value: option }
+                            );
+                        });
+
+                        const initialIndex = field.field_options.findIndex((option) => {
+                            return (option.default_value);
+                        });
+                        return (
+                            <Radioform
+                                options={labels}
+                                editable={isEditable}
+                                isPreview={true}
+                                initial={initialIndex}
+                            />
+                        );
+                    }
+
+                    case 'CALENDAR': // Calendar
+                        return (
+                            <Datepicker
+                                editable={isEditable}
+                                isPreview={true}
+                                mode={'date'}
+                                answer={field.default_value}
+                                onChange={(date) => {
+                                    this.setState({ date: date });
+                                }}
+                            />
+                        );
+
+                    case 'INSTRUCTIONS': // Instructions
+                        return (
+                            <Text style={newReportStyles.instructions}>
+                                {field.default_value}
+                            </Text>
+                        );
+
+                    case 'TEXTFIELD_LONG': // Text (Multiple row text field)
+                        return (
+                            <Input
+                                multiline
+                                editable={isEditable}
+                                isPreview={true}
+                                placeholder={field.default_value}
+                                placeholderTextColor={newReportStyles.$disabledGray}
+                            />
+                        );
+
+                    case 'TIME': // Time
+                        return (
+                            <Datepicker
+                                editable={isEditable}
+                                isPreview={true}
+                                mode={'time'}
+                                answer={field.default_value}
+                                onChange={(time) => {
+                                    this.setState({ time: time });
+                                }}
+                            />
+                        );
+
+                    case 'NUMBERFIELD': // Digits (Text input that only accepts numeric characters)
+                        return (
+                            <Input
+                                editable={isEditable}
+                                isPreview={true}
+                                placeholder={field.default_value}
+                                placeholderTextColor={newReportStyles.$disabledGray}
+                                keyboardType='numeric'
+                            />
+                        );
+
+                    case 'LINK': // Link
+                        return (
+                            <View key={index} style={newReportStyles.linkContainer}>
+                                <Icon name={'link'} type={'feather'} iconStyle={newReportStyles.linkIcon}/>
+                                <Text
+                                    disabled={!isEditable}
+                                    style={[newReportStyles.link, newReportStyles.disabledLink]}
+                                    onPress={() => {
+                                        const url = field.default_value;
+                                        // This checks if any installed app can handle the
+                                        // url before attempting to open it.
+                                        // This is done as shown in React Native docs.
+                                        Linking.canOpenURL(url).then(supported => {
+                                            if (!supported) {
+                                                console.log('Can\'t handle url: ' + url);
+                                            } else {
+                                                return Linking.openURL(url);
+                                            }
+                                        }).catch(err => console.error('An error occurred', err));
+                                    }}>
+                                    Link to somewhere
+                                </Text>
                             </View>
-                        </View>
-                    );
+                        );
 
-                case 6: // Calendar
-                    return (
-                        <View key={index} >
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
-                            <DatePicker
-                                disabled={!isEditable}
-                                style={ newReportStyles.dateStyleClass }
-                                customStyles={{
-                                    dateInput: {
-                                        borderColor: '#adadad',
-                                        borderWidth: 1.5,
-                                        borderRadius: 5,
-                                        backgroundColor: 'white',
-                                    },
-                                    dateText: {
-                                        color: '#adadad',
-                                    }
-                                }}
-                                date={field.defaultValue}
-                                mode="date"
-                                placeholder="select date"
-                                placeholderTextColor={'#adadad'}
-                                format="YYYY-MM-DD"
-                                minDate="2018-05-01"
-                                maxDate="2018-06-01"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                /*iconComponent={<Icon name={'event'} type={'MaterialIcons'} iconStyle={ newReportStyles.dateIconStyle }/>}*/
-                                onDateChange={(date) => {this.setState({ date: date });}}
-                            />
-                        </View>
-                    );
-
-                case 7: // Instructions
-                    return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
-                            <Text
-                                style = {newReportStyles.instructions}>
-                                {field.defaultValue}
-                            </Text>
-                        </View>
-                    );
-
-                case 8: // Text (Multiple row text field)
-                    return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
-                            <TextInput
-                                editable={isEditable}
-                                style = {newReportStyles.multilinedTextInputStyleClass}
-                                placeholder={field.defaultValue}
-                                placeholderTextColor={'#adadad'}
-                                multiline={true}
-                            />
-                        </View>
-                    );
-
-                case 9: // Time
-                    return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
-                            <DatePicker
-                                disabled={!isEditable}
-                                style={ newReportStyles.dateStyleClass }
-                                customStyles={{
-                                    dateInput: {
-                                        borderColor: '#adadad',
-                                        borderWidth: 1.5,
-                                        borderRadius: 5,
-                                        backgroundColor: 'white',
-                                    },
-                                    dateText: {
-                                        color: '#adadad',
-                                    }
-                                }}
-                                date={field.defaultValue}
-                                mode="time"
-                                format="HH:mm"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                minuteInterval={10}
-                                iconComponent={<Icon name={'clock'} type={'entypo'} iconStyle={ newReportStyles.dateIconStyle }/>}
-                                onDateChange={(time) => {this.setState({ time: time });}}
-                            />
-                        </View>
-                    );
-
-                case 10: // Digits (Text input that only accepts numeric characters)
-                    return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
-                            <TextInput
-                                editable={isEditable}
-                                style={newReportStyles.textInputStyleClass}
-                                placeholder={field.defaultValue}
-                                placeholderTextColor={'#adadad'}
-                                keyboardType = 'numeric'
-                                onChangeText={(text)=> this.onChanged(text)}
-                                value = {this.state.number}
-                            />
-                        </View>
-                    );
-
-                case 11: // Link
-                    return (
-                        <View key={index} style={{ flexDirection: 'row' }}>
-                            <Icon name={'link'} type={'feather'} iconStyle={ newReportStyles.linkIconStyle }/>
-                            <Text
-                                disabled={!isEditable}
-                                style={ newReportStyles.linkStyleClass }
-                                onPress={() => Linking.openURL(field.defaultValue)}>
-                                Link to somewhere
-                            </Text>
-                        </View>
-                    );
-
-                case 12: // User dropdown
-                    return (
-                        <View key={index}>
-                            <Text style={ newReportStyles.textStyleClass }>{field.title}</Text>
+                    case 'DROPDOWN': // User dropdown
+                        return (
                             <Dropdown
                                 disabled={!isEditable}
-                                defaultValue={'Select user'}
-                                options={JSON.parse(field.defaultValue)}
+                                isPreview={true}
+                                defaultValue={strings('createNew.selectUser')}
+                                options={JSON.parse(field.default_value)}
                             />
-                        </View>
-                    );
+                        );
 
-                default:
-                    return (
-                        null
-                    );
+                    default:
+                        return (
+                            null
+                        );
+                }
+            };
 
-            }
+            return (
+                <View key={index} style={newReportStyles.fieldContainer}>
+                    <View style={newReportStyles.fieldTitle}>
+                        <Text style={ newReportStyles.text }>
+                            {field.title}
+                        </Text>
+                        {
+                            (field.required) &&
+                            <Text style={newReportStyles.required}> *</Text>
+                        }
+                    </View>
+                    {renderedField()}
+                </View>
+            );
         });
 
         return (
-            <AppBackground style={'no-padding'}>
+            <AppBackground>
                 <View style={ newReportStyles.ViewContainer }>
-                    <View style={ newReportStyles.ReportContainer }>
-                        <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
-                            <View style={newReportStyles.titleContainer}>
-                                <Icon name={'assignment'} color={'#a0a0a0'} size={45}/>
-                                <Text style={newReportStyles.title}>{strings('templates.report')}</Text>
-                                <Icon name={'find-in-page'} color={'#88c9e5'} size={45} containerStyle={newReportStyles.previewIconContainer}/>
+                    <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
+                        <View style={newReportStyles.fieldContainer}>
+                            <View style={newReportStyles.fieldTitle}>
+                                <Text style={newReportStyles.text}>Otsikko</Text>
+                                <Text style={newReportStyles.required}> *</Text>
                             </View>
-                            <View style={newReportStyles.fieldContainer}>
-                                {renderedFields}
-                            </View>
-                        </ScrollView>
-                        <EditButton onPress={() => this.handleOnPress()} />
-                    </View>
+                            <Input
+                                editable={isEditable}
+                                isPreview={true}
+                                placeholder={strings('createNew.title')}
+                                placeholderTextColor={newReportStyles.$gray}
+                                onChangeText={(text) => this.props.dispatch(insertTitle(text))}
+                            />
+                        </View>
+                        {renderedFields}
+                    </ScrollView>
+                    <EditButton onPress={() => this.handleOnPress()} />
                 </View>
             </AppBackground>
-            /*
-                <TextInput
-                    placeholder={ strings('createNew.enterNew') }
-                    onChangeText={(TextInputName) => this.setState({ TextInputName })}
-                    underlineColorAndroid='transparent'
-                    style={newReportStyles.textInputStyleClass}
-                />
-                <Button
-                    title={ strings('createNew.createNew') }
-                    onPress={ this.send }
-                >
-                </Button>
-            */
         );
     }
 }
@@ -372,16 +296,16 @@ export class PreviewScreen extends React.Component {
 // maps redux state to component props. Object that is returned can be accessed via 'this.props' e.g. this.props.email
 const mapStateToProps = (state) => {
     const userID = state.user.userID;
-    const isEditable = state.preview.isEditable;
     const templateID = state.preview.templateID;
+    const templates = state.templates;
     const title = state.preview.title;
     const number = state.preview.number;
     const token = state.user.token;
     const username = state.user.username;
     return {
         userID,
-        isEditable,
         templateID,
+        templates,
         title,
         number,
         token,

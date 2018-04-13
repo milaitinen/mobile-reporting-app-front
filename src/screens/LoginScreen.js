@@ -1,15 +1,19 @@
 import React from 'react';
-import { Text, StatusBar, Keyboard } from 'react-native';
+import { Text, StatusBar, Keyboard, NetInfo, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import loginStyles from './style/loginStyles';
 import { strings } from '../locales/i18n';
+import { IconInput } from '../components/TextInput';
 import { SignInButton } from '../components/Button';
-import { Input } from '../components/TextInput';
 import { AppBackground } from '../components/AppBackground';
 import { insertUsername, insertPassword, insertToken } from '../redux/actions/user';
-import { login } from './api';
+import { isNetworkConnected, login, sendAllPendingReports } from '../api';
 import { NavigationActions } from 'react-navigation';
+import { OfflineNotice } from '../components/OfflineNotice';
+import { toggleConnection } from '../redux/actions/connection';
+import { setInitialConnection } from '../redux/actions/connection';
+import { LOGGED_IN_ROUTE_NAME } from '../navigation/AppNavigation';
 
 // "export" necessary in order to test component without Redux store
 export class LoginScreen extends React.Component {
@@ -19,15 +23,28 @@ export class LoginScreen extends React.Component {
         super(props);
 
         if (this.props.token) { // this.props.token != null
-            //TODO: verify token
-            /*
-            const response = verifyToken(this.props.user.token);
-            if (someCondition(response)) {
-            }
-            */
-            this.props.navigation.navigate('drawerStack');
+            this.props.navigation.navigate(LOGGED_IN_ROUTE_NAME);
         }
     }
+
+    componentDidMount() {
+        // AsyncStorage.clear();
+
+        /* First sets the initial connection state, and then adds eventlistener to listen to connection changes.
+            Unused 'isConnected' was added to ensure that setInitialConnection runs before toggling anything*/
+        isNetworkConnected()
+            .then(isConnected => {
+                this.props.dispatch(setInitialConnection({ connectionStatus: isConnected }));})
+            .then(isConnected => NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange));
+    }
+
+    componentWillUnmount() {
+        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
+    }
+
+    handleConnectionChange = isConnected => {
+        this.props.dispatch(toggleConnection({ connectionStatus: isConnected }));
+    };
 
     /**
      * Navigates to the given route and resets navigation
@@ -44,23 +61,35 @@ export class LoginScreen extends React.Component {
 
     logIn = () => {
         login(this.props.username, this.props.password)
-            .then(response => {
-                if (response === undefined) {
-                    alert('Invalid username or password');
+            .then(token => {
+                if (token === undefined) {
+                    alert(strings('login.invalid'));
                 } else {
-                    const token = response;
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
-                    this.resetNavigationTo('drawerStack');
+
+                    //Send all pending reports, and then navigate to next screen.
+                    sendAllPendingReports(this.props.username, token)
+                        .then(sentPending => {
+                            if (sentPending) {
+                                Alert.alert(strings('login.queuedSent'));}
+                        })
+                        .then(() => {
+                            this.resetNavigationTo(LOGGED_IN_ROUTE_NAME);
+                            this.props.dispatch(insertPassword(null));
+                        });
                 }
             });
-        this.props.dispatch(insertPassword(null));
     };
 
     render() {
         return (
             <AppBackground>
-                <StatusBar backgroundColor='#3d4f7c' barStyle='light-content'/>
+                <OfflineNotice />
+                <StatusBar
+                    backgroundColor={ this.props.isConnected ? '#3d4f7c' : '#b52424'}
+                    hidden={false}
+                    barStyle="light-content"/>
 
                 <Text style={loginStyles.title}>
                     { strings('login.title') }
@@ -70,18 +99,18 @@ export class LoginScreen extends React.Component {
                     {strings('login.slogan')}
                 </Text>
 
-                <Input
+                <IconInput
                     name={'user'}
                     placeholder={ strings('login.username') }
                     onChangeText={username => this.props.dispatch(insertUsername(username))}
                 />
-                <Input
+                <IconInput
                     name={'lock'}
                     secureTextEntry={true}
                     placeholder={ strings('login.password') }
                     onChangeText={password => this.props.dispatch(insertPassword(password))}
                 />
-                <Input
+                <IconInput
                     name={'globe'}
                     placeholder={ strings('login.serverUrl') }
                     onChangeText={serverUrl => this.setState({ serverUrl })}
@@ -103,9 +132,11 @@ export class LoginScreen extends React.Component {
 const mapStateToProps = (state) => {
     const password = state.user.password;
     const username = state.user.username;
+    const isConnected = state.connection.isConnected;
     return {
         password,
-        username
+        username,
+        isConnected,
     };
 };
 

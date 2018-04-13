@@ -2,6 +2,10 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
 
+    $activeBlue: '$active',
+    $gray1: '$disabledPlaceholder',
+    $gray2: '$placeholder',
+
     dropdownContainer: {
         margin: 5,
         flexDirection: 'row',
@@ -17,12 +21,13 @@ const styles = EStyleSheet.create({
 
     dropdownButton: {
         width: 180,
-        borderWidth: '$containerBorderWidth',
+        marginBottom: 10,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: '$dropdownRadius',
-        borderColor: '$draftBlue',
+        borderWidth: '$containerBorderWidth',
+        borderColor: '$inactive',
         backgroundColor: '$primaryWhite',
     },
 
@@ -38,7 +43,8 @@ const styles = EStyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 6,
         fontSize: 16,
-        color: '$gray1',
+        fontFamily: '$primaryFont',
+        color: '$placeholder',
         textAlign: 'center',
         textAlignVertical: 'center',
     },
@@ -53,22 +59,23 @@ const styles = EStyleSheet.create({
 
     dropdownSeparator: {
         height: 1,
-        backgroundColor: '$draftBlue',
+        backgroundColor: '$inactive',
     },
 
     dropdownRowText: {
         marginHorizontal: 4,
         fontSize: 16,
-        color: '$gray1',
+        fontFamily: '$primaryFont',
+        color: '$placeholder',
         textAlignVertical: 'center',
     },
 
     dropStyleClass: {
         width: 180,
         height: 300,
-        borderColor: '$draftBlue',
         borderWidth: '$containerBorderWidth',
-        borderRadius: 3,
+        borderColor: '$inactive',
+        borderRadius: '$dropdownRadius',
     },
 
     icon: {
@@ -76,7 +83,14 @@ const styles = EStyleSheet.create({
     },
 
     disabled: {
-        backgroundColor: '#eee'
+        backgroundColor: '$disabled',
+        borderColor: '$disabledBorder',
+        borderWidth: 2,
+    },
+
+    disabledText: {
+        color: '$disabledPlaceholder',
+        fontFamily: '$primaryFont',
     }
 });
 

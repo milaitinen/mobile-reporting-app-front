@@ -78,8 +78,8 @@ class Layout extends Component{
     };
 
     /*
-     Determine whether empty space is rendered after the last template of template screen.
-     Without this function it wouldn't be possible to autoscroll to the last templates of the template screen.
+    Determine whether empty space is rendered after the last template of template screen.
+    Without this function it wouldn't be possible to autoscroll to the last templates of the template screen.
      */
     setTemplateScreenRenderFooter = (bool) => {
         this.props.setTemplateScreenRenderFooter(bool);
@@ -87,7 +87,7 @@ class Layout extends Component{
 
 
     // Sets maximum height when opened.
-    _setMaxHeight = (event) => {
+    _setMaxHeight = () => {
         const height = Dimensions.get('window').height;
 
         this.setState({ maxHeight: (Platform.OS === 'ios') ? height - 142 : height - 165 });
@@ -105,7 +105,7 @@ class Layout extends Component{
 
     render(){
         // simplifies referencing (instead of this.props.title, title is enough)
-        const { title, nofReports, templateID, data } = this.props;
+        const { title, nofReports, nofQueued, templateID, data } = this.props;
         return (
             <Animated.View
                 style={[styles.animatedContainer,{ height: this.state.animation }]}>
@@ -116,7 +116,9 @@ class Layout extends Component{
                         title={title} // Title of the template.
                         titleStyle = { styles.templateTitle }
                         //Number of reports as a subtitle
-                        subtitle={`${nofReports} ${(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}`}
+                        subtitle={
+                            <View style={ styles.subtitle }><Text>{nofReports} {(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}</Text>
+                                <Text>{nofQueued} {(nofQueued === 1) ? strings('templates.queuedSingular') : strings('templates.queuedPlural')}</Text></View>}
                         hideChevron={true}
                         badge={{ element: <RightButton
                             onPressNew={() => this.props.createNew(templateID, true)}
@@ -127,31 +129,42 @@ class Layout extends Component{
                 </View>
 
                 <View style={styles.reportListContainer} onLayout={this._setMaxHeight}>
-                    <ScrollView style={{height: this.state.maxHeight - this.state.minHeight}}>
+                    <ScrollView style={{ height: this.state.maxHeight - this.state.minHeight }}>
                         <FlatList
                             data={ (data === undefined) ? data : data.slice(0, this.state.itemsCount) }
                             extraData={ this.state.itemsCount }
                             /* Renders the reports from the state array
                               with the help of an index from the earlier
                               renderItem function. */
-                            renderItem={({ item }) =>
+                            renderItem={({ item, index }) =>
                                 <ListItem
-                                    key={item.title}
+                                    key={index}
+                                    onPress={() => this.props.viewReport(templateID, item.report_id, item.title)}
                                     containerStyle={ styles.reportContainer }
                                     titleStyle = { styles.reportTitle }
-                                    title={`${item.orderNo} ${item.title}`}
-                                    subtitle={item.dateCreated}
+                                    title={(item.orderNo) ? `${item.orderNo}\t${item.title}` : `${item.title}`}
+                                    subtitle={item.date_created}
                                     hideChevron = {true}
-                                    badge ={{ element: <StatusBadge dateAccepted={item.dateAccepted}/> }}
+                                    badge ={{ element:
+                                        <StatusBadge
+                                            dateAccepted={item.date_accepted}
+                                            isDraft={item.report_id < 0}
+                                            inQueue={item.report_id == null}
+                                        />
+                                    }}
                                 />
                             }
-                            keyExtractor={item => item.id}
+
+                            //Generates random ID for rendering purposes. TODO:// Change to better solution maybe?
+                            keyExtractor={item => item.report_id != null ? item.report_id * Math.random() : Math.random()}
                             ListFooterComponent={
                                 (data !== undefined && data.length > this.state.itemsCount)
-                                    ? <Text style={styles.more} onPress={() => this.showMore()}>
+                                    ?
+                                    <Text testID={'showMore'} style={styles.more} onPress={() => this.showMore()}>
                                         { strings('templates.showMore') }
                                     </Text>
-                                    : <Text style={styles.noMoreReports}>
+                                    :
+                                    <Text style={styles.noMoreReports}>
                                         { strings('templates.endOfReports') }
                                     </Text>
                             }
@@ -164,3 +177,4 @@ class Layout extends Component{
 }
 
 export default Layout;
+

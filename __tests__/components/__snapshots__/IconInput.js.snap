@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IconInput component renders correctly 1`] = `
+<View
+  style={undefined}
+>
+  <Text
+    accessible={true}
+    allowFontScaling={false}
+    ellipsizeMode="tail"
+    style={
+      Array [
+        Object {
+          "color": "white",
+          "fontSize": 16,
+        },
+        undefined,
+        Object {
+          "fontFamily": "Feather",
+          "fontStyle": "normal",
+          "fontWeight": "normal",
+        },
+      ]
+    }
+  >
+    
+  </Text>
+  <TextInput
+    allowFontScaling={true}
+    autoCapitalize="none"
+    name="user"
+    onChangeText={[Function]}
+    placeholder="Username"
+    placeholderTextColor="white"
+    selectionColor={undefined}
+    style={undefined}
+    underlineColorAndroid="transparent"
+  />
+</View>
+`;
