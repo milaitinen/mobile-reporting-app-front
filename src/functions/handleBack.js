@@ -24,7 +24,7 @@ export const handleBack = (dispatch, isUnsaved) => {
     if (isUnsaved) {
         Alert.alert(
             strings('createNew.unsavedChanges'),
-            strings('leaveWithoutSaving'),
+            strings('createNew.leaveWithoutSaving'),
             [
                 { text: strings('createNew.cancel'), onPress: () => {
                     console.log('Cancel pressed');

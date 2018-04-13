@@ -54,7 +54,7 @@ const TemplateStack = StackNavigator({
                    <View style={ navigationStyles.titleContainer }>
                        {/*TODO: header title needs to be chosen based on the report being new or already sent.
                           Possible solution: https://reactnavigation.org/docs/headers.html#using-params-in-the-title */}
-                       <Text style={ navigationStyles.ScreenHeader }>{ strings('createNew.report') }</Text>
+                       <Text style={ navigationStyles.ScreenHeader }>{ strings('templates.report') }</Text>
                    </View>
                    <View style={ navigationStyles.backButtonContainer }>
                        <ReportEditingBackButton
