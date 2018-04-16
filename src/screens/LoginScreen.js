@@ -63,10 +63,7 @@ export class LoginScreen extends React.Component {
         login(this.props.username, this.props.password)
             .then(token => {
                 if (token === undefined) {
-                    if (this.props.isConnected) {
-                        alert(strings('login.invalid'));
-                    }
-
+                    alert(strings('login.invalid'));
                 } else {
                     this.props.dispatch(insertToken(token));
                     Keyboard.dismiss();
