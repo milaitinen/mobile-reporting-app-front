@@ -16,14 +16,14 @@ const styles = EStyleSheet.create({
         marginBottom: 0,
         // borderRadius: 5,
         '@media (max-width: 350)': {
-            fontSize: 40,
+            fontSize: 45,
             paddingRight: 2,
             paddingLeft: 2,
             paddingTop: 4,
             paddingBottom: 5,
         },
         '@media (min-width: 350)': {
-            fontSize: 50,
+            fontSize: 55,
             paddingRight: 5,
             paddingLeft: 8,
             paddingTop: 5,

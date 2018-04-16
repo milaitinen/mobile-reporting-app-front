@@ -13,11 +13,11 @@ class Layout extends Component{
 
         this.state = {
             maxHeight  : 475,
-            minHeight  : Dimensions.get('window').width < 350 ? 50 : 60,
+            minHeight  : Dimensions.get('window').width < 350 ? 55 : 65,
             itemsCount : 20,
             updated    : false,
             expanded   : false,  // Checks whether the reports of the template are shown or not.
-            animation  : new Animated.Value(Dimensions.get('window').width < 350 ? 50 : 60),
+            animation  : new Animated.Value(Dimensions.get('window').width < 350 ? 55 : 65),
             /* Initializes the animation state as 60 (same height as the ListItem
             component which includes the title of the Layout etc.)
             This is the minimum height when the layout component isn't expanded. */
@@ -117,8 +117,8 @@ class Layout extends Component{
                         titleStyle = { styles.templateTitle }
                         //Number of reports as a subtitle
                         subtitle={
-                            <View style={ styles.subtitle }><Text>{nofReports} {(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}</Text>
-                                <Text>{nofQueued} {(nofQueued === 1) ? strings('templates.queuedSingular') : strings('templates.queuedPlural')}</Text></View>}
+                            <View style={ styles.subtitleContainer }><Text style={styles.subtitle}>{nofReports} {(nofReports === 1) ? strings('templates.report') : strings('templates.reports')}</Text>
+                                <Text style={styles.subtitle}>{nofQueued} {(nofQueued === 1) ? strings('templates.queuedSingular') : strings('templates.queuedPlural')}</Text></View>}
                         hideChevron={true}
                         badge={{ element: <RightButton
                             onPressNew={() => this.props.createNew(templateID, true)}
