@@ -5,7 +5,7 @@ exports[`renders correctly 1`] = `
   collapsable={undefined}
   style={
     Object {
-      "height": 50,
+      "height": 55,
     }
   }
 >
@@ -151,6 +151,7 @@ exports[`renders correctly 1`] = `
                   accessible={true}
                   allowFontScaling={true}
                   ellipsizeMode="tail"
+                  style={undefined}
                 >
                    
                   templates.reports
@@ -159,6 +160,7 @@ exports[`renders correctly 1`] = `
                   accessible={true}
                   allowFontScaling={true}
                   ellipsizeMode="tail"
+                  style={undefined}
                 >
                    
                   templates.queuedPlural
@@ -341,7 +343,7 @@ exports[`renders correctly 1`] = `
     <RCTScrollView
       style={
         Object {
-          "height": 425,
+          "height": 420,
         }
       }
     >

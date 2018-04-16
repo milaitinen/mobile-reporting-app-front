@@ -18,7 +18,7 @@ const StatusBadge = ({ dateAccepted, isDraft, inQueue }) =>{
                 <Icon name={icon} type={'feather'} iconStyle={styles.badgeIconStyle} />
             </Badge>
             {
-                (dateAccepted) &&
+                (dateAccepted && !isDraft) &&
                 <Text style={styles.dateAccepted}>
                     {dateAccepted}
                 </Text>
