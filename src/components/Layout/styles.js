@@ -1,4 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import normalize from "react-native-elements/src/helpers/normalizeText";
 
 export default EStyleSheet.create({
 
@@ -8,18 +9,18 @@ export default EStyleSheet.create({
         marginRight: 0,
         overflow:'hidden',
         borderRadius: '$containerBorderRadius',
-        height: 60,
+        height: 65,
         elevation: 3,
         shadowOffset: {
             width: 0,
             height: 3,
         },
         '@media (max-width: 350)': {
-            height: 50,
+            height: 55,
             margin: 8,
         },
         '@media (min-width: 350)': {
-            height: 60,
+            height: 65,
             margin: 10,
         }
     },
@@ -34,15 +35,21 @@ export default EStyleSheet.create({
         paddingVertical: 0,
         paddingBottom: 0,
         '@media (max-width: 350)': {
-            height: 50,
+            height: 55,
         },
         '@media (min-width: 350)': {
-            height: 60,
+            height: 65,
         }
     },
 
-    subtitle: {
+    subtitleContainer: {
         flexDirection: 'column',
+    },
+
+    subtitle: {
+        color: '#86939e',
+        fontSize: normalize(12),    // Normalizes the size of fonts across devices.
+        fontWeight: 'bold',
     },
 
     folderIcon: {

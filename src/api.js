@@ -56,7 +56,7 @@ export const sendAllPendingReports = (username, token) => {
         .then(async templates => {
             await asyncForEach(templates, async template => {
                 const status = await sendPendingReportsByTemplateID(username, template.template_id, token);
-                if (status == true) { sentSomething = true; }
+                if (status === true) { sentSomething = true; }
             });
             return sentSomething;
         });

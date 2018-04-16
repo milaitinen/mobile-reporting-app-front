@@ -8,12 +8,12 @@ const loginStyles = EStyleSheet.create({
         color: 'white',
 
         '@media (max-width: 350)': {
-            fontSize: 25,
+            fontSize: 30,
             marginTop: 6,
             paddingBottom: 20,
         },
         '@media (min-width: 350)': {
-            fontSize: 30,
+            fontSize: 35,
             marginTop: 10,
             paddingBottom: 30,
         },

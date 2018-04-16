@@ -141,7 +141,7 @@ exports[`TemplateScreen renders correctly 1`] = `
                 collapsable={undefined}
                 style={
                   Object {
-                    "height": 60,
+                    "height": 65,
                   }
                 }
               >
@@ -317,6 +317,7 @@ exports[`TemplateScreen renders correctly 1`] = `
                                 accessible={true}
                                 allowFontScaling={true}
                                 ellipsizeMode="tail"
+                                style={undefined}
                               >
                                 1
                                  
@@ -326,6 +327,7 @@ exports[`TemplateScreen renders correctly 1`] = `
                                 accessible={true}
                                 allowFontScaling={true}
                                 ellipsizeMode="tail"
+                                style={undefined}
                               >
                                 0
                                  
@@ -509,7 +511,7 @@ exports[`TemplateScreen renders correctly 1`] = `
                   <RCTScrollView
                     style={
                       Object {
-                        "height": 415,
+                        "height": 410,
                       }
                     }
                   >
