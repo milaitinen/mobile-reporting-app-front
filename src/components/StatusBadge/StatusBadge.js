@@ -17,6 +17,12 @@ const StatusBadge = ({ dateAccepted, isDraft, inQueue }) =>{
                 <Text style={styles.badgeTextStyle}>{text}</Text>
                 <Icon name={icon} type={'feather'} iconStyle={styles.badgeIconStyle} />
             </Badge>
+            {
+                (dateAccepted) &&
+                <Text style={styles.dateAccepted}>
+                    {dateAccepted}
+                </Text>
+            }
         </View>
     );
 };
