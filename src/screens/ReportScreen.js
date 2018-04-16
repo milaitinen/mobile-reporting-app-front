@@ -497,7 +497,7 @@ export class ReportScreen extends React.Component {
                     <ScrollView keyboardShouldPersistTaps={'handled'} style={ newReportStyles.ReportScrollView }>
                         <View style={newReportStyles.fieldContainer}>
                             <View style={newReportStyles.fieldTitle}>
-                                <Text style={newReportStyles.text}>Otsikko</Text>
+                                <Text style={newReportStyles.text}>{strings('createNew.title')}</Text>
                                 <Text style={newReportStyles.required}> *</Text>
                             </View>
                             <Input
