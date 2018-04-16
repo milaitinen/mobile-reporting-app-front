@@ -168,7 +168,7 @@ export class TemplateScreen extends Component {
     // Handler function to set isNavigating to false if user returns back to this screen.
     handleNavigatingDebounce = () => {
         this.setState({ isNavigating: false });
-    }
+    };
 
     // Determines whether this screen is scrollable or not.
     setScrollEnabled = (bool) => {
